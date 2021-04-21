@@ -16,7 +16,7 @@ import * as url from "url";
 import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
 
-const BASE_PATH = "http://localhost:8080".replace(/\/+$/, "");
+const BASE_PATH = "";
 
 /**
  *
@@ -54,7 +54,7 @@ export interface FetchArgs {
  * @class BaseAPI
  */
 export class BaseAPI {
-    protected configuration: Configuration;
+    protected configuration: Configuration | undefined;
 
     constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
         if (configuration) {
@@ -71,7 +71,8 @@ export class BaseAPI {
  * @extends {Error}
  */
 export class RequiredError extends Error {
-    name: "RequiredError"
+    // @ts-ignore
+    name: "RequiredError" | undefined
     constructor(public field: string, msg?: string) {
         super(msg);
     }
@@ -100,25 +101,34 @@ export interface AssignmentWithUserNameTO {
      * @type {string}
      * @memberof AssignmentWithUserNameTO
      */
-    roleEnum: AssignmentWithUserNameTO.RoleEnumEnum;
+    roleEnum: RoleEnum;
 }
 
 /**
  * @export
  * @namespace AssignmentWithUserNameTO
  */
+export enum RoleEnum {
+    OWNER = <any> 'OWNER',
+    ADMIN = <any> 'ADMIN',
+    MEMBER = <any> 'MEMBER',
+    VIEWER = <any> 'VIEWER'
+}
+
+/**
+ *
+
 export namespace AssignmentWithUserNameTO {
     /**
      * @export
      * @enum {string}
-     */
-    export enum RoleEnumEnum {
-        OWNER = <any> 'OWNER',
-        ADMIN = <any> 'ADMIN',
-        MEMBER = <any> 'MEMBER',
-        VIEWER = <any> 'VIEWER'
-    }
+
+
 }
+*/
+
+
+
 /**
  * 
  * @export
@@ -228,7 +238,7 @@ export interface BpmnDiagramVersionTO {
      * @type {string}
      * @memberof BpmnDiagramVersionTO
      */
-    saveType: BpmnDiagramVersionTO.SaveTypeEnum;
+    saveType: SaveTypeEnum;
     /**
      * 
      * @type {string}
@@ -247,17 +257,25 @@ export interface BpmnDiagramVersionTO {
  * @export
  * @namespace BpmnDiagramVersionTO
  */
+export enum SaveTypeEnum {
+    RELEASE = <any> 'RELEASE',
+    MILESTONE = <any> 'MILESTONE',
+    AUTOSAVE = <any> 'AUTOSAVE'
+}
+
+/**
+ *
+
 export namespace BpmnDiagramVersionTO {
     /**
      * @export
      * @enum {string}
-     */
-    export enum SaveTypeEnum {
-        RELEASE = <any> 'RELEASE',
-        MILESTONE = <any> 'MILESTONE',
-        AUTOSAVE = <any> 'AUTOSAVE'
-    }
+
 }
+ */
+
+
+
 /**
  * 
  * @export
@@ -281,24 +299,25 @@ export interface BpmnDiagramVersionUploadTO {
      * @type {string}
      * @memberof BpmnDiagramVersionUploadTO
      */
-    saveType?: BpmnDiagramVersionUploadTO.SaveTypeEnum;
+    saveType?: SaveTypeEnum;
 }
 
 /**
  * @export
  * @namespace BpmnDiagramVersionUploadTO
  */
+
+/**
+ *
 export namespace BpmnDiagramVersionUploadTO {
     /**
      * @export
      * @enum {string}
-     */
-    export enum SaveTypeEnum {
-        RELEASE = <any> 'RELEASE',
-        MILESTONE = <any> 'MILESTONE',
-        AUTOSAVE = <any> 'AUTOSAVE'
-    }
+
 }
+ */
+
+
 /**
  * 
  * @export
@@ -417,9 +436,12 @@ export const AssignmentControllerApiFetchParamCreator = function (configuration?
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Authorization'] = getOAuthToken();
+
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"AssignmentWithUserNameTO" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -456,6 +478,7 @@ export const AssignmentControllerApiFetchParamCreator = function (configuration?
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -478,6 +501,7 @@ export const AssignmentControllerApiFetchParamCreator = function (configuration?
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -659,9 +683,12 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Authorization'] = getOAuthToken();
+
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"BpmnDiagramUploadTO" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -699,6 +726,7 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -727,6 +755,7 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -761,6 +790,7 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -998,9 +1028,12 @@ export const BpmnDiagramVersionControllerApiFetchParamCreator = function (config
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Authorization'] = getOAuthToken();
+
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"BpmnDiagramVersionUploadTO" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -1037,6 +1070,7 @@ export const BpmnDiagramVersionControllerApiFetchParamCreator = function (config
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -1072,6 +1106,7 @@ export const BpmnDiagramVersionControllerApiFetchParamCreator = function (config
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -1112,6 +1147,7 @@ export const BpmnDiagramVersionControllerApiFetchParamCreator = function (config
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -1347,9 +1383,12 @@ export const BpmnRepositoryControllerApiFetchParamCreator = function (configurat
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Authorization'] = getOAuthToken();
+
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"NewBpmnRepositoryTO" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -1381,6 +1420,7 @@ export const BpmnRepositoryControllerApiFetchParamCreator = function (configurat
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -1404,6 +1444,7 @@ export const BpmnRepositoryControllerApiFetchParamCreator = function (configurat
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -1433,6 +1474,7 @@ export const BpmnRepositoryControllerApiFetchParamCreator = function (configurat
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -1466,9 +1508,12 @@ export const BpmnRepositoryControllerApiFetchParamCreator = function (configurat
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Authorization'] = getOAuthToken();
+
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"NewBpmnRepositoryTO" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -1535,6 +1580,10 @@ export const BpmnRepositoryControllerApiFp = function(configuration?: Configurat
         getAllRepositories(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BpmnRepositoryTO>> {
             const localVarFetchArgs = BpmnRepositoryControllerApiFetchParamCreator(configuration).getAllRepositories(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                console.log(basePath);
+                console.log(localVarFetchArgs.url);
+                console.log(localVarFetchArgs.options);
+                //basePath= "http://localhost:8081";
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
@@ -1737,9 +1786,11 @@ export const UserControllerApiFetchParamCreator = function (configuration?: Conf
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Authorization'] = getOAuthToken();
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"UserTO" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -1764,6 +1815,7 @@ export const UserControllerApiFetchParamCreator = function (configuration?: Conf
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
 
@@ -1790,9 +1842,11 @@ export const UserControllerApiFetchParamCreator = function (configuration?: Conf
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Authorization'] = getOAuthToken();
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"UserUpdateTO" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -1942,4 +1996,12 @@ export class UserControllerApi extends BaseAPI {
         return UserControllerApiFp(this.configuration).updateUser(body, options)(this.fetch, this.basePath);
     }
 
+}
+
+const getOAuthToken = () : string => {
+    const oAuthToken = localStorage.getItem("oauth_token");
+    if (oAuthToken === null) {
+        return "";
+    }
+    return oAuthToken;
 }

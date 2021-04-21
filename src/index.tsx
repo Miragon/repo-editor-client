@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Auth0Provider } from '@auth0/auth0-react';
+import {HashRouter} from "react-router-dom";
+import App from "./components/Layout/App";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+ReactDOM.render((
+   <Auth0Provider
+        domain="flowsquad.eu.auth0.com"
+        clientId="3h8eEHlAfoMF4yYkTOzsDcQc6rgpLOxO"
+        audience="https://flowsquad.io"
+        authorizeTimeoutSeconds={5}
+        useRefreshTokensIn
+        redirectUri={window.location.origin}>
+        <HashRouter>
+            <App/>
+        </HashRouter>
+    </Auth0Provider>
+    ),
   document.getElementById('root')
 );
 

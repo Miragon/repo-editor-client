@@ -112,7 +112,7 @@ const AppMenu: React.FC = () => {
                 <div className={classes.drawerContent}>
 
                     <DrawerApp
-                        title="Modeler"
+                        title="Building Blocks"
                         onClick={() => window.open("https://modeler.miragon.cloud/", "_self")}
                         description="View, create, and edit BPMN and DMN models, save them in
                             the cloud, or download them onto your local computer."
@@ -127,7 +127,7 @@ const AppMenu: React.FC = () => {
 
                     <DrawerApp
                         active
-                        title="Building Blocks"
+                        title="Diagrams"
                         onClick={() => setOpen(false)}
                         description="Create element templates to define shared building blocks
                             that are reused across all your processes."

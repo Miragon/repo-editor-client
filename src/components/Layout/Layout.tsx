@@ -1,11 +1,8 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { CircularProgress, makeStyles } from "@material-ui/core";
-import React, {useEffect, useState} from "react";
-import { UserControllerApi } from "../../api";
-import RegisterNewUserScreen from "../../screens/user/RegisterNewUserScreen";
+import React, {useState} from "react";
 import Menu from "./Menu";
 import Router from "./Router";
-import GlobalToastContainer from "../Feedback/GlobalToastContainer";
 
 const useStyles = makeStyles(() => ({
     // Der Inhalt der Anwendung außer das Menü
@@ -41,21 +38,12 @@ const useStyles = makeStyles(() => ({
 const Layout = (): any => {
 
     const classes = useStyles();
-    const [userController] = useState<UserControllerApi>(new UserControllerApi());
 
     //const [securityIsOn, setSecurityIsOn] = useState<boolean>(true);
     const [initializing, setInitializing] = useState<boolean>(false);
     const [initialized, setInitialized] = useState<boolean>(false);
-    const [userDoesExist, setUserDoesExist] = useState<boolean>(false);
     const {loginWithRedirect, isAuthenticated, isLoading, error, getAccessTokenSilently} = useAuth0();
 
-    useEffect(() => {
-        if (isAuthenticated && initialized) {
-            userController.getLoggedInUser()
-                .then(() => setUserDoesExist(true))
-                .catch(() => setUserDoesExist(false));
-        }
-    }, [isAuthenticated, initialized, userController]);
 
     if (isLoading) {
         return (
@@ -79,20 +67,18 @@ const Layout = (): any => {
             setInitializing(true);
             getAccessTokenSilently().then((token) => {
                 localStorage.setItem("oauth_token", "Bearer " + token)
-                setInitialized(true)
+
             });
+            setInitialized(true)
+            setInitializing(false)
         }
-        return null;
+        //return null;
     }
 
-    if (!userDoesExist) {
-        return <RegisterNewUserScreen />
-    }
 
     return (
         <>
             <Menu />
-            <GlobalToastContainer />
             <div className={classes.content}>
                 <Router />
             </div>

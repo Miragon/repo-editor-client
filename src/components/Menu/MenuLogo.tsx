@@ -22,7 +22,7 @@ const MenuLogo: React.FC<Props> = props => {
         <span
             onClick={props.onClick}
             className={classes.logo}>
-            Building Blocks
+            Home
         </span>
     );
 };
