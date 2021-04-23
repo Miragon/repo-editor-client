@@ -21,7 +21,7 @@ const LatestDiagrams: React.FC<LatestDiagramsProps> = observer((props: LatestDia
     useEffect(() => {
         console.log("____________________")
         console.log(props.repoIds);
-        (async () => await store.diagramStore.initialize(props.repoIds))();
+        (async () => await store.diagramStore.initializeRecent())();
         //Store.diagramStore
 
     }, [props.repoIds, store.diagramStore])

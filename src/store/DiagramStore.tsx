@@ -31,12 +31,42 @@ export default class DiagramStore {
             })
             console.log("Diagrams: ");
             console.log(this.diagrams);
-
         }
     }
+
+    @action
+    initializeRecent = async (): Promise<void> => {
+        if(this.isInitialized){
+        console.log("Fetching most recent diagrams");
+        this.fetchRecent().then(recentDiagrams => {
+            recentDiagrams.forEach(diagram => {
+                runInAction(() => this.diagrams.push(diagram))
+            });
+        });
+        }
+        this.isInitialized=true;
+    }
+
+
+
     getAllDiagrams = (): BpmnDiagramTO[] => {
-        const diagramList = this.diagrams;
-        return diagramList.sort();
+        return this.diagrams;
+    }
+
+    public fetchRecent = async (): Promise<BpmnDiagramTO[]> => {
+        try {
+            return await this.bpmnDiagramController.getRecent();
+        } catch (response) {
+            switch (response.status) {
+                case 502:
+                    console.log("Error");
+                    break;
+                default:
+                    console.log("Error");
+                    break;
+            }
+            return [];
+        }
     }
 
 
