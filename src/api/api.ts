@@ -16,7 +16,7 @@ import * as url from "url";
 import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
 
-const BASE_PATH = "";
+const BASE_PATH = "http://localhost:8081".replace(/\/+$/, "");
 
 /**
  *
@@ -54,7 +54,7 @@ export interface FetchArgs {
  * @class BaseAPI
  */
 export class BaseAPI {
-    protected configuration: Configuration | undefined;
+    protected configuration: Configuration;
 
     constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
         if (configuration) {
@@ -71,7 +71,6 @@ export class BaseAPI {
  * @extends {Error}
  */
 export class RequiredError extends Error {
-    // @ts-ignore
     name: "RequiredError"
     constructor(public field: string, msg?: string) {
         super(msg);
@@ -101,24 +100,37 @@ export interface AssignmentWithUserNameTO {
      * @type {string}
      * @memberof AssignmentWithUserNameTO
      */
-    roleEnum: RoleEnumEnum;
+    roleEnum: AssignmentWithUserNameTO.RoleEnumEnum;
 }
-export enum RoleEnumEnum {
-    OWNER = <any> 'OWNER',
-    ADMIN = <any> 'ADMIN',
-    MEMBER = <any> 'MEMBER',
-    VIEWER = <any> 'VIEWER'
-}
+
 /**
  * @export
  * @namespace AssignmentWithUserNameTO
- *
+ */
 export namespace AssignmentWithUserNameTO {
     /**
      * @export
      * @enum {string}
-     *
-
+     */
+    export enum RoleEnumEnum {
+        OWNER = <any> 'OWNER',
+        ADMIN = <any> 'ADMIN',
+        MEMBER = <any> 'MEMBER',
+        VIEWER = <any> 'VIEWER'
+    }
+}
+/**
+ * 
+ * @export
+ * @interface BpmnDiagramSVGUploadTO
+ */
+export interface BpmnDiagramSVGUploadTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof BpmnDiagramSVGUploadTO
+     */
+    svgPreview: string;
 }
 /**
  * 
@@ -162,6 +174,12 @@ export interface BpmnDiagramTO {
      * @memberof BpmnDiagramTO
      */
     updatedDate?: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof BpmnDiagramTO
+     */
+    svgPreview?: string;
 }
 /**
  * 
@@ -229,7 +247,7 @@ export interface BpmnDiagramVersionTO {
      * @type {string}
      * @memberof BpmnDiagramVersionTO
      */
-    saveType: SaveTypeEnum;
+    saveType: BpmnDiagramVersionTO.SaveTypeEnum;
     /**
      * 
      * @type {string}
@@ -243,21 +261,21 @@ export interface BpmnDiagramVersionTO {
      */
     bpmnRepositoryId: string;
 }
-export enum SaveTypeEnum {
-    RELEASE = <any> 'RELEASE',
-    MILESTONE = <any> 'MILESTONE',
-    AUTOSAVE = <any> 'AUTOSAVE'
-}
+
 /**
  * @export
  * @namespace BpmnDiagramVersionTO
- *
+ */
 export namespace BpmnDiagramVersionTO {
     /**
      * @export
      * @enum {string}
-     *
-
+     */
+    export enum SaveTypeEnum {
+        RELEASE = <any> 'RELEASE',
+        MILESTONE = <any> 'MILESTONE',
+        AUTOSAVE = <any> 'AUTOSAVE'
+    }
 }
 /**
  * 
@@ -282,24 +300,23 @@ export interface BpmnDiagramVersionUploadTO {
      * @type {string}
      * @memberof BpmnDiagramVersionUploadTO
      */
-    saveType?: SaveTypeEnum;
-}
-/**
-export enum SaveTypeEnum {
-    RELEASE = <any> 'RELEASE',
-    MILESTONE = <any> 'MILESTONE',
-    AUTOSAVE = <any> 'AUTOSAVE'
+    saveType?: BpmnDiagramVersionUploadTO.SaveTypeEnum;
 }
 
+/**
  * @export
  * @namespace BpmnDiagramVersionUploadTO
- *
+ */
 export namespace BpmnDiagramVersionUploadTO {
     /**
      * @export
      * @enum {string}
-     *
-
+     */
+    export enum SaveTypeEnum {
+        RELEASE = <any> 'RELEASE',
+        MILESTONE = <any> 'MILESTONE',
+        AUTOSAVE = <any> 'AUTOSAVE'
+    }
 }
 /**
  * 
@@ -640,21 +657,21 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
         /**
          * 
          * @param {BpmnDiagramUploadTO} body 
-         * @param {string} repositoryId 
+         * @param {string} bpmnRepositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrUpdateDiagram(body: BpmnDiagramUploadTO, repositoryId: string, options: any = {}): FetchArgs {
+        createOrUpdateDiagram(body: BpmnDiagramUploadTO, bpmnRepositoryId: string, options: any = {}): FetchArgs {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createOrUpdateDiagram.');
             }
-            // verify required parameter 'repositoryId' is not null or undefined
-            if (repositoryId === null || repositoryId === undefined) {
-                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling createOrUpdateDiagram.');
+            // verify required parameter 'bpmnRepositoryId' is not null or undefined
+            if (bpmnRepositoryId === null || bpmnRepositoryId === undefined) {
+                throw new RequiredError('bpmnRepositoryId','Required parameter bpmnRepositoryId was null or undefined when calling createOrUpdateDiagram.');
             }
-            const localVarPath = `/api/diagram/{repositoryId}`
-                .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
+            const localVarPath = `/api/diagram/{bpmnRepositoryId}`
+                .replace(`{${"bpmnRepositoryId"}}`, encodeURIComponent(String(bpmnRepositoryId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -793,6 +810,99 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getStarred(options: any = {}): FetchArgs {
+            const localVarPath = `/api/diagram/starred`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} bpmnDiagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setStarred(bpmnDiagramId: string, options: any = {}): FetchArgs {
+            // verify required parameter 'bpmnDiagramId' is not null or undefined
+            if (bpmnDiagramId === null || bpmnDiagramId === undefined) {
+                throw new RequiredError('bpmnDiagramId','Required parameter bpmnDiagramId was null or undefined when calling setStarred.');
+            }
+            const localVarPath = `/api/diagram/starred/{bpmnDiagramId}`
+                .replace(`{${"bpmnDiagramId"}}`, encodeURIComponent(String(bpmnDiagramId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {BpmnDiagramSVGUploadTO} body 
+         * @param {string} bpmnRepositoryId 
+         * @param {string} bpmnDiagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePreviewSVG(body: BpmnDiagramSVGUploadTO, bpmnRepositoryId: string, bpmnDiagramId: string, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updatePreviewSVG.');
+            }
+            // verify required parameter 'bpmnRepositoryId' is not null or undefined
+            if (bpmnRepositoryId === null || bpmnRepositoryId === undefined) {
+                throw new RequiredError('bpmnRepositoryId','Required parameter bpmnRepositoryId was null or undefined when calling updatePreviewSVG.');
+            }
+            // verify required parameter 'bpmnDiagramId' is not null or undefined
+            if (bpmnDiagramId === null || bpmnDiagramId === undefined) {
+                throw new RequiredError('bpmnDiagramId','Required parameter bpmnDiagramId was null or undefined when calling updatePreviewSVG.');
+            }
+            const localVarPath = `/api/diagram/{bpmnRepositoryId}/{bpmnDiagramId}`
+                .replace(`{${"bpmnRepositoryId"}}`, encodeURIComponent(String(bpmnRepositoryId)))
+                .replace(`{${"bpmnDiagramId"}}`, encodeURIComponent(String(bpmnDiagramId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"BpmnDiagramSVGUploadTO" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -805,12 +915,12 @@ export const BpmnDiagramControllerApiFp = function(configuration?: Configuration
         /**
          * 
          * @param {BpmnDiagramUploadTO} body 
-         * @param {string} repositoryId 
+         * @param {string} bpmnRepositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrUpdateDiagram(body: BpmnDiagramUploadTO, repositoryId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = BpmnDiagramControllerApiFetchParamCreator(configuration).createOrUpdateDiagram(body, repositoryId, options);
+        createOrUpdateDiagram(body: BpmnDiagramUploadTO, bpmnRepositoryId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = BpmnDiagramControllerApiFetchParamCreator(configuration).createOrUpdateDiagram(body, bpmnRepositoryId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -895,6 +1005,61 @@ export const BpmnDiagramControllerApiFp = function(configuration?: Configuration
                 });
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getStarred(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BpmnDiagramTO>> {
+            const localVarFetchArgs = BpmnDiagramControllerApiFetchParamCreator(configuration).getStarred(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @param {string} bpmnDiagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setStarred(bpmnDiagramId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = BpmnDiagramControllerApiFetchParamCreator(configuration).setStarred(bpmnDiagramId, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @param {BpmnDiagramSVGUploadTO} body 
+         * @param {string} bpmnRepositoryId 
+         * @param {string} bpmnDiagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePreviewSVG(body: BpmnDiagramSVGUploadTO, bpmnRepositoryId: string, bpmnDiagramId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = BpmnDiagramControllerApiFetchParamCreator(configuration).updatePreviewSVG(body, bpmnRepositoryId, bpmnDiagramId, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
     }
 };
 
@@ -907,12 +1072,12 @@ export const BpmnDiagramControllerApiFactory = function (configuration?: Configu
         /**
          * 
          * @param {BpmnDiagramUploadTO} body 
-         * @param {string} repositoryId 
+         * @param {string} bpmnRepositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrUpdateDiagram(body: BpmnDiagramUploadTO, repositoryId: string, options?: any) {
-            return BpmnDiagramControllerApiFp(configuration).createOrUpdateDiagram(body, repositoryId, options)(fetch, basePath);
+        createOrUpdateDiagram(body: BpmnDiagramUploadTO, bpmnRepositoryId: string, options?: any) {
+            return BpmnDiagramControllerApiFp(configuration).createOrUpdateDiagram(body, bpmnRepositoryId, options)(fetch, basePath);
         },
         /**
          * 
@@ -952,6 +1117,34 @@ export const BpmnDiagramControllerApiFactory = function (configuration?: Configu
         getSingleDiagram(bpmnRepositoryId: string, bpmnDiagramId: string, options?: any) {
             return BpmnDiagramControllerApiFp(configuration).getSingleDiagram(bpmnRepositoryId, bpmnDiagramId, options)(fetch, basePath);
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getStarred(options?: any) {
+            return BpmnDiagramControllerApiFp(configuration).getStarred(options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @param {string} bpmnDiagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setStarred(bpmnDiagramId: string, options?: any) {
+            return BpmnDiagramControllerApiFp(configuration).setStarred(bpmnDiagramId, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @param {BpmnDiagramSVGUploadTO} body 
+         * @param {string} bpmnRepositoryId 
+         * @param {string} bpmnDiagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePreviewSVG(body: BpmnDiagramSVGUploadTO, bpmnRepositoryId: string, bpmnDiagramId: string, options?: any) {
+            return BpmnDiagramControllerApiFp(configuration).updatePreviewSVG(body, bpmnRepositoryId, bpmnDiagramId, options)(fetch, basePath);
+        },
     };
 };
 
@@ -965,13 +1158,13 @@ export class BpmnDiagramControllerApi extends BaseAPI {
     /**
      * 
      * @param {BpmnDiagramUploadTO} body 
-     * @param {string} repositoryId 
+     * @param {string} bpmnRepositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BpmnDiagramControllerApi
      */
-    public createOrUpdateDiagram(body: BpmnDiagramUploadTO, repositoryId: string, options?: any) {
-        return BpmnDiagramControllerApiFp(this.configuration).createOrUpdateDiagram(body, repositoryId, options)(this.fetch, this.basePath);
+    public createOrUpdateDiagram(body: BpmnDiagramUploadTO, bpmnRepositoryId: string, options?: any) {
+        return BpmnDiagramControllerApiFp(this.configuration).createOrUpdateDiagram(body, bpmnRepositoryId, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1018,6 +1211,40 @@ export class BpmnDiagramControllerApi extends BaseAPI {
      */
     public getSingleDiagram(bpmnRepositoryId: string, bpmnDiagramId: string, options?: any) {
         return BpmnDiagramControllerApiFp(this.configuration).getSingleDiagram(bpmnRepositoryId, bpmnDiagramId, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BpmnDiagramControllerApi
+     */
+    public getStarred(options?: any) {
+        return BpmnDiagramControllerApiFp(this.configuration).getStarred(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @param {string} bpmnDiagramId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BpmnDiagramControllerApi
+     */
+    public setStarred(bpmnDiagramId: string, options?: any) {
+        return BpmnDiagramControllerApiFp(this.configuration).setStarred(bpmnDiagramId, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @param {BpmnDiagramSVGUploadTO} body 
+     * @param {string} bpmnRepositoryId 
+     * @param {string} bpmnDiagramId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BpmnDiagramControllerApi
+     */
+    public updatePreviewSVG(body: BpmnDiagramSVGUploadTO, bpmnRepositoryId: string, bpmnDiagramId: string, options?: any) {
+        return BpmnDiagramControllerApiFp(this.configuration).updatePreviewSVG(body, bpmnRepositoryId, bpmnDiagramId, options)(this.fetch, this.basePath);
     }
 
 }

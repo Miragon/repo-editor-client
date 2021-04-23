@@ -1,0 +1,29 @@
+
+body{
+    background: #fff;
+}
+.DiagramContainer{
+    height: 400px;
+    width: 83%;
+    top: 30px;
+    left: 15%;
+    position: relative;
+    background-color: white;
+    border-top: 2px solid #ccc;
+}
+
+div.DiagramContainer h1{
+    padding-left: 20px;
+    color:black;
+    font-size: 25px;
+    font-style: italic;
+}
+
+.ScrollBar{
+    height: 340px;
+    top: 50px;
+    width: auto;
+    overflow-x: auto;
+    display: flex;
+    flex-wrap: nowrap;
+}
