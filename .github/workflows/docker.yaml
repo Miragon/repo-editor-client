@@ -34,12 +34,12 @@ jobs:
       - name: Build Application
         run: yarn build
 
-  - name: Build Docker Image
-    uses: FlowSquad/docker-cloud-build@v1.0.0
-    with:
-      gcp-project-id: ${{ secrets.GCP_PROJECT_ID }}
-      gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
-      image-name: cloud-homescreen
-      image-sources: build, docker, Dockerfile
-      github-disabled: true
+      - name: Build Docker Image
+        uses: FlowSquad/docker-cloud-build@v1.0.0
+        with:
+          gcp-project-id: ${{ secrets.GCP_PROJECT_ID }}
+          gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
+          image-name: cloud-homescreen
+          image-sources: build, docker, Dockerfile
+          github-disabled: true
 
