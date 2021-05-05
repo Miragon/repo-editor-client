@@ -112,14 +112,14 @@ const AppMenu: React.FC = () => {
                     <DrawerApp
                         title={getContent("FlowCov")}
                         onClick={() => window.open("https://flowcov.miragon.cloud/", "_self")}
-                        description={getContent("Improve your workflow and decision models by \ntesting them and tracking coverage")}
+                        description={getContent("Test and Track coverage of yout workflow and decision models")}
                         icon={BarChart} />
 
                     <DrawerApp
                         active
                         title={getContent("Diagrams")}
                         onClick={() => setOpen(false)}
-                        description={getContent("Create element templates to define shared \nbuilding blocks")}
+                        description={getContent("Create shared element templates")}
                         icon={Widgets} />
 
                     <MenuSpacer />
