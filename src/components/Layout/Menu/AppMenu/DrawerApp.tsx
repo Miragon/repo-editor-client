@@ -9,6 +9,7 @@ const useStyles = makeStyles(() => ({
         flexDirection: "row",
         padding: "8px",
         minWidth: "25px",
+        height: "80px",
         justifyContent: "flex-start",
         margin: "4px 0"
     },
@@ -19,7 +20,7 @@ const useStyles = makeStyles(() => ({
         }
     },
     drawerAppIcon: {
-        marginLeft: "0px",
+        marginLeft: "8px",
         marginRight: "0px",
         width: "40px",
         height: "40px"
@@ -29,9 +30,11 @@ const useStyles = makeStyles(() => ({
     },
     drawerAppTitle: (props: Props) => ({
         textTransform: "none",
+        whiteSpace: "nowrap",
         fontSize: "1.1rem",
         textAlign: "left",
-        marginBottom: props.dense ? 0 : "0.25rem"
+        marginLeft: "5px",
+        top: "2px"
     }),
     drawerAppTitleActive: {
         color: "#3c91b0",
@@ -42,6 +45,8 @@ const useStyles = makeStyles(() => ({
         fontWeight: 300,
         textTransform: "none",
         wordWrap: "break-word",
+        marginLeft: "5px",
+        whiteSpace: "pre",
         textAlign: "left"
     },
     drawerAppDescriptionActive: {
@@ -92,9 +97,14 @@ const DrawerApp: React.FC<Props> = props => {
                     props.active && classes.drawerAppIconActive
                 )
             })}
+            <div className={classes.drawerText}>
+            <div className={classes.drawerAppTitle}>{props.title}</div>
+                <div className={classes.drawerAppDescription}>{props.description}</div>
+            </div>
         </Button>
     );
 };
+//            <div className={classes.drawerAppDescription}>{props.description}</div>
 /*
  Removed - was in front of button close tag
             {props.description && (

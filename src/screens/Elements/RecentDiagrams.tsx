@@ -24,7 +24,7 @@ const RecentDiagrams: React.FC = observer(() =>{
                 <div className="ScrollBarDiagram">
                     {store.diagramStore.getRecentDiagrams().map(diagram => (
                         // eslint-disable-next-line react/jsx-key
-                        <a href={"/modeler/" + diagram.bpmnRepositoryId + "/" + diagram.bpmnDiagramId + "/latest"}>
+                        <a href={"/modeler/" + diagram.bpmnRepositoryId + "/" + diagram.bpmnDiagramId + "/latest/"}>
                         <DiagramCard
                         diagramTitle={diagram.bpmnDiagramName}
                         image={diagram.svgPreview}

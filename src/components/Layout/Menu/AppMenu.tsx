@@ -17,7 +17,7 @@ import React, { useCallback, useRef, useState } from "react";
 import MenuSpacer from "../../Menu/MenuSpacer";
 import DrawerApp from "./AppMenu/DrawerApp";
 import DrawerDivider from "./AppMenu/DrawerDivider";
-
+//Drawerpaper: 84px breit
 const useStyles = makeStyles(() => ({
     button: {
         textTransform: "none",
@@ -32,11 +32,18 @@ const useStyles = makeStyles(() => ({
     activeButton: {
         color: "black"
     },
-    drawerPaper: {
-        width: "84px",
-        padding: "0px"
-
+    hiddenTitle: {
+        display: "none"
     },
+    drawerPaper: {
+        width: "100px",
+        padding: "0px",
+        transition: "width .3s",
+        "&:hover": {
+            width: "400px"
+        }
+    },
+
     drawerBackdrop: {
         backgroundColor: "rgba(0, 0, 0, 0)"
     },
@@ -57,12 +64,14 @@ const useStyles = makeStyles(() => ({
         flexDirection: "column",
         flexGrow: 1
     }
+
 }));
 
 const AppMenu: React.FC = () => {
     const classes = useStyles();
 
     const [open, setOpen] = useState(true);
+    const [showContent, setShowContent] = useState(false);
     const anchorRef = useRef<HTMLButtonElement>(null);
     const handleClose = useCallback((event: React.MouseEvent<EventTarget>) => {
         if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
@@ -74,6 +83,14 @@ const AppMenu: React.FC = () => {
 
     const { logout, user } = useAuth0();
 
+    const getContent = (content: string) => {
+        if(showContent){
+            return content
+        }
+        else{
+            return ""
+        }
+    }
     return (
         <>
 
@@ -86,66 +103,63 @@ const AppMenu: React.FC = () => {
                 }}
                 anchor="left"
                 open={open}
+                onMouseOver={() => setShowContent(true)}
+                onMouseOut={() => setShowContent(false)}
                 onClose={handleClose}>
-
-
 
 
                 <div className={classes.drawerContent}>
 
                     <DrawerApp
-                        title="Building Blocks"
+                        title={getContent("Building Blocks")}
                         onClick={() => window.open("https://modeler.miragon.cloud/", "_self")}
-                        description="View, create, and edit BPMN and DMN models, save them in
-                            the cloud, or download them onto your local computer."
+                        description={getContent("View, create, and edit BPMN and DMN models")}
                         icon={Brush} />
 
-                    <DrawerApp title="New Diagram"
+                    <DrawerApp title={getContent("New Diagram")}
                                onClick={() => window.open("https://modeler.miragon.cloud/", "_blank")}
-                               description="Create a new BPMN diagram"
+                               description={getContent("Create a new BPMN diagram")}
                                icon={Add} />
 
                     <DrawerApp
-                        title="FlowCov"
+                        title={getContent("FlowCov")}
                         onClick={() => window.open("https://flowcov.miragon.cloud/", "_self")}
-                        description="Improve your workflow and decision models by testing them
-                            and tracking coverage across all your processes."
+                        description={getContent("Improve your workflow and decision models by \ntesting them and tracking coverage")}
                         icon={BarChart} />
 
                     <DrawerApp
                         active
-                        title="Diagrams"
+                        title={getContent("Diagrams")}
                         onClick={() => setOpen(false)}
-                        description="Create element templates to define shared building blocks
-                            that are reused across all your processes."
+                        description={getContent("Create element templates to define shared \nbuilding blocks")}
                         icon={Widgets} />
 
                     <MenuSpacer />
 
                     <DrawerApp
                         dense
-                        title="Contact Support"
-                        description="info@flowsquad.io"
+                        title={getContent("Contact Support")}
+                        description={getContent("info@flowsquad.io")}
                         icon={Help} />
 
                     <DrawerDivider />
 
                     <DrawerApp
                         dense
-                        title="Your Account"
-                        description={user.email}
+                        title={getContent("Your Account")}
+                        description={getContent(user.email)}
                         icon={AccountCircle} />
 
                     <DrawerApp
-                        title="Your Organization"
+                        title={getContent("Your Organization")}
                         icon={Apartment} />
 
                     <DrawerDivider />
 
                     <DrawerApp
                         dense
-                        title="Sign Out"
-                        description={user.email}
+                        title={getContent("Sign Out")}
+                        description={getContent(user.email)}
                         onClick={logout}
                         icon={PowerSettingsNew} />
 

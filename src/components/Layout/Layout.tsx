@@ -48,7 +48,7 @@ const Layout = (): any => {
     if (isLoading) {
         return (
             <div className={classes.loadingScreen}>
-                <h1>Loading Building Blocks...</h1>
+                <h1>Loading Miragon Cloud...</h1>
                 <CircularProgress className={classes.loadingCircle} />
             </div>
         );
