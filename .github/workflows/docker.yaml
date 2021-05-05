@@ -1,0 +1,45 @@
+name: Build Docker Image
+# This action builds the application using yarn and then builds a docker image.
+# The yarn dependencies are cached to reduce install times.
+#
+# The action will be executed on push to the branches 'master' and 'develop'.
+on:
+  push:
+    branches:
+      - 'dev'
+
+jobs:
+  docker:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Setup NodeJS 14.x
+        uses: actions/setup-node@v1
+      - name: Set Yarn Cache Directory
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Restore Yarn Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      # Should actually be run without scripts, see https://github.com/actions/setup-node ("Use private packages").
+      # However, yarn does not allow to run them in a separate step.
+      - name: Install Dependencies
+        run: yarn
+      - name: Build Application
+        run: yarn build
+
+  - name: Build Docker Image
+    uses: FlowSquad/docker-cloud-build@v1.0.0
+    with:
+      gcp-project-id: ${{ secrets.GCP_PROJECT_ID }}
+      gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
+      image-name: cloud-homescreen
+      image-sources: build, docker, Dockerfile
+      github-disabled: true
+

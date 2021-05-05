@@ -34,7 +34,6 @@ export default class DiagramStore {
 
         //Pbly overkill as soon as some more repos exist -> remove and only query all repos for the repo-selection-area, not all diagrams
         if (!this.allInitialized) {
-            console.log("In if clause of diagramStore")
             repoIds.forEach(repoId => {
                 this.fetchAllDiagrams(repoId).then(allDiagrams => {
                     allDiagrams.forEach(diagram => {
