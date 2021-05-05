@@ -1,9 +1,9 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import {makeStyles, Theme} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import clsx from "clsx";
 import React from "react";
-import { createTestAttributes } from "../../util/TestUtils";
+import {createTestAttributes} from "../../util/TestUtils";
 
 export interface Props {
     icon?: React.ElementType;

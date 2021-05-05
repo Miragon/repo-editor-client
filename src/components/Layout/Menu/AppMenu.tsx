@@ -1,19 +1,8 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { Button, Drawer, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-    AccountCircle,
-    Add,
-    Apartment,
-    Apps,
-    BarChart,
-    Brush,
-    Help,
-    PowerSettingsNew,
-    Widgets
-} from "@material-ui/icons";
-import clsx from "clsx";
-import React, { useCallback, useRef, useState } from "react";
+import {useAuth0} from "@auth0/auth0-react";
+import {Drawer} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
+import {AccountCircle, Add, Apartment, BarChart, Brush, Help, PowerSettingsNew, Widgets} from "@material-ui/icons";
+import React, {useCallback, useRef, useState} from "react";
 import MenuSpacer from "../../Menu/MenuSpacer";
 import DrawerApp from "./AppMenu/DrawerApp";
 import DrawerDivider from "./AppMenu/DrawerDivider";

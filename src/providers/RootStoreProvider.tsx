@@ -1,5 +1,5 @@
 import React, {createContext, ReactNode, useContext} from "react";
-import RootStore  from "../store/RootStore";
+import RootStore from "../store/RootStore";
 
 // https://github.com/ivandotv/react-hooks-mobx-root-store/blob/master/src/providers/RootStoreProvider.tsx
 

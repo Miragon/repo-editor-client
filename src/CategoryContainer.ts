@@ -1,5 +1,4 @@
 import React from "react";
-import DiagramContainer from "./screens/Elements/DiagramContainer";
 
 
 type ContainerProps = {

@@ -1,4 +1,4 @@
-/// <reference path="../../../../Downloads/typescript-fetch-client-generated (2)/custom.d.ts" />
+/// <reference path="./custom.d.ts" />
 // tslint:disable
 /**
  * OpenAPI definition
@@ -14,7 +14,7 @@
 
 import * as url from "url";
 import * as portableFetch from "portable-fetch";
-import { Configuration } from "../../../../Downloads/typescript-fetch-client-generated (2)/configuration";
+import {Configuration} from "../../../../Downloads/typescript-fetch-client-generated (2)/configuration";
 
 const BASE_PATH = "";
 // "http://localhost:8081".replace(/\/+$/, "");

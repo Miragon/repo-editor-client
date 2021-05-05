@@ -1,11 +1,9 @@
-import { makeStyles } from "@material-ui/core/styles";
-import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone';
+import {makeStyles} from "@material-ui/core/styles";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import BetaBadge from "../Menu/BetaBadge";
 import MenuBar from "../Menu/MenuBar";
 import MenuLogo from "../Menu/MenuLogo";
-import MenuSpacer from "../Menu/MenuSpacer";
 import AppMenu from "./Menu/AppMenu";
 
 const useStyles = makeStyles({

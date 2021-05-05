@@ -1,9 +1,9 @@
-import { makeStyles } from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
-import { createTestAttributes } from "../../util/TestUtils";
+import {createTestAttributes} from "../../util/TestUtils";
 
 const useStyles = makeStyles(() => ({
     menuText: {

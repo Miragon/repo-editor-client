@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import './DiagramContainer.css'
 import DiagramCard from "./Holder/DiagramCard";
 import {useStore} from "../../providers/RootStoreProvider";
-import {BpmnRepositoryTO} from "../../api";
 import {observer} from "mobx-react";
-
 
 
 const StarredDiagrams: React.FC = observer(() => {

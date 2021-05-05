@@ -1,5 +1,5 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { CircularProgress, makeStyles } from "@material-ui/core";
+import {useAuth0} from "@auth0/auth0-react";
+import {CircularProgress, makeStyles} from "@material-ui/core";
 import React, {useState} from "react";
 import Menu from "./Menu";
 import Router from "./Router";

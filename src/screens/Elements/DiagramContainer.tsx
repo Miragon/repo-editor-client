@@ -1,6 +1,5 @@
 import React from "react";
 import './DiagramContainer.css'
-import DiagramCard from "./Holder/DiagramCard";
 
 interface ContainerProps {
     category: string;

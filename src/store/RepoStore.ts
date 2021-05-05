@@ -1,6 +1,5 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
-import {BpmnRepositoryControllerApi, BpmnRepositoryRequestTO, BpmnRepositoryTO} from "../api";
-import {List} from "@material-ui/core";
+import {BpmnRepositoryControllerApi, BpmnRepositoryRequestTO} from "../api";
 
 
 export default class RepoStore {

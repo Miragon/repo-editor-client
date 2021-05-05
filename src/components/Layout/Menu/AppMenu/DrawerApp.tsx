@@ -1,5 +1,5 @@
-import { Button, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import {Button} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
 import clsx from "clsx";
 import React from "react";
 
@@ -28,14 +28,14 @@ const useStyles = makeStyles(() => ({
     drawerAppIconActive: {
         color: "#3c91b0"
     },
-    drawerAppTitle: (props: Props) => ({
+    drawerAppTitle: {
         textTransform: "none",
         whiteSpace: "nowrap",
         fontSize: "1.1rem",
         textAlign: "left",
         marginLeft: "5px",
         top: "2px"
-    }),
+    },
     drawerAppTitleActive: {
         color: "#3c91b0",
         fontWeight: 600
@@ -71,17 +71,6 @@ interface Props {
 
 const DrawerApp: React.FC<Props> = props => {
     const classes = useStyles(props);
-
-    const title = (
-        <Typography
-            className={clsx(
-                classes.drawerAppTitle,
-                props.active && classes.drawerAppTitleActive
-            )}
-            variant="body1">
-            {props.title}
-        </Typography>
-    );
 
     return (
         <Button

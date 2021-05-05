@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from "react";
-import DiagramCard from "./Holder/DiagramCard";
+import React, {useEffect} from "react";
 import {useStore} from "../../providers/RootStoreProvider";
-import {BpmnRepositoryTO} from "../../api";
 import {observer} from "mobx-react";
 import RepoCard from "./Holder/RepoCard";
 import {makeStyles} from "@material-ui/core/styles";
