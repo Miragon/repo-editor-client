@@ -14,7 +14,7 @@
 
 import * as url from "url";
 import * as portableFetch from "portable-fetch";
-import {Configuration} from "../../../../Downloads/typescript-fetch-client-generated (2)/configuration";
+import {Configuration} from "./configuration";
 
 const BASE_PATH = "";
 // "http://localhost:8081".replace(/\/+$/, "");
