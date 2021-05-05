@@ -1,11 +1,11 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
-import {BpmnRepositoryControllerApi, BpmnRepositoryTO} from "../api";
+import {BpmnRepositoryControllerApi, BpmnRepositoryRequestTO, BpmnRepositoryTO} from "../api";
 import {List} from "@material-ui/core";
 
 
 export default class RepoStore {
     @observable
-    repositories: BpmnRepositoryTO[] = [];
+    repositories: BpmnRepositoryRequestTO[] = [];
 
     bpmnRepositoryController: BpmnRepositoryControllerApi;
     isInitialized = false;
@@ -20,30 +20,43 @@ export default class RepoStore {
         console.log("initializing RepoStore");
         if(!this.isInitialized){
             this.fetchAllRepos().then(allRepos => {
-                runInAction(() => this.repositories = allRepos);
+                allRepos.forEach(repo => {
+                    runInAction(() => this.repositories.push(repo));
+                })
 
             });
+            console.log("___________________________REPOS:");
             console.log(this.repositories)
             this.isInitialized = true;
         }
     }
 
-    getRepo = (repositoryId: string): BpmnRepositoryTO|undefined => {
-        console.log("Getting sinlge repo");
+    getRepo = (repositoryId: string): BpmnRepositoryRequestTO|undefined => {
+        console.log("Getting single repo");
         console.log(this.repositories);
         return this.repositories.find(repository => repository.bpmnRepositoryId === repositoryId);
     }
 
-    getAllRepos = (): BpmnRepositoryTO[] => {
+    getAllRepos = (): BpmnRepositoryRequestTO[] => {
         return this.repositories;
+    }
+
+    getRepoName = (repositoryId: string): string|undefined => {
+        const bpmnRepositoryRequestTO = this.repositories.find(repository => repository.bpmnRepositoryId === repositoryId);
+        if(bpmnRepositoryRequestTO != undefined){
+            return bpmnRepositoryRequestTO.bpmnRepositoryName;
+        }
+        else{
+            return "unknown";
+        }
     }
 
     getListOfRepoIds = (): string[] => {
         console.log("Creating List of repository Ids....");
         const repositoryIds: string[] = [];
-        this.repositories.forEach(bpmnRepositoryTO => {
-            if(bpmnRepositoryTO.bpmnRepositoryId != null){
-                repositoryIds.push(bpmnRepositoryTO.bpmnRepositoryId);
+        this.repositories.forEach(bpmnRepositoryRequestTO => {
+            if(bpmnRepositoryRequestTO.bpmnRepositoryId != null){
+                repositoryIds.push(bpmnRepositoryRequestTO.bpmnRepositoryId);
             }
         });
         return repositoryIds;
@@ -51,7 +64,7 @@ export default class RepoStore {
 
 
     //change to private
-    public fetchAllRepos = async (): Promise<BpmnRepositoryTO[]> => {
+    public fetchAllRepos = async (): Promise<BpmnRepositoryRequestTO[]> => {
         try{
             return await this.bpmnRepositoryController.getAllRepositories();
         } catch (response){

@@ -27,7 +27,9 @@ const useStyles = makeStyles({
         margin: "0 auto"
     },
     userIcon: {
+        position: "absolute",
         cursor: "pointer",
+        right: "5%",
         color: "white",
         height: "28px"
     },
@@ -48,16 +50,9 @@ const Menu: React.FC = () => {
 
             <div className={classes.menu}>
 
-                <MenuLogo onClick={() => history.push("/repositories")} />
+                <MenuLogo onClick={() => history.push("/")} />
 
                 <BetaBadge />
-
-                <MenuSpacer />
-
-                <AccountCircleTwoToneIcon
-                    className={classes.userIcon}
-                    onClick={() => history.push("/User")}
-                    fontSize="large" />
 
             </div>
 

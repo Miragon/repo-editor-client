@@ -4,9 +4,9 @@ body{
 }
 .DiagramContainer{
     height: 400px;
-    width: 83%;
+    width: 90%;
     top: 75px;
-    left: 15%;
+    left: 120px;
     position: relative;
     background-color: white;
     border-top: 2px solid #ccc;
@@ -15,15 +15,14 @@ body{
 div.DiagramContainer h1{
     padding-left: 20px;
     color:black;
-    font-size: 25px;
-    font-style: italic;
+    font-size: 20px;
 }
 
-.ScrollBar{
+.ScrollBarDiagram{
     height: 340px;
     top: 50px;
-    width: auto;
     overflow-x: auto;
     display: flex;
     flex-wrap: nowrap;
 }
+

@@ -8,7 +8,7 @@ const useStyles = makeStyles(() => ({
         display: "flex",
         flexDirection: "row",
         padding: "8px",
-        minWidth: "100%",
+        minWidth: "25px",
         justifyContent: "flex-start",
         margin: "4px 0"
     },
@@ -19,8 +19,10 @@ const useStyles = makeStyles(() => ({
         }
     },
     drawerAppIcon: {
-        marginLeft: "16px",
-        marginRight: "24px"
+        marginLeft: "0px",
+        marginRight: "0px",
+        width: "40px",
+        height: "40px"
     },
     drawerAppIconActive: {
         color: "#3c91b0"
@@ -90,7 +92,11 @@ const DrawerApp: React.FC<Props> = props => {
                     props.active && classes.drawerAppIconActive
                 )
             })}
-
+        </Button>
+    );
+};
+/*
+ Removed - was in front of button close tag
             {props.description && (
                 <div className={classes.drawerText}>
                     {title}
@@ -107,8 +113,6 @@ const DrawerApp: React.FC<Props> = props => {
 
             {!props.description && title}
 
-        </Button>
-    );
-};
 
+ */
 export default DrawerApp;

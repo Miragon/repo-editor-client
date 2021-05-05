@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import './DiagramContainer.css'
-import DiagramPrevTypescript from "../components/DiagramPrevTypescript";
-import {useStore} from "../providers/RootStoreProvider";
-import {BpmnRepositoryTO} from "../api";
+import DiagramCard from "./Holder/DiagramCard";
+import {useStore} from "../../providers/RootStoreProvider";
+import {BpmnRepositoryTO} from "../../api";
 import {observer} from "mobx-react";
 
 
@@ -10,7 +10,7 @@ import {observer} from "mobx-react";
 const RecentDiagrams: React.FC = observer(() =>{
 
     const store = useStore();
-    const category = "Latest";
+    const category = "Recent";
 
     useEffect(() => {
         (async () => await store.diagramStore.initializeRecent())();
@@ -18,26 +18,24 @@ const RecentDiagrams: React.FC = observer(() =>{
 
     }, [store.diagramStore])
 
-//Have to fetch all diagrams sorted by changedDate
-    //-> fetch the repoid list
-        //-> create a diagramStore, pass the repoids and query all the diagrams
-            //sort and return as arraylist, which can be returned one by one by using .map
-
 
     return <div className="DiagramContainer">
                 <h1>{category}</h1>
-                <div className="ScrollBar">
+                <div className="ScrollBarDiagram">
                     {store.diagramStore.getRecentDiagrams().map(diagram => (
                         // eslint-disable-next-line react/jsx-key
-                        <DiagramPrevTypescript
+                        <a href={"/Modeler?repoid=" + diagram.bpmnRepositoryId + "&diagramid=" + diagram.bpmnDiagramId + "/"}>
+                        <DiagramCard
                         diagramTitle={diagram.bpmnDiagramName}
+                        image={diagram.svgPreview}
                         updatedDate={diagram.updatedDate}
                         description={diagram.bpmnDiagramDescription}
-                        repoName={diagram.bpmnRepositoryId} />
+                        repositoryId={diagram.bpmnRepositoryId} />
+                        </a>
                         ))}
-                        <DiagramPrevTypescript diagramTitle="Hardcoded sample in RecentDiagrams.tsx" updatedDate={undefined} description="Description description description description description" repoName="Sample Repo Name"/>
                 </div>
             </div>
 });
+//                        <DiagramCard diagramTitle="Hardcoded sample in RecentDiagrams.tsx" updatedDate={undefined} description="Description description description description description" repoName="Sample Repo Name"/>
 
 export default RecentDiagrams;

@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import DiagramContainer from "./DiagramContainer";
-
+import DiagramContainer from "./Elements/DiagramContainer";
 import '../App.css';
 import {useStore} from "../providers/RootStoreProvider";
 import {observer} from "mobx-react";
-import LatestDiagrams from "./LatestDiagrams";
+import RecentDiagrams from "./Elements/RecentDiagrams";
+import StarredDiagrams from "./Elements/StarredDiagrams";
+import RepoContainer from "./Elements/RepoContainer";
 
 
 const Overview: React.FC =  observer(() => {
@@ -23,12 +24,10 @@ const Overview: React.FC =  observer(() => {
 
     return (
         <div>
-          <h1></h1>
-            <p>testOverview</p>
-            <p>bla {store.repoStore.getRepo("3cd5059e-bd2b-464c-a8b3-f50c10000647")?.bpmnRepositoryName}</p>
-            <LatestDiagrams repoIds={store.repoStore.getListOfRepoIds()}/>
-            <DiagramContainer category="Frequently used"/>
-            <DiagramContainer category="Starred"/>
+            <RepoContainer/>
+            <RecentDiagrams/>
+            <StarredDiagrams/>
+            <DiagramContainer category="Frequently used - no Endpoint included so far"/>
         </div>
     );
 });

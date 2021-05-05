@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import './DiagramContainer.css'
-import DiagramPrevTypescript from "../components/DiagramPrevTypescript";
-import {useStore} from "../providers/RootStoreProvider";
-import {BpmnRepositoryTO} from "../api";
+import DiagramCard from "./Holder/DiagramCard";
+import {useStore} from "../../providers/RootStoreProvider";
+import {BpmnRepositoryTO} from "../../api";
 import {observer} from "mobx-react";
 
 
@@ -10,7 +10,7 @@ import {observer} from "mobx-react";
 const StarredDiagrams: React.FC = observer(() => {
 
     const store = useStore();
-    const category = "Favourites";
+    const category = "Favorites";
 
     useEffect(() => {
         (async () => await store.diagramStore.initializeStarred())();
@@ -20,20 +20,24 @@ const StarredDiagrams: React.FC = observer(() => {
 
 return <div className="DiagramContainer">
     <h1>{category}</h1>
-    <div className="ScrollBar">
+    <div className="ScrollBarDiagram">
         {store.diagramStore.getStarredDiagrams().map(diagram => (
             // eslint-disable-next-line react/jsx-key
-            <DiagramPrevTypescript
+            <a href={"/Modeler?repoid=" + diagram.bpmnRepositoryId + "&diagramid=" + diagram.bpmnDiagramId + "/"}>
+            <DiagramCard
                 diagramTitle={diagram.bpmnDiagramName}
+                image={diagram.svgPreview}
                 updatedDate={diagram.updatedDate}
                 description={diagram.bpmnDiagramDescription}
-                repoName={diagram.bpmnRepositoryId} />
+                repositoryId={diagram.bpmnRepositoryId} />
+            </a>
         ))}
-        <DiagramPrevTypescript diagramTitle="Favourites hardcoded" updatedDate={undefined} description="Description description description description description" repoName="Sample Repo Name"/>
+
     </div>
 </div>
 
 });
+//<DiagramCard diagramTitle="Favourites hardcoded" updatedDate={undefined} description="Description description description description description" repoName="Sample Repo Name"/>
 
 export default  StarredDiagrams;
 

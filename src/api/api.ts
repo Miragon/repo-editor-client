@@ -1,4 +1,4 @@
-/// <reference path="./custom.d.ts" />
+/// <reference path="../../../../Downloads/typescript-fetch-client-generated (2)/custom.d.ts" />
 // tslint:disable
 /**
  * OpenAPI definition
@@ -14,9 +14,10 @@
 
 import * as url from "url";
 import * as portableFetch from "portable-fetch";
-import { Configuration } from "./configuration";
+import { Configuration } from "../../../../Downloads/typescript-fetch-client-generated (2)/configuration";
 
-const BASE_PATH = "http://localhost:8081".replace(/\/+$/, "");
+const BASE_PATH = "";
+// "http://localhost:8081".replace(/\/+$/, "");
 
 /**
  *
@@ -54,7 +55,7 @@ export interface FetchArgs {
  * @class BaseAPI
  */
 export class BaseAPI {
-    protected configuration: Configuration;
+    protected configuration: Configuration | undefined;
 
     constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
         if (configuration) {
@@ -71,7 +72,8 @@ export class BaseAPI {
  * @extends {Error}
  */
 export class RequiredError extends Error {
-    name: "RequiredError"
+    // @ts-ignore
+    name: "RequiredError" | undefined
     constructor(public field: string, msg?: string) {
         super(msg);
     }
@@ -100,24 +102,26 @@ export interface AssignmentWithUserNameTO {
      * @type {string}
      * @memberof AssignmentWithUserNameTO
      */
-    roleEnum: AssignmentWithUserNameTO.RoleEnumEnum;
+    roleEnum: RoleEnumEnum;
 }
 
+
+export enum RoleEnumEnum {
+    OWNER = <any> 'OWNER',
+    ADMIN = <any> 'ADMIN',
+    MEMBER = <any> 'MEMBER',
+    VIEWER = <any> 'VIEWER'
+}
 /**
  * @export
  * @namespace AssignmentWithUserNameTO
- */
+ *
 export namespace AssignmentWithUserNameTO {
     /**
      * @export
      * @enum {string}
-     */
-    export enum RoleEnumEnum {
-        OWNER = <any> 'OWNER',
-        ADMIN = <any> 'ADMIN',
-        MEMBER = <any> 'MEMBER',
-        VIEWER = <any> 'VIEWER'
-    }
+     *
+
 }
 /**
  * 
@@ -247,7 +251,7 @@ export interface BpmnDiagramVersionTO {
      * @type {string}
      * @memberof BpmnDiagramVersionTO
      */
-    saveType: BpmnDiagramVersionTO.SaveTypeEnum;
+    saveType: SaveTypeEnum;
     /**
      * 
      * @type {string}
@@ -265,17 +269,12 @@ export interface BpmnDiagramVersionTO {
 /**
  * @export
  * @namespace BpmnDiagramVersionTO
- */
+ *
 export namespace BpmnDiagramVersionTO {
     /**
      * @export
      * @enum {string}
-     */
-    export enum SaveTypeEnum {
-        RELEASE = <any> 'RELEASE',
-        MILESTONE = <any> 'MILESTONE',
-        AUTOSAVE = <any> 'AUTOSAVE'
-    }
+     *
 }
 /**
  * 
@@ -300,23 +299,25 @@ export interface BpmnDiagramVersionUploadTO {
      * @type {string}
      * @memberof BpmnDiagramVersionUploadTO
      */
-    saveType?: BpmnDiagramVersionUploadTO.SaveTypeEnum;
+    saveType?: SaveTypeEnum;
+}
+
+export enum SaveTypeEnum {
+    RELEASE = <any> 'RELEASE',
+    MILESTONE = <any> 'MILESTONE',
+    AUTOSAVE = <any> 'AUTOSAVE'
 }
 
 /**
  * @export
  * @namespace BpmnDiagramVersionUploadTO
- */
+ *
 export namespace BpmnDiagramVersionUploadTO {
     /**
      * @export
      * @enum {string}
-     */
-    export enum SaveTypeEnum {
-        RELEASE = <any> 'RELEASE',
-        MILESTONE = <any> 'MILESTONE',
-        AUTOSAVE = <any> 'AUTOSAVE'
-    }
+     *
+
 }
 /**
  * 
@@ -342,6 +343,39 @@ export interface BpmnRepositoryTO {
      * @memberof BpmnRepositoryTO
      */
     bpmnRepositoryDescription: string;
+}
+export interface BpmnRepositoryRequestTO {
+    /**
+     *
+     * @type {string}
+     * @memberof BpmnRepositoryTO
+     */
+    bpmnRepositoryId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof BpmnRepositoryTO
+     */
+    bpmnRepositoryName: string;
+    /**
+     *
+     * @type {string}
+     * @memberof BpmnRepositoryTO
+     */
+    bpmnRepositoryDescription: string;
+    /**
+     *
+     * @type {number}
+     * @memberof BpmnRepositoryTO
+     */
+    existingDiagrams: number;
+    /**
+     *
+     * @type {number}
+     * @memberof BpmnRepositoryTO
+     */
+    assignedUsers: number;
+
 }
 /**
  * 
@@ -1818,7 +1852,7 @@ export const BpmnRepositoryControllerApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllRepositories(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BpmnRepositoryTO>> {
+        getAllRepositories(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BpmnRepositoryRequestTO>> {
             const localVarFetchArgs = BpmnRepositoryControllerApiFetchParamCreator(configuration).getAllRepositories(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
