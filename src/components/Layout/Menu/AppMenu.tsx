@@ -112,7 +112,7 @@ const AppMenu: React.FC = () => {
                     <DrawerApp
                         title={getContent("FlowCov")}
                         onClick={() => window.open("https://flowcov.miragon.cloud/", "_self")}
-                        description={getContent("Test and Track coverage of yout workflow and decision models")}
+                        description={getContent("Track the coverage of your process models")}
                         icon={BarChart} />
 
                     <DrawerApp

@@ -10,7 +10,7 @@ export default class RepoStore {
     isInitialized = false;
     constructor() {
         makeObservable(this);
-        this.bpmnRepositoryController = new BpmnRepositoryControllerApi();
+        this.bpmnRepositoryController = new BpmnRepositoryControllerApi({});
     }
 
 

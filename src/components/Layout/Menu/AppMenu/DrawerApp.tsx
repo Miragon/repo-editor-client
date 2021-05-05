@@ -56,6 +56,7 @@ const useStyles = makeStyles(() => ({
     drawerText: {
         display: "flex",
         paddingRight: "16px",
+        paddingLeft: "10px",
         flexDirection: "column"
     }
 }));

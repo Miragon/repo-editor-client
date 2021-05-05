@@ -466,7 +466,7 @@ export const AssignmentControllerApiFetchParamCreator = function (configuration?
             const localVarPath = `/api/assignment`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -504,7 +504,7 @@ export const AssignmentControllerApiFetchParamCreator = function (configuration?
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -526,7 +526,7 @@ export const AssignmentControllerApiFetchParamCreator = function (configuration?
             const localVarPath = `/api/assignment`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -708,7 +708,7 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
                 .replace(`{${"bpmnRepositoryId"}}`, encodeURIComponent(String(bpmnRepositoryId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -747,7 +747,7 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
                 .replace(`{${"bpmnDiagramId"}}`, encodeURIComponent(String(bpmnDiagramId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -775,7 +775,7 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
                 .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -797,7 +797,7 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
             const localVarPath = `/api/diagram/recent10`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -831,7 +831,7 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
                 .replace(`{${"bpmnDiagramId"}}`, encodeURIComponent(String(bpmnDiagramId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -853,7 +853,7 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
             const localVarPath = `/api/diagram/starred`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -881,7 +881,7 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
                 .replace(`{${"bpmnDiagramId"}}`, encodeURIComponent(String(bpmnDiagramId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -920,7 +920,7 @@ export const BpmnDiagramControllerApiFetchParamCreator = function (configuration
                 .replace(`{${"bpmnDiagramId"}}`, encodeURIComponent(String(bpmnDiagramId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1314,7 +1314,7 @@ export const BpmnDiagramVersionControllerApiFetchParamCreator = function (config
                 .replace(`{${"bpmnDiagramId"}}`, encodeURIComponent(String(bpmnDiagramId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1352,7 +1352,7 @@ export const BpmnDiagramVersionControllerApiFetchParamCreator = function (config
                 .replace(`{${"bpmnDiagramId"}}`, encodeURIComponent(String(bpmnDiagramId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1387,7 +1387,7 @@ export const BpmnDiagramVersionControllerApiFetchParamCreator = function (config
                 .replace(`{${"bpmnDiagramId"}}`, encodeURIComponent(String(bpmnDiagramId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1427,7 +1427,7 @@ export const BpmnDiagramVersionControllerApiFetchParamCreator = function (config
                 .replace(`{${"bpmnDiagramVersionId"}}`, encodeURIComponent(String(bpmnDiagramVersionId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1663,7 +1663,7 @@ export const BpmnRepositoryControllerApiFetchParamCreator = function (configurat
             const localVarPath = `/api/bpmnrepo`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1696,7 +1696,7 @@ export const BpmnRepositoryControllerApiFetchParamCreator = function (configurat
                 .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1719,7 +1719,7 @@ export const BpmnRepositoryControllerApiFetchParamCreator = function (configurat
             const localVarPath = `/api/bpmnrepo`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1748,7 +1748,7 @@ export const BpmnRepositoryControllerApiFetchParamCreator = function (configurat
                 .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1782,7 +1782,7 @@ export const BpmnRepositoryControllerApiFetchParamCreator = function (configurat
                 .replace(`{${"bpmnRepositoryId"}}`, encodeURIComponent(String(bpmnRepositoryId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -2053,7 +2053,7 @@ export const UserControllerApiFetchParamCreator = function (configuration?: Conf
             const localVarPath = `/api/user`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -2079,7 +2079,7 @@ export const UserControllerApiFetchParamCreator = function (configuration?: Conf
             const localVarPath = `/api/user/apiKey`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -2106,7 +2106,7 @@ export const UserControllerApiFetchParamCreator = function (configuration?: Conf
             const localVarPath = `/api/user`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
-            const localVarHeaderParameter = {} as any;
+            const localVarHeaderParameter = { "Authorization": getOAuthToken(), "Content-Type": "application/json" };
             const localVarQueryParameter = {} as any;
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -2262,4 +2262,11 @@ export class UserControllerApi extends BaseAPI {
         return UserControllerApiFp(this.configuration).updateUser(body, options)(this.fetch, this.basePath);
     }
 
+}
+const getOAuthToken = () : string => {
+    const oAuthToken = localStorage.getItem("oauth_token");
+    if (oAuthToken === null) {
+        return "";
+    }
+    return oAuthToken;
 }
