@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
         display: "none"
     },
     drawerPaper: {
-        width: "100px",
+        width: "60px",
         padding: "0px",
         transition: "width .3s",
         "&:hover": {
@@ -48,7 +48,6 @@ const useStyles = makeStyles(() => ({
         fontWeight: 300
     },
     drawerContent: {
-        padding: "13px",
         display: "flex",
         flexDirection: "column",
         flexGrow: 1

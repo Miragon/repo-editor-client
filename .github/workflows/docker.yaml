@@ -34,12 +34,26 @@ jobs:
       - name: Build Application
         run: yarn build
 
+      - name: Prepare Docker Build Directory
+        run: |
+          mkdir target
+          cp -R docker target/docker
+          cp -R build target/build
+          cp Dockerfile target
+      - name: Checkout Build Action
+        run: |
+          git clone https://$GITHUB_TOKEN@github.com/FlowSquad/action-cicd-docker ./.github/actions/action-cicd-docker
+          cd ./.github/actions/action-cicd-docker
+          yarn
+          cd ../../..
+        env:
+          GITHUB_TOKEN: ${{ secrets.PACKAGES_DEPLOYMENT_TOKEN }}
       - name: Build Docker Image
-        uses: FlowSquad/docker-cloud-build@v1.0.0
+        uses: ./.github/actions/action-cicd-docker
         with:
           gcp-project-id: ${{ secrets.GCP_PROJECT_ID }}
           gcp-service-account-key: ${{ secrets.GCP_SA_KEY }}
-          image-name: cloud-homescreen
-          image-sources: build, docker, Dockerfile
-          github-disabled: true
+          gcp-cloud-build-bucket: ${{ secrets.GCP_PROJECT_ID }}_cloudbuild
+          source-folder: target
+          image-name: miragon-cloud-homescreen
 

@@ -20,10 +20,10 @@ const useStyles = makeStyles(() => ({
         }
     },
     drawerAppIcon: {
-        marginLeft: "8px",
+        marginLeft: "4px",
         marginRight: "0px",
-        width: "40px",
-        height: "40px"
+        width: "32px",
+        height: "32px"
     },
     drawerAppIconActive: {
         color: "#3c91b0"
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
         whiteSpace: "nowrap",
         fontSize: "1.1rem",
         textAlign: "left",
-        marginLeft: "5px",
+        marginLeft: "10px",
         top: "2px"
     },
     drawerAppTitleActive: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles(() => ({
         fontWeight: 300,
         textTransform: "none",
         wordWrap: "break-word",
-        marginLeft: "5px",
+        marginLeft: "10px",
         whiteSpace: "pre",
         textAlign: "left"
     },
