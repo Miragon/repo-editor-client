@@ -99,6 +99,7 @@ const AppMenu: React.FC = () => {
                         description="View, create, and edit BPMN and DMN models, save them in
                             the cloud, or download them onto your local computer."
                         icon={Brush} />
+
                     <DrawerApp title="New Diagram"
                                onClick={() => window.open("https://modeler.miragon.cloud/", "_blank")}
                                description="Create a new BPMN diagram"
