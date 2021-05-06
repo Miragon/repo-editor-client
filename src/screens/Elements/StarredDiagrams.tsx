@@ -21,7 +21,10 @@ return <div className="DiagramContainer">
     <div className="ScrollBarDiagram">
         {store.diagramStore.getStarredDiagrams().map(diagram => (
             // eslint-disable-next-line react/jsx-key
-            <a href={"/modeler/" + diagram.bpmnRepositoryId + "/" + diagram.bpmnDiagramId + "/latest/"}>
+            <a
+                rel="noreferrer"
+                target="_blank"
+                href={"/modeler/#/" + diagram.bpmnRepositoryId + "/" + diagram.bpmnDiagramId + "/latest/"}>
             <DiagramCard
                 diagramTitle={diagram.bpmnDiagramName}
                 image={diagram.svgPreview}
