@@ -2,11 +2,17 @@ import {action, makeObservable, observable, runInAction} from "mobx";
 import {BpmnRepositoryControllerApi, BpmnRepositoryRequestTO} from "../api";
 
 
+class nameAndId {
+    repoId: string | undefined;
+    repoName: string | undefined;
+}
+
 export default class RepoStore {
     @observable
     repositories: BpmnRepositoryRequestTO[] = [];
 
     bpmnRepositoryController: BpmnRepositoryControllerApi;
+
     isInitialized = false;
     constructor() {
         makeObservable(this);
@@ -48,6 +54,16 @@ export default class RepoStore {
         else{
             return "unknown";
         }
+    }
+
+
+    getListOfRepoNamesAndIds = (): nameAndId[] => {
+        const repoNamesAndIds: nameAndId[] = [];
+        this.repositories.forEach(bpmnRepositoryRequestTO => {
+            repoNamesAndIds.push({repoId: bpmnRepositoryRequestTO.bpmnRepositoryId, repoName: bpmnRepositoryRequestTO.bpmnRepositoryName})
+        });
+        return repoNamesAndIds;
+
     }
 
     getListOfRepoIds = (): string[] => {

@@ -953,12 +953,12 @@ export const BpmnDiagramControllerApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrUpdateDiagram(body: BpmnDiagramUploadTO, bpmnRepositoryId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        createOrUpdateDiagram(body: BpmnDiagramUploadTO, bpmnRepositoryId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BpmnDiagramTO> {
             const localVarFetchArgs = BpmnDiagramControllerApiFetchParamCreator(configuration).createOrUpdateDiagram(body, bpmnRepositoryId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response;
+                        return response.json();
                     } else {
                         throw response;
                     }

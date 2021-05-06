@@ -107,6 +107,32 @@ export default class DiagramStore {
         }
     }
 
+    public createNewDiagram = async (title: string, description: string, bpmnRepositoryId: string): Promise<BpmnDiagramTO> => {
+        try {
+            const diagram: BpmnDiagramTO = {
+                bpmnDiagramName: title,
+                bpmnDiagramDescription: description,
+                bpmnRepositoryId: bpmnRepositoryId
+            }
+            return await this.bpmnDiagramController.createOrUpdateDiagram(diagram, bpmnRepositoryId);
+
+        } catch (response) {
+            switch (response.status) {
+                case 502:
+                    console.log("Error");
+                    break;
+                default:
+                    console.log("Error");
+                    break;
+            }
+            const empty: BpmnDiagramTO = {
+                bpmnDiagramName: "",
+                bpmnDiagramDescription: "",
+                bpmnRepositoryId: ""
+            }
+            return empty;
+        }
+    }
 
     public fetchAllDiagrams = async (repositoryId: string): Promise<BpmnDiagramTO[]> => {
         try {
