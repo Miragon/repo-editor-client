@@ -21,6 +21,7 @@ const useStyles = makeStyles(() => ({
         },
     },
     formTitle: {
+        padding: "15px",
         textAlign: "center",
         fontSize: "20px"
     },
@@ -67,13 +68,11 @@ const CreateDiagramForm: React.FC = () => {
     };
 
 
-    //#TODO: redirect is blocked by material UI-Form
     const handleSubmit = () => {
         store.diagramStore.createNewDiagram(title, description, repoId).then(returnedDiagram => {
             if(returnedDiagram.bpmnDiagramId !=  undefined && returnedDiagram.bpmnDiagramId != ""){
                 setDiagramId(returnedDiagram.bpmnDiagramId)
                 window.open(("/modeler/#/" + repoId + "/" + diagramId + "/latest/"))
-                console.log("Selected filytype: " + file)
             }
         });
     }
@@ -85,10 +84,10 @@ const CreateDiagramForm: React.FC = () => {
                 </div>
 
 
-                <form className={classes.root} onSubmit={handleSubmit} noValidate autoComplete="on">
+                <form className={classes.root} noValidate autoComplete="on">
                     <FormControl component="fieldset">
                         <FormLabel component="legend">Choose filetype</FormLabel>
-                        <RadioGroup onChange={handleChangeFile}>
+                        <RadioGroup value={file} onChange={handleChangeFile}>
                             <FormControlLabel value="BPMN" control={<Radio color={"primary"} />} label="BPMN" />
                             <FormControlLabel value="DMN" control={<Radio color={"primary"}/>} label="DMN" />
                         </RadioGroup>
@@ -110,7 +109,7 @@ const CreateDiagramForm: React.FC = () => {
                                 ))}
                         </TextField>
                         <Button
-                            type="submit"
+                            onClick={handleSubmit}
                             variant="contained"
                             color="primary"
                             className={classes.button}

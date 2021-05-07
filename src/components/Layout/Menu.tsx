@@ -1,5 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
-import {Add} from "@material-ui/icons";
+import {Add, Publish} from "@material-ui/icons";
 import React from "react";
 import {useHistory} from "react-router-dom";
 import BetaBadge from "../Menu/BetaBadge";
@@ -8,6 +8,7 @@ import MenuLogo from "../Menu/MenuLogo";
 import AppMenu from "./Menu/AppMenu";
 import {Button, Popover} from "@material-ui/core";
 import CreateDiagramForm from "../../screens/Elements/CreateDiagramForm";
+import ImportDiagramForm from "../../screens/Elements/ImportDiagramForm";
 
 const useStyles = makeStyles({
     menuComponent: {
@@ -38,7 +39,23 @@ const useStyles = makeStyles({
         position: "absolute",
         cursor: "pointer",
         top: "2%",
-        left: "5%",
+        left: "70px",
+        color: "white",
+        height: "96%",
+        width: "200px",
+        border: "1px solid white",
+        borderRadius: "5px",
+        transition: "background-color .3s, color .3s",
+        "&:hover": {
+            backgroundColor: "white",
+            color: "#3c91b0"
+        }
+    },
+    importButton: {
+        position: "absolute",
+        cursor: "pointer",
+        top: "2%",
+        left: "280px",
         color: "white",
         height: "96%",
         width: "200px",
@@ -66,8 +83,9 @@ const Menu: React.FC = () => {
     const history = useHistory();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorImport, setAnchorImport] = React.useState(null);
 
-    const handleClick = (event: any) => {
+    const handleClickAdd = (event: any) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -75,35 +93,36 @@ const Menu: React.FC = () => {
         setAnchorEl(null);
     };
 
+    const handleClickUpload = (event: any) => {
+        setAnchorImport(event.currentTarget)
+    }
+
+    const handleCloseImport = () => {
+        setAnchorImport(null);
+    }
+
     const open = Boolean(anchorEl);
+    const openImport = Boolean(anchorImport);
     const id = open ? 'simple-popover' : undefined;
+    const idImport = openImport ? 'simple-popover-import' : undefined;
 
 
     return (
         <MenuBar>
-
             <AppMenu />
-
-
             <div className={classes.menu}>
-
-
                 <MenuLogo onClick={() => history.push("/")} />
-
                 <BetaBadge />
-
             </div>
-
-
                 <div>
-                    <Button className={classes.addButton}  onClick={handleClick}>
+                    <Button className={classes.addButton}  onClick={handleClickAdd}>
                         {React.createElement(Add, {
                             className: classes.addIcon
                         })}
                         Create New File
                     </Button>
                     <Popover
-                        id={id}
+                        id={idImport}
                         open={open}
                         anchorEl={anchorEl}
                         onClose={handleClose}
@@ -118,6 +137,31 @@ const Menu: React.FC = () => {
                     >
                         <CreateDiagramForm/>
                     </Popover>
+
+
+                    <Button className={classes.importButton}  onClick={handleClickUpload}>
+                        {React.createElement(Publish, {
+                            className: classes.addIcon
+                        })}
+                        Import File
+                    </Button>
+                    <Popover
+                        id={id}
+                        open={openImport}
+                        anchorEl={anchorImport}
+                        onClose={handleCloseImport}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                    >
+                        <ImportDiagramForm/>
+                    </Popover>
+
                 </div>
         </MenuBar>
 

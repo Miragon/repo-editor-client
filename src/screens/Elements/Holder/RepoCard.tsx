@@ -44,21 +44,21 @@ repoDescription: {
         position: "absolute",
         top: "80%",
         right: "10px",
-        width: "100px",
+        width: "120px",
         textAlign: "center",
         height: "25px"
     },
 
     diagramInfo: {
         position: "absolute",
-        width: "50px",
+        width: "60px",
         left: "0px"
     },
 
     teamInfo: {
         position:"absolute",
-        width: "50px",
-        left: "50px",
+        width: "60px",
+        left: "60px",
         color: "#f7f7f7"
     },
 
@@ -68,7 +68,7 @@ repoDescription: {
     },
     number: {
         position: "absolute",
-        left: "40px",
+        left: "50px",
         top: "5px",
         color: "#f7f7f7"
     }
