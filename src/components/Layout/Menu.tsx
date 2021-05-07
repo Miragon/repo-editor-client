@@ -85,7 +85,7 @@ const Menu: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorImport, setAnchorImport] = React.useState(null);
 
-    const handleClickAdd = (event: any) => {
+    const handleClickAdd = (event: React.BaseSyntheticEvent) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -93,7 +93,7 @@ const Menu: React.FC = () => {
         setAnchorEl(null);
     };
 
-    const handleClickUpload = (event: any) => {
+    const handleClickUpload = (event: React.BaseSyntheticEvent) => {
         setAnchorImport(event.currentTarget)
     }
 

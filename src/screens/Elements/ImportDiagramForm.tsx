@@ -69,11 +69,15 @@ const ImportDiagramForm: React.FC = () => {
         });
     }
 
-    const changeHandler = (event: any) => {
-        const file: File = event.target.files[0];
-        file.text().then(stringValue => {
-            setFileString(stringValue);
-        })
+    const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const fileList: FileList | null = event.target?.files;
+        if(fileList !== null){
+            const file: File = fileList[0];
+            file.text().then(stringValue => {
+                setFileString(stringValue);
+            })
+        }
+
     };
 
 
