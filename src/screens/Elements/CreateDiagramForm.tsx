@@ -46,7 +46,6 @@ const CreateDiagramForm: React.FC = () => {
     const [title, setTitle] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [repoId, setRepoId] = React.useState("repo");
-    const [diagramId, setDiagramId] = React.useState('');
 
 
     const repositories = store.repoStore.getListOfRepoNamesAndIds();
@@ -71,8 +70,7 @@ const CreateDiagramForm: React.FC = () => {
     const handleSubmit = () => {
         store.diagramStore.createNewDiagram(title, description, repoId).then(returnedDiagram => {
             if(returnedDiagram.bpmnDiagramId !=  undefined && returnedDiagram.bpmnDiagramId != ""){
-                setDiagramId(returnedDiagram.bpmnDiagramId)
-                window.open(("/modeler/#/" + repoId + "/" + diagramId + "/latest/"))
+                window.open(("/modeler/#/" + repoId + "/" + returnedDiagram.bpmnDiagramId + "/latest/"))
             }
         });
     }
