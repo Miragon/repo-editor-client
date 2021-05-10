@@ -19,9 +19,12 @@ const useStyles = makeStyles(() => ({
         position: "relative",
         top: "40px"
     },
+    textField: {
+        margin: "10px"
+    },
     selection: {
         position: "relative",
-        top: "20px"
+        margin: "10px"
     }
 
 }));
@@ -34,9 +37,12 @@ const ImportDiagramForm: React.FC = () => {
     const [file, setFile] = React.useState('BPMN');
     const [title, setTitle] = React.useState('');
     const [description, setDescription] = React.useState('');
-    const [repoId, setRepoId] = React.useState("repo");
+    const [repoId, setRepoId] = React.useState("");
     const [diagramId, setDiagramId] = React.useState('');
     const [fileString, setFileString] = useState("");
+
+    const [titleError, setTitleError] = useState(false);
+    const [titleHelper, setTitleHelper] = useState("");
 
     const repositories = store.repoStore.getListOfRepoNamesAndIds();
 
@@ -58,11 +64,15 @@ const ImportDiagramForm: React.FC = () => {
 
 
     const handleSubmit = () => {
+        validateTitel;
+        if(titleError){
+            return;
+        }
         store.diagramStore.createNewDiagram(title, description, repoId).then(returnedDiagram => {
             if(returnedDiagram.bpmnDiagramId !=  undefined && returnedDiagram.bpmnDiagramId != ""){
                 setDiagramId(returnedDiagram.bpmnDiagramId)
 
-                store.versionStore.importDiagram(repoId, diagramId, fileString).then(() => {
+                store.versionStore.importDiagramVersion(repoId, diagramId, fileString).then(() => {
                     window.open(("/modeler/#/" + repoId + "/" + returnedDiagram.bpmnDiagramId + "/latest/"))
                 })
             }
@@ -80,6 +90,27 @@ const ImportDiagramForm: React.FC = () => {
 
     };
 
+    //#TODO Validation is called after "Title" loses focus, but not after "Repository" loses focus
+    const validateTitel = () => {
+        const enteredTitle = title;
+        setTitleError(false);
+        setTitleHelper("");
+        if(enteredTitle == ""){
+            setTitleHelper("required");
+            setTitleError(true);
+        }
+        if(repoId != ""){
+            store.diagramStore.fetchAllDiagrams(repoId).then(bpmnDiagramTO => {
+                bpmnDiagramTO.forEach(diagram => {
+                    console.log(diagram.bpmnDiagramName);
+                    if (diagram.bpmnDiagramName.toUpperCase() === enteredTitle.toUpperCase()) {
+                        setTitleError(true);
+                        setTitleHelper("Title already in use");
+                    }
+                });
+            })
+            }
+        }
 
     return (
         <div>
@@ -89,7 +120,7 @@ const ImportDiagramForm: React.FC = () => {
 
 
 
-            <form className={classes.root} noValidate autoComplete="on">
+            <form className={classes.root} autoComplete="on">
                 <FormControl component="fieldset">
 
                     <Input type="file" color="primary" required={true} onChange={changeHandler}/>
@@ -99,8 +130,8 @@ const ImportDiagramForm: React.FC = () => {
                         <FormControlLabel value="DMN" control={<Radio color={"primary"}/>} label="DMN" />
                     </RadioGroup>
 
-                    <TextField id="diagramName" label="Title" onInput={handleChangeTitle}/>
-                    <TextField id="diagramDescription" label="Description" onInput={handleChangeDescription}/>
+                    <TextField error={titleError} helperText={titleHelper} id="diagramName" label="Title" required={true} className={classes.textField} onBlur={validateTitel} variant="outlined" onInput={handleChangeTitle}/>
+                    <TextField id="diagramDescription" className={classes.textField} label="Description" variant="outlined" onInput={handleChangeDescription}/>
                     <TextField className={classes.selection}
                                id="outlined-select-currency"
                                select
@@ -108,6 +139,7 @@ const ImportDiagramForm: React.FC = () => {
                                label="Repository"
                                onChange={handleChangeRepo}
                                variant="outlined"
+                               onBlur={validateTitel}
                     >
                         {repositories.map((option) => (
                             <MenuItem key={option.repoName} value={option.repoId}>

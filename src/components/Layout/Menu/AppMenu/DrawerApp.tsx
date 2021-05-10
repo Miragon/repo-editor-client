@@ -3,15 +3,16 @@ import {makeStyles} from "@material-ui/core/styles";
 import clsx from "clsx";
 import React from "react";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     drawerAppContainer: {
         display: "flex",
         flexDirection: "row",
-        padding: "8px",
-        minWidth: "25px",
+        width: "100%",
         height: "80px",
+        color: "white",
         justifyContent: "flex-start",
-        margin: "4px 0"
+        margin: "0px 0",
+
     },
     drawerAppContainerActive: {
         backgroundColor: "rgba(0, 0, 0, 0.1)",
@@ -20,28 +21,31 @@ const useStyles = makeStyles(() => ({
         }
     },
     drawerAppIcon: {
-        marginLeft: "4px",
+        marginLeft: "8px",
         marginRight: "0px",
         width: "32px",
-        height: "32px"
+        height: "32px",
+        color: "white"
     },
     drawerAppIconActive: {
-        color: "#3c91b0"
+        color: theme.palette.secondary.main
     },
     drawerAppTitle: {
+        color: "white",
         textTransform: "none",
         whiteSpace: "nowrap",
         fontSize: "1.1rem",
         textAlign: "left",
         marginLeft: "10px",
-        top: "2px"
+        top: "2px",
     },
     drawerAppTitleActive: {
-        color: "#3c91b0",
+        color: theme.palette.secondary.main,
         fontWeight: 600
     },
     drawerAppDescription: {
         fontSize: "0.85rem",
+        color: "white",
         fontWeight: 300,
         textTransform: "none",
         wordWrap: "break-word",
@@ -50,10 +54,11 @@ const useStyles = makeStyles(() => ({
         textAlign: "left"
     },
     drawerAppDescriptionActive: {
-        color: "#3c91b0",
+        color: theme.palette.secondary.main,
         fontWeight: 400
     },
     drawerText: {
+        color: "white",
         display: "flex",
         paddingRight: "16px",
         paddingLeft: "10px",
@@ -88,8 +93,10 @@ const DrawerApp: React.FC<Props> = props => {
                 )
             })}
             <div className={classes.drawerText}>
-            <div className={classes.drawerAppTitle}>{props.title}</div>
-                <div className={classes.drawerAppDescription}>{props.description}</div>
+            <div className={clsx(classes.drawerAppTitle,
+            props.active && classes.drawerAppTitleActive)}>{props.title}</div>
+                <div className={clsx(classes.drawerAppDescription,
+            props.active && classes.drawerAppDescriptionActive)}>{props.description}</div>
             </div>
         </Button>
     );

@@ -1,10 +1,10 @@
 import React from "react";
-import teamIcon from '../../team-icon.svg';
-import diagramIcon from '../../diagram-icon.svg';
 import {makeStyles} from "@material-ui/core/styles";
+import PeopleIcon from '@material-ui/icons/People';
+import DescriptionIcon from '@material-ui/icons/Description';
 
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
 RepoBox: {
     flex: "0 0 auto",
     transition: "box-shadow .3s",
@@ -12,7 +12,7 @@ RepoBox: {
     height: "130px",
     margin: "10px",
     borderRadius: "10px",
-    background: "linear-gradient(to bottom, #3c91b0 40%, #55a1bd 60%, #78d3f5 90%)",
+    background: "linear-gradient(to bottom, "+theme.palette.primary.main+" 40%, "+theme.palette.primary.light+" 90%)",
     float: "left",
     position: "relative",
     cursor: "pointer",
@@ -42,7 +42,7 @@ repoDescription: {
 },
     repoInfo: {
         position: "absolute",
-        top: "80%",
+        top: "75%",
         right: "10px",
         width: "120px",
         textAlign: "center",
@@ -63,14 +63,14 @@ repoDescription: {
     },
 
     icon: {
-        width: "25px",
-        height: "25px",
+        width: "20px",
+        color: theme.palette.secondary.main
     },
     number: {
         position: "absolute",
         left: "50px",
-        top: "5px",
-        color: "#f7f7f7"
+        top: "3px",
+        color: theme.palette.secondary.main
     }
 }));
 
@@ -89,12 +89,20 @@ const RepoCard: React.FC<RepoProps> = (props:RepoProps) => {
     return <div className={classes.RepoBox}>
         <div className={classes.repoInfo}>
             <div className={classes.diagramInfo}>
-                <img className={classes.icon} src={diagramIcon} />
-                <div className={classes.number}>{props.existingDiagrams}</div>
+                <div>
+                    {React.createElement(DescriptionIcon, {
+                    className: classes.icon
+                    })}
+                </div>
+                <div className={classes.number}>{(props.existingDiagrams == 0 || props.existingDiagrams == undefined || props.existingDiagrams == null) ? 0 : props.existingDiagrams}</div>
             </div>
             <div className={classes.teamInfo}>
-                <img className={classes.icon} src={teamIcon} />
-                <div className={classes.number}>{props.assignedUsers}</div>
+                <div>
+                    {React.createElement(PeopleIcon, {
+                        className: classes.icon
+                    })}
+                </div>
+                <div className={classes.number}>{(props.assignedUsers == 0 || props.assignedUsers == undefined || props.assignedUsers == null) ? 1 : props.assignedUsers}</div>
             </div>
         </div>
             <div className={classes.repoHeader}>{props.repoTitle}</div>

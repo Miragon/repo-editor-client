@@ -1,6 +1,7 @@
 import {makeStyles, Theme} from "@material-ui/core";
 import React from "react";
 import {createTestAttributes} from "../../util/TestUtils";
+import {COLORS} from "../../design";
 
 interface Props {
     testId?: string;
@@ -9,7 +10,7 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         zIndex: theme.zIndex.appBar,
-        backgroundColor: "#3c91b0",
+        backgroundColor: COLORS.primary,
         padding: "0.5rem calc(0.5rem + 44px) 0.5rem 0.5rem",
         flexDirection: "row",
         alignItems: "center",

@@ -1,21 +1,22 @@
 import {makeStyles} from "@material-ui/core/styles";
-import {Add, Publish} from "@material-ui/icons";
+import {Add} from "@material-ui/icons";
 import React from "react";
 import {useHistory} from "react-router-dom";
-import BetaBadge from "../Menu/BetaBadge";
 import MenuBar from "../Menu/MenuBar";
 import MenuLogo from "../Menu/MenuLogo";
 import AppMenu from "./Menu/AppMenu";
-import {Button, Popover} from "@material-ui/core";
+import {Popover} from "@material-ui/core";
 import CreateDiagramForm from "../../screens/Elements/CreateDiagramForm";
 import ImportDiagramForm from "../../screens/Elements/ImportDiagramForm";
+import Dropdown from 'react-bootstrap/Dropdown';
+import flowSquadIcon from "../../FlowSquadLogo.svg";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     menuComponent: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#3c91b0",
+        backgroundColor: theme.palette.primary.main,
         paddingLeft: "30px",
         paddingRight: "30px",
     },
@@ -38,44 +39,67 @@ const useStyles = makeStyles({
     addButton: {
         position: "absolute",
         cursor: "pointer",
-        top: "2%",
-        left: "70px",
+        top: "10%",
+        left: "110px",
         color: "white",
-        height: "96%",
-        width: "200px",
+        backgroundColor: theme.palette.primary.main,
+        height: "80%",
+        width: "180px",
         border: "1px solid white",
         borderRadius: "5px",
-        transition: "background-color .3s, color .3s",
+        transition: "background-color .3s, color .3s, border .3s",
         "&:hover": {
-            backgroundColor: "white",
-            color: "#3c91b0"
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.primary.main,
+            border: "1px solid "+theme.palette.primary.main
+
         }
     },
-    importButton: {
-        position: "absolute",
-        cursor: "pointer",
-        top: "2%",
-        left: "280px",
-        color: "white",
-        height: "96%",
-        width: "200px",
-        border: "1px solid white",
-        borderRadius: "5px",
-        transition: "background-color .3s, color .3s",
-        "&:hover": {
-            backgroundColor: "white",
-            color: "#3c91b0"
-        }
-    },
+
     addIcon: {
-        width: "50px",
-        height: "50px",
+        position: "absolute",
+        left: "0px",
+        top: "0px",
+        width: "35px",
+        height: "35px",
+
+    },
+    buttonText: {
+        position: "absolute",
+        top: "10px",
+        left: "40px",
+        display: "inline-block",
+        fontSize: "16px"
+    },
+    dropdownContent: {
+        display: "flex",
+        width: "200px",
+        flexDirection: "column",
+        flexGrow: 1,
+        backgroundColor: "white",
+        fontSize: "16px",
+        fontFamily: "arial",
+        boxShadow: "0 0 11px rgba(33,33,33,.2)"
+    },
+    dropdownItem: {
+        padding: "10px",
+        color: "black",
+        textDecoration: "none",
+        transition: "background-color .3s",
+        "&:hover": {
+            backgroundColor: "#e3e3e3"
+        }
+    },
+    flowSquadIcon: {
+        position: "absolute",
+        right: "5%",
+        height: "25px",
 
     },
     spacer: {
         flexGrow: 1
     }
-});
+}));
 
 const Menu: React.FC = () => {
 
@@ -101,6 +125,7 @@ const Menu: React.FC = () => {
         setAnchorImport(null);
     }
 
+
     const open = Boolean(anchorEl);
     const openImport = Boolean(anchorImport);
     const id = open ? 'simple-popover' : undefined;
@@ -112,57 +137,57 @@ const Menu: React.FC = () => {
             <AppMenu />
             <div className={classes.menu}>
                 <MenuLogo onClick={() => history.push("/")} />
-                <BetaBadge />
             </div>
                 <div>
-                    <Button className={classes.addButton}  onClick={handleClickAdd}>
+                <Dropdown>
+                    <Dropdown.Toggle className={classes.addButton}>
                         {React.createElement(Add, {
                             className: classes.addIcon
                         })}
-                        Create New File
-                    </Button>
-                    <Popover
-                        id={idImport}
-                        open={open}
-                        anchorEl={anchorEl}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                        }}
-                    >
-                        <CreateDiagramForm/>
-                    </Popover>
+                        <div className={classes.buttonText}>Create New File</div>
+                    </Dropdown.Toggle>
 
-
-                    <Button className={classes.importButton}  onClick={handleClickUpload}>
-                        {React.createElement(Publish, {
-                            className: classes.addIcon
-                        })}
-                        Import File
-                    </Button>
-                    <Popover
-                        id={id}
-                        open={openImport}
-                        anchorEl={anchorImport}
-                        onClose={handleCloseImport}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
-                        }}
-                    >
-                        <ImportDiagramForm/>
-                    </Popover>
-
+                    <Dropdown.Menu className={classes.dropdownContent}>
+                        <Dropdown.Item className={classes.dropdownItem} onClick={handleClickAdd}>New BPMN Diagram</Dropdown.Item>
+                        <Popover
+                            id={idImport}
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+                        >
+                            <CreateDiagramForm/>
+                        </Popover>
+                        <Dropdown.Item className={classes.dropdownItem} >New DMN</Dropdown.Item>
+                        <Dropdown.Divider />
+                        <Dropdown.Item className={classes.dropdownItem} onClick={handleClickUpload}>Import File</Dropdown.Item>
+                        <Popover
+                            id={id}
+                            open={openImport}
+                            anchorEl={anchorImport}
+                            onClose={handleCloseImport}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+                        >
+                            <ImportDiagramForm/>
+                        </Popover>
+                    </Dropdown.Menu>
+                </Dropdown>
                 </div>
+            <img className={classes.flowSquadIcon} src={flowSquadIcon}/>
         </MenuBar>
 
     );

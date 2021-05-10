@@ -1,8 +1,9 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {useStore} from "../../../providers/RootStoreProvider";
+import {COLORS} from "../../../design";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
 
 DiagramBox: {
     transition: "box-shadow .3s",
@@ -11,7 +12,7 @@ DiagramBox: {
     margin: "10px",
     borderRadius: "10px",
     border: "1px solid #ccc",
-    background: "linear-gradient(to bottom, #ededed 30%, transparent)",
+    background: "linear-gradient(to bottom, "+theme.palette.primary.main+" 30%, transparent)",
     float: "left",
     position: "relative",
     cursor: "pointer",
@@ -23,7 +24,7 @@ DiagramBox: {
 header: {
     textAlign: "left",
     padding: "10px",
-    color: "#424242",
+    color: "white",
     fontSize: "15px",
     fontWeight: "bold",
     fontFamily: "Arial"
@@ -32,7 +33,7 @@ header: {
 image: {
     position: "absolute",
     top: "15%",
-    borderTop: "3px solid #3c91b0",
+    borderTop: "3px solid " + theme.palette.primary.main,
     borderBottom: "1px solid #ccc",
     backgroundColor: "white",
     width: "100%",
@@ -85,12 +86,12 @@ repoLabel: {
     fontSize: "12px",
     fontFamily: "Arial",
     overflow: "hidden",
-    backgroundColor: "#3c91b0",
+    backgroundColor: theme.palette.primary.light,
     transition: "0.3s",
     cursor: "pointer",
     "&:hover": {
-            backgroundColor: "#3c91b0",
-            color: "white",
+            backgroundColor: theme.palette.primary.main,
+            color: COLORS.secondary,
             fontWeight: "bold",
             height: "20%",
             margin: "auto"

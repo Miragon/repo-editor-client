@@ -7,7 +7,7 @@ import MenuSpacer from "../../Menu/MenuSpacer";
 import DrawerApp from "./AppMenu/DrawerApp";
 import DrawerDivider from "./AppMenu/DrawerDivider";
 //Drawerpaper: 84px breit
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     button: {
         textTransform: "none",
         fontFamily: "Arial",
@@ -25,8 +25,10 @@ const useStyles = makeStyles(() => ({
         display: "none"
     },
     drawerPaper: {
-        width: "60px",
+        width: "65px",
         padding: "0px",
+        background: theme.palette.primary.main,
+        overflow: "hidden",
         transition: "width .3s",
         "&:hover": {
             width: "400px"
@@ -99,6 +101,7 @@ const AppMenu: React.FC = () => {
                 <div className={classes.drawerContent}>
 
                     <DrawerApp
+
                         title={getContent("Building Blocks")}
                         onClick={() => window.open("https://modeler.miragon.cloud/", "_self")}
                         description={getContent("View, create, and edit BPMN and DMN models")}
@@ -110,15 +113,15 @@ const AppMenu: React.FC = () => {
                                icon={Add} />
 
                     <DrawerApp
+                        active
                         title={getContent("FlowCov")}
                         onClick={() => window.open("https://flowcov.miragon.cloud/", "_self")}
                         description={getContent("Track the coverage of your process models")}
                         icon={BarChart} />
 
                     <DrawerApp
-                        active
                         title={getContent("Diagrams")}
-                        onClick={() => setOpen(false)}
+                        onClick={() => window.open("https://blocks.miragon.cloud/", "_blank")}
                         description={getContent("Create shared element templates")}
                         icon={Widgets} />
 

@@ -1,5 +1,5 @@
 import {action, makeObservable, observable, runInAction} from "mobx";
-import {BpmnRepositoryControllerApi, BpmnRepositoryRequestTO} from "../api";
+import {BpmnRepositoryControllerApi, BpmnRepositoryRequestTO, NewBpmnRepositoryTO} from "../api";
 
 
 class nameAndId {
@@ -75,6 +75,27 @@ export default class RepoStore {
             }
         });
         return repositoryIds;
+    }
+
+
+    public createRepo = async (title: string, description: string): Promise<Response | undefined> => {
+        try{
+            const repo: NewBpmnRepositoryTO = {
+                bpmnRepositoryName: title,
+                bpmnRepositoryDescription: description
+            }
+            return await this.bpmnRepositoryController.createRepository(repo);
+        } catch (response){
+            switch (response.status) {
+                case 502:
+                    console.log("Error");
+                    break;
+                default:
+                    console.log("Error");
+                    break;
+            }
+            return undefined;
+        }
     }
 
 
