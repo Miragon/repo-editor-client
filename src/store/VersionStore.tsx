@@ -19,10 +19,13 @@ export default class VersionStore {
     try{
         const versionUploadTO = {
             //hardcoded string is an empty bpmn Diagram
-            bpmnAsXML: "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-                "<!-- created with bpmn-js / http://bpmn.io -->" +
-                "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">" +
-                "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"0\" height=\"0\" viewBox=\"0 0 0 0\" version=\"1.1\"></svg>",
+            bpmnAsXML: `<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+                        <bpmn:process id="Process_1" isExecutable="false" />
+                        <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+                        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1" />
+                        </bpmndi:BPMNDiagram>
+                        </bpmn:definitions> `,
+
             saveType: SaveTypeEnum.RELEASE
         }
 
