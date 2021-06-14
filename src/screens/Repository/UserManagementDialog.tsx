@@ -1,17 +1,20 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import PopupDialog from "../../components/Form/PopupDialog";
 import * as assignmentAction from "../../store/actions/assignmentAction";
+import * as userAction from "../../store/actions/userAction";
 import {getAllAssignedUsers} from "../../store/actions/assignmentAction";
 import {AssignmentTORoleEnumEnum, UserInfoTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
-import {IconButton, List, ListItem, ListItemSecondaryAction, Paper} from "@material-ui/core";
+import {IconButton, List, ListItem, ListItemSecondaryAction, Paper, TextField} from "@material-ui/core";
 import {Add} from "@material-ui/icons";
 import {AssignmentTO} from "../../api/models/assignment-to";
 import UserListItem from "./UserListItem";
 import SettingsTextField from "../../components/Form/SettingsTextField";
 import {makeStyles} from "@material-ui/core/styles";
-import {HANDLEDERROR} from "../../store/actions/diagramAction";
+import {HANDLEDERROR, SEARCH_USERS} from "../../store/actions/diagramAction";
+import {Autocomplete} from "@material-ui/lab";
+import AddUserSearchBar from "./AddUserSearchBar";
 
 interface Props {
     open: boolean;
@@ -57,39 +60,33 @@ const UserManagementDialog: React.FC<Props> = props => {
 
     useEffect(() => {
         fetchAssignedUsers(props.repoId)
-        checkForAdminPermissions()
         if(!syncStatus){
             fetchAssignedUsers(props.repoId)
         }
     }, [fetchAssignedUsers, syncStatus])
 
-    const addUser = useCallback(() => {
-        try {
-            console.log("Added user")
-            dispatch(assignmentAction.createOrUpdateUserAssignment(props.repoId, user))
-        } catch (err) {
-            console.log(err)
-        }
 
-    }, [dispatch, user])
 
-    //in useMemo umschreiben
-    const checkForAdminPermissions = (() => {
+    const checkForAdminPermissions = useMemo(() => {
             const currentUserAssignment = assignmentTOs.find(assignmentTO => assignmentTO.userName === currentUser.userName)
             try{
                 if(currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.ADMIN || currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.OWNER){
                     setHasAdminPermissions(true)
-
-                    console.log("Set to true")
+                    return true
                 } else {
                     setHasAdminPermissions(false)
-                    console.log("set to false", currentUserAssignment?.roleEnum)
+                    return  false
                 }
             } catch (err){
                 dispatch({type: HANDLEDERROR, message: "Error while checking permissions for this repository"})
             }
-        }
-    )
+        }, [assignmentTOs])
+
+    const onCancel= (() => {
+        setUser("")
+        dispatch({type: SEARCH_USERS, searchedUsers: []})
+        onCancelled()
+    })
 
 
 //#TODO: Autosuggestions? Load all usernames on Input? Load Users after  x letters entered? ...
@@ -101,22 +98,10 @@ const UserManagementDialog: React.FC<Props> = props => {
             error={error}
             onCloseError={() => setError(undefined)}
             secondTitle="close"
-            onSecond={onCancelled} >
+            onSecond={onCancel} >
             <List dense={false}>
-                {hasAdminPermissions && (
-                <ListItem>
-                    <SettingsTextField label="Add user"
-                                       value={user}
-                                       onChanged={setUser}
-
-                    />
-
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" onClick={() => addUser()}>
-                            <Add/>
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>
+                {checkForAdminPermissions && (
+                    <AddUserSearchBar repoId={props.repoId}/>
                 )}
                 <Paper>
 

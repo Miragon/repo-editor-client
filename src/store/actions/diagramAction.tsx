@@ -16,6 +16,8 @@ export const SUCCESS = "SUCCESS"
 export const GET_VERSIONS = "GET_VERSIONS"
 export const ASSIGNED_USERS = "ASSIGNED_USERS"
 export const CURRENT_USER_INFO = "CURRENT_USER_INFO"
+export const SEARCH_USERS = "SEARCH_USERS"
+export const USERQUERY_EXECUTED = "USERQUERY_EXECUTED"
 
 export const fetchFavoriteDiagrams = () => {
     return async (dispatch: Dispatch) => {

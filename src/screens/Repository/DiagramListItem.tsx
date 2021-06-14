@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from "@material-ui/core"
 import theme from "../../theme";
@@ -9,6 +9,7 @@ import {getAllVersions} from "../../store/actions/versionAction";
 import {BpmnDiagramVersionTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
 import {formatDate} from "@angular/common";
+import {GET_VERSIONS} from "../../store/actions/diagramAction";
 const useStyles = makeStyles(() => ({
     listWithVersions: {
         display: "flex",
@@ -180,10 +181,22 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         console.log("querying versions");
         fetchVersions();
         setOpen(false);
+        dispatch({type: GET_VERSIONS, versions: undefined})
+
     }
     const openModeler = (repoId: string, diagramId: string, versionId: string) => {
         window.open(`/modeler/#/${repoId}/${diagramId}/${versionId}/`, '_blank')?.focus();
     }
+
+    const checkIfVersionsAreOpen = useCallback(() => {
+        const openedDiagramId = versions[0]
+            if(openedDiagramId?.bpmnDiagramId === props.diagramId){
+                setOpen(true)
+            } else {
+                setOpen(false)
+            }
+    }, [versions])
+
 
     if(open){
         return (

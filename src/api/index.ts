@@ -11,16 +11,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-/**
- * 
- * @export
- * @interface UserEmailTO
- */
-export interface UserEmailTO {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserEmailTO
-     */
-    email: any;
-}
+export * from "./api";
+export * from "./configuration";
+

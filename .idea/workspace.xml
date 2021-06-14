@@ -4,18 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="API Dateien">
-      <change afterPath="$PROJECT_DIR$/src/store/reducers/currentUserReducer.tsx" afterDir="false" />
+    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="User management">
+      <change afterPath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/actions/userAction.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/reducers/userResultsReducer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/reducers/usersReducer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/RecentDiagrams.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/RecentDiagrams.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/apis/assignment-controller-api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/apis/bpmn-diagram-controller-api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/apis/bpmn-diagram-version-controller-api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/apis/bpmn-repository-controller-api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/base.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/assignment-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/assignment-with-user-name-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-diagram-svgupload-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-diagram-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-diagram-upload-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-diagram-version-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-diagram-version-upload-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-repository-request-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/new-bpmn-repository-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/user-email-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/user-info-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/user-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/user-update-to.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/RepositoryDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/RepositoryDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/UserListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/UserListItem.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/VersionListItem.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" afterDir="false" />
     </list>
@@ -78,11 +94,11 @@
       <recent name="$PROJECT_DIR$/src/screens" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/api" />
       <recent name="$PROJECT_DIR$/src/screens/Repository" />
       <recent name="$PROJECT_DIR$/src/screens" />
       <recent name="$PROJECT_DIR$/src/screens/CreateContainer" />
       <recent name="$PROJECT_DIR$/src/screens/Overview" />
-      <recent name="$PROJECT_DIR$/src/components/Exception" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -110,6 +126,8 @@
       <workItem from="1623132446429" duration="11364000" />
       <workItem from="1623219313654" duration="15836000" />
       <workItem from="1623306621226" duration="12171000" />
+      <workItem from="1623328837825" duration="1709000" />
+      <workItem from="1623651414140" duration="14123000" />
     </task>
     <task id="LOCAL-00001" summary="Update Modeler URLs">
       <created>1620297569688</created>
@@ -185,6 +203,7 @@
     <MESSAGE value="Repository-View: Displaying versions, userManagement started" />
     <MESSAGE value="UserManagement" />
     <MESSAGE value="API Dateien" />
-    <option name="LAST_COMMIT_MESSAGE" value="API Dateien" />
+    <MESSAGE value="User management" />
+    <option name="LAST_COMMIT_MESSAGE" value="User management" />
   </component>
 </project>
