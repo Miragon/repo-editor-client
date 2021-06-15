@@ -22,7 +22,7 @@ export const getAllAssignedUsers = (repoId: string) => {
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
                     case "400":
                         dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
                         return;
@@ -76,7 +76,7 @@ export const createOrUpdateUserAssignment = (repoId: string, userName: string, r
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
                     case "400":
                         dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message})
                         return;

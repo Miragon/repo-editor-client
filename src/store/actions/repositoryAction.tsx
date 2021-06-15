@@ -28,7 +28,7 @@ export const fetchRepositories = () => {
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
                     case "400":
                         dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
                         return;
@@ -71,7 +71,7 @@ export const getSingleRepository = (bpmnRepositoryId: string) => {
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
                     case "400":
                         dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
                         return;
@@ -117,7 +117,7 @@ export const createRepository = (bpmnRepositoryName: string, bpmnRepositoryDescr
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
                     case "400":
                         dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
                         return;

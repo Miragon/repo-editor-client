@@ -8,7 +8,6 @@ import dataSyncedReducer from "./dataSyncedReducer";
 import activeRepoReducer from "./activeRepoReducer";
 import activeDiagramsReducer from "./activeDiagramsReducer";
 import versionsReducer from "./versionsReducer";
-import apiResponseWithRetryReducer from "./apiResponseWithRetryReducer";
 import assignedUsersReducer from "./assignedUsersReducer";
 import currentUserReducer from "./currentUserReducer";
 import searchedUsers from "../reducers/usersReducer";
@@ -20,7 +19,6 @@ export const rootReducer = combineReducers({
     repos: repoReducer,
     uploadedDiagram: uploadDiagramReducer,
     api: apiResponseReducer,
-    apiWithRetry: apiResponseWithRetryReducer,
     dataSynced: dataSyncedReducer,
     activeRepo: activeRepoReducer,
     activeDiagrams: activeDiagramsReducer,

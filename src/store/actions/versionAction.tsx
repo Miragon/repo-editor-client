@@ -2,28 +2,30 @@ import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import {BpmnDiagramVersionUploadTO, BpmnDiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import helpers from "../../constants/Functions";
-import {GET_VERSIONS, HANDLEDERROR, UNHANDLEDERROR} from "./diagramAction";
+import {GET_VERSIONS, HANDLEDERROR, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "./diagramAction";
 import {defaultErrors} from "../../components/Exception/defaultErrors";
 
-export const createOrUpdateVersion = (bpmnRepositoryId: string, bpmnDiagramId: string, file: string) => {
+export const createOrUpdateVersion = (bpmnRepositoryId: string, bpmnDiagramId: string, file: string, comment?: string) => {
     return async (dispatch: Dispatch) => {
         const versionController = new api.BpmnDiagramVersionControllerApi()
         try{
             const bpmnDiagramVersionTO: BpmnDiagramVersionUploadTO = {
                 bpmnAsXML: file,
+                bpmnDiagramVersionComment: comment,
                 saveType: BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE
             }
             const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
             const response = await versionController.createOrUpdateVersion(bpmnDiagramVersionTO, bpmnRepositoryId, bpmnDiagramId, config)
             if(Math.floor(response.status/100) === 2) {
-                window.location.href = (`/modeler/${bpmnRepositoryId}/${bpmnDiagramId}/latest/`)
+                dispatch({type: SUCCESS, successMessage: "Successfully created a new Version"})
+                dispatch({type: SYNC_STATUS, dataSynced: false})
             }
             else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response)})
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
                     case "400":
                         dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
                         return;
@@ -64,7 +66,7 @@ export const getAllVersions = (bpmnRepositoryId: string, bpmnDiagramId: string) 
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
                     case "400":
                         dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
                         return;

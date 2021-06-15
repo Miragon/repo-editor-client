@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -21,6 +21,8 @@ function sleep(delay = 0) {
         setTimeout(resolve, delay);
     });
 }
+
+let timeout: NodeJS.Timeout | undefined = undefined;
 
 const AddUserSearchBar: React.FC<Props> = props => {
     const dispatch = useDispatch();
@@ -45,15 +47,13 @@ const AddUserSearchBar: React.FC<Props> = props => {
             active = false
             loading = false
         }
-        console.log(loading)
-        console.log(results)
 
         return () => {
             active = false;
         };
     }, [loading, results]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!open) {
             setOptions([]);
         }
@@ -65,9 +65,13 @@ const AddUserSearchBar: React.FC<Props> = props => {
 
     const onChangeWithTimer = ((input: string) => {
         //#TODO: How to reset the timer if this method is called a second time?
+        setUser(input)
+        console.log(input, "__________")
         if(input != "") {
-            setUser(input)
-            fetchUserSuggestions(input)
+            if(timeout){
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(() => fetchUserSuggestions(input), 500);
         }
     })
 

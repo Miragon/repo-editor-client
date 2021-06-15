@@ -5,34 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="User management">
-      <change afterPath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/actions/userAction.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/reducers/userResultsReducer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/reducers/usersReducer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Layout/Toast.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/Repository/CreateDiagramContainer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/assignment-controller-api.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/bpmn-diagram-controller-api.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/bpmn-diagram-version-controller-api.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/bpmn-repository-controller-api.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/base.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/assignment-to.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/assignment-with-user-name-to.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-diagram-svgupload-to.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-diagram-to.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-diagram-upload-to.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-diagram-version-to.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-diagram-version-upload-to.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/bpmn-repository-request-to.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/new-bpmn-repository-to.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/user-email-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/user-info-to.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/user-to.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/user-update-to.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Form/DropdownButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/DropdownButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Repository/Repository.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/Repository.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/userAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/userAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/apiResponseReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/apiResponseReducer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/apiResponseWithRetryReducer.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -127,7 +120,8 @@
       <workItem from="1623219313654" duration="15836000" />
       <workItem from="1623306621226" duration="12171000" />
       <workItem from="1623328837825" duration="1709000" />
-      <workItem from="1623651414140" duration="14123000" />
+      <workItem from="1623651414140" duration="14190000" />
+      <workItem from="1623737626571" duration="22510000" />
     </task>
     <task id="LOCAL-00001" summary="Update Modeler URLs">
       <created>1620297569688</created>
@@ -178,7 +172,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623314679816</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="User management">
+      <created>1623668610554</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1623668610554</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

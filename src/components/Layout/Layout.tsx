@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/reducers/rootReducer";
 import RepoCard from "../../screens/Overview/Holder/RepoCard";
 import {CURRENT_USER_INFO, HANDLEDERROR, SUCCESS} from "../../store/actions/diagramAction";
+import Toast from "./Toast";
 
 const useStyles = makeStyles(() => ({
     contentWrapper: {
@@ -56,6 +57,7 @@ const Layout = (): any => {
 
     const dispatch = useDispatch()
     const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage)
+    const apiErrorRetryMethod: () => void = useSelector((state: RootState) => state.api.retryMethod)
     const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage)
 
 
@@ -63,7 +65,7 @@ const Layout = (): any => {
     useEffect(() => {
         if(apiErrorState){
             //toast can contain any component, the Retry Button (and the message: apiErrorState) has to be passed here
-            //toast.error(<RepoCard repoTitle={"abc"} description={"def"} existingDiagrams={3} assignedUsers={2}></RepoCard>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
+            //toast.error(<Toast errorMessage={apiErrorState} retryMethod={apiErrorRetryMethod}/>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
             toast.error(apiErrorState, {autoClose: 8000, pauseOnHover: true})
             dispatch({type: HANDLEDERROR, errorMessage: ""})
         }
@@ -71,7 +73,7 @@ const Layout = (): any => {
             toast.success(apiSuccessState, {autoClose: 4000, pauseOnHover: true})
             dispatch({type: SUCCESS, successMessage: ""})
         }
-    }, [apiErrorState, apiSuccessState, dispatch])
+    }, [apiErrorState, apiSuccessState, apiErrorRetryMethod, dispatch])
 
     const classes = useStyles();
     const [userController] = useState<UserControllerApi>(new UserControllerApi());
@@ -97,7 +99,6 @@ const Layout = (): any => {
                 .then((response) => {
                     if(response.data) {
                         setUserDoesExist(true)
-                        console.log(response.data)
                         dispatch({type: CURRENT_USER_INFO, currentUserInfo: response.data})
                     } else {
                         setUserDoesExist(false);

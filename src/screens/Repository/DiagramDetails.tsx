@@ -5,6 +5,7 @@ import {RootState} from "../../store/reducers/rootReducer";
 import {makeStyles} from "@material-ui/styles";
 import DiagramListItem from "./DiagramListItem";
 import {fetchDiagramsFromRepo} from "../../store/actions/diagramAction";
+import {Card} from "@material-ui/core";
 
 
 const useStyles = makeStyles(() => ({
@@ -24,30 +25,36 @@ const DiagramDetails: React.FC = (() => {
 
     const activeDiagrams: Array<BpmnDiagramTO> = useSelector((state: RootState) => state.activeDiagrams.activeDiagrams)
     const activeRepo: BpmnRepositoryRequestTO = useSelector((state: RootState) => state.activeRepo.activeRepo)
+    const synced: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced)
 
     const fetchActiveDiagrams = useCallback((repoId: string) => {
+
         try  {
             dispatch(fetchDiagramsFromRepo(repoId))
         } catch (err) {
             console.log(err)
         }
-    }, [dispatch])
+        if(!synced){
+            dispatch(fetchDiagramsFromRepo(repoId))
+        }
+    }, [dispatch, synced])
 
     useEffect(() => {
         fetchActiveDiagrams(activeRepo?.bpmnRepositoryId)
     }, [fetchActiveDiagrams, activeRepo])
 
     const openModeler = (repoId: string, diagramId: string) => {
-        window.open(`/modeler/#/${repoId}/${diagramId}/latest/`, '_blank')?.focus();
+        console.error("err");
+
+        window.open(`/modeler/#/${repoId}/${diagramId}/latest/`, '_blank');
     }
 
     return (
         <>
       <div className={classes.container}>
           {activeDiagrams?.map(diagram => (
-              <div
-                  key={diagram.bpmnDiagramId}
-                  onClick={() => openModeler(diagram.bpmnRepositoryId, diagram.bpmnDiagramId)}>
+              <Card
+                  key={diagram.bpmnDiagramId} >
 
               <DiagramListItem diagramTitle={diagram.bpmnDiagramName}
                                image={diagram.svgPreview}
@@ -57,7 +64,7 @@ const DiagramDetails: React.FC = (() => {
                                repoId={diagram.bpmnRepositoryId}
                                diagramId={diagram.bpmnDiagramId}
                                 />
-              </div>
+              </Card>
           ))}
       </div>
         </>

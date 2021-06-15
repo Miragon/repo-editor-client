@@ -26,7 +26,6 @@ export const fetchFavoriteDiagrams = () => {
         try{
             const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
             const response = await diagramController.getStarred(config)
-            console.log("DiagramRequest")
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: GET_FAVORITE, favoriteDiagrams: response.data})
             }
@@ -35,7 +34,7 @@ export const fetchFavoriteDiagrams = () => {
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
                     case "400":
                         dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
                         return;
@@ -77,7 +76,7 @@ export const fetchRecentDiagrams = () => {
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
                     case "400":
                         dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
                         return;
@@ -106,6 +105,7 @@ export const fetchRecentDiagrams = () => {
 export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string, bpmnDiagramDescription: string, fileType?: string) => {
     return async (dispatch: Dispatch) => {
         const diagramController = new api.BpmnDiagramControllerApi()
+        console.log("Creating Diagram")
         try{
             const bpmnDiagramUploadTO: BpmnDiagramUploadTO = {
                 bpmnDiagramName: bpmnDiagramName,
@@ -119,28 +119,30 @@ export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
                 dispatch({type: SYNC_STATUS, dataSynced: false})
             }
             else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response)})
+                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response), retryMethod: createDiagram(bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, fileType ? fileType : "BPMN")})
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                console.log(error.response.data)
+                console.log(error.response.data.status?.toString())
+                switch(error.response.data.status?.toString()) {
                     case "400":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"], retryMethod: createDiagram(bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, fileType ? fileType : "BPMN")})
                         return;
                     case "401":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"]})
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"], retryMethod: createDiagram(bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, fileType ? fileType : "BPMN")})
                         return;
                     case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"]})
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"], retryMethod: createDiagram(bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, fileType ? fileType : "BPMN")})
                         return;
                     case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"]})
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"], retryMethod: createDiagram(bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, fileType ? fileType : "BPMN")})
                         return;
                     case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message})
+                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message, retryMethod: (() => createDiagram(bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, fileType ? fileType : "BPMN"))})
                         return;
                     default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`})
+                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`, retryMethod: (() => createDiagram(bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, fileType ? fileType : "BPMN"))})
                         return;
 
                 }
@@ -152,7 +154,6 @@ export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
 export const fetchDiagramsFromRepo = (repoId: string) => {
     return async (dispatch: Dispatch) => {
         const diagramController = new api.BpmnDiagramControllerApi()
-        console.log("Requesting diagramrepos")
         try{
             const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
             const response = await diagramController.getDiagramsFromRepo(repoId, config)
@@ -160,28 +161,28 @@ export const fetchDiagramsFromRepo = (repoId: string) => {
                 dispatch({type: ACTIVE_DIAGRAMS, activeDiagrams: response.data})
             }
             else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response)})
+                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response), retryMethod: fetchDiagramsFromRepo(repoId)})
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
                     case "400":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"], retryMethod: fetchDiagramsFromRepo(repoId)})
                         return;
                     case "401":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"]})
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"], retryMethod: fetchDiagramsFromRepo(repoId)})
                         return;
                     case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"]})
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"], retryMethod: fetchDiagramsFromRepo(repoId)})
                         return;
                     case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"]})
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"], retryMethod: fetchDiagramsFromRepo(repoId)})
                         return;
                     case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message})
+                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message, retryMethod: fetchDiagramsFromRepo(repoId)})
                         return;
                     default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`})
+                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`, retryMethod: fetchDiagramsFromRepo(repoId)})
                         return;
 
                 }
@@ -209,7 +210,48 @@ export const uploadDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
+                    case "400":
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
+                        return;
+                    case "401":
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"]})
+                        return;
+                    case "403":
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"]})
+                        return;
+                    case "404":
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"]})
+                        return;
+                    case "409":
+                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message})
+                        return;
+                    default:
+                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`})
+                        return;
+
+                }
+            }
+        }
+    }
+}
+
+export const deleteDiagram = (bpmnRepositoryId: string, bpmnDiagramId: string) => {
+
+    return async (dispatch: Dispatch) => {
+        const diagramController = new api.BpmnDiagramControllerApi()
+        try{
+            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const response = await diagramController.deleteDiagram(bpmnRepositoryId, bpmnDiagramId)
+            if(Math.floor(response.status/100) === 2) {
+                dispatch({type: SYNC_STATUS, dataSynced: false})
+            }
+            else {
+                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response)})
+            }
+        } catch (error){
+            if(error.response){
+                switch(error.response.data.status) {
                     case "400":
                         dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
                         return;

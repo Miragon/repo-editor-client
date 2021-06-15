@@ -24,7 +24,7 @@ export const searchUsers = (typedName: string) => {
             }
         } catch (error){
             if(error.response){
-                switch(error.response.data.status.toString()) {
+                switch(error.response.data.status) {
                     case "400":
                         dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
                         return;

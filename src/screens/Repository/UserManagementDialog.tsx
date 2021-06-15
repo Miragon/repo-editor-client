@@ -89,7 +89,6 @@ const UserManagementDialog: React.FC<Props> = props => {
     })
 
 
-//#TODO: Autosuggestions? Load all usernames on Input? Load Users after  x letters entered? ...
     //#TODO: Style the Input field
     return (
         <PopupDialog

@@ -7,7 +7,7 @@ import React, {useRef, useState} from "react";
 export interface DropdownButtonItem {
     id: string;
     label: React.ReactNode;
-    onClick?: () => void;
+    onClick?: (event?: any) => void;
     disabled?: boolean;
     type?: "button" | "divider" | "hint";
 }

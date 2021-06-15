@@ -8,6 +8,7 @@ import RepositoryDetails from "./RepositoryDetails";
 import DiagramDetails from "./DiagramDetails";
 import {useParams} from "react-router";
 import {getSingleRepository} from "../../store/actions/repositoryAction";
+import CreateDiagramContainer from "./CreateDiagramContainer";
 
 
 const Repository: React.FC = (() => {
@@ -30,6 +31,7 @@ const Repository: React.FC = (() => {
     return (
     <>
         <RepositoryDetails/>
+        <CreateDiagramContainer/>
         <DiagramDetails/>
     </>
 );

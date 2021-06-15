@@ -25,6 +25,7 @@ const useStyles = makeStyles(() => ({
 interface Props {
     open: boolean;
     onCancelled: () => void;
+    repo?: BpmnRepositoryRequestTO;
 }
 
 const UploadDiagramDialog: React.FC<Props> = props => {
@@ -105,13 +106,22 @@ const UploadDiagramDialog: React.FC<Props> = props => {
                     value={repository}
                     label="Target Repository"
                     onChanged={setRepository}>
-                    {allRepos?.map(repo => (
+                    {props.repo ?
+                        <MenuItem
+                            key={props.repo?.bpmnRepositoryId}
+                            value={props.repo?.bpmnRepositoryId}
+                            selected={true} >
+                            {props.repo?.bpmnRepositoryName}
+                        </MenuItem>
+                        :
+                        allRepos?.map(repo => (
                         <MenuItem
                             key={repo.bpmnRepositoryId}
                             value={repo.bpmnRepositoryId}>
                             {repo.bpmnRepositoryName}
                         </MenuItem>
-                    ))}
+                    ))
+                    }
 
 
                 </SettingsSelect>

@@ -14,6 +14,7 @@ interface Props {
     open: boolean;
     onCancelled: () => void;
     type: "bpmn" | "dmn";
+    repo?: BpmnRepositoryRequestTO;
 }
 
 const CreateDiagramDialog: React.FC<Props> = props => {
@@ -35,7 +36,7 @@ const CreateDiagramDialog: React.FC<Props> = props => {
             dispatch(diagramAction.createDiagram(repository, title, description, props.type))
             onCancelled();
         } catch (err) {
-            console.log("err")
+            console.log(err)
         }
     }, [dispatch, repository, title, description, props.type])
 
@@ -60,13 +61,22 @@ const CreateDiagramDialog: React.FC<Props> = props => {
                     value={repository}
                     label="Target Repository"
                     onChanged={setRepository}>
-                    {allRepos?.map(repo => (
+                    {props.repo ?
                         <MenuItem
-                        key={repo.bpmnRepositoryId}
-                        value={repo.bpmnRepositoryId}>
-                            {repo.bpmnRepositoryName}
+                            key={props.repo?.bpmnRepositoryId}
+                            value={props.repo?.bpmnRepositoryId}
+                            selected={true}>
+                            {props.repo?.bpmnRepositoryName}
                         </MenuItem>
-                    ))}
+                        :
+                        allRepos?.map(repo => (
+                            <MenuItem
+                                key={repo.bpmnRepositoryId}
+                                value={repo.bpmnRepositoryId}>
+                                {repo.bpmnRepositoryName}
+                            </MenuItem>
+                        ))
+                    }
                 </SettingsSelect>
 
                 <SettingsTextField

@@ -3,7 +3,8 @@ import {CaseReducer} from "@reduxjs/toolkit";
 
 const initialState = {
     errorMessage: "",
-    successMessage: ""
+    successMessage: "",
+    retryMethod: () => console.log("sth"),
 }
 
 
@@ -12,12 +13,14 @@ const reducer: CaseReducer = (state = initialState, action) => {
         case HANDLEDERROR:
             return {
                 ...state,
-                errorMessage: action.errorMessage
+                errorMessage: action.errorMessage,
+                retryMethod: action.retryMethod
             }
         case UNHANDLEDERROR:
             return {
                 ...state,
-                errorMessage: action.errorMessage
+                errorMessage: action.errorMessage,
+                retryMethod: action.retryMethod
             }
         case SUCCESS:
             return {

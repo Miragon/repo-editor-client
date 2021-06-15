@@ -73,6 +73,7 @@ const RepoContainer: React.FC = observer(() => {
                 {allRepos.map(repo => (
                     // eslint-disable-next-line react/jsx-key
                     <RepoCard
+                        key={repo.bpmnRepositoryId}
                         repoTitle={repo.bpmnRepositoryName}
                         description={repo.bpmnRepositoryDescription}
                         existingDiagrams={repo.existingDiagrams}
