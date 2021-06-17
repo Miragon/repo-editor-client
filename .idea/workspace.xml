@@ -4,29 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="User management">
-      <change afterPath="$PROJECT_DIR$/src/components/Layout/Toast.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Repository/CreateDiagramContainer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" afterDir="false" />
+    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="Version Management, Styles">
+      <change afterPath="$PROJECT_DIR$/src/screens/Overview/DiagramSearchBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/actions/actions.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/reducers/actionsReducer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/DropdownButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/DropdownButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/base.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/Toast.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Toast.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/Functions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/Functions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Overview/Overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/Overview.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Overview/RecentDiagrams.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/RecentDiagrams.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/Repository.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/Repository.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/userAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/userAction.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/apiResponseReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/apiResponseReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/apiResponseWithRetryReducer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +115,9 @@
       <workItem from="1623306621226" duration="12171000" />
       <workItem from="1623328837825" duration="1709000" />
       <workItem from="1623651414140" duration="14190000" />
-      <workItem from="1623737626571" duration="22510000" />
+      <workItem from="1623737626571" duration="22556000" />
+      <workItem from="1623910944743" duration="1674000" />
+      <workItem from="1623916896625" duration="11177000" />
     </task>
     <task id="LOCAL-00001" summary="Update Modeler URLs">
       <created>1620297569688</created>
@@ -179,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623668610554</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Version Management, Styles">
+      <created>1623766914988</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1623766914988</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,7 +193,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/feat/starter-anbindung" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -205,6 +220,7 @@
     <MESSAGE value="UserManagement" />
     <MESSAGE value="API Dateien" />
     <MESSAGE value="User management" />
-    <option name="LAST_COMMIT_MESSAGE" value="User management" />
+    <MESSAGE value="Version Management, Styles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version Management, Styles" />
   </component>
 </project>

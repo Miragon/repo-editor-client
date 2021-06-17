@@ -10,6 +10,7 @@ import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 
 const useStyles = makeStyles(() => ({
     diagramContainer: {
+        paddingTop: "15px",
         "&>h1": {
             color: "black",
             fontSize: "20px",

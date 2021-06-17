@@ -64,9 +64,7 @@ const AddUserSearchBar: React.FC<Props> = props => {
 
 
     const onChangeWithTimer = ((input: string) => {
-        //#TODO: How to reset the timer if this method is called a second time?
         setUser(input)
-        console.log(input, "__________")
         if(input != "") {
             if(timeout){
                 clearTimeout(timeout);
@@ -94,7 +92,7 @@ const AddUserSearchBar: React.FC<Props> = props => {
     return (
         <ListItem>
         <Autocomplete
-            id="asynchronous-demo"
+            id="UserSearchBar"
             style={{ width: 500 }}
             open={open}
             onOpen={() => {

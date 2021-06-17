@@ -12,7 +12,7 @@ const helpers = {
     getClientConfig: function(token: string | null) {
         return {
             //#TODO change to cloud backend
-            basePath: "http://localhost:8080",
+            basePath: "",
                     "headers": {
                         'Authorization': `${token}`,
                     }

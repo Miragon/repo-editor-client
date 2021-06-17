@@ -32,7 +32,11 @@ const Toast: React.FC<Props> = props => {
         <p>
             {props.errorMessage}
         </p>
-        <IconButton className={classes.retryButton} onClick={dispatch(props.retryMethod)}>
+        <IconButton className={classes.retryButton} onClick={() => {
+            console.log("called")
+            props.retryMethod()
+
+        }}>
             <Replay/>
         </IconButton>
     </div>

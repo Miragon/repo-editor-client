@@ -64,9 +64,10 @@ const Layout = (): any => {
     //#TODO: Add a retry Button to the toast
     useEffect(() => {
         if(apiErrorState){
+            console.log("Trying to make toast")
             //toast can contain any component, the Retry Button (and the message: apiErrorState) has to be passed here
-            //toast.error(<Toast errorMessage={apiErrorState} retryMethod={apiErrorRetryMethod}/>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
-            toast.error(apiErrorState, {autoClose: 8000, pauseOnHover: true})
+            toast.error(<Toast errorMessage={apiErrorState} retryMethod={apiErrorRetryMethod}/>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
+            //toast.error(apiErrorState, {autoClose: 8000, pauseOnHover: true})
             dispatch({type: HANDLEDERROR, errorMessage: ""})
         }
         if(apiSuccessState){
@@ -95,6 +96,8 @@ const Layout = (): any => {
     useEffect(() => {
         if (isAuthenticated && initialized) {
             const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            console.log("Fetching user Info")
+            console.log(config)
             userController.getUserInfo(config)
                 .then((response) => {
                     if(response.data) {
