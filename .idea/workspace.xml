@@ -35,13 +35,10 @@
   <component name="ChangeListManager">
     <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="User management">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/base.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/user-info-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/user-info-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/user-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/user-update-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/userAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/userAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/apis/bpmn-diagram-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/bpmn-diagram-controller-api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,19 +91,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/api" />
-      <recent name="$PROJECT_DIR$/src/screens/Repository" />
-      <recent name="$PROJECT_DIR$/src/screens" />
-      <recent name="$PROJECT_DIR$/src/screens/CreateContainer" />
-      <recent name="$PROJECT_DIR$/src/screens/Overview" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/api" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/store/actions" />
       <recent name="$PROJECT_DIR$/src/models" />
       <recent name="$PROJECT_DIR$/src/constants" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/api" />
+      <recent name="$PROJECT_DIR$/src/screens/Repository" />
+      <recent name="$PROJECT_DIR$/src/screens" />
+      <recent name="$PROJECT_DIR$/src/screens/CreateContainer" />
+      <recent name="$PROJECT_DIR$/src/screens/Overview" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -221,15 +218,5 @@
     <MESSAGE value="API Dateien" />
     <MESSAGE value="User management" />
     <option name="LAST_COMMIT_MESSAGE" value="User management" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="2298" y="483" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1623848554332">
-      <screen x="0" y="25" width="5120" height="1415" />
-    </state>
-    <state x="2298" y="483" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.5120.1415@0.25.5120.1415" timestamp="1623848554332" />
-    <state x="2225" y="349" width="670" height="676" key="search.everywhere.popup" timestamp="1623911150174">
-      <screen x="0" y="25" width="5120" height="1415" />
-    </state>
-    <state x="2225" y="349" width="670" height="676" key="search.everywhere.popup/0.25.5120.1415@0.25.5120.1415" timestamp="1623911150174" />
   </component>
 </project>

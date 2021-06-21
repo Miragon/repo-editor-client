@@ -237,6 +237,46 @@ export const BpmnDiagramControllerApiAxiosParamCreator = function (configuration
             };
         },
         /**
+         *
+         * @param {string} typedTitle
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchDiagrams: async (typedTitle: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'typedTitle' is not null or undefined
+            if (typedTitle === null) {
+                throw new RequiredError('typedTitle','Required parameter typedTitle was null or undefined when calling searchDiagrams.');
+            }
+
+            const localVarPath = `/api/diagram/searchDiagram/{typedTitle}`
+                .replace(`{${"typedTitle"}}`, encodeURIComponent(String(typedTitle)))
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -440,6 +480,19 @@ export const BpmnDiagramControllerApiFp = function(configuration?: Configuration
             };
         },
         /**
+         *
+         * @param {string} typedTitle
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchDiagrams(typedTitle: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BpmnDiagramTO>>> {
+            const localVarAxiosArgs = await BpmnDiagramControllerApiAxiosParamCreator(configuration).searchDiagrams(typedTitle, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -537,6 +590,15 @@ export const BpmnDiagramControllerApiFactory = function (configuration?: Configu
             return BpmnDiagramControllerApiFp(configuration).getSingleDiagram(bpmnRepositoryId, bpmnDiagramId, options).then((request) => request(axios, basePath));
         },
         /**
+         *
+         * @param {string} typedTitle
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchDiagrams(typedTitle: string, options?: any): AxiosPromise<Array<BpmnDiagramTO>> {
+            return BpmnDiagramControllerApiFp(configuration).searchDiagrams(typedTitle, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -626,6 +688,16 @@ export class BpmnDiagramControllerApi extends BaseAPI {
      */
     public getSingleDiagram(bpmnRepositoryId: string, bpmnDiagramId: string, options?: any) {
         return BpmnDiagramControllerApiFp(this.configuration).getSingleDiagram(bpmnRepositoryId, bpmnDiagramId, options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
+     *
+     * @param {string} typedTitle
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BpmnDiagramControllerApi
+     */
+    public searchDiagrams(typedTitle: string, options?: any) {
+        return BpmnDiagramControllerApiFp(this.configuration).searchDiagrams(typedTitle, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 

@@ -5,7 +5,7 @@ import React, {useCallback, useState} from "react";
 import {useDispatch} from "react-redux";
 import * as versionAction from "../../store/actions/versionAction";
 import SettingsSelect from "../../components/Form/SettingsSelect";
-import {BpmnDiagramVersionTOSaveTypeEnum} from "../../api/models";
+import {BpmnDiagramVersionTOSaveTypeEnum, BpmnDiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import {MenuItem} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 
@@ -32,16 +32,17 @@ const CreateVersionDialog: React.FC<Props> = props => {
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [comment, setComment] = useState("");
-    const [saveType, setSaveType] = useState<BpmnDiagramVersionTOSaveTypeEnum>(BpmnDiagramVersionTOSaveTypeEnum.RELEASE);
+    const [saveType, setSaveType] = useState<BpmnDiagramVersionUploadTOSaveTypeEnum> (BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE);
 
     const onCreate = useCallback(async () => {
         try{
-            dispatch(versionAction.createOrUpdateVersion(repoId, diagramId, "latestversion", comment))
+            //#TODO: Use the XML String from the last version
+            dispatch(versionAction.createOrUpdateVersion(repoId, diagramId, "latestversion", saveType, comment))
             onCancelled()
         } catch (err) {
             console.log(err)
         }
-    }, [repoId, diagramId, comment, dispatch])
+    }, [repoId, diagramId, comment, saveType, dispatch])
 
 
     return (
@@ -64,14 +65,14 @@ const CreateVersionDialog: React.FC<Props> = props => {
                     disabled={false}
                     onChanged={setSaveType}>
                     <MenuItem
-                    key={BpmnDiagramVersionTOSaveTypeEnum.RELEASE}
-                    value={BpmnDiagramVersionTOSaveTypeEnum.RELEASE} >
-                        {BpmnDiagramVersionTOSaveTypeEnum.RELEASE}
+                    key={BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE}
+                    value={BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE} >
+                        {BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE}
                     </MenuItem>
                     <MenuItem
-                    key={BpmnDiagramVersionTOSaveTypeEnum.MILESTONE}
-                    value={BpmnDiagramVersionTOSaveTypeEnum.MILESTONE}>
-                        {BpmnDiagramVersionTOSaveTypeEnum.MILESTONE}
+                    key={BpmnDiagramVersionUploadTOSaveTypeEnum.MILESTONE}
+                    value={BpmnDiagramVersionUploadTOSaveTypeEnum.MILESTONE}>
+                        {BpmnDiagramVersionUploadTOSaveTypeEnum.MILESTONE}
                     </MenuItem>
                 </SettingsSelect>
 
