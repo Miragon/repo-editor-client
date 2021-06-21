@@ -248,7 +248,7 @@ export const BpmnDiagramControllerApiAxiosParamCreator = function (configuration
                 throw new RequiredError('typedTitle','Required parameter typedTitle was null or undefined when calling searchDiagrams.');
             }
 
-            const localVarPath = `/api/diagram/searchDiagram/{typedTitle}`
+            const localVarPath = `/api/diagram/searchDiagrams/{typedTitle}`
                 .replace(`{${"typedTitle"}}`, encodeURIComponent(String(typedTitle)))
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');

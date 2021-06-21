@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
@@ -10,6 +10,8 @@ import {RootState} from "../../store/reducers/rootReducer";
 import {makeStyles} from "@material-ui/styles";
 import DiagramCard from "./Holder/DiagramCard";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
+import * as diagramAction from "../../store/actions/diagramAction";
+
 const useStyles = makeStyles(() => ({
     headerText: {
         color: "black",
@@ -37,8 +39,7 @@ const DiagramSearchBar: React.FC = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    //TODO: Create a  state for really searched Diagrams and do not only use the recent ones
-    const searchedDiagrams: Array<BpmnDiagramTO> = useSelector((state: RootState) => state.recentDiagrams.recentDiagrams)
+    const searchedDiagrams: Array<BpmnDiagramTO> = useSelector((state: RootState) => state.searchedDiagrams.searchedDiagrams)
     const repos: Array<BpmnRepositoryRequestTO> = useSelector((state: RootState) => state.repos.repos)
 
 
@@ -79,10 +80,13 @@ const DiagramSearchBar: React.FC = () => {
             if(timeout){
                 clearTimeout(timeout);
             }
-            timeout = setTimeout(() => console.log("Firing DiagramSearch- API Call"), 500);
+            timeout = setTimeout(() => fetchDiagramSuggestion(input), 500);
         }
     })
 
+    const fetchDiagramSuggestion = useCallback((input: string) => {
+        dispatch(diagramAction.searchDiagram(input))
+    }, [dispatch])
 
     return (
         <>

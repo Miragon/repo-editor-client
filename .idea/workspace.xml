@@ -4,32 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="Version Management, Styles">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Default_Changelist]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/assignment-to.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/assignment-with-user-name-to.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/bpmn-diagram-svgupload-to.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/bpmn-diagram-to.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/bpmn-diagram-upload-to.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/bpmn-diagram-version-to.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/bpmn-diagram-version-upload-to.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/bpmn-repository-request-to.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/new-bpmn-repository-to.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/user-info-to.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/user-update-to.ts" afterDir="false" />
+    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="Added searchDiagramEndpoint, resolved Conflicts">
+      <change afterPath="$PROJECT_DIR$/src/store/reducers/searchDiagramsReducer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/apis/bpmn-diagram-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/bpmn-diagram-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/user-info-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/user-info-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/user-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/user-update-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/userAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/userAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Overview/DiagramSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/DiagramSearchBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623668610554</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added searchDiagramEndpoint, resolved Conflicts">
+      <created>1624269987801</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1624269987801</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,6 +196,7 @@
     <MESSAGE value="UserManagement" />
     <MESSAGE value="API Dateien" />
     <MESSAGE value="User management" />
-    <option name="LAST_COMMIT_MESSAGE" value="User management" />
+    <MESSAGE value="Added searchDiagramEndpoint, resolved Conflicts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added searchDiagramEndpoint, resolved Conflicts" />
   </component>
 </project>

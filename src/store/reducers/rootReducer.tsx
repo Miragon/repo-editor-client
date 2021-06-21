@@ -12,6 +12,7 @@ import assignedUsersReducer from "./assignedUsersReducer";
 import currentUserReducer from "./currentUserReducer";
 import searchedUsers from "../reducers/usersReducer";
 import resultsCount from "../reducers/userResultsReducer";
+import searchDiagramsReducer from "./searchDiagramsReducer";
 
 export const rootReducer = combineReducers({
     recentDiagrams: diagramReducer,
@@ -26,7 +27,8 @@ export const rootReducer = combineReducers({
     assignedUsers: assignedUsersReducer,
     currentUserInfo: currentUserReducer,
     searchedUsers: searchedUsers,
-    resultsCount: resultsCount
+    resultsCount: resultsCount,
+    searchedDiagrams: searchDiagramsReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>
