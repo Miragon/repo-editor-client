@@ -4,14 +4,14 @@ import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import {BpmnDiagramTO, BpmnRepositoryRequestTO} from "../../api/models";
+import {BpmnDiagramTO, BpmnDiagramVersionUploadTOSaveTypeEnum, BpmnRepositoryRequestTO} from "../../api/models";
 import {useDispatch, useSelector} from "react-redux";
 import * as diagramAction from "../../store/actions/diagramAction";
+import {HANDLEDERROR, UNHANDLEDERROR} from "../../store/actions/diagramAction";
 import * as versionAction from "../../store/actions/versionAction";
 import MenuItem from "@material-ui/core/MenuItem";
 import {RootState} from "../../store/reducers/rootReducer";
 import 'react-toastify/dist/ReactToastify.css';
-import {HANDLEDERROR, UNHANDLEDERROR} from "../../store/actions/diagramAction";
 
 const useStyles = makeStyles(() => ({
     input: {
@@ -47,7 +47,7 @@ const UploadDiagramDialog: React.FC<Props> = props => {
 
     useEffect(() => {
         if(uploadedDiagram != undefined){
-            dispatch(versionAction.createOrUpdateVersion(uploadedDiagram.bpmnRepositoryId, uploadedDiagram.bpmnDiagramId, file))
+            dispatch(versionAction.createOrUpdateVersion(uploadedDiagram.bpmnRepositoryId, uploadedDiagram.bpmnDiagramId, file, BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE))
         }
     }, [dispatch, uploadedDiagram])
 

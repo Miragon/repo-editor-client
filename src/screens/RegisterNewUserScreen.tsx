@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
@@ -11,7 +10,6 @@ import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 import {UserControllerApi} from "../api/api";
-import {UserTO} from "../api/models";
 import helpers from "../constants/Functions";
 import {HANDLEDERROR, SUCCESS} from "../store/actions/diagramAction";
 import {useDispatch, useSelector} from "react-redux";
@@ -81,12 +79,9 @@ const RegisterNewUserScreen: React.FC = () => {
     const history = useHistory();
     const dispatch = useDispatch()
 
-
     const [userController] = useState<UserControllerApi>(new UserControllerApi());
-    const [newUsername, setNewUsername] = useState<string>("Username");
-    const [flowSquadEmail, setFlowSquadEmail] = useState<string>("");
+    const [userName, setUserName] = useState<string>("");
     const [isButtonDisabled, setButtonDisabled] = useState<boolean>(true);
-
 
     const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage)
     const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage)
@@ -107,35 +102,29 @@ const RegisterNewUserScreen: React.FC = () => {
         (async () => {
             try {
                 const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
-                userController.getUserEmail(config).then(existingEmail => {
-                    setFlowSquadEmail(existingEmail.data.email);
+                userController.getUserName(config).then(userName => {
+                    setUserName(userName.data);
                 })
             } catch (response) {
                 toast.error("Could not get the email of the authenticated User. "
                     + "Please check your network-connection or try to reload the page");
             }
         })();
-    }, [userController, setFlowSquadEmail, dispatch, apiErrorState, apiSuccessState]);
+    }, [userController, setUserName, dispatch, apiErrorState, apiSuccessState]);
 
     /**
      * Persist a new User-profile in the FlowRepo-backend
      */
     const handleCreateUserProfile = useCallback(async (): Promise<void> => {
-        const newProfile: UserTO = {
-            userName: newUsername,
-            email: flowSquadEmail
-        };
         try {
-            await userController.createUser(newProfile);
+            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            await userController.createUser(config);
             history.push("/");
         } catch (response) {
             toast.error("Could not persist the new User");
         }
-    }, [history, userController, newUsername, flowSquadEmail]);
+    }, [history, userController, userName]);
 
-    const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNewUsername(event.target.value)
-    }
 
     return (
         <div className={classes.createUserProfilePage}>
@@ -155,20 +144,6 @@ const RegisterNewUserScreen: React.FC = () => {
                 </p>
 
                 <form className={classes.form} noValidate>
-                    <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        label="Your E-Mail address"
-                        value={flowSquadEmail}
-                        disabled />
-
-                    <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        label="Your User Identifier"
-                        onInput={handleInput}/>
 
                     <FormControlLabel
                         className={classes.confirmationCheckbox}

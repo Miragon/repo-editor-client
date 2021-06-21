@@ -3,7 +3,6 @@ import * as api from "../../api/api";
 import {
     BpmnDiagramVersionUploadTO,
     BpmnDiagramVersionUploadTOSaveTypeEnum,
-    UserEmailTO,
 } from "../../api/models";
 import helpers from "../../constants/Functions";
 import {HANDLEDERROR, SEARCH_USERS, UNHANDLEDERROR, USERQUERY_EXECUTED} from "./diagramAction";

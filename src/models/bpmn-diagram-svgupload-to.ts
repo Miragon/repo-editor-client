@@ -14,19 +14,13 @@
 /**
  * 
  * @export
- * @interface UserUpdateTO
+ * @interface BpmnDiagramSVGUploadTO
  */
-export interface UserUpdateTO {
+export interface BpmnDiagramSVGUploadTO {
     /**
      * 
      * @type {string}
-     * @memberof UserUpdateTO
+     * @memberof BpmnDiagramSVGUploadTO
      */
-    userId: any;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserUpdateTO
-     */
-    username?: any;
+    svgPreview: any;
 }

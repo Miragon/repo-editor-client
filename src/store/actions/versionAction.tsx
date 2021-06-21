@@ -6,14 +6,14 @@ import {GET_VERSIONS, HANDLEDERROR, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "
 import {defaultErrors} from "../../components/Exception/defaultErrors";
 import {ActionType} from "./actions";
 
-export const createOrUpdateVersion = (bpmnRepositoryId: string, bpmnDiagramId: string, file: string, comment?: string) => {
+export const createOrUpdateVersion = (bpmnRepositoryId: string, bpmnDiagramId: string, file: string, saveType: BpmnDiagramVersionUploadTOSaveTypeEnum, comment?: string) => {
     return async (dispatch: Dispatch) => {
         const versionController = new api.BpmnDiagramVersionControllerApi()
         try{
             const bpmnDiagramVersionTO: BpmnDiagramVersionUploadTO = {
                 bpmnAsXML: file,
                 bpmnDiagramVersionComment: comment,
-                saveType: BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE
+                saveType: saveType
             }
             const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
             const response = await versionController.createOrUpdateVersion(bpmnDiagramVersionTO, bpmnRepositoryId, bpmnDiagramId, config)
