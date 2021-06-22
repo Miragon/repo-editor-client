@@ -2,23 +2,28 @@ import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import {BpmnDiagramVersionUploadTO, BpmnDiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import helpers from "../../constants/Functions";
-import {GET_VERSIONS, HANDLEDERROR, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "./diagramAction";
+import {CREATED_DIAGRAM, GET_VERSIONS, HANDLEDERROR, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "./diagramAction";
 import {defaultErrors} from "../../components/Exception/defaultErrors";
 import {ActionType} from "./actions";
 
+export const DEFAULT_FILE = "Default XML String"
+
 export const createOrUpdateVersion = (bpmnRepositoryId: string, bpmnDiagramId: string, file: string, saveType: BpmnDiagramVersionUploadTOSaveTypeEnum, comment?: string) => {
+    console.log("Creating Version...")
+
     return async (dispatch: Dispatch) => {
         const versionController = new api.BpmnDiagramVersionControllerApi()
         try{
-            const bpmnDiagramVersionTO: BpmnDiagramVersionUploadTO = {
+            const bpmnDiagramVersionUploadTO: BpmnDiagramVersionUploadTO = {
                 bpmnAsXML: file,
                 bpmnDiagramVersionComment: comment,
                 saveType: saveType
             }
             const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
-            const response = await versionController.createOrUpdateVersion(bpmnDiagramVersionTO, bpmnRepositoryId, bpmnDiagramId, config)
+            const response = await versionController.createOrUpdateVersion(bpmnDiagramVersionUploadTO, bpmnRepositoryId, bpmnDiagramId, config)
             if(Math.floor(response.status/100) === 2) {
-                dispatch({type: SUCCESS, successMessage: "Successfully created a new Version"})
+                dispatch({type: SUCCESS, successMessage: "Version Created"})
+                dispatch({type: CREATED_DIAGRAM, createdDiagram: null})
                 dispatch({type: SYNC_STATUS, dataSynced: false})
             }
             else {

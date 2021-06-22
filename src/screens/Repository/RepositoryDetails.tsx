@@ -6,20 +6,21 @@ import {RootState} from "../../store/reducers/rootReducer";
 import {People, Description}  from '@material-ui/icons/';
 import UserManagementDialog from "./UserManagementDialog";
 import {Icon, IconButton} from "@material-ui/core";
+import {Settings} from "@material-ui/icons";
+import RepoManagementDialog from "./RepoManagementDialog";
 
 
 const useStyles = makeStyles(() => ({
 header: {
     display: "flex",
-    width: "100%"
+    width: "100%",
+    justifyContent: "space-between"
 },
 headerText: {
     color: "black",
     fontSize: "20px"
 },
 repoInfo: {
-    position: "absolute",
-    right: "20px",
     display: "flex",
     color: "black",
     fontSize: "15px"
@@ -42,6 +43,7 @@ const RepositoryDetails: React.FC = (() => {
     const activeRepo: BpmnRepositoryRequestTO = useSelector((state: RootState) => state.activeRepo.activeRepo)
 
     const [userManagementOpen, setUserManagementOpen] = useState<boolean>(false);
+    const [repoManagementOpen, setRepoManagementOpen] =  useState<boolean>(false);
 
 
 
@@ -61,6 +63,9 @@ const RepositoryDetails: React.FC = (() => {
                             <People/>
                             {activeRepo.assignedUsers}
                         </IconButton>
+                        <IconButton onClick={() => setRepoManagementOpen(true)}>
+                            <Settings/>
+                        </IconButton>
 
                     </div>
                 </div>
@@ -71,6 +76,14 @@ const RepositoryDetails: React.FC = (() => {
                     open={userManagementOpen}
                     onCancelled={() => setUserManagementOpen(false)}
                     repoId={activeRepo.bpmnRepositoryId}
+                />
+
+                <RepoManagementDialog
+                    open={repoManagementOpen}
+                    onCancelled={() => setRepoManagementOpen(false)}
+                    repoId={activeRepo.bpmnRepositoryId}
+                    repoName={activeRepo.bpmnRepositoryName}
+                    repoDescription={activeRepo.bpmnRepositoryDescription}
                 />
             </>
         );

@@ -1,10 +1,15 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import helpers from "../../constants/Functions";
-import {BpmnDiagramUploadTO} from "../../api/models";
+import {BpmnDiagramUploadTO, BpmnDiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import {defaultErrors} from "../../components/Exception/defaultErrors";
 import {ACTIVE_DIAGRAMS} from "./repositoryAction";
 import {ActionType} from "./actions";
+import {BpmnDiagramTO} from "../../models";
+import * as versionAction from "../../store/actions/versionAction"
+import {createOrUpdateVersion, DEFAULT_FILE} from "../../store/actions/versionAction"
+import {useCallback} from "react";
+import {useDispatch} from "react-redux";
 
 export const GET_FAVORITE = "GET_FAVORITE"
 export const GET_RECENT = "GET_RECENT"
@@ -20,6 +25,8 @@ export const CURRENT_USER_INFO = "CURRENT_USER_INFO"
 export const SEARCH_USERS = "SEARCH_USERS"
 export const USERQUERY_EXECUTED = "USERQUERY_EXECUTED"
 export const SEARCH_DIAGRAMS = "SEARCH_DIAGRAMS"
+export const CREATED_DIAGRAM = "CREATED_DIAGRAM"
+
 
 export const fetchFavoriteDiagrams = () => {
     return async (dispatch: Dispatch) => {
@@ -107,7 +114,6 @@ export const fetchRecentDiagrams = () => {
 export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string, bpmnDiagramDescription: string, fileType?: string) => {
     return async (dispatch: Dispatch) => {
         const diagramController = new api.BpmnDiagramControllerApi()
-        console.log("Creating Diagram")
         try{
             const bpmnDiagramUploadTO: BpmnDiagramUploadTO = {
                 bpmnDiagramName: bpmnDiagramName,
@@ -118,6 +124,7 @@ export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
             const response = await diagramController.createOrUpdateDiagram(bpmnDiagramUploadTO, bpmnRepositoryId, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: SUCCESS, successMessage: "Diagram Created"})
+                dispatch({type: CREATED_DIAGRAM, createdDiagram: response.data})
                 dispatch({type: SYNC_STATUS, dataSynced: false})
             }
             else {
@@ -285,7 +292,7 @@ export const deleteDiagram = (bpmnRepositoryId: string, bpmnDiagramId: string) =
         const diagramController = new api.BpmnDiagramControllerApi()
         try{
             const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
-            const response = await diagramController.deleteDiagram(bpmnRepositoryId, bpmnDiagramId)
+            const response = await diagramController.deleteDiagram(bpmnRepositoryId, bpmnDiagramId, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: SYNC_STATUS, dataSynced: false})
             }

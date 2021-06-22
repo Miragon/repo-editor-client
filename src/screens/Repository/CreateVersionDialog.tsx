@@ -8,6 +8,7 @@ import SettingsSelect from "../../components/Form/SettingsSelect";
 import {BpmnDiagramVersionTOSaveTypeEnum, BpmnDiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import {MenuItem} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
+import {getAllVersions} from "../../store/actions/versionAction";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -37,7 +38,8 @@ const CreateVersionDialog: React.FC<Props> = props => {
     const onCreate = useCallback(async () => {
         try{
             //#TODO: Use the XML String from the last version
-            dispatch(versionAction.createOrUpdateVersion(repoId, diagramId, "latestversion", saveType, comment))
+            await dispatch(versionAction.createOrUpdateVersion(repoId, diagramId, "latestversion", saveType, comment))
+            dispatch(versionAction.getAllVersions(repoId, diagramId))
             onCancelled()
         } catch (err) {
             console.log(err)

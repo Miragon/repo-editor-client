@@ -173,8 +173,8 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
 
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState<boolean>();
-    const [currentId, setCurrentId] = useState<string>();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [currentId, setCurrentId] = useState<string>("");
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
     const [createVersionOpen, setCreateVersionOpen] = useState<boolean>(false);
 
@@ -184,7 +184,8 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     useEffect(() => {
         //This block checks if th versions of another diagram are being fetched at the moment and if the loading animation has to be displayed
         if(bpmnDiagramVersionTOS){
-            setCurrentId(bpmnDiagramVersionTOS[0]?.bpmnDiagramId)
+            bpmnDiagramVersionTOS.sort(compare)
+            setCurrentId(bpmnDiagramVersionTOS[0] ? bpmnDiagramVersionTOS[0].bpmnDiagramId : "")
             if(currentId === bpmnDiagramVersionTOS[0]?.bpmnDiagramId){
                 setLoading(false)
             }
@@ -196,12 +197,26 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         */
         checkIfVersionsAreOpen()
 
-        if(!dataSynced){
-            fetchVersions()
-            dispatch({type: SYNC_STATUS, dataSynced: true})
 
+    }, [bpmnDiagramVersionTOS, currentId])
+
+    const compare = (a: BpmnDiagramVersionTO, b: BpmnDiagramVersionTO) => {
+        if(a.bpmnDiagramVersionRelease < b.bpmnDiagramVersionRelease){
+            return -1;
         }
-    }, [bpmnDiagramVersionTOS, currentId, dataSynced])
+        if(a.bpmnDiagramVersionRelease > b.bpmnDiagramVersionRelease){
+            return 1;
+        }
+        if(a.bpmnDiagramVersionRelease === b.bpmnDiagramVersionRelease){
+            if(a.bpmnDiagramVersionMilestone < b.bpmnDiagramVersionMilestone){
+                return -1;
+            }
+            if(a.bpmnDiagramVersionMilestone > b.bpmnDiagramVersionMilestone){
+                return 1;
+            }
+        }
+        return 0;
+    }
 
     const fetchVersions = useCallback(() => {
         try {
@@ -222,7 +237,6 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     }
     const removeDiagram = () => {
         dispatch(deleteDiagram(props.repoId, props.diagramId))
-        console.log("Clicked Delete")
     }
     const openSettings = (event: any) => {
         event.stopPropagation()
@@ -237,7 +251,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     }
     const closeVersions = (event: any): void => {
         event.stopPropagation();
-        dispatch({type: GET_VERSIONS, versions: undefined})
+        dispatch({type: GET_VERSIONS, versions: []})
         setOpen(false);
 
     }

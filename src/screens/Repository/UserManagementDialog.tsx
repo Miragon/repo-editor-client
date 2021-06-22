@@ -37,7 +37,7 @@ const useStyles = makeStyles(() => ({
 
 const UserManagementDialog: React.FC<Props> = props => {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const { open, onCancelled } = props;
 

@@ -4,8 +4,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/reducers/rootReducer";
 import {makeStyles} from "@material-ui/styles";
 import DiagramListItem from "./DiagramListItem";
-import {fetchDiagramsFromRepo} from "../../store/actions/diagramAction";
+import {fetchDiagramsFromRepo, GET_VERSIONS, SYNC_STATUS} from "../../store/actions/diagramAction";
 import {Card} from "@material-ui/core";
+import {getAllVersions} from "../../store/actions";
 
 
 const useStyles = makeStyles(() => ({
@@ -36,8 +37,11 @@ const DiagramDetails: React.FC = (() => {
         }
         if(!synced){
             dispatch(fetchDiagramsFromRepo(repoId))
+            dispatch({type: SYNC_STATUS, dataSynced: true})
         }
     }, [dispatch, synced])
+
+
 
     useEffect(() => {
         fetchActiveDiagrams(activeRepo?.bpmnRepositoryId)

@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {IconButton, ListItem, ListItemSecondaryAction} from "@material-ui/core";
+import {IconButton, ListItem, ListItemSecondaryAction, Typography} from "@material-ui/core";
 import {Add} from "@material-ui/icons";
 import {BpmnDiagramTO, BpmnRepositoryRequestTO, UserInfoTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
@@ -30,6 +30,18 @@ const useStyles = makeStyles(() => ({
         "&:nth-child(5n)>div": {
             marginRight: 0
         }
+    },
+    listItem: {
+      display: "flex",
+      flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    diagramName: {
+        color: "black",
+        flexGrow: 3
+    },
+    repoName: {
+        color: "lightgrey",
     }
 }));
 
@@ -61,6 +73,7 @@ const DiagramSearchBar: React.FC = () => {
         if(diagram === ""){
             setDisplayResult(false)
         }
+        console.log(diagram)
     }, [open, searchedDiagrams, diagram, displayResult]);
 
 
@@ -88,12 +101,17 @@ const DiagramSearchBar: React.FC = () => {
         dispatch(diagramAction.searchDiagram(input))
     }, [dispatch])
 
+
+
+
+//            getOptionLabel={(option) => option.bpmnDiagramName + "  " + <Typography>{getRepoName(option.bpmnRepositoryId)}</Typography>}
     return (
         <>
             <div className={classes.container}>
                 <ErrorBoundary>
         <Autocomplete
             id="DiagramSearchBar"
+            freeSolo={true}
             style={{ width: "100%" }}
             open={open}
             onOpen={() => {
@@ -102,17 +120,18 @@ const DiagramSearchBar: React.FC = () => {
             onClose={() => {
                 setOpen(false);
             }}
+
             getOptionSelected={(option, value) => option.bpmnDiagramName === value.bpmnDiagramName}
-            getOptionLabel={(option) => option.bpmnDiagramName}
+            getOptionLabel={option => option.bpmnDiagramName + `  (${getRepoName(option.bpmnRepositoryId)})`}
             options={options}
             loading={loading}
-            onChange={(event, value) => setDiagram(value?.bpmnDiagramName)}
             renderInput={(params) => (
                 <TextField
                     {...params}
                     label="Search Diagram"
                     variant="outlined"
                     onChange={(event) => onChangeWithTimer(event.target.value)}
+                    value={diagram}
                     InputProps={{
                         ...params.InputProps,
                         endAdornment: (
@@ -142,7 +161,7 @@ const DiagramSearchBar: React.FC = () => {
                             repositoryId={diagram.bpmnRepositoryId} />
                     </a>
                 ))}
-                {searchedDiagrams?.length === 0 && (
+                {displayResult && searchedDiagrams?.length === 0 && (
                     <span>No Results</span>
                 )}
 </div>

@@ -10,8 +10,14 @@ import {searchUsers} from "../../store/actions/userAction";
 import {IconButton, ListItem, ListItemSecondaryAction} from "@material-ui/core";
 import {Add} from "@material-ui/icons";
 import * as assignmentAction from "../../store/actions/assignmentAction";
+import {makeStyles} from "@material-ui/styles";
 
-
+const useStyles = makeStyles(() => ({
+    listItem: {
+        paddingLeft: "0px",
+        paddingRight: "60px"
+    }
+}));
 interface Props {
     repoId: string;
 }
@@ -25,6 +31,7 @@ function sleep(delay = 0) {
 let timeout: NodeJS.Timeout | undefined = undefined;
 
 const AddUserSearchBar: React.FC<Props> = props => {
+    const classes = useStyles();
     const dispatch = useDispatch();
 
     const searchedUsers: Array<UserInfoTO> = useSelector((state: RootState) => state.searchedUsers.searchedUsers)
@@ -90,9 +97,10 @@ const AddUserSearchBar: React.FC<Props> = props => {
 
 
     return (
-        <ListItem>
+        <ListItem className={classes.listItem}>
         <Autocomplete
             id="UserSearchBar"
+            freeSolo={true}
             style={{ width: 500 }}
             open={open}
             onOpen={() => {
@@ -105,7 +113,6 @@ const AddUserSearchBar: React.FC<Props> = props => {
             getOptionLabel={(option) => option.userName}
             options={options}
             loading={loading}
-            onChange={(event, value) => setUser(value?.userName)}
             renderInput={(params) => (
                 <TextField
                     {...params}

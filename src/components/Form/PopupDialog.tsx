@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         border: "none !important"
     },
     titleWrapper: {
-        padding: "16px 24px 0px 24px"
+        padding: "16px 24px 0px 24px",
     },
     error: {
         margin: "calc(0.5rem + 3px)"

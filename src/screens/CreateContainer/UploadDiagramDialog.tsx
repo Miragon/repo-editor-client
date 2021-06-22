@@ -31,14 +31,12 @@ interface Props {
 const UploadDiagramDialog: React.FC<Props> = props => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {
-        open, onCancelled
-    } = props;
+
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [repository, setRepository] = useState("");
+    const [repository, setRepository] = useState<string>(props.repo ? props.repo.bpmnRepositoryId : "");
     const [file, setFile] = useState<string>("");
 
     const allRepos: Array<BpmnRepositoryRequestTO> = useSelector((state: RootState) => state.repos.repos)
@@ -46,15 +44,19 @@ const UploadDiagramDialog: React.FC<Props> = props => {
 
 
     useEffect(() => {
-        if(uploadedDiagram != undefined){
+        if(uploadedDiagram){
             dispatch(versionAction.createOrUpdateVersion(uploadedDiagram.bpmnRepositoryId, uploadedDiagram.bpmnDiagramId, file, BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE))
         }
     }, [dispatch, uploadedDiagram])
 
+    useEffect(() => {
+        setRepository(props.repo?.bpmnRepositoryId)
+    }, [props.repo])
 
     const onCreate = useCallback(async () => {
         try{
             dispatch(diagramAction.uploadDiagram(repository, title, description))
+            props.onCancelled()
         } catch (err) {
             dispatch({type: UNHANDLEDERROR, errorMessage: err});
         }
@@ -85,10 +87,10 @@ const UploadDiagramDialog: React.FC<Props> = props => {
         <PopupDialog
             error={error}
             onCloseError={() => setError(undefined)}
-            open={open}
+            open={props.open}
             title="Upload Diagram File"
             secondTitle="Cancel"
-            onSecond={onCancelled}
+            onSecond={props.onCancelled}
             firstTitle="Create"
             onFirst={onCreate}>
 
@@ -103,14 +105,13 @@ const UploadDiagramDialog: React.FC<Props> = props => {
 
                 <SettingsSelect
                     disabled={false}
-                    value={repository}
+                    value={props.repo ? props.repo.bpmnRepositoryId : repository}
                     label="Target Repository"
                     onChanged={setRepository}>
                     {props.repo ?
                         <MenuItem
                             key={props.repo?.bpmnRepositoryId}
-                            value={props.repo?.bpmnRepositoryId}
-                            selected={true} >
+                            value={props.repo?.bpmnRepositoryId} >
                             {props.repo?.bpmnRepositoryName}
                         </MenuItem>
                         :

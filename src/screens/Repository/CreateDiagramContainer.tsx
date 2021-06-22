@@ -88,7 +88,8 @@ const CreateDiagramContainer: React.FC = observer(() => {
 
             <UploadDiagramDialog
                 open={uploadDiagramOpen}
-                onCancelled={() => setUploadDiagramOpen(false)} />
+                onCancelled={() => setUploadDiagramOpen(false)}
+                repo={activeRepo}/>
         </>
     );
 });
