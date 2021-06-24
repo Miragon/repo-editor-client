@@ -1,7 +1,7 @@
 import {makeStyles} from "@material-ui/core/styles";
 import DescriptionIcon from '@material-ui/icons/Description';
 import PeopleIcon from '@material-ui/icons/People';
-import React, {useEffect} from "react";
+import React from "react";
 
 const useStyles = makeStyles((theme) => ({
     repoBox: {

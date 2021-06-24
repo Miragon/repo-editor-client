@@ -1,9 +1,5 @@
-import {observer} from "mobx-react";
 import React, {useCallback, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import CreateContainer from "../CreateContainer/CreateContainer";
-import {BpmnDiagramTO, BpmnRepositoryRequestTO} from "../../api/models";
-import {RootState} from "../../store/reducers/rootReducer";
+import {useDispatch} from "react-redux";
 import RepositoryDetails from "./RepositoryDetails";
 import DiagramDetails from "./DiagramDetails";
 import {useParams} from "react-router";
@@ -18,7 +14,6 @@ const Repository: React.FC = (() => {
     const [ready, setReady] = useState<boolean>(false);
 
     useEffect(() => {
-        console.log(repoId)
         getRepo()
     })
 

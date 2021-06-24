@@ -1,4 +1,4 @@
-import React, {Dispatch} from "react";
+import React from "react";
 import {IconButton, makeStyles} from "@material-ui/core";
 import {Replay} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
@@ -19,13 +19,12 @@ const useStyles = makeStyles(() => ({
 
 interface Props {
     errorMessage: string;
-    retryMethod: any;
+    retryMethod: () => void;
 }
 
 
 const Toast: React.FC<Props> = props => {
     const classes = useStyles();
-    const dispatch = useDispatch();
 
     return (
     <div className={classes.container}>
@@ -33,9 +32,7 @@ const Toast: React.FC<Props> = props => {
             {props.errorMessage}
         </p>
         <IconButton className={classes.retryButton} onClick={() => {
-            console.log("called")
             props.retryMethod()
-
         }}>
             <Replay/>
         </IconButton>

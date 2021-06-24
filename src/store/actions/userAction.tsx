@@ -1,9 +1,5 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import {
-    BpmnDiagramVersionUploadTO,
-    BpmnDiagramVersionUploadTOSaveTypeEnum,
-} from "../../api/models";
 import helpers from "../../constants/Functions";
 import {HANDLEDERROR, SEARCH_USERS, UNHANDLEDERROR, USERQUERY_EXECUTED} from "./diagramAction";
 import {defaultErrors} from "../../components/Exception/defaultErrors";

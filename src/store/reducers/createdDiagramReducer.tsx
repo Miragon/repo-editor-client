@@ -1,5 +1,5 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {CREATED_DIAGRAM, SYNC_STATUS} from "../actions";
+import {CREATED_DIAGRAM} from "../actions";
 
 const initialState = {
     createdDiagram: null

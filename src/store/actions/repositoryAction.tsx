@@ -144,3 +144,47 @@ export const createRepository = (bpmnRepositoryName: string, bpmnRepositoryDescr
     }
 }
 
+export const updateRepository = (bpmnRepositoryId: string, bpmnRepositoryName: string, bpmnRepositoryDescription: string) => {
+    return async (dispatch: Dispatch) => {
+        const repositoryController = new api.BpmnRepositoryControllerApi() //config was passed before
+        try {
+            const newBpmnRepositoryTO: NewBpmnRepositoryTO = {
+                bpmnRepositoryName: bpmnRepositoryName,
+                bpmnRepositoryDescription: bpmnRepositoryDescription
+            }
+            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const response = await repositoryController.updateRepository(newBpmnRepositoryTO, bpmnRepositoryId, config)
+            if(Math.floor(response.status/100) === 2){
+                dispatch({type: SUCCESS, successMessage: "Repository updated"})
+                dispatch({type: SYNC_STATUS, dataSynced: false})
+            }
+            else {
+                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response), retryMethod: (() => dispatch({type: ActionType.UPDATE_REPOSITORY, payload: [bpmnRepositoryId, bpmnRepositoryName, bpmnRepositoryDescription] }))})
+            }
+        } catch (error){
+            if(error.response){
+                switch(error.response.data.status) {
+                    case "400":
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"], retryMethod: (() => dispatch({type: ActionType.UPDATE_REPOSITORY, payload: [bpmnRepositoryId, bpmnRepositoryName, bpmnRepositoryDescription] }))})
+                        return;
+                    case "401":
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"], retryMethod: (() => dispatch({type: ActionType.UPDATE_REPOSITORY, payload: [bpmnRepositoryId, bpmnRepositoryName, bpmnRepositoryDescription] }))})
+                        return;
+                    case "403":
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"], retryMethod: (() => dispatch({type: ActionType.UPDATE_REPOSITORY, payload: [bpmnRepositoryId, bpmnRepositoryName, bpmnRepositoryDescription] }))})
+                        return;
+                    case "404":
+                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"], retryMethod: (() => dispatch({type: ActionType.UPDATE_REPOSITORY, payload: [bpmnRepositoryId, bpmnRepositoryName, bpmnRepositoryDescription] }))})
+                        return;
+                    case "409":
+                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message, retryMethod: (() => dispatch({type: ActionType.UPDATE_REPOSITORY, payload: [bpmnRepositoryId, bpmnRepositoryName, bpmnRepositoryDescription] }))})
+                        return;
+                    default:
+                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`, retryMethod: (() => dispatch({type: ActionType.UPDATE_REPOSITORY, payload: [bpmnRepositoryId, bpmnRepositoryName, bpmnRepositoryDescription] }))})
+                        return;
+
+                }
+            }
+        }
+    }
+}

@@ -1,8 +1,6 @@
 import {observer} from "mobx-react";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import DropdownButton, {DropdownButtonItem} from "../../components/Form/DropdownButton";
-import SimpleButton from "../../components/Form/SimpleButton";
-import CreateRepoDialog from "../CreateContainer/CreateRepoDialog";
 import CreateDiagramDialog from "../CreateContainer/CreateDiagramDialog";
 import UploadDiagramDialog from "../CreateContainer/UploadDiagramDialog";
 import {makeStyles} from "@material-ui/core/styles";

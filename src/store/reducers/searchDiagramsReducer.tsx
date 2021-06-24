@@ -1,6 +1,5 @@
-import {UserInfoTO} from "../../api/models";
 import {CaseReducer} from "@reduxjs/toolkit";
-import {SEARCH_DIAGRAMS, SEARCH_USERS} from "../actions";
+import {SEARCH_DIAGRAMS} from "../actions";
 import {BpmnDiagramTO} from "../../models";
 
 const initialState = {

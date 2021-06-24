@@ -9,7 +9,6 @@ import {ActionType} from "./actions";
 export const DEFAULT_FILE = "Default XML String"
 
 export const createOrUpdateVersion = (bpmnRepositoryId: string, bpmnDiagramId: string, file: string, saveType: BpmnDiagramVersionUploadTOSaveTypeEnum, comment?: string) => {
-    console.log("Creating Version...")
 
     return async (dispatch: Dispatch) => {
         const versionController = new api.BpmnDiagramVersionControllerApi()
@@ -60,7 +59,6 @@ export const createOrUpdateVersion = (bpmnRepositoryId: string, bpmnDiagramId: s
 export const getAllVersions = (bpmnRepositoryId: string, bpmnDiagramId: string) => {
     return async (dispatch: Dispatch) => {
         try {
-
             const versionController = new api.BpmnDiagramVersionControllerApi()
             const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
             const response = await versionController.getAllVersions(bpmnRepositoryId, bpmnDiagramId, config)

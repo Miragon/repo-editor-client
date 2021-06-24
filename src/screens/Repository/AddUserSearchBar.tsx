@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from "react-redux";
 import * as userAction from "../../store/actions/userAction";
 import {UserInfoTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
-import {searchUsers} from "../../store/actions/userAction";
 import {IconButton, ListItem, ListItemSecondaryAction} from "@material-ui/core";
 import {Add} from "@material-ui/icons";
 import * as assignmentAction from "../../store/actions/assignmentAction";
@@ -95,6 +94,13 @@ const AddUserSearchBar: React.FC<Props> = props => {
 
     }, [dispatch, user])
 
+    const onInputChange = (event: any, input: string | UserInfoTO | null) => {
+        (typeof input === "string") ? setUser(input) : setUser("");
+    }
+
+    const updateState = (event: any) => {
+        setUser(event.target.textContent)
+    }
 
     return (
         <ListItem className={classes.listItem}>
@@ -112,6 +118,7 @@ const AddUserSearchBar: React.FC<Props> = props => {
             getOptionSelected={(option, value) => option.userName === value.userName}
             getOptionLabel={(option) => option.userName}
             options={options}
+            onChange={updateState}
             loading={loading}
             renderInput={(params) => (
                 <TextField

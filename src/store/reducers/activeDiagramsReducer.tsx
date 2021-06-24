@@ -1,5 +1,5 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {BpmnDiagramTO, BpmnRepositoryRequestTO} from "../../api/models";
+import {BpmnDiagramTO} from "../../api/models";
 import {ACTIVE_DIAGRAMS} from "../actions/repositoryAction";
 
 const initialState = {

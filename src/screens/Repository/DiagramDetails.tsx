@@ -4,9 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/reducers/rootReducer";
 import {makeStyles} from "@material-ui/styles";
 import DiagramListItem from "./DiagramListItem";
-import {fetchDiagramsFromRepo, GET_VERSIONS, SYNC_STATUS} from "../../store/actions/diagramAction";
+import {fetchDiagramsFromRepo, SYNC_STATUS} from "../../store/actions/diagramAction";
 import {Card} from "@material-ui/core";
-import {getAllVersions} from "../../store/actions";
 
 
 const useStyles = makeStyles(() => ({
@@ -48,8 +47,6 @@ const DiagramDetails: React.FC = (() => {
     }, [fetchActiveDiagrams, activeRepo])
 
     const openModeler = (repoId: string, diagramId: string) => {
-        console.error("err");
-
         window.open(`/modeler/#/${repoId}/${diagramId}/latest/`, '_blank');
     }
 

@@ -1,19 +1,14 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import PopupDialog from "../../components/Form/PopupDialog";
-import * as assignmentAction from "../../store/actions/assignmentAction";
-import * as userAction from "../../store/actions/userAction";
 import {getAllAssignedUsers} from "../../store/actions/assignmentAction";
 import {AssignmentTORoleEnumEnum, UserInfoTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
-import {IconButton, List, ListItem, ListItemSecondaryAction, Paper, TextField} from "@material-ui/core";
-import {Add} from "@material-ui/icons";
+import {List, Paper} from "@material-ui/core";
 import {AssignmentTO} from "../../api/models/assignment-to";
 import UserListItem from "./UserListItem";
-import SettingsTextField from "../../components/Form/SettingsTextField";
 import {makeStyles} from "@material-ui/core/styles";
 import {HANDLEDERROR, SEARCH_USERS} from "../../store/actions/diagramAction";
-import {Autocomplete} from "@material-ui/lab";
 import AddUserSearchBar from "./AddUserSearchBar";
 
 interface Props {
@@ -36,7 +31,6 @@ const useStyles = makeStyles(() => ({
 
 
 const UserManagementDialog: React.FC<Props> = props => {
-    const classes = useStyles();
     const dispatch = useDispatch();
 
     const { open, onCancelled } = props;
@@ -46,7 +40,6 @@ const UserManagementDialog: React.FC<Props> = props => {
     const currentUser: UserInfoTO = useSelector((state: RootState) => state.currentUserInfo.currentUserInfo)
 
     const [error, setError] = useState<string | undefined>(undefined);
-    const [user, setUser] = useState<string>("");
     const [hasAdminPermissions, setHasAdminPermissions] = useState<boolean>(false);
 
 
@@ -83,7 +76,6 @@ const UserManagementDialog: React.FC<Props> = props => {
         }, [assignmentTOs])
 
     const onCancel= (() => {
-        setUser("")
         dispatch({type: SEARCH_USERS, searchedUsers: []})
         onCancelled()
     })

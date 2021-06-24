@@ -1,6 +1,5 @@
-import {UserInfoTO} from "../../api/models";
 import {CaseReducer} from "@reduxjs/toolkit";
-import {SEARCH_USERS, USERQUERY_EXECUTED} from "../actions/diagramAction";
+import {USERQUERY_EXECUTED} from "../actions/diagramAction";
 
 const initialState = {
     resultsCount: 0

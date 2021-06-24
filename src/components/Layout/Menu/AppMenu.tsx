@@ -1,7 +1,7 @@
 import {useAuth0} from "@auth0/auth0-react";
 import {Drawer} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import {AccountCircle, BarChart, Brush, ExitToApp, FormatShapes, Help, Home, PowerSettingsNew, Widgets} from "@material-ui/icons";
+import {AccountCircle, BarChart, Brush, ExitToApp, FormatShapes, Help, Home, Widgets} from "@material-ui/icons";
 import React, {useCallback, useRef, useState} from "react";
 import MenuSpacer from "../../Menu/MenuSpacer";
 import DrawerApp from "./AppMenu/DrawerApp";

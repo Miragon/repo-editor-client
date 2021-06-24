@@ -5,10 +5,9 @@ import React, {useCallback, useState} from "react";
 import {useDispatch} from "react-redux";
 import * as versionAction from "../../store/actions/versionAction";
 import SettingsSelect from "../../components/Form/SettingsSelect";
-import {BpmnDiagramVersionTOSaveTypeEnum, BpmnDiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
+import {BpmnDiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import {MenuItem} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
-import {getAllVersions} from "../../store/actions/versionAction";
 
 const useStyles = makeStyles(() => ({
     container: {

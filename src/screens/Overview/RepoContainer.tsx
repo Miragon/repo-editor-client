@@ -7,10 +7,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/reducers/rootReducer";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import 'react-toastify/dist/ReactToastify.css';
-import {fetchDiagramsFromRepo, SYNC_STATUS} from "../../store/actions/diagramAction";
 import {ACTIVE_REPO, fetchRepositories} from "../../store/actions/repositoryAction";
 import {useHistory} from "react-router-dom";
-import Repository from "../Repository/Repository";
 
 
 const useStyles = makeStyles(() => ({

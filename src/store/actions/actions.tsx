@@ -1,7 +1,3 @@
-import {CaseReducer} from "@reduxjs/toolkit";
-import {useDispatch} from "react-redux";
-import {createDiagram} from "./diagramAction";
-
 export enum ActionType {
     FETCH_FAVORITE_DIAGRAMS,
     FETCH_RECENT_DIAGRAMS,
@@ -17,7 +13,8 @@ export enum ActionType {
     GET_ALL_VERSIONS,
     GET_ALL_ASSIGNED_USERS,
     CREATE_OR_UPDATE_USER_ASSIGNMENT,
-    DELETE_ASSIGNMENT
+    DELETE_ASSIGNMENT,
+    UPDATE_REPOSITORY
 }
 
 

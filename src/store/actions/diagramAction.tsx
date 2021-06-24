@@ -1,15 +1,10 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import helpers from "../../constants/Functions";
-import {BpmnDiagramUploadTO, BpmnDiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
+import {BpmnDiagramUploadTO} from "../../api/models";
 import {defaultErrors} from "../../components/Exception/defaultErrors";
 import {ACTIVE_DIAGRAMS} from "./repositoryAction";
 import {ActionType} from "./actions";
-import {BpmnDiagramTO} from "../../models";
-import * as versionAction from "../../store/actions/versionAction"
-import {createOrUpdateVersion, DEFAULT_FILE} from "../../store/actions/versionAction"
-import {useCallback} from "react";
-import {useDispatch} from "react-redux";
 
 export const GET_FAVORITE = "GET_FAVORITE"
 export const GET_RECENT = "GET_RECENT"
@@ -111,7 +106,7 @@ export const fetchRecentDiagrams = () => {
     }
 }
 
-export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string, bpmnDiagramDescription: string, fileType?: string) => {
+export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string, bpmnDiagramDescription: string, fileType?: string, bpmnDiagramId?: string) => {
     return async (dispatch: Dispatch) => {
         const diagramController = new api.BpmnDiagramControllerApi()
         try{
@@ -119,12 +114,19 @@ export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
                 bpmnDiagramName: bpmnDiagramName,
                 bpmnDiagramDescription: bpmnDiagramDescription,
                 fileType: fileType,
+                bpmnDiagramId: bpmnDiagramId ? bpmnDiagramId : null
+            }
+            let message = "Diagram created"
+            if(bpmnDiagramId){
+                message = "Diagram updated"
             }
             const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
             const response = await diagramController.createOrUpdateDiagram(bpmnDiagramUploadTO, bpmnRepositoryId, config)
             if(Math.floor(response.status/100) === 2) {
-                dispatch({type: SUCCESS, successMessage: "Diagram Created"})
-                dispatch({type: CREATED_DIAGRAM, createdDiagram: response.data})
+                dispatch({type: SUCCESS, successMessage: message})
+                if(!bpmnDiagramId){
+                    dispatch({type: CREATED_DIAGRAM, createdDiagram: response.data})
+                }
                 dispatch({type: SYNC_STATUS, dataSynced: false})
             }
             else {
@@ -148,7 +150,6 @@ export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
                         dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"], retryMethod: (() => dispatch({type: ActionType.CREATE_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, "BPMN"] }))})
                         return;
                     case "409":
-                        console.log("in 409 case")
                         dispatch({type: HANDLEDERROR, errorMessage: "SomeMessage", retryMethod: (() => dispatch({type: ActionType.CREATE_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, "BPMN"] }))})
                         return;
                     default:

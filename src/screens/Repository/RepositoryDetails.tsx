@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import {BpmnDiagramTO, BpmnRepositoryRequestTO} from "../../api/models";
+import {BpmnRepositoryRequestTO} from "../../api/models";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/reducers/rootReducer";
-import {People, Description}  from '@material-ui/icons/';
+import {Description, People} from '@material-ui/icons/';
 import UserManagementDialog from "./UserManagementDialog";
-import {Icon, IconButton} from "@material-ui/core";
+import {IconButton} from "@material-ui/core";
 import {Settings} from "@material-ui/icons";
-import RepoManagementDialog from "./RepoManagementDialog";
+import EditRepoDialog from "./EditRepoDialog";
 
 
 const useStyles = makeStyles(() => ({
@@ -78,7 +78,7 @@ const RepositoryDetails: React.FC = (() => {
                     repoId={activeRepo.bpmnRepositoryId}
                 />
 
-                <RepoManagementDialog
+                <EditRepoDialog
                     open={repoManagementOpen}
                     onCancelled={() => setRepoManagementOpen(false)}
                     repoId={activeRepo.bpmnRepositoryId}

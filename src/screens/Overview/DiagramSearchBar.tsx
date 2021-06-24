@@ -3,8 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {IconButton, ListItem, ListItemSecondaryAction, Typography} from "@material-ui/core";
-import {Add} from "@material-ui/icons";
 import {BpmnDiagramTO, BpmnRepositoryRequestTO, UserInfoTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
 import {makeStyles} from "@material-ui/styles";
@@ -70,12 +68,13 @@ const DiagramSearchBar: React.FC = () => {
         if(open) {
             setOptions(searchedDiagrams)
         }
+    }, [open, searchedDiagrams, diagram, displayResult]);
+
+    useEffect(() => {
         if(diagram === ""){
             setDisplayResult(false)
         }
-        console.log(diagram)
-    }, [open, searchedDiagrams, diagram, displayResult]);
-
+    }, [diagram])
 
     const getRepoName = ((repoId: string) => {
         const assignedRepo = repos.find(repo => repo.bpmnRepositoryId === repoId)
@@ -99,10 +98,13 @@ const DiagramSearchBar: React.FC = () => {
 
     const fetchDiagramSuggestion = useCallback((input: string) => {
         dispatch(diagramAction.searchDiagram(input))
+        setDisplayResult(true)
     }, [dispatch])
 
 
-
+    const updateState = (event: any) => {
+        setDiagram(event.target.textContent)
+    }
 
 //            getOptionLabel={(option) => option.bpmnDiagramName + "  " + <Typography>{getRepoName(option.bpmnRepositoryId)}</Typography>}
     return (
@@ -120,9 +122,9 @@ const DiagramSearchBar: React.FC = () => {
             onClose={() => {
                 setOpen(false);
             }}
-
             getOptionSelected={(option, value) => option.bpmnDiagramName === value.bpmnDiagramName}
             getOptionLabel={option => option.bpmnDiagramName + `  (${getRepoName(option.bpmnRepositoryId)})`}
+            onChange={updateState}
             options={options}
             loading={loading}
             renderInput={(params) => (
@@ -172,3 +174,6 @@ const DiagramSearchBar: React.FC = () => {
 }
 
 export default DiagramSearchBar;
+
+
+

@@ -1,6 +1,7 @@
 import React, {useCallback, useRef, useState} from "react";
 import {
-    ClickAwayListener, Divider,
+    ClickAwayListener,
+    Divider,
     Grow,
     IconButton,
     ListItem,
@@ -19,7 +20,6 @@ import {Theme} from "@material-ui/core/styles";
 import {DropdownButtonItem} from "../../components/Form/DropdownButton";
 import {useDispatch} from "react-redux";
 import * as assignmentAction from "../../store/actions/assignmentAction";
-import {deleteAssignment} from "../../store/actions/assignmentAction";
 
 
 interface Props {

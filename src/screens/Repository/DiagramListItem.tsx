@@ -1,27 +1,33 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {
+    ClickAwayListener,
+    Collapse,
+    Grow,
+    IconButton,
+    MenuItem,
+    MenuList,
+    Paper,
+    Popper,
     Table,
     TableBody,
     TableCell,
-    TableContainer,
     TableHead,
-    TableRow,
-    Paper,
-    Collapse,
-    IconButton, Popper, Grow, ClickAwayListener, MenuList, MenuItem
+    TableRow
 } from "@material-ui/core"
 import theme from "../../theme";
-import {Delete, MoreVert, KeyboardArrowDown, KeyboardArrowUp} from '@material-ui/icons';
-import DropdownButton, {DropdownButtonItem} from "../../components/Form/DropdownButton";
+import {KeyboardArrowDown, KeyboardArrowUp, MoreVert} from '@material-ui/icons';
+import {DropdownButtonItem} from "../../components/Form/DropdownButton";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllVersions} from "../../store/actions/versionAction";
-import {AssignmentWithUserNameTORoleEnumEnum, BpmnDiagramVersionTO} from "../../api/models";
+import {BpmnDiagramVersionTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
-import {deleteDiagram, GET_VERSIONS, SYNC_STATUS} from "../../store/actions/diagramAction";
+import {deleteDiagram, GET_VERSIONS} from "../../store/actions/diagramAction";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import clsx from "clsx";
 import CreateVersionDialog from "./CreateVersionDialog";
+import EditDiagramDialog from "./EditDiagramDialog";
+
 const useStyles = makeStyles(() => ({
     listWithVersions: {
         display: "flex",
@@ -140,6 +146,14 @@ const useStyles = makeStyles(() => ({
         borderBottomLeftRadius: "4px",
         borderTopLeftRadius: "4px",
     },
+    menuItemDivider: {
+        height: "1px",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        opacity: "1 !important",
+        marginTop: "0.25rem",
+        marginBottom: "0.5rem",
+        padding: 0
+    },
     versionsButtonClose: {
         bottom: "0px",
         width: "100%",
@@ -177,6 +191,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const [currentId, setCurrentId] = useState<string>("");
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
     const [createVersionOpen, setCreateVersionOpen] = useState<boolean>(false);
+    const [editDiagramOpen, setEditDiagramOpen] = useState<boolean>(false);
 
     const ref = useRef<HTMLButtonElement>(null);
 
@@ -256,7 +271,6 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
     }
     const openModeler = (repoId: string, diagramId: string, versionId?: string) => {
-        console.error("err");
         if(versionId){
             window.open(`/modeler/#/${repoId}/${diagramId}/${versionId}/`, '_blank');
         } else {
@@ -277,20 +291,36 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
 
     const options: DropdownButtonItem[] = [
-        {
-            id: "DeleteDiagram",
-            label: "Delete Diagram",
-            type: "button",
-            onClick: () => {
-                removeDiagram()
-            }
-        },
+
         {
             id: "CreateVersion",
             label: "Create new Version",
             type: "button",
             onClick: () => {
                 setCreateVersionOpen(true)
+            }
+        },
+        {
+            id: "EditDiagram",
+            label: "Edit Diagram",
+            type: "button",
+            onClick: () => {
+                setEditDiagramOpen(true)
+            }
+
+        },
+        {
+            id: "divider1",
+            type: "divider",
+            label: "",
+            onClick: () => { /* Do nothing */ }
+        },
+        {
+            id: "DeleteDiagram",
+            label: "Delete Diagram",
+            type: "button",
+            onClick: () => {
+                removeDiagram()
             }
         }
     ];
@@ -388,7 +418,8 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                                     key={option.id}
                                     disabled={option.disabled || option.type !== "button"}
                                     className={clsx(
-                                        classes.menuItem
+                                        classes.menuItem,
+                                        option.type === "divider" && classes.menuItemDivider
                                     )}
                                     onClick={() => {
                                         if (option.onClick) {
@@ -415,6 +446,14 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                     repoId={props.repoId}
                     diagramId={props.diagramId}
                     diagramTitle={props.diagramTitle} />
+
+                <EditDiagramDialog
+                    open={editDiagramOpen}
+                    onCancelled={() => setEditDiagramOpen(false)}
+                    repoId={props.repoId}
+                    diagramId={props.diagramId}
+                    diagramName={props.diagramTitle}
+                    diagramDescription={props.description} />
     </>
         );
 });

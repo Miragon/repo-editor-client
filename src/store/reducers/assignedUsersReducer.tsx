@@ -1,6 +1,4 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {ACTIVE_REPO} from "../actions/repositoryAction";
-import {UserInfoTO} from "../../api/models";
 import {ASSIGNED_USERS} from "../actions/diagramAction";
 import {AssignmentTO} from "../../api/models/assignment-to";
 

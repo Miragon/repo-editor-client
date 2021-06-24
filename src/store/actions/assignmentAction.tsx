@@ -1,10 +1,11 @@
-import {Dispatch} from "@reduxjs/toolkit";
+import {Action, Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import helpers from "../../constants/Functions";
 import {defaultErrors} from "../../components/Exception/defaultErrors";
 import {ASSIGNED_USERS, HANDLEDERROR, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "./diagramAction";
 import {AssignmentWithUserNameTO, AssignmentWithUserNameTORoleEnumEnum} from "../../api/models";
 import {ActionType} from "./actions";
+import {handleError, handleFailedCall} from "./errorAction";
 
 export const getAllAssignedUsers = (repoId: string) => {
     return async (dispatch: Dispatch) => {
@@ -54,8 +55,8 @@ export const createOrUpdateUserAssignment = (repoId: string, userName: string, r
     return async (dispatch: Dispatch) => {
         const assignmentController = new api.AssignmentControllerApi()
         let message = ""
-        try{
-            if(!roleEnum){
+        try {
+            if (!roleEnum) {
                 message = "Added User to Repository"
             } else {
                 message = `Changed role of ${userName} to ${roleEnum}`
@@ -68,46 +69,89 @@ export const createOrUpdateUserAssignment = (repoId: string, userName: string, r
             }
             const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
             const response = await assignmentController.createOrUpdateUserAssignment(assignment, config)
-            if(Math.floor(response.status/100) === 2) {
+            if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: SUCCESS, successMessage: message})
                 dispatch({type: SYNC_STATUS, dataSynced: false})
-            }
-            else {
-                console.log("in error")
+            } else {
+                dispatch({
+                    type: UNHANDLEDERROR,
+                    errorMessage: response.status + "" + JSON.stringify(response),
+                    retryMethod: (() => dispatch({
+                        type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT,
+                        payload: [repoId, userName, roleEnum]
+                    }))
+                })
 
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response), retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT, payload: [repoId, userName, roleEnum] }))})
             }
-        } catch (error){
-            if(error.response){
-                switch(error.response.data.status) {
+        } catch (error) {
+            if (error.response) {
+                console.log(error.response)
+                switch (error.response.status.toString()) {
                     case "400":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message, retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT, payload: [repoId, userName, roleEnum] }))})
+                        dispatch({
+                            type: UNHANDLEDERROR,
+                            errorMessage: defaultErrors["400"],
+                            retryMethod: (() => dispatch({
+                                type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT,
+                                payload: [repoId, userName, roleEnum]
+                            }))
+                        })
                         return;
                     case "401":
-                        console.log("401 case")
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message, retryMethod: (() => {
-                            console.log("in dispatch")
-                            dispatch({type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT, payload: [repoId, userName, roleEnum]
 
-                            })
-                            })})
+                        dispatch({
+                            type: UNHANDLEDERROR,
+                            errorMessage: error.response.data.message,
+                            retryMethod: (() => dispatch({
+                                type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT,
+                                payload: [repoId, userName, roleEnum]
+                            }))
+                        })
                         return;
                     case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"], retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT, payload: [repoId, userName, roleEnum] }))})
+                        dispatch({
+                            type: UNHANDLEDERROR,
+                            errorMessage: defaultErrors["403"],
+                            retryMethod: (() => dispatch({
+                                type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT,
+                                payload: [repoId, userName, roleEnum]
+                            }))
+                        })
                         return;
                     case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"], retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT, payload: [repoId, userName, roleEnum] }))})
+                        dispatch({
+                            type: UNHANDLEDERROR,
+                            errorMessage: defaultErrors["404"],
+                            retryMethod: (() => dispatch({
+                                type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT,
+                                payload: [repoId, userName, roleEnum]
+                            }))
+                        })
                         return;
                     case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message, retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT, payload: [repoId, userName, roleEnum] }))})
+                        dispatch({
+                            type: HANDLEDERROR,
+                            errorMessage: error.response.data.message,
+                            retryMethod: (() => dispatch({
+                                type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT,
+                                payload: [repoId, userName, roleEnum]
+                            }))
+                        })
                         return;
                     default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`, retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT, payload: [repoId, userName, roleEnum] }))})
+                        dispatch({
+                            type: UNHANDLEDERROR,
+                            errorMessage: `Error ${error.response.status}`,
+                            retryMethod: (() => dispatch({
+                                type: ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT,
+                                payload: [repoId, userName, roleEnum]
+                            }))
+                        })
                         return;
 
                 }
+                console.log(error)
             }
-            console.log(error)
         }
     }
 }

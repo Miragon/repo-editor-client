@@ -12,7 +12,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {RootState} from "../../store/reducers/rootReducer";
 import 'react-toastify/dist/ReactToastify.css';
 import {BpmnDiagramTO} from "../../models";
-import {CREATED_DIAGRAM} from "../../store/actions/diagramAction";
 
 interface Props {
     open: boolean;
@@ -34,7 +33,6 @@ const CreateDiagramDialog: React.FC<Props> = props => {
     const createdDiagram: BpmnDiagramTO = useSelector((state: RootState) => state.createdDiagram.createdDiagram)
 
     const onCreate = useCallback(async () => {
-        console.log("Repo: " + repository)
         try{
             dispatch(diagramAction.createDiagram(repository, title, description, props.type))
             props.onCancelled();
@@ -106,11 +104,4 @@ const CreateDiagramDialog: React.FC<Props> = props => {
         </PopupDialog>
     );
 };
-/* inside the settingsSelect paragraph
-                    {repositories.map(repo => (
-                        <MenuItem key={repo.repoId} value={repo.repoId}>
-                            {repo.repoName}
-                        </MenuItem>
-                    ))}
- */
 export default CreateDiagramDialog;
