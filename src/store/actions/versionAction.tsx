@@ -18,7 +18,7 @@ export const createOrUpdateVersion = (bpmnRepositoryId: string, bpmnDiagramId: s
                 bpmnDiagramVersionComment: comment,
                 saveType: saveType
             }
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await versionController.createOrUpdateVersion(bpmnDiagramVersionUploadTO, bpmnRepositoryId, bpmnDiagramId, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: SUCCESS, successMessage: "Version Created"})
@@ -40,7 +40,7 @@ export const getAllVersions = (bpmnRepositoryId: string, bpmnDiagramId: string) 
     return async (dispatch: Dispatch) => {
         try {
             const versionController = new api.BpmnDiagramVersionControllerApi()
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await versionController.getAllVersions(bpmnRepositoryId, bpmnDiagramId, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: GET_VERSIONS, versions: response.data})

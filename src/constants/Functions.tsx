@@ -5,18 +5,18 @@ const helpers = {
     isPositiveInt: function (value: string) {
         return /^\d+$/.test(value);
     },
-    throwError: function(errorMessage: string) {
+    throwError: function (errorMessage: string) {
         throw new Error(errorMessage);
     },
 
-    getClientConfig: function(token: string | null) {
+    getClientConfig: function () {
         return {
-            basePath: "",
-                    "headers": {
-                        'Authorization': `${token}`,
-                    }
+            // basePath: "",
+            //         "headers": {
+            //             'Authorization': `${token}`,
+            //         }
 
-            }
+        }
     }
 }
 

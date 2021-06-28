@@ -101,7 +101,7 @@ const RegisterNewUserScreen: React.FC = () => {
 
         (async () => {
             try {
-                const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+                const config = helpers.getClientConfig()
                 userController.getUserName(config).then(userName => {
                     setUserName(userName.data);
                 })
@@ -117,7 +117,7 @@ const RegisterNewUserScreen: React.FC = () => {
      */
     const handleCreateUserProfile = useCallback(async (): Promise<void> => {
         try {
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             await userController.createUser(config);
             history.push("/");
         } catch (response) {

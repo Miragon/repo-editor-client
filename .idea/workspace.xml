@@ -5,11 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="Exceptions and Repo Handling">
+      <change afterPath="$PROJECT_DIR$/.idea/saveactions_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Default_Changelist]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/EditDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/EditDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/Functions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/Functions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/userAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/userAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +61,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/screens/Repository" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -76,6 +88,19 @@
       <recent name="$PROJECT_DIR$/src/screens/CreateContainer" />
       <recent name="$PROJECT_DIR$/src/screens/Overview" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -108,6 +133,7 @@
       <workItem from="1624342123896" duration="18946000" />
       <workItem from="1624517860625" duration="18089000" />
       <workItem from="1624860658747" duration="15486000" />
+      <workItem from="1624883396236" duration="3196000" />
     </task>
     <task id="LOCAL-00001" summary="Update Modeler URLs">
       <created>1620297569688</created>

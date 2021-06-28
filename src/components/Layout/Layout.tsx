@@ -1,5 +1,4 @@
-import {useAuth0} from "@auth0/auth0-react";
-import {CircularProgress, makeStyles} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import Menu from "./Menu";
 import Router from "./Router";
@@ -53,23 +52,24 @@ const useStyles = makeStyles(() => ({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Layout = (): any => {
 
-
-
     const dispatch = useDispatch()
     const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage)
     const apiErrorRetryMethod: ActionType = useSelector((state: RootState) => state.api.retryMethod)
     const apiErrorRetryPayload: Array<any> = useSelector((state: RootState) => state.api.retryPayload)
     const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage)
 
-
     //#TODO: Add a retry Button to the toast
     useEffect(() => {
-        if(apiErrorState){
+        if (apiErrorState) {
             //toast can contain any component, the Retry Button (and the message: apiErrorState) has to be passed here
-            toast.error(<Toast errorMessage={apiErrorState} retryMethod={apiErrorRetryMethod} retryPayload={apiErrorRetryPayload}/>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
+            toast.error(<Toast errorMessage={apiErrorState} retryMethod={apiErrorRetryMethod} retryPayload={apiErrorRetryPayload}/>, {
+                autoClose: 8000,
+                pauseOnHover: true,
+                role: "alert"
+            })
             //toast.error(apiErrorState, {autoClose: 8000, pauseOnHover: true})
         }
-        if(apiSuccessState){
+        if (apiSuccessState) {
             toast.success(apiSuccessState, {autoClose: 4000, pauseOnHover: true})
             dispatch({type: SUCCESS, successMessage: ""})
         }
@@ -79,83 +79,35 @@ const Layout = (): any => {
     const [userController] = useState<UserControllerApi>(new UserControllerApi());
 
 
-    //const [securityIsOn, setSecurityIsOn] = useState<boolean>(true);
-    const [initializing, setInitializing] = useState<boolean>(false);
-    const [initialized, setInitialized] = useState<boolean>(false);
     const [userDoesExist, setUserDoesExist] = useState<boolean>(false);
-    const {
-        loginWithRedirect,
-        isAuthenticated,
-        isLoading,
-        error,
-        getAccessTokenSilently
-    } = useAuth0();
 
 
     useEffect(() => {
-        if (isAuthenticated && initialized) {
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
-            userController.getUserInfo(config)
-                .then((response) => {
-                    if(response.data) {
-                        setUserDoesExist(true)
-                        dispatch({type: CURRENT_USER_INFO, currentUserInfo: response.data})
-                    } else {
-                        setUserDoesExist(false);
-                    }
+        const config = helpers.getClientConfig()
+        userController.getUserInfo(config)
+            .then((response) => {
+                if (response.data) {
+                    setUserDoesExist(true)
+                    dispatch({type: CURRENT_USER_INFO, currentUserInfo: response.data})
+                } else {
+                    setUserDoesExist(false);
+                }
 
-                })
-                .catch(() => setUserDoesExist(false));
-        }
+            })
+            .catch(() => setUserDoesExist(false));
+    }, [userController, dispatch]);
 
-
-    }, [isAuthenticated, initialized, userController, dispatch]);
-
-
-
-    if (isLoading) {
-        return (
-            <div className={classes.loadingScreen}>
-                <h1>Developer Platform it@M</h1>
-                <CircularProgress className={classes.loadingCircle} />
-            </div>
-        );
-    }
-
-    if (error) {
-        return <div>Oops... {error.message}</div>;
-    }
-
-    if (!isAuthenticated) {
-        return loginWithRedirect();
-    }
-
-    if (!initialized) {
-        if (!initializing) {
-            setInitializing(true);
-            getAccessTokenSilently().then((token) => {
-                localStorage.setItem("oauth_token", "Bearer " + token)
-
-            });
-            setInitialized(true)
-            setInitializing(false)
-        }
-        //return null;
-    }
-
-
-
-    if(!userDoesExist){
+    if (!userDoesExist) {
         return <RegisterNewUserScreen/>
     }
 
     return (
         <>
-            <Menu />
+            <Menu/>
             <div className={classes.contentWrapper}>
                 <div className={classes.content}>
-                    <Router />
-                    <ToastContainer />
+                    <Router/>
+                    <ToastContainer/>
                 </div>
             </div>
         </>

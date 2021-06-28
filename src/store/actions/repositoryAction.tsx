@@ -16,7 +16,7 @@ export const fetchRepositories = () => {
     return async (dispatch: Dispatch) => {
         const repositoryController = new api.BpmnRepositoryControllerApi() //config was passed before
         try {
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
 
             const response = await repositoryController.getAllRepositories(config)
             if(Math.floor(response.status/100) === 2){
@@ -40,7 +40,7 @@ export const getSingleRepository = (bpmnRepositoryId: string) => {
     return async (dispatch: Dispatch) => {
         const repositoryController = new api.BpmnRepositoryControllerApi() //config was passed before
         try {
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
 
             const response = await repositoryController.getSingleRepository(bpmnRepositoryId, config)
             if(Math.floor(response.status/100) === 2){
@@ -68,7 +68,7 @@ export const createRepository = (bpmnRepositoryName: string, bpmnRepositoryDescr
                 bpmnRepositoryName: bpmnRepositoryName,
                 bpmnRepositoryDescription: bpmnRepositoryDescription
             }
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await repositoryController.createRepository(newBpmnRepositoryTO, config)
             if(Math.floor(response.status/100) === 2){
                 dispatch({type: SUCCESS, successMessage: "Repository created"})
@@ -94,7 +94,7 @@ export const updateRepository = (bpmnRepositoryId: string, bpmnRepositoryName: s
                 bpmnRepositoryName: bpmnRepositoryName,
                 bpmnRepositoryDescription: bpmnRepositoryDescription
             }
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await repositoryController.updateRepository(newBpmnRepositoryTO, bpmnRepositoryId, config)
             if(Math.floor(response.status/100) === 2){
                 dispatch({type: SUCCESS, successMessage: "Repository updated"})
@@ -116,7 +116,7 @@ export const deleteRepository = (bpmnRepositoryId: string) => {
         const repositoryController = new api.BpmnRepositoryControllerApi() //config was passed before
         try {
 
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await repositoryController.deleteRepository(bpmnRepositoryId, config)
             if(Math.floor(response.status/100) === 2){
                 dispatch({type: SUCCESS, successMessage: "Repository deleted"})

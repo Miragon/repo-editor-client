@@ -28,7 +28,7 @@ export const fetchFavoriteDiagrams = () => {
         const diagramController = new api.BpmnDiagramControllerApi()
 
         try{
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await diagramController.getStarred(config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: GET_FAVORITE, favoriteDiagrams: response.data})
@@ -50,7 +50,7 @@ export const fetchRecentDiagrams = () => {
         const diagramController = new api.BpmnDiagramControllerApi()
 
         try{
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await diagramController.getRecent(config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: GET_RECENT, recentDiagrams: response.data})
@@ -84,7 +84,7 @@ export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
             if(bpmnDiagramId){
                 message = "Diagram updated"
             }
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await diagramController.createOrUpdateDiagram(bpmnDiagramUploadTO, bpmnRepositoryId, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: SUCCESS, successMessage: message})
@@ -107,7 +107,7 @@ export const fetchDiagramsFromRepo = (repoId: string) => {
     return async (dispatch: Dispatch) => {
         const diagramController = new api.BpmnDiagramControllerApi()
         try{
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await diagramController.getDiagramsFromRepo(repoId, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: ACTIVE_DIAGRAMS, activeDiagrams: response.data})
@@ -132,7 +132,7 @@ export const uploadDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
                 bpmnDiagramDescription: bpmnDiagramDescription,
                 fileType: "bpmn"
             }
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await diagramController.createOrUpdateDiagram(bpmnDiagramUploadTO, bpmnRepositoryId, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: DIAGRAM_UPLOAD, uploadedDiagram: response.data})
@@ -152,7 +152,7 @@ export const searchDiagram = (typedTitle: string) => {
     return async (dispatch: Dispatch) => {
         const diagramController = new api.BpmnDiagramControllerApi()
         try{
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await diagramController.searchDiagrams(typedTitle, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: SEARCH_DIAGRAMS, searchedDiagrams: response.data})
@@ -173,7 +173,7 @@ export const deleteDiagram = (bpmnRepositoryId: string, bpmnDiagramId: string) =
     return async (dispatch: Dispatch) => {
         const diagramController = new api.BpmnDiagramControllerApi()
         try{
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await diagramController.deleteDiagram(bpmnRepositoryId, bpmnDiagramId, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: SYNC_STATUS, dataSynced: false})

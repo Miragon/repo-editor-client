@@ -9,7 +9,7 @@ export const searchUsers = (typedName: string) => {
     return async (dispatch: Dispatch) => {
         const userController = new api.UserControllerApi()
         try{
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await userController.searchUsers(typedName, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: SEARCH_USERS, searchedUsers: response.data})

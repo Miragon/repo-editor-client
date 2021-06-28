@@ -11,7 +11,7 @@ export const getAllAssignedUsers = (repoId: string) => {
         const assignmentController = new api.AssignmentControllerApi()
 
         try{
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await assignmentController.getAllAssignedUsers(repoId, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: ASSIGNED_USERS, assignedUsers: response.data})
@@ -46,7 +46,7 @@ export const createOrUpdateUserAssignment = (repoId: string, userName: string, r
                 userName: userName,
                 roleEnum: (roleEnum) ? roleEnum : AssignmentWithUserNameTORoleEnumEnum.MEMBER
             }
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await assignmentController.createOrUpdateUserAssignment(assignment, config)
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: SUCCESS, successMessage: message})
@@ -69,7 +69,7 @@ export const deleteAssignment = (repoId: string, userName: string) => {
     return async (dispatch: Dispatch) => {
         const assignmentController = new api.AssignmentControllerApi()
         try{
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
+            const config = helpers.getClientConfig()
             const response = await assignmentController.deleteUserAssignment(repoId, userName, config)
             if(Math.floor(response.status/100) === 2) {
                 dispatch({type: SUCCESS, successMessage: `Removed ${userName} from Repository`})
