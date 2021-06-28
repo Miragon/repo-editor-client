@@ -45,7 +45,7 @@ const EditDiagramDialog: React.FC<Props> = props => {
         } catch (err){
             console.log(err)
         }
-    }, [title, description])
+    }, [title, description, props, dispatch])
 
 
 

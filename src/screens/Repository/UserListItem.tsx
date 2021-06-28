@@ -84,7 +84,7 @@ const UserListItem: React.FC<Props> = props => {
         } catch (err) {
             console.log(err)
         }
-    }, [dispatch])
+    }, [dispatch, props])
 
     const removeUser = useCallback(() => {
         try{
@@ -92,7 +92,7 @@ const UserListItem: React.FC<Props> = props => {
         } catch (err) {
             console.log(err)
         }
-    }, [dispatch])
+    }, [dispatch, props])
 
 
     const options: DropdownButtonItem[] = [

@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import {BpmnDiagramTO, BpmnRepositoryRequestTO, UserInfoTO} from "../../api/models";
+import {BpmnDiagramTO, BpmnRepositoryRequestTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
 import {makeStyles} from "@material-ui/styles";
 import DiagramCard from "./Holder/DiagramCard";

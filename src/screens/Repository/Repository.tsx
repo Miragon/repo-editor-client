@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useDispatch} from "react-redux";
 import RepositoryDetails from "./RepositoryDetails";
 import DiagramDetails from "./DiagramDetails";
@@ -11,7 +11,6 @@ const Repository: React.FC = (() => {
     const dispatch = useDispatch();
     const { repoId } = useParams<{repoId: string}>();
 
-    const [ready, setReady] = useState<boolean>(false);
 
     useEffect(() => {
         getRepo()
@@ -20,7 +19,7 @@ const Repository: React.FC = (() => {
 
     const getRepo = useCallback(() => {
         dispatch(getSingleRepository(repoId))
-    }, [dispatch])
+    }, [dispatch, repoId])
 
 
     return (

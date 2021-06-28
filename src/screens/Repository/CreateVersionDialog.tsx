@@ -17,7 +17,6 @@ const useStyles = makeStyles(() => ({
 interface Props {
     open: boolean;
     onCancelled: () => void;
-    onCreated: () => void;
     repoId: string;
     diagramId: string;
     diagramTitle: string;
@@ -28,7 +27,7 @@ const CreateVersionDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const { open, onCancelled, onCreated, repoId, diagramId, diagramTitle } = props;
+    const { open, onCancelled, repoId, diagramId, diagramTitle } = props;
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [comment, setComment] = useState("");

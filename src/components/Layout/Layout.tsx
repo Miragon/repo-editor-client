@@ -9,8 +9,9 @@ import helpers from "../../constants/Functions";
 import {toast, ToastContainer} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/reducers/rootReducer";
-import {CURRENT_USER_INFO, HANDLEDERROR, SUCCESS} from "../../store/actions/diagramAction";
+import {CURRENT_USER_INFO, SUCCESS} from "../../store/actions/diagramAction";
 import Toast from "./Toast";
+import {ActionType} from "../../store/actions/actions";
 
 const useStyles = makeStyles(() => ({
     contentWrapper: {
@@ -56,7 +57,8 @@ const Layout = (): any => {
 
     const dispatch = useDispatch()
     const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage)
-    const apiErrorRetryMethod: () => void = useSelector((state: RootState) => state.api.retryMethod)
+    const apiErrorRetryMethod: ActionType = useSelector((state: RootState) => state.api.retryMethod)
+    const apiErrorRetryPayload: Array<any> = useSelector((state: RootState) => state.api.retryPayload)
     const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage)
 
 
@@ -64,15 +66,14 @@ const Layout = (): any => {
     useEffect(() => {
         if(apiErrorState){
             //toast can contain any component, the Retry Button (and the message: apiErrorState) has to be passed here
-            toast.error(<Toast errorMessage={apiErrorState} retryMethod={apiErrorRetryMethod}/>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
+            toast.error(<Toast errorMessage={apiErrorState} retryMethod={apiErrorRetryMethod} retryPayload={apiErrorRetryPayload}/>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
             //toast.error(apiErrorState, {autoClose: 8000, pauseOnHover: true})
-            dispatch({type: HANDLEDERROR, errorMessage: ""})
         }
         if(apiSuccessState){
             toast.success(apiSuccessState, {autoClose: 4000, pauseOnHover: true})
             dispatch({type: SUCCESS, successMessage: ""})
         }
-    }, [apiErrorState, apiSuccessState, apiErrorRetryMethod, dispatch])
+    }, [apiErrorState, apiSuccessState, apiErrorRetryMethod, apiErrorRetryPayload, dispatch])
 
     const classes = useStyles();
     const [userController] = useState<UserControllerApi>(new UserControllerApi());
@@ -108,7 +109,7 @@ const Layout = (): any => {
         }
 
 
-    }, [isAuthenticated, initialized, userController]);
+    }, [isAuthenticated, initialized, userController, dispatch]);
 
 
 

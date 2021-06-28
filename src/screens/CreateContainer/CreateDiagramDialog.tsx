@@ -39,7 +39,7 @@ const CreateDiagramDialog: React.FC<Props> = props => {
         } catch (err) {
             console.log(err)
         }
-    }, [dispatch, repository, title, description, props.type])
+    }, [dispatch, repository, title, description, props])
 
     useEffect(() => {
         if(createdDiagram){

@@ -47,7 +47,7 @@ const UploadDiagramDialog: React.FC<Props> = props => {
         if(uploadedDiagram){
             dispatch(versionAction.createOrUpdateVersion(uploadedDiagram.bpmnRepositoryId, uploadedDiagram.bpmnDiagramId, file, BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE))
         }
-    }, [dispatch, uploadedDiagram])
+    }, [dispatch, uploadedDiagram, file])
 
     useEffect(() => {
         setRepository(props.repo?.bpmnRepositoryId)

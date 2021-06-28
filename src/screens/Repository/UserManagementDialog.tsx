@@ -56,7 +56,7 @@ const UserManagementDialog: React.FC<Props> = props => {
         if(!syncStatus){
             fetchAssignedUsers(props.repoId)
         }
-    }, [fetchAssignedUsers, syncStatus])
+    }, [fetchAssignedUsers, syncStatus, props])
 
 
 
@@ -73,7 +73,7 @@ const UserManagementDialog: React.FC<Props> = props => {
             } catch (err){
                 dispatch({type: HANDLEDERROR, message: "Error while checking permissions for this repository"})
             }
-        }, [assignmentTOs])
+        }, [assignmentTOs, currentUser, dispatch])
 
     const onCancel= (() => {
         dispatch({type: SEARCH_USERS, searchedUsers: []})

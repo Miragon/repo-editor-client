@@ -32,10 +32,10 @@ const useStyles = makeStyles(() => ({
     listWithVersions: {
         display: "flex",
         flexDirection: "column",
-        marginTop: "10px",
         position: "relative",
         transition: "box-shadow .3s",
         borderRadius: "4px",
+        marginTop: "10px",
         border: "1px solid lightgrey",
         width: "100%",
         "&:hover": {
@@ -182,7 +182,6 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const dispatch = useDispatch();
 
     const bpmnDiagramVersionTOS: Array<BpmnDiagramVersionTO> = useSelector((state: RootState) => state.versions.versions)
-    const dataSynced: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced)
 
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
 
@@ -240,7 +239,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         } catch (err) {
             console.log(err)
         }
-    }, [dispatch])
+    }, [dispatch, props])
 
     const reformatDate = (date: string | undefined) => {
         if(date){
@@ -287,7 +286,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                     setOpen(false)
                 }
         }
-    }, [bpmnDiagramVersionTOS])
+    }, [bpmnDiagramVersionTOS, props])
 
 
     const options: DropdownButtonItem[] = [
@@ -320,7 +319,9 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             label: "Delete Diagram",
             type: "button",
             onClick: () => {
-                removeDiagram()
+                if(confirm(`Are you sure you want to delete '${props.diagramTitle}'?`)){
+                    removeDiagram()
+                }
             }
         }
     ];

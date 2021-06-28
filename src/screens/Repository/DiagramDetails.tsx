@@ -12,7 +12,8 @@ const useStyles = makeStyles(() => ({
     container: {
         display: "flex",
         flexDirection: "column",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        backgroundColor: "white"
     },
     unstyledButton: {
         all: "unset"
@@ -30,7 +31,10 @@ const DiagramDetails: React.FC = (() => {
     const fetchActiveDiagrams = useCallback((repoId: string) => {
 
         try  {
-            dispatch(fetchDiagramsFromRepo(repoId))
+            if(repoId){
+                console.log("in here")
+                dispatch(fetchDiagramsFromRepo(repoId))
+            }
         } catch (err) {
             console.log(err)
         }
@@ -46,16 +50,14 @@ const DiagramDetails: React.FC = (() => {
         fetchActiveDiagrams(activeRepo?.bpmnRepositoryId)
     }, [fetchActiveDiagrams, activeRepo])
 
-    const openModeler = (repoId: string, diagramId: string) => {
-        window.open(`/modeler/#/${repoId}/${diagramId}/latest/`, '_blank');
-    }
 
     return (
         <>
       <div className={classes.container}>
           {activeDiagrams?.map(diagram => (
               <Card
-                  key={diagram.bpmnDiagramId} >
+                  key={diagram.bpmnDiagramId}
+              >
 
               <DiagramListItem diagramTitle={diagram.bpmnDiagramName}
                                image={diagram.svgPreview}

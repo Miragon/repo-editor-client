@@ -6,6 +6,7 @@ import RepoContainer from "./RepoContainer";
 import FavoriteDiagrams from "./FavoriteDiagrams";
 import 'react-toastify/dist/ReactToastify.css';
 import DiagramSearchBar from "./DiagramSearchBar";
+import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 
 
 const Overview: React.FC = observer(() => {
@@ -14,12 +15,22 @@ const Overview: React.FC = observer(() => {
 
     return (
         <>
-            <CreateContainer />
-            <RepoContainer />
-            <DiagramSearchBar />
-            <RecentDiagrams />
-            <FavoriteDiagrams />
-        </>
+            <ErrorBoundary>
+                <CreateContainer />
+            </ErrorBoundary>
+            <ErrorBoundary>
+                <RepoContainer />
+            </ErrorBoundary>
+            <ErrorBoundary>
+                <DiagramSearchBar />
+            </ErrorBoundary>
+            <ErrorBoundary>
+                <RecentDiagrams />
+            </ErrorBoundary>
+            <ErrorBoundary>
+                <FavoriteDiagrams />
+            </ErrorBoundary>
+            </>
     );
 });
 

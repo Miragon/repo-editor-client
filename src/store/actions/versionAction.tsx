@@ -2,9 +2,9 @@ import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import {BpmnDiagramVersionUploadTO, BpmnDiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import helpers from "../../constants/Functions";
-import {CREATED_DIAGRAM, GET_VERSIONS, HANDLEDERROR, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "./diagramAction";
-import {defaultErrors} from "../../components/Exception/defaultErrors";
+import {CREATED_DIAGRAM, GET_VERSIONS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "./diagramAction";
 import {ActionType} from "./actions";
+import {handleError} from "./errorAction";
 
 export const DEFAULT_FILE = "Default XML String"
 
@@ -26,35 +26,15 @@ export const createOrUpdateVersion = (bpmnRepositoryId: string, bpmnDiagramId: s
                 dispatch({type: SYNC_STATUS, dataSynced: false})
             }
             else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response), retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_VERSION, payload: [bpmnRepositoryId, bpmnDiagramId, file, comment] }))})
+                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
         } catch (error){
-            if(error.response){
-                switch(error.response.data.status) {
-                    case "400":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"], retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_VERSION, payload: [bpmnRepositoryId, bpmnDiagramId, file, comment] }))})
-                        return;
-                    case "401":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"], retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_VERSION, payload: [bpmnRepositoryId, bpmnDiagramId, file, comment] }))})
-                        return;
-                    case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"], retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_VERSION, payload: [bpmnRepositoryId, bpmnDiagramId, file, comment] }))})
-                        return;
-                    case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"], retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_VERSION, payload: [bpmnRepositoryId, bpmnDiagramId, file, comment] }))})
-                        return;
-                    case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message, retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_VERSION, payload: [bpmnRepositoryId, bpmnDiagramId, file, comment] }))})
-                        return;
-                    default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`, retryMethod: (() => dispatch({type: ActionType.CREATE_OR_UPDATE_VERSION, payload: [bpmnRepositoryId, bpmnDiagramId, file, comment] }))})
-                        return;
+            dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_VERSION, [bpmnRepositoryId, bpmnDiagramId, file, saveType, comment]))
 
-                }
-            }
         }
     }
 }
+
 
 export const getAllVersions = (bpmnRepositoryId: string, bpmnDiagramId: string) => {
     return async (dispatch: Dispatch) => {
@@ -66,32 +46,11 @@ export const getAllVersions = (bpmnRepositoryId: string, bpmnDiagramId: string) 
                 dispatch({type: GET_VERSIONS, versions: response.data})
             }
             else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response), retryMethod: (() => dispatch({type: ActionType.GET_ALL_VERSIONS, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
+                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
         } catch (error){
-            if(error.response){
-                switch(error.response.data.status) {
-                    case "400":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"], retryMethod: (() => dispatch({type: ActionType.GET_ALL_VERSIONS, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
-                    case "401":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"], retryMethod: (() => dispatch({type: ActionType.GET_ALL_VERSIONS, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
-                    case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"], retryMethod: (() => dispatch({type: ActionType.GET_ALL_VERSIONS, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
-                    case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"], retryMethod: (() => dispatch({type: ActionType.GET_ALL_VERSIONS, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
-                    case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message, retryMethod: (() => dispatch({type: ActionType.GET_ALL_VERSIONS, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
-                    default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`, retryMethod: (() => dispatch({type: ActionType.GET_ALL_VERSIONS, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
+            dispatch(handleError(error, ActionType.GET_ALL_VERSIONS, [bpmnRepositoryId, bpmnDiagramId]))
 
-                }
-            }
         }
     }
 }

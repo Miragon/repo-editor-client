@@ -14,7 +14,6 @@ import searchedUsers from "../reducers/usersReducer";
 import resultsCount from "../reducers/userResultsReducer";
 import searchDiagramsReducer from "./searchDiagramsReducer";
 import createdDiagramReducer from "./createdDiagramReducer";
-import actionsReducer from "./actionsReducer";
 
 export const rootReducer = combineReducers({
     recentDiagrams: diagramReducer,
@@ -26,7 +25,6 @@ export const rootReducer = combineReducers({
     activeRepo: activeRepoReducer,
     activeDiagrams: activeDiagramsReducer,
     versions: versionsReducer,
-    actions: actionsReducer,
     assignedUsers: assignedUsersReducer,
     currentUserInfo: currentUserReducer,
     searchedUsers: searchedUsers,

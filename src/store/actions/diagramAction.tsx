@@ -2,9 +2,9 @@ import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import helpers from "../../constants/Functions";
 import {BpmnDiagramUploadTO} from "../../api/models";
-import {defaultErrors} from "../../components/Exception/defaultErrors";
 import {ACTIVE_DIAGRAMS} from "./repositoryAction";
 import {ActionType} from "./actions";
+import {handleError} from "./errorAction";
 
 export const GET_FAVORITE = "GET_FAVORITE"
 export const GET_RECENT = "GET_RECENT"
@@ -34,36 +34,16 @@ export const fetchFavoriteDiagrams = () => {
                 dispatch({type: GET_FAVORITE, favoriteDiagrams: response.data})
             }
             else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response)})
+                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
         } catch (error){
-            if(error.response){
-                switch(error.response.data.status) {
-                    case "400":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
-                        return;
-                    case "401":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"]})
-                        return;
-                    case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"]})
-                        return;
-                    case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"]})
-                        return;
-                    case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message})
-                        return;
-                    default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`})
-                        return;
+            dispatch(handleError(error, ActionType.FETCH_FAVORITE_DIAGRAMS, []))
 
-                }
-            }
-            console.log(error)
         }
     }
 }
+
+
 
 export const fetchRecentDiagrams = () => {
     return async (dispatch: Dispatch) => {
@@ -76,44 +56,28 @@ export const fetchRecentDiagrams = () => {
                 dispatch({type: GET_RECENT, recentDiagrams: response.data})
             }
             else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response)})
+                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
         } catch (error){
-            if(error.response){
-                switch(error.response.data.status) {
-                    case "400":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
-                        return;
-                    case "401":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"]})
-                        return;
-                    case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"]})
-                        return;
-                    case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"]})
-                        return;
-                    case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message})
-                        return;
-                    default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`})
-                        return;
+            dispatch(handleError(error, ActionType.FETCH_RECENT_DIAGRAMS, []))
 
-                }
-            }
         }
     }
 }
 
+
+
 export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string, bpmnDiagramDescription: string, fileType?: string, bpmnDiagramId?: string) => {
+    console.log("DiagramAction")
     return async (dispatch: Dispatch) => {
+        console.log("DiagramAction")
+
         const diagramController = new api.BpmnDiagramControllerApi()
         try{
             const bpmnDiagramUploadTO: BpmnDiagramUploadTO = {
                 bpmnDiagramName: bpmnDiagramName,
                 bpmnDiagramDescription: bpmnDiagramDescription,
-                fileType: fileType,
+                fileType: fileType ? fileType : "BPMN",
                 bpmnDiagramId: bpmnDiagramId ? bpmnDiagramId : null
             }
             let message = "Diagram created"
@@ -130,34 +94,11 @@ export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
                 dispatch({type: SYNC_STATUS, dataSynced: false})
             }
             else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response), retryMethod: (() => dispatch({type: ActionType.CREATE_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, "BPMN"] }))})
+                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
         } catch (error){
-            if(error.response){
-                console.log(error.response.data)
-                console.log(error.response.data.status?.toString())
-                switch(error.response.data.status?.toString()) {
-                    case "400":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"], retryMethod: (() => dispatch({type: ActionType.CREATE_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, "BPMN"] }))})
-                        return;
-                    case "401":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"], retryMethod: (() => dispatch({type: ActionType.CREATE_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, "BPMN"] }))})
-                        return;
-                    case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"], retryMethod: (() => dispatch({type: ActionType.CREATE_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, "BPMN"] }))})
-                        return;
-                    case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"], retryMethod: (() => dispatch({type: ActionType.CREATE_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, "BPMN"] }))})
-                        return;
-                    case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: "SomeMessage", retryMethod: (() => dispatch({type: ActionType.CREATE_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, "BPMN"] }))})
-                        return;
-                    default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`, retryMethod: (() => dispatch({type: ActionType.CREATE_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, "BPMN"] }))})
-                        return;
+            dispatch(handleError(error, ActionType.CREATE_DIAGRAM, [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, fileType, bpmnDiagramId]))
 
-                }
-            }
         }
     }
 }
@@ -172,35 +113,15 @@ export const fetchDiagramsFromRepo = (repoId: string) => {
                 dispatch({type: ACTIVE_DIAGRAMS, activeDiagrams: response.data})
             }
             else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response), retryMethod: (() => dispatch({type: ActionType.FETCH_DIAGRAMS_FROM_REPO, payload: [repoId] }))})
+                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
         } catch (error){
-            if(error.response){
-                switch(error.response.data.status) {
-                    case "400":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"], retryMethod: (() => dispatch({type: ActionType.FETCH_DIAGRAMS_FROM_REPO, payload: [repoId] }))})
-                        return;
-                    case "401":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"], retryMethod: (() => dispatch({type: ActionType.FETCH_DIAGRAMS_FROM_REPO, payload: [repoId] }))})
-                        return;
-                    case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"], retryMethod: (() => dispatch({type: ActionType.FETCH_DIAGRAMS_FROM_REPO, payload: [repoId] }))})
-                        return;
-                    case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"], retryMethod: (() => dispatch({type: ActionType.FETCH_DIAGRAMS_FROM_REPO, payload: [repoId] }))})
-                        return;
-                    case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message, retryMethod: (() => dispatch({type: ActionType.FETCH_DIAGRAMS_FROM_REPO, payload: [repoId] }))})
-                        return;
-                    default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`, retryMethod: (() => dispatch({type: ActionType.FETCH_DIAGRAMS_FROM_REPO, payload: [repoId] }))})
-                        return;
+            dispatch(handleError(error, ActionType.FETCH_DIAGRAMS_FROM_REPO, [repoId]))
 
-                }
-            }
         }
     }
 }
+
 
 export const uploadDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string, bpmnDiagramDescription: string) => {
     return async (dispatch: Dispatch) => {
@@ -217,35 +138,15 @@ export const uploadDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
                 dispatch({type: DIAGRAM_UPLOAD, uploadedDiagram: response.data})
             }
             else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response), retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription] }))})
+                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
         } catch (error){
-            if(error.response){
-                switch(error.response.data.status) {
-                    case "400":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"], retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription] }))})
-                        return;
-                    case "401":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"], retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription] }))})
-                        return;
-                    case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"], retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription] }))})
-                        return;
-                    case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"], retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription] }))})
-                        return;
-                    case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message, retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription] }))})
-                        return;
-                    default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`, retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription] }))})
-                        return;
+            dispatch(handleError(error, ActionType.UPLOAD_DIAGRAM, [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription]))
 
-                }
-            }
         }
     }
 }
+
 
 export const searchDiagram = (typedTitle: string) => {
     return async (dispatch: Dispatch) => {
@@ -257,35 +158,15 @@ export const searchDiagram = (typedTitle: string) => {
                 dispatch({type: SEARCH_DIAGRAMS, searchedDiagrams: response.data})
             }
             else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response)})
+                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
         } catch (error){
-            if(error.response){
-                switch(error.response.data.status) {
-                    case "400":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"]})
-                        return;
-                    case "401":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"]})
-                        return;
-                    case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"]})
-                        return;
-                    case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"]})
-                        return;
-                    case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message})
-                        return;
-                    default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`})
-                        return;
+            dispatch(handleError(error, ActionType.SEARCH_DIAGRAM, [typedTitle]))
 
-                }
-            }
         }
     }
 }
+
 
 export const deleteDiagram = (bpmnRepositoryId: string, bpmnDiagramId: string) => {
 
@@ -298,32 +179,10 @@ export const deleteDiagram = (bpmnRepositoryId: string, bpmnDiagramId: string) =
                 dispatch({type: SYNC_STATUS, dataSynced: false})
             }
             else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: response.status + "" + JSON.stringify(response), retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
+                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
         } catch (error){
-            if(error.response){
-                switch(error.response.data.status) {
-                    case "400":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["400"], retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
-                    case "401":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["401"], retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
-                    case "403":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["403"], retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
-                    case "404":
-                        dispatch({type: UNHANDLEDERROR, errorMessage: defaultErrors["404"], retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
-                    case "409":
-                        dispatch({type: HANDLEDERROR, errorMessage: error.response.data.message, retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
-                    default:
-                        dispatch({type: UNHANDLEDERROR, errorMessage: `Error ${error.response.status}`, retryMethod: (() => dispatch({type: ActionType.UPLOAD_DIAGRAM, payload: [bpmnRepositoryId, bpmnDiagramId] }))})
-                        return;
-
-                }
-            }
+            dispatch(handleError(error, ActionType.DELETE_DIAGRAM, [bpmnRepositoryId, bpmnDiagramId]))
         }
     }
 }

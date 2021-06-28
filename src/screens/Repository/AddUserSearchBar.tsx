@@ -21,11 +21,6 @@ interface Props {
     repoId: string;
 }
 
-function sleep(delay = 0) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay);
-    });
-}
 
 let timeout: NodeJS.Timeout | undefined = undefined;
 
@@ -54,9 +49,6 @@ const AddUserSearchBar: React.FC<Props> = props => {
             loading = false
         }
 
-        return () => {
-            active = false;
-        };
     }, [loading, results]);
 
     useEffect(() => {
@@ -92,11 +84,8 @@ const AddUserSearchBar: React.FC<Props> = props => {
             console.log(err)
         }
 
-    }, [dispatch, user])
+    }, [dispatch, user, props])
 
-    const onInputChange = (event: any, input: string | UserInfoTO | null) => {
-        (typeof input === "string") ? setUser(input) : setUser("");
-    }
 
     const updateState = (event: any) => {
         setUser(event.target.textContent)
