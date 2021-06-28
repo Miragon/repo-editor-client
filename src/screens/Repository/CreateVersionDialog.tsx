@@ -17,6 +17,7 @@ const useStyles = makeStyles(() => ({
 interface Props {
     open: boolean;
     onCancelled: () => void;
+    onCreated: () => void;
     repoId: string;
     diagramId: string;
     diagramTitle: string;

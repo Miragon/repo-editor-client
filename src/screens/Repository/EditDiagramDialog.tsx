@@ -1,9 +1,10 @@
 import React, {useCallback, useState} from "react";
 import {useDispatch} from "react-redux";
-import {PopupDialog} from "@flowsquad/react-utils-ui";
 import {makeStyles} from "@material-ui/core/styles";
 import {Input, InputLabel} from "@material-ui/core";
 import * as diagramAction from "../../store/actions/diagramAction";
+import PopupDialog from "../../components/Form/PopupDialog";
+
 
 const useStyles = makeStyles(() => ({
     line: {

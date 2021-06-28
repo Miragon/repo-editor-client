@@ -4,32 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="Exceptions, Repo- and Diagram Editing, Searching for Diagrams">
+    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="Exceptions and Repo Handling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Toast.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Toast.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/DiagramSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/DiagramSearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/Overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/Overview.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Repository/EditDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/EditDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/EditRepoDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/EditRepoDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/Repository.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/Repository.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/UserListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/UserListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/actions.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/errorAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/errorAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/userAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/userAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/actionsReducer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/apiResponseReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/apiResponseReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +107,7 @@
       <workItem from="1623737626571" duration="22510000" />
       <workItem from="1624342123896" duration="18946000" />
       <workItem from="1624517860625" duration="18089000" />
-      <workItem from="1624860658747" duration="14126000" />
+      <workItem from="1624860658747" duration="15486000" />
     </task>
     <task id="LOCAL-00001" summary="Update Modeler URLs">
       <created>1620297569688</created>
@@ -213,7 +193,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624540792839</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Exceptions and Repo Handling">
+      <created>1624876987283</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1624876987283</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,6 +230,8 @@
     <MESSAGE value="Added searchDiagramEndpoint, fixed Version-overwriting-bug" />
     <MESSAGE value="RepoManagement, Create Version Fix, Version Sortierung fix" />
     <MESSAGE value="Exceptions, Repo- and Diagram Editing, Searching for Diagrams" />
-    <option name="LAST_COMMIT_MESSAGE" value="Exceptions, Repo- and Diagram Editing, Searching for Diagrams" />
+    <MESSAGE value="Exceptions and" />
+    <MESSAGE value="Exceptions and Repo Handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="Exceptions and Repo Handling" />
   </component>
 </project>
