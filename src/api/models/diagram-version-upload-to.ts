@@ -14,34 +14,34 @@
 /**
  * 
  * @export
- * @interface BpmnDiagramVersionUploadTO
+ * @interface DiagramVersionUploadTO
  */
-export interface BpmnDiagramVersionUploadTO {
+export interface DiagramVersionUploadTO {
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramVersionUploadTO
+     * @memberof DiagramVersionUploadTO
      */
-    bpmnDiagramVersionComment?: any;
+    versionComment?: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramVersionUploadTO
+     * @memberof DiagramVersionUploadTO
      */
-    bpmnAsXML?: any;
+    xml?: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramVersionUploadTO
+     * @memberof DiagramVersionUploadTO
      */
-    saveType?: BpmnDiagramVersionUploadTOSaveTypeEnum;
+    saveType?: DiagramVersionUploadTOSaveTypeEnum;
 }
 
 /**
     * @export
     * @enum {string}
     */
-export enum BpmnDiagramVersionUploadTOSaveTypeEnum {
+export enum DiagramVersionUploadTOSaveTypeEnum {
     RELEASE = 'RELEASE',
     MILESTONE = 'MILESTONE',
     AUTOSAVE = 'AUTOSAVE'

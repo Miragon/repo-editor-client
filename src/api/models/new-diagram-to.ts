@@ -14,13 +14,31 @@
 /**
  * 
  * @export
- * @interface UserEmailTO
+ * @interface NewDiagramTO
  */
-export interface UserEmailTO {
+export interface NewDiagramTO {
     /**
      * 
      * @type {string}
-     * @memberof UserEmailTO
+     * @memberof NewDiagramTO
      */
-    email: any;
+    name: any;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewDiagramTO
+     */
+    description: any;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewDiagramTO
+     */
+    fileType?: any;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewDiagramTO
+     */
+    svgPreview?: any;
 }

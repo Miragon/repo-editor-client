@@ -14,19 +14,19 @@
 /**
  * 
  * @export
- * @interface NewBpmnRepositoryTO
+ * @interface RepositoryUpdateTO
  */
-export interface NewBpmnRepositoryTO {
+export interface RepositoryUpdateTO {
     /**
      * 
      * @type {string}
-     * @memberof NewBpmnRepositoryTO
+     * @memberof RepositoryUpdateTO
      */
-    bpmnRepositoryName: any;
+    name: any;
     /**
      * 
      * @type {string}
-     * @memberof NewBpmnRepositoryTO
+     * @memberof RepositoryUpdateTO
      */
-    bpmnRepositoryDescription: any;
+    description: any;
 }

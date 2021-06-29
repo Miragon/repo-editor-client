@@ -16,21 +16,32 @@ import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
-import { UserInfoTO } from '../models';
-import { UserUpdateTO } from '../models';
+import { DiagramVersionTO } from '../models';
+import { DiagramVersionUploadTO } from '../models';
 /**
- * UserControllerApi - axios parameter creator
+ * DiagramVersionControllerApi - axios parameter creator
  * @export
  */
-export const UserControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const DiagramVersionControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {DiagramVersionUploadTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUser: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/user/create`;
+        createOrUpdateVersion: async (body: DiagramVersionUploadTO, diagramId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createOrUpdateVersion.');
+            }
+            // verify required parameter 'diagramId' is not null or undefined
+            if (diagramId === null || diagramId === undefined) {
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling createOrUpdateVersion.');
+            }
+            const localVarPath = `/api/version/{diagramId}`
+                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -38,149 +49,6 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserInfo: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/user/currentUser`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserName: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/user/registeredEmail`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} typedName 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        searchUsers: async (typedName: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'typedName' is not null or undefined
-            if (typedName === null || typedName === undefined) {
-                throw new RequiredError('typedName','Required parameter typedName was null or undefined when calling searchUsers.');
-            }
-            const localVarPath = `/api/user/searchUsers/{typedName}`
-                .replace(`{${"typedName"}}`, encodeURIComponent(String(typedName)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {UserUpdateTO} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateUser: async (body: UserUpdateTO, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateUser.');
-            }
-            const localVarPath = `/api/user`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -204,22 +72,148 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} diagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllVersions: async (diagramId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'diagramId' is not null or undefined
+            if (diagramId === null || diagramId === undefined) {
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling getAllVersions.');
+            }
+            const localVarPath = `/api/version/{diagramId}/all`
+                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Return the latest version of the requested diagram
+         * @param {string} diagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLatestVersion: async (diagramId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'diagramId' is not null or undefined
+            if (diagramId === null || diagramId === undefined) {
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling getLatestVersion.');
+            }
+            const localVarPath = `/api/version/{diagramId}/latest`
+                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} diagramId 
+         * @param {string} versionId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getVersion: async (diagramId: string, versionId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'diagramId' is not null or undefined
+            if (diagramId === null || diagramId === undefined) {
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling getVersion.');
+            }
+            // verify required parameter 'versionId' is not null or undefined
+            if (versionId === null || versionId === undefined) {
+                throw new RequiredError('versionId','Required parameter versionId was null or undefined when calling getVersion.');
+            }
+            const localVarPath = `/api/version/{diagramId}/{versionId}`
+                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)))
+                .replace(`{${"versionId"}}`, encodeURIComponent(String(versionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
 /**
- * UserControllerApi - functional programming interface
+ * DiagramVersionControllerApi - functional programming interface
  * @export
  */
-export const UserControllerApiFp = function(configuration?: Configuration) {
+export const DiagramVersionControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {DiagramVersionUploadTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).createUser(options);
+        async createOrUpdateVersion(body: DiagramVersionUploadTO, diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DiagramVersionControllerApiAxiosParamCreator(configuration).createOrUpdateVersion(body, diagramId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -227,11 +221,12 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserInfo(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserInfoTO>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).getUserInfo(options);
+        async getAllVersions(diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DiagramVersionTO>>> {
+            const localVarAxiosArgs = await DiagramVersionControllerApiAxiosParamCreator(configuration).getAllVersions(diagramId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -239,11 +234,13 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Return the latest version of the requested diagram
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserName(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).getUserName(options);
+        async getLatestVersion(diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DiagramVersionTO>> {
+            const localVarAxiosArgs = await DiagramVersionControllerApiAxiosParamCreator(configuration).getLatestVersion(diagramId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -251,25 +248,13 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} typedName 
+         * @param {string} diagramId 
+         * @param {string} versionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchUsers(typedName: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserInfoTO>>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).searchUsers(typedName, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {UserUpdateTO} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateUser(body: UserUpdateTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).updateUser(body, options);
+        async getVersion(diagramId: string, versionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DiagramVersionTO>> {
+            const localVarAxiosArgs = await DiagramVersionControllerApiAxiosParamCreator(configuration).getVersion(diagramId, versionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -279,108 +264,101 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * UserControllerApi - factory interface
+ * DiagramVersionControllerApi - factory interface
  * @export
  */
-export const UserControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const DiagramVersionControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
          * 
+         * @param {DiagramVersionUploadTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUser(options?: any): AxiosPromise<void> {
-            return UserControllerApiFp(configuration).createUser(options).then((request) => request(axios, basePath));
+        createOrUpdateVersion(body: DiagramVersionUploadTO, diagramId: string, options?: any): AxiosPromise<void> {
+            return DiagramVersionControllerApiFp(configuration).createOrUpdateVersion(body, diagramId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserInfo(options?: any): AxiosPromise<UserInfoTO> {
-            return UserControllerApiFp(configuration).getUserInfo(options).then((request) => request(axios, basePath));
+        getAllVersions(diagramId: string, options?: any): AxiosPromise<Array<DiagramVersionTO>> {
+            return DiagramVersionControllerApiFp(configuration).getAllVersions(diagramId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Return the latest version of the requested diagram
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserName(options?: any): AxiosPromise<string> {
-            return UserControllerApiFp(configuration).getUserName(options).then((request) => request(axios, basePath));
+        getLatestVersion(diagramId: string, options?: any): AxiosPromise<DiagramVersionTO> {
+            return DiagramVersionControllerApiFp(configuration).getLatestVersion(diagramId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} typedName 
+         * @param {string} diagramId 
+         * @param {string} versionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchUsers(typedName: string, options?: any): AxiosPromise<Array<UserInfoTO>> {
-            return UserControllerApiFp(configuration).searchUsers(typedName, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {UserUpdateTO} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateUser(body: UserUpdateTO, options?: any): AxiosPromise<void> {
-            return UserControllerApiFp(configuration).updateUser(body, options).then((request) => request(axios, basePath));
+        getVersion(diagramId: string, versionId: string, options?: any): AxiosPromise<DiagramVersionTO> {
+            return DiagramVersionControllerApiFp(configuration).getVersion(diagramId, versionId, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * UserControllerApi - object-oriented interface
+ * DiagramVersionControllerApi - object-oriented interface
  * @export
- * @class UserControllerApi
+ * @class DiagramVersionControllerApi
  * @extends {BaseAPI}
  */
-export class UserControllerApi extends BaseAPI {
+export class DiagramVersionControllerApi extends BaseAPI {
     /**
      * 
+     * @param {DiagramVersionUploadTO} body 
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof DiagramVersionControllerApi
      */
-    public createUser(options?: any) {
-        return UserControllerApiFp(this.configuration).createUser(options).then((request) => request(this.axios, this.basePath));
+    public createOrUpdateVersion(body: DiagramVersionUploadTO, diagramId: string, options?: any) {
+        return DiagramVersionControllerApiFp(this.configuration).createOrUpdateVersion(body, diagramId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof DiagramVersionControllerApi
      */
-    public getUserInfo(options?: any) {
-        return UserControllerApiFp(this.configuration).getUserInfo(options).then((request) => request(this.axios, this.basePath));
+    public getAllVersions(diagramId: string, options?: any) {
+        return DiagramVersionControllerApiFp(this.configuration).getAllVersions(diagramId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
+     * @summary Return the latest version of the requested diagram
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof DiagramVersionControllerApi
      */
-    public getUserName(options?: any) {
-        return UserControllerApiFp(this.configuration).getUserName(options).then((request) => request(this.axios, this.basePath));
+    public getLatestVersion(diagramId: string, options?: any) {
+        return DiagramVersionControllerApiFp(this.configuration).getLatestVersion(diagramId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
-     * @param {string} typedName 
+     * @param {string} diagramId 
+     * @param {string} versionId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof DiagramVersionControllerApi
      */
-    public searchUsers(typedName: string, options?: any) {
-        return UserControllerApiFp(this.configuration).searchUsers(typedName, options).then((request) => request(this.axios, this.basePath));
-    }
-    /**
-     * 
-     * @param {UserUpdateTO} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserControllerApi
-     */
-    public updateUser(body: UserUpdateTO, options?: any) {
-        return UserControllerApiFp(this.configuration).updateUser(body, options).then((request) => request(this.axios, this.basePath));
+    public getVersion(diagramId: string, versionId: string, options?: any) {
+        return DiagramVersionControllerApiFp(this.configuration).getVersion(diagramId, versionId, options).then((request) => request(this.axios, this.basePath));
     }
 }

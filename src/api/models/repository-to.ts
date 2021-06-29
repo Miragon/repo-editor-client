@@ -14,37 +14,37 @@
 /**
  * 
  * @export
- * @interface BpmnRepositoryRequestTO
+ * @interface RepositoryTO
  */
-export interface BpmnRepositoryRequestTO {
+export interface RepositoryTO {
     /**
      * 
      * @type {string}
-     * @memberof BpmnRepositoryRequestTO
+     * @memberof RepositoryTO
      */
-    bpmnRepositoryId: any;
+    id: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnRepositoryRequestTO
+     * @memberof RepositoryTO
      */
-    bpmnRepositoryName: any;
+    name: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnRepositoryRequestTO
+     * @memberof RepositoryTO
      */
-    bpmnRepositoryDescription: any;
+    description: any;
     /**
      * 
      * @type {number}
-     * @memberof BpmnRepositoryRequestTO
+     * @memberof RepositoryTO
      */
     existingDiagrams: any;
     /**
      * 
      * @type {number}
-     * @memberof BpmnRepositoryRequestTO
+     * @memberof RepositoryTO
      */
     assignedUsers: any;
 }

@@ -22,5 +22,5 @@ export interface UserInfoTO {
      * @type {string}
      * @memberof UserInfoTO
      */
-    userName: any;
+    username: any;
 }

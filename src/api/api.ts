@@ -11,8 +11,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */export * from './apis/assignment-controller-api';
-export * from './apis/bpmn-diagram-controller-api';
-export * from './apis/bpmn-diagram-version-controller-api';
-export * from './apis/bpmn-repository-controller-api';
+export * from './apis/bpm-repository-controller-api';
+export * from './apis/diagram-controller-api';
+export * from './apis/diagram-version-controller-api';
 export * from './apis/user-controller-api';
 

@@ -14,37 +14,31 @@
 /**
  * 
  * @export
- * @interface BpmnDiagramUploadTO
+ * @interface DiagramUpdateTO
  */
-export interface BpmnDiagramUploadTO {
+export interface DiagramUpdateTO {
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramUploadTO
+     * @memberof DiagramUpdateTO
      */
-    bpmnDiagramId?: any;
+    name: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramUploadTO
+     * @memberof DiagramUpdateTO
      */
-    bpmnDiagramName: any;
+    description: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramUploadTO
-     */
-    bpmnDiagramDescription: any;
-    /**
-     * 
-     * @type {string}
-     * @memberof BpmnDiagramUploadTO
+     * @memberof DiagramUpdateTO
      */
     fileType?: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramUploadTO
+     * @memberof DiagramUpdateTO
      */
     svgPreview?: any;
 }

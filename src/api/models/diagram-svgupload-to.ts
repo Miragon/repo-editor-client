@@ -14,25 +14,13 @@
 /**
  * 
  * @export
- * @interface UserTO
+ * @interface DiagramSVGUploadTO
  */
-export interface UserTO {
+export interface DiagramSVGUploadTO {
     /**
      * 
      * @type {string}
-     * @memberof UserTO
+     * @memberof DiagramSVGUploadTO
      */
-    userName: any;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTO
-     */
-    apiKey?: any;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserTO
-     */
-    email: any;
+    svgPreview: any;
 }

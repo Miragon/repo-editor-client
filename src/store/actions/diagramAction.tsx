@@ -1,7 +1,7 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import helpers from "../../constants/Functions";
-import {BpmnDiagramUploadTO} from "../../api/models";
+import {NewDiagramTO} from "../../api/models";
 import {ACTIVE_DIAGRAMS} from "./repositoryAction";
 import {ActionType} from "./actions";
 import {handleError} from "./errorAction";
@@ -25,18 +25,17 @@ export const CREATED_DIAGRAM = "CREATED_DIAGRAM"
 
 export const fetchFavoriteDiagrams = () => {
     return async (dispatch: Dispatch) => {
-        const diagramController = new api.BpmnDiagramControllerApi()
+        const diagramController = new api.DiagramControllerApi()
 
-        try{
+        try {
             const config = helpers.getClientConfig()
             const response = await diagramController.getStarred(config)
-            if(Math.floor(response.status/100) === 2) {
+            if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: GET_FAVORITE, favoriteDiagrams: response.data})
-            }
-            else {
+            } else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
-        } catch (error){
+        } catch (error) {
             dispatch(handleError(error, ActionType.FETCH_FAVORITE_DIAGRAMS, []))
 
         }
@@ -44,21 +43,19 @@ export const fetchFavoriteDiagrams = () => {
 }
 
 
-
 export const fetchRecentDiagrams = () => {
     return async (dispatch: Dispatch) => {
-        const diagramController = new api.BpmnDiagramControllerApi()
+        const diagramController = new api.DiagramControllerApi()
 
-        try{
+        try {
             const config = helpers.getClientConfig()
             const response = await diagramController.getRecent(config)
-            if(Math.floor(response.status/100) === 2) {
+            if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: GET_RECENT, recentDiagrams: response.data})
-            }
-            else {
+            } else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
-        } catch (error){
+        } catch (error) {
             dispatch(handleError(error, ActionType.FETCH_RECENT_DIAGRAMS, []))
 
         }
@@ -66,38 +63,47 @@ export const fetchRecentDiagrams = () => {
 }
 
 
+export const createDiagram = (repositoryId: string, diagramName: string, diagramDescription: string, fileType?: string, diagramId?: string) => {
+    //TODO update muss wieder funktionieren
 
-export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string, bpmnDiagramDescription: string, fileType?: string, bpmnDiagramId?: string) => {
-    console.log("DiagramAction")
     return async (dispatch: Dispatch) => {
-        console.log("DiagramAction")
+        const diagramController = new api.DiagramControllerApi()
+        try {
 
-        const diagramController = new api.BpmnDiagramControllerApi()
-        try{
-            const bpmnDiagramUploadTO: BpmnDiagramUploadTO = {
-                bpmnDiagramName: bpmnDiagramName,
-                bpmnDiagramDescription: bpmnDiagramDescription,
-                fileType: fileType ? fileType : "BPMN",
-                bpmnDiagramId: bpmnDiagramId ? bpmnDiagramId : null
-            }
-            let message = "Diagram created"
-            if(bpmnDiagramId){
-                message = "Diagram updated"
-            }
+
             const config = helpers.getClientConfig()
-            const response = await diagramController.createOrUpdateDiagram(bpmnDiagramUploadTO, bpmnRepositoryId, config)
-            if(Math.floor(response.status/100) === 2) {
+            let response: any;
+
+            let message = "Diagram created"
+            if (diagramId) {
+                const diagramUpdate: NewDiagramTO = {
+                    name: diagramName,
+                    description: diagramDescription,
+                    fileType: fileType ? fileType : "BPMN",
+                }
+                response = await diagramController.updateDiagram(diagramUpdate, diagramId, config)
+                message = "Diagram updated"
+            } else {
+                const newDiagram: NewDiagramTO = {
+                    name: diagramName,
+                    description: diagramDescription,
+                    fileType: fileType ? fileType : "BPMN",
+                }
+                response = await diagramController.createDiagram(newDiagram, repositoryId, config)
+            }
+
+
+            if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: SUCCESS, successMessage: message})
-                if(!bpmnDiagramId){
+                if (!diagramId) {
                     dispatch({type: CREATED_DIAGRAM, createdDiagram: response.data})
                 }
                 dispatch({type: SYNC_STATUS, dataSynced: false})
-            }
-            else {
+            } else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
-        } catch (error){
-            dispatch(handleError(error, ActionType.CREATE_DIAGRAM, [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription, fileType, bpmnDiagramId]))
+        } catch (error) {
+            dispatch(handleError(error, ActionType.CREATE_DIAGRAM, [repositoryId, diagramName, diagramDescription, fileType, diagramId]))
 
         }
     }
@@ -105,17 +111,16 @@ export const createDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
 
 export const fetchDiagramsFromRepo = (repoId: string) => {
     return async (dispatch: Dispatch) => {
-        const diagramController = new api.BpmnDiagramControllerApi()
-        try{
+        const diagramController = new api.DiagramControllerApi()
+        try {
             const config = helpers.getClientConfig()
             const response = await diagramController.getDiagramsFromRepo(repoId, config)
-            if(Math.floor(response.status/100) === 2) {
+            if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: ACTIVE_DIAGRAMS, activeDiagrams: response.data})
-            }
-            else {
+            } else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
-        } catch (error){
+        } catch (error) {
             dispatch(handleError(error, ActionType.FETCH_DIAGRAMS_FROM_REPO, [repoId]))
 
         }
@@ -123,25 +128,24 @@ export const fetchDiagramsFromRepo = (repoId: string) => {
 }
 
 
-export const uploadDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string, bpmnDiagramDescription: string) => {
+export const uploadDiagram = (repositoryId: string, diagramName: string, diagramDescription: string) => {
     return async (dispatch: Dispatch) => {
-        const diagramController = new api.BpmnDiagramControllerApi()
-        try{
-            const bpmnDiagramUploadTO: BpmnDiagramUploadTO = {
-                bpmnDiagramName: bpmnDiagramName,
-                bpmnDiagramDescription: bpmnDiagramDescription,
+        const diagramController = new api.DiagramControllerApi()
+        try {
+            const newDiagram: NewDiagramTO = {
+                name: diagramName,
+                description: diagramDescription,
                 fileType: "bpmn"
             }
             const config = helpers.getClientConfig()
-            const response = await diagramController.createOrUpdateDiagram(bpmnDiagramUploadTO, bpmnRepositoryId, config)
-            if(Math.floor(response.status/100) === 2) {
+            const response = await diagramController.createDiagram(newDiagram, repositoryId, config)
+            if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: DIAGRAM_UPLOAD, uploadedDiagram: response.data})
-            }
-            else {
+            } else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
-        } catch (error){
-            dispatch(handleError(error, ActionType.UPLOAD_DIAGRAM, [bpmnRepositoryId, bpmnDiagramName, bpmnDiagramDescription]))
+        } catch (error) {
+            dispatch(handleError(error, ActionType.UPLOAD_DIAGRAM, [repositoryId, diagramName, diagramDescription]))
 
         }
     }
@@ -150,17 +154,16 @@ export const uploadDiagram = (bpmnRepositoryId: string, bpmnDiagramName: string,
 
 export const searchDiagram = (typedTitle: string) => {
     return async (dispatch: Dispatch) => {
-        const diagramController = new api.BpmnDiagramControllerApi()
-        try{
+        const diagramController = new api.DiagramControllerApi()
+        try {
             const config = helpers.getClientConfig()
             const response = await diagramController.searchDiagrams(typedTitle, config)
-            if(Math.floor(response.status/100) === 2) {
+            if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: SEARCH_DIAGRAMS, searchedDiagrams: response.data})
-            }
-            else {
+            } else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
-        } catch (error){
+        } catch (error) {
             dispatch(handleError(error, ActionType.SEARCH_DIAGRAM, [typedTitle]))
 
         }
@@ -171,17 +174,16 @@ export const searchDiagram = (typedTitle: string) => {
 export const deleteDiagram = (bpmnRepositoryId: string, bpmnDiagramId: string) => {
 
     return async (dispatch: Dispatch) => {
-        const diagramController = new api.BpmnDiagramControllerApi()
-        try{
+        const diagramController = new api.DiagramControllerApi()
+        try {
             const config = helpers.getClientConfig()
             const response = await diagramController.deleteDiagram(bpmnRepositoryId, bpmnDiagramId, config)
-            if(Math.floor(response.status/100) === 2) {
+            if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: SYNC_STATUS, dataSynced: false})
-            }
-            else {
+            } else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
-        } catch (error){
+        } catch (error) {
             dispatch(handleError(error, ActionType.DELETE_DIAGRAM, [bpmnRepositoryId, bpmnDiagramId]))
         }
     }

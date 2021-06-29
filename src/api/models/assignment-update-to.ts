@@ -14,34 +14,40 @@
 /**
  * 
  * @export
- * @interface AssignmentWithUserNameTO
+ * @interface AssignmentUpdateTO
  */
-export interface AssignmentWithUserNameTO {
+export interface AssignmentUpdateTO {
     /**
      * 
      * @type {string}
-     * @memberof AssignmentWithUserNameTO
+     * @memberof AssignmentUpdateTO
      */
-    bpmnRepositoryId: any;
+    repositoryId: any;
     /**
      * 
      * @type {string}
-     * @memberof AssignmentWithUserNameTO
+     * @memberof AssignmentUpdateTO
      */
-    userName: any;
+    userId: any;
     /**
      * 
      * @type {string}
-     * @memberof AssignmentWithUserNameTO
+     * @memberof AssignmentUpdateTO
      */
-    roleEnum: AssignmentWithUserNameTORoleEnumEnum;
+    username: any;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssignmentUpdateTO
+     */
+    roleEnum: AssignmentUpdateTORoleEnumEnum;
 }
 
 /**
     * @export
     * @enum {string}
     */
-export enum AssignmentWithUserNameTORoleEnumEnum {
+export enum AssignmentUpdateTORoleEnumEnum {
     OWNER = 'OWNER',
     ADMIN = 'ADMIN',
     MEMBER = 'MEMBER',

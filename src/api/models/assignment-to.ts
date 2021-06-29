@@ -22,7 +22,7 @@ export interface AssignmentTO {
      * @type {string}
      * @memberof AssignmentTO
      */
-    bpmnRepositoryId: any;
+    repositoryId: any;
     /**
      * 
      * @type {string}
@@ -34,7 +34,7 @@ export interface AssignmentTO {
      * @type {string}
      * @memberof AssignmentTO
      */
-    userName: any;
+    username: any;
     /**
      * 
      * @type {string}

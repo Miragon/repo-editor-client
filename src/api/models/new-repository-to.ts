@@ -14,13 +14,19 @@
 /**
  * 
  * @export
- * @interface BpmnDiagramSVGUploadTO
+ * @interface NewRepositoryTO
  */
-export interface BpmnDiagramSVGUploadTO {
+export interface NewRepositoryTO {
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramSVGUploadTO
+     * @memberof NewRepositoryTO
      */
-    svgPreview: any;
+    name: any;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewRepositoryTO
+     */
+    description: any;
 }

@@ -14,55 +14,55 @@
 /**
  * 
  * @export
- * @interface BpmnDiagramTO
+ * @interface DiagramTO
  */
-export interface BpmnDiagramTO {
+export interface DiagramTO {
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramTO
+     * @memberof DiagramTO
      */
-    bpmnDiagramId?: any;
+    id?: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramTO
+     * @memberof DiagramTO
      */
-    bpmnRepositoryId: any;
+    repositoryId: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramTO
+     * @memberof DiagramTO
      */
-    bpmnDiagramName: any;
+    name: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramTO
+     * @memberof DiagramTO
      */
-    bpmnDiagramDescription: any;
+    description: any;
     /**
      * 
      * @type {Date}
-     * @memberof BpmnDiagramTO
+     * @memberof DiagramTO
      */
     createdDate?: any;
     /**
      * 
      * @type {Date}
-     * @memberof BpmnDiagramTO
+     * @memberof DiagramTO
      */
     updatedDate?: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramTO
+     * @memberof DiagramTO
      */
     svgPreview?: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramTO
+     * @memberof DiagramTO
      */
     fileType?: any;
 }

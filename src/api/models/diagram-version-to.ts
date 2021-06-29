@@ -14,70 +14,70 @@
 /**
  * 
  * @export
- * @interface BpmnDiagramVersionTO
+ * @interface DiagramVersionTO
  */
-export interface BpmnDiagramVersionTO {
+export interface DiagramVersionTO {
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramVersionTO
+     * @memberof DiagramVersionTO
      */
-    bpmnDiagramVersionId?: any;
+    id?: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramVersionTO
+     * @memberof DiagramVersionTO
      */
-    bpmnDiagramVersionComment?: any;
+    comment?: any;
     /**
      * 
      * @type {number}
-     * @memberof BpmnDiagramVersionTO
+     * @memberof DiagramVersionTO
      */
-    bpmnDiagramVersionRelease?: any;
+    release?: any;
     /**
      * 
      * @type {number}
-     * @memberof BpmnDiagramVersionTO
+     * @memberof DiagramVersionTO
      */
-    bpmnDiagramVersionMilestone?: any;
+    milestone?: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramVersionTO
+     * @memberof DiagramVersionTO
      */
-    bpmnAsXML: any;
+    xml: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramVersionTO
+     * @memberof DiagramVersionTO
      */
-    saveType: BpmnDiagramVersionTOSaveTypeEnum;
+    saveType: DiagramVersionTOSaveTypeEnum;
     /**
      * 
      * @type {Date}
-     * @memberof BpmnDiagramVersionTO
+     * @memberof DiagramVersionTO
      */
     updatedDate: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramVersionTO
+     * @memberof DiagramVersionTO
      */
-    bpmnDiagramId: any;
+    diagramId: any;
     /**
      * 
      * @type {string}
-     * @memberof BpmnDiagramVersionTO
+     * @memberof DiagramVersionTO
      */
-    bpmnRepositoryId: any;
+    repositoryId: any;
 }
 
 /**
     * @export
     * @enum {string}
     */
-export enum BpmnDiagramVersionTOSaveTypeEnum {
+export enum DiagramVersionTOSaveTypeEnum {
     RELEASE = 'RELEASE',
     MILESTONE = 'MILESTONE',
     AUTOSAVE = 'AUTOSAVE'
