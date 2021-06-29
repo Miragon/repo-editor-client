@@ -195,6 +195,17 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
     const ref = useRef<HTMLButtonElement>(null);
 
+    const checkIfVersionsAreOpen = useCallback(() => {
+        if (diagramVersionTOs) {
+            const openedDiagram = diagramVersionTOs[0]
+            if (openedDiagram?.diagramId === props.diagramId) {
+                setOpen(true)
+            } else {
+                setOpen(false)
+            }
+        }
+    }, [diagramVersionTOs, props])
+
 
     useEffect(() => {
         //This block checks if th versions of another diagram are being fetched at the moment and if the loading animation has to be displayed
@@ -213,7 +224,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         checkIfVersionsAreOpen()
 
 
-    }, [diagramVersionTOs, currentId])
+    }, [diagramVersionTOs, currentId, checkIfVersionsAreOpen])
 
     const compare = (a: DiagramVersionTO, b: DiagramVersionTO) => {
         if (a.release < b.release) {
@@ -276,17 +287,6 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             window.open(`/modeler/#/${repoId}/${diagramId}/latest`, '_blank');
         }
     }
-
-    const checkIfVersionsAreOpen = useCallback(() => {
-        if (diagramVersionTOs) {
-            const openedDiagram = diagramVersionTOs[0]
-            if (openedDiagram?.diagramId === props.diagramId) {
-                setOpen(true)
-            } else {
-                setOpen(false)
-            }
-        }
-    }, [diagramVersionTOs, props])
 
 
     const options: DropdownButtonItem[] = [
@@ -447,7 +447,6 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                 open={createVersionOpen}
                 onCancelled={() => setCreateVersionOpen(false)}
                 onCreated={() => setCreateVersionOpen(false)}
-                repoId={props.repoId}
                 diagramId={props.diagramId}
                 diagramTitle={props.diagramTitle}/>
 

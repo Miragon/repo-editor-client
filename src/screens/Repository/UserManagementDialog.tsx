@@ -7,7 +7,6 @@ import {RootState} from "../../store/reducers/rootReducer";
 import {List, Paper} from "@material-ui/core";
 import {AssignmentTO} from "../../api/models/assignment-to";
 import UserListItem from "./UserListItem";
-import {makeStyles} from "@material-ui/core/styles";
 import {SEARCH_USERS, UNHANDLEDERROR} from "../../store/constants";
 import AddUserSearchBar from "./AddUserSearchBar";
 
@@ -16,18 +15,6 @@ interface Props {
     onCancelled: () => void;
     repoId: string;
 }
-
-const useStyles = makeStyles(() => ({
-    textField: {
-        left: "0px",
-        width: "80%"
-    },
-    button: {
-
-        right: "0px",
-        width: "80%"
-    }
-}));
 
 
 const UserManagementDialog: React.FC<Props> = props => {

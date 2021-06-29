@@ -7,10 +7,10 @@ import {DiagramTO, DiagramVersionUploadTOSaveTypeEnum, RepositoryTO} from "../..
 import {useDispatch, useSelector} from "react-redux";
 import * as diagramAction from "../../store/actions/diagramAction";
 import * as versionAction from "../../store/actions/versionAction";
-import {DEFAULT_FILE} from "../../store/actions/versionAction";
 import MenuItem from "@material-ui/core/MenuItem";
 import {RootState} from "../../store/reducers/rootReducer";
 import 'react-toastify/dist/ReactToastify.css';
+import {DEFAULT_DMN_FILE, DEFAULT_XML_FILE} from "../../store/constants";
 
 interface Props {
     open: boolean;
@@ -42,13 +42,9 @@ const CreateDiagramDialog: React.FC<Props> = props => {
 
     useEffect(() => {
         if (createdDiagram) {
-            dispatch(versionAction.createOrUpdateVersion(createdDiagram.id, DEFAULT_FILE, DiagramVersionUploadTOSaveTypeEnum.RELEASE))
+            dispatch(versionAction.createOrUpdateVersion(createdDiagram.id, (props.type === "bpmn" ? DEFAULT_XML_FILE : DEFAULT_DMN_FILE), DiagramVersionUploadTOSaveTypeEnum.RELEASE))
         }
-    }, [createdDiagram, dispatch])
-
-    useEffect(() => {
-        setRepository(props.repo?.id)
-    }, [props.repo])
+    }, [createdDiagram, dispatch, props.type])
 
 
     return (

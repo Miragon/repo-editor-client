@@ -60,7 +60,7 @@ const UploadDiagramDialog: React.FC<Props> = props => {
         } catch (err) {
             dispatch({type: UNHANDLEDERROR, errorMessage: err});
         }
-    }, [title, description, repository, dispatch]);
+    }, [title, description, repository, props, dispatch]);
 
 
     const onFileChanged = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +80,7 @@ const UploadDiagramDialog: React.FC<Props> = props => {
             });
             reader.readAsText(file);
         }
-    }, []);
+    }, [dispatch]);
 
     return (
         <PopupDialog

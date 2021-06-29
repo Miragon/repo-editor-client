@@ -17,7 +17,6 @@ interface Props {
     open: boolean;
     onCancelled: () => void;
     onCreated: () => void;
-    repoId: string;
     diagramId: string;
     diagramTitle: string;
 }
@@ -28,7 +27,7 @@ const CreateVersionDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const {open, onCancelled, repoId, diagramId, diagramTitle} = props;
+    const {open, onCancelled, diagramId, diagramTitle} = props;
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [comment, setComment] = useState("");
@@ -43,7 +42,7 @@ const CreateVersionDialog: React.FC<Props> = props => {
         } catch (err) {
             console.log(err)
         }
-    }, [repoId, diagramId, comment, saveType, dispatch])
+    }, [diagramId, comment, saveType, dispatch, onCancelled])
 
 
     return (

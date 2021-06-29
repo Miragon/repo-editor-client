@@ -123,7 +123,7 @@ const RegisterNewUserScreen: React.FC = () => {
         } catch (response) {
             toast.error("Could not persist the new User");
         }
-    }, [history, userController, userName]);
+    }, [history, userController]);
 
 
     return (

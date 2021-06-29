@@ -15,7 +15,7 @@ const CreateRepoDialog: React.FC<Props> = props => {
 
     const dispatch = useDispatch();
 
-    const { open, onCancelled, onCreated } = props;
+    const {open, onCancelled, onCreated} = props;
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState("");
@@ -23,13 +23,13 @@ const CreateRepoDialog: React.FC<Props> = props => {
 
 
     const onCreate = useCallback(() => {
-        try{
+        try {
             dispatch(repositoryAction.createRepository(title, description))
             onCancelled()
         } catch (err) {
             console.log(err)
         }
-    }, [dispatch, title, description])
+    }, [dispatch, title, description, onCancelled])
 
 
     return (
@@ -43,7 +43,8 @@ const CreateRepoDialog: React.FC<Props> = props => {
             firstTitle="Create"
             onFirst={() => {
                 onCreate()
-                onCreated()}
+                onCreated()
+            }
             }>
 
             <SettingsForm large>
@@ -51,7 +52,7 @@ const CreateRepoDialog: React.FC<Props> = props => {
                 <SettingsTextField
                     label="Title"
                     value={title}
-                    onChanged={setTitle} />
+                    onChanged={setTitle}/>
 
                 <SettingsTextField
                     label="Description"
@@ -59,7 +60,7 @@ const CreateRepoDialog: React.FC<Props> = props => {
                     multiline
                     rows={3}
                     rowsMax={3}
-                    onChanged={setDescription} />
+                    onChanged={setDescription}/>
 
             </SettingsForm>
 

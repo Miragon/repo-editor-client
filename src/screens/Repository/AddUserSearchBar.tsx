@@ -86,7 +86,7 @@ const AddUserSearchBar: React.FC<Props> = props => {
         const selectedUser = searchedUsers.find(user => user.username.toLowerCase() === username.toLowerCase())
         console.log("Matching ID: " + selectedUser?.id)
         return selectedUser
-    }, [searchedUsers, userName])
+    }, [searchedUsers])
 
 
     const addUser = useCallback(() => {
@@ -100,7 +100,7 @@ const AddUserSearchBar: React.FC<Props> = props => {
             console.log(err)
         }
 
-    }, [dispatch, userName, props])
+    }, [dispatch, userName, props, getUserByName])
 
 
     const updateState = (event: any) => {

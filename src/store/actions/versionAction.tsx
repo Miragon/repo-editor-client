@@ -6,7 +6,6 @@ import {CREATED_DIAGRAM, GET_VERSIONS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} fro
 import {ActionType} from "./actions";
 import {handleError} from "./errorAction";
 
-export const DEFAULT_FILE = "Default XML String"
 
 export const createOrUpdateVersion = (bpmnDiagramId: string, file: string, saveType: DiagramVersionUploadTOSaveTypeEnum, comment?: string) => {
 
