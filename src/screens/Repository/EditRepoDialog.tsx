@@ -6,7 +6,7 @@ import {IconButton, Typography} from "@material-ui/core";
 import * as repositoryAction from "../../store/actions/repositoryAction";
 import SettingsTextField from "../../components/Form/SettingsTextField";
 import DeleteIcon from '@material-ui/icons/Delete';
-import {SYNC_STATUS} from "../../store/actions";
+import {SYNC_STATUS} from "../../store/constants";
 import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
@@ -71,20 +71,19 @@ const EditRepoDialog: React.FC<Props> = props => {
     }, [title, description, dispatch, props])
 
 
-
     const deleteRepo = useCallback(() => {
+        console.log("Deleting")
         try {
-            if(confirm(`Are you sure you want to delete '${title}'?`)){
+            if (confirm(`Are you sure you want to delete '${title}'?`)) {
                 dispatch(repositoryAction.deleteRepository(props.repoId))
                 history.push('/')
                 dispatch({type: SYNC_STATUS, dataSynced: false})
                 console.log("Sync status = false")
-                }
-            } catch (err) {
+            }
+        } catch (err) {
             console.log(err)
         }
     }, [dispatch, history, props.repoId, title])
-
 
 
     return (
@@ -98,15 +97,15 @@ const EditRepoDialog: React.FC<Props> = props => {
             secondTitle="Close"
             onSecond={props.onCancelled}>
             <div className={classes.deleteSection}>
-                <Typography variant={"h5"} >
+                <Typography variant={"h5"}>
                     Delete Repository
                 </Typography>
-                <IconButton className={classes.deleteButton}>
-                    <DeleteIcon onClick={deleteRepo} />
+                <IconButton className={classes.deleteButton} onClick={deleteRepo}>
+                    <DeleteIcon/>
                 </IconButton>
             </div>
 
-            <div className={classes.spacer} />
+            <div className={classes.spacer}/>
 
             <SettingsTextField label={"Title"}
                                value={title}
@@ -121,7 +120,6 @@ const EditRepoDialog: React.FC<Props> = props => {
                 multiline={true}
                 rows={4}
             />
-
 
 
         </PopupDialog>

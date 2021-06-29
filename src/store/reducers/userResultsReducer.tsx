@@ -1,5 +1,5 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {USERQUERY_EXECUTED} from "../actions/diagramAction";
+import {USERQUERY_EXECUTED} from "../constants";
 
 const initialState = {
     resultsCount: 0

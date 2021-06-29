@@ -8,7 +8,7 @@ import {List, Paper} from "@material-ui/core";
 import {AssignmentTO} from "../../api/models/assignment-to";
 import UserListItem from "./UserListItem";
 import {makeStyles} from "@material-ui/core/styles";
-import {HANDLEDERROR, SEARCH_USERS} from "../../store/actions/diagramAction";
+import {SEARCH_USERS, UNHANDLEDERROR} from "../../store/constants";
 import AddUserSearchBar from "./AddUserSearchBar";
 
 interface Props {
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 const UserManagementDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
 
-    const { open, onCancelled } = props;
+    const {open, onCancelled} = props;
 
     const assignmentTOs: Array<AssignmentTO> = useSelector((state: RootState) => state.assignedUsers.assignedUsers)
     const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced)
@@ -53,29 +53,28 @@ const UserManagementDialog: React.FC<Props> = props => {
 
     useEffect(() => {
         fetchAssignedUsers(props.repoId)
-        if(!syncStatus){
+        if (!syncStatus) {
             fetchAssignedUsers(props.repoId)
         }
     }, [fetchAssignedUsers, syncStatus, props])
 
 
-
     const checkForAdminPermissions = useMemo(() => {
-            const currentUserAssignment = assignmentTOs.find(assignmentTO => assignmentTO.userName === currentUser.userName)
-            try{
-                if(currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.ADMIN || currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.OWNER){
-                    setHasAdminPermissions(true)
-                    return true
-                } else {
-                    setHasAdminPermissions(false)
-                    return  false
-                }
-            } catch (err){
-                dispatch({type: HANDLEDERROR, message: "Error while checking permissions for this repository"})
+        const currentUserAssignment = assignmentTOs.find(assignmentTO => assignmentTO.username === currentUser.username)
+        try {
+            if (currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.ADMIN || currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.OWNER) {
+                setHasAdminPermissions(true)
+                return true
+            } else {
+                setHasAdminPermissions(false)
+                return false
             }
-        }, [assignmentTOs, currentUser, dispatch])
+        } catch (err) {
+            dispatch({type: UNHANDLEDERROR, message: "Error while checking permissions for this repository"})
+        }
+    }, [assignmentTOs, currentUser, dispatch])
 
-    const onCancel= (() => {
+    const onCancel = (() => {
         dispatch({type: SEARCH_USERS, searchedUsers: []})
         onCancelled()
     })
@@ -89,17 +88,18 @@ const UserManagementDialog: React.FC<Props> = props => {
             error={error}
             onCloseError={() => setError(undefined)}
             secondTitle="close"
-            onSecond={onCancel} >
+            onSecond={onCancel}>
             <List dense={false}>
                 {checkForAdminPermissions && (
                     <AddUserSearchBar repoId={props.repoId}/>
                 )}
                 <Paper>
 
-                {assignmentTOs?.map(assignmentTO => (
-                    <UserListItem assignmentTO={assignmentTO} hasAdminPermissions={hasAdminPermissions} key={assignmentTO.userId} />
+                    {assignmentTOs?.map(assignmentTO => (
+                        <UserListItem assignmentTO={assignmentTO} hasAdminPermissions={hasAdminPermissions}
+                                      key={assignmentTO.userId}/>
 
-                ))}
+                    ))}
                 </Paper>
 
             </List>

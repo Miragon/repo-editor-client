@@ -1,6 +1,6 @@
 import {UserInfoTO} from "../../api/models";
 import {CaseReducer} from "@reduxjs/toolkit";
-import {SEARCH_USERS} from "../actions/diagramAction";
+import {SEARCH_USERS} from "../constants";
 
 const initialState = {
     searchedUsers: Array<UserInfoTO>()

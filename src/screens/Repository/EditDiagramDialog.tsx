@@ -40,14 +40,13 @@ const EditDiagramDialog: React.FC<Props> = props => {
 
 
     const applyChanges = useCallback(async () => {
-        try{
-            dispatch(diagramAction.createDiagram(props.repoId, title, description, "BPMN", props.diagramId))
+        try {
+            dispatch(diagramAction.createDiagram(props.repoId, title, description, "BPMN"))
             props.onCancelled()
-        } catch (err){
+        } catch (err) {
             console.log(err)
         }
     }, [title, description, props, dispatch])
-
 
 
     return (
@@ -62,20 +61,18 @@ const EditDiagramDialog: React.FC<Props> = props => {
             onSecond={props.onCancelled}>
             <InputLabel style={{'fontSize': '12px'}} htmlFor="Title">Title</InputLabel>
             <Input
-                    id="Name"
-                    value={title}
-                    onChange={(event) => setTitle(event.target.value)}/>
-            <div className={classes.spacer} />
+                id="Name"
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}/>
+            <div className={classes.spacer}/>
             <InputLabel style={{'fontSize': '12px'}} htmlFor="Description">Description</InputLabel>
             <Input
-                    id="Description"
-                    value={description}
-                    multiline
-                    rows={4}
-                    onChange={(event) => setDescription(event.target.value)}
-                    />
-
-
+                id="Description"
+                value={description}
+                multiline
+                rows={4}
+                onChange={(event) => setDescription(event.target.value)}
+            />
 
 
         </PopupDialog>

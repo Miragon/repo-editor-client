@@ -11,7 +11,7 @@ import {useHistory} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 import {UserControllerApi} from "../api/api";
 import helpers from "../constants/Functions";
-import {HANDLEDERROR, SUCCESS} from "../store/actions/diagramAction";
+import {SUCCESS, UNHANDLEDERROR} from "../store/constants";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/reducers/rootReducer";
 
@@ -88,13 +88,13 @@ const RegisterNewUserScreen: React.FC = () => {
 
 
     useEffect(() => {
-        if(apiErrorState){
+        if (apiErrorState) {
             //toast can contain any component, the Retry Button (and the message: apiErrorState) has to be passed here
             //toast.error(<RepoCard repoTitle={"abc"} description={"def"} existingDiagrams={3} assignedUsers={2}></RepoCard>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
             toast.error(apiErrorState, {autoClose: 8000, pauseOnHover: true})
-            dispatch({type: HANDLEDERROR, errorMessage: ""})
+            dispatch({type: UNHANDLEDERROR, errorMessage: ""})
         }
-        if(apiSuccessState){
+        if (apiSuccessState) {
             toast.success(apiSuccessState, {autoClose: 4000, pauseOnHover: true})
             dispatch({type: SUCCESS, successMessage: ""})
         }
@@ -130,7 +130,7 @@ const RegisterNewUserScreen: React.FC = () => {
         <div className={classes.createUserProfilePage}>
             <div className={classes.createUserProfileContent}>
                 <Avatar className={classes.avatar}>
-                    <LockIcon />
+                    <LockIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign up for Miragon Cloud Services
@@ -138,7 +138,7 @@ const RegisterNewUserScreen: React.FC = () => {
 
                 <p className={classes.infoText}>
                     This is the first time you are trying to access Miragon Cloud Services.
-                    <br />
+                    <br/>
                     To use this service you need an account.
                     To create a new account, choose a name and accept the Terms and Conditions.
                 </p>
@@ -152,7 +152,7 @@ const RegisterNewUserScreen: React.FC = () => {
                             onClick={() => setButtonDisabled(!isButtonDisabled)}
                             value="allowExtraEmails"
                             color="primary"/>}
-                        label="I agree to the terms of service" />
+                        label="I agree to the terms of service"/>
 
                     <Button
                         type="submit"
@@ -165,9 +165,9 @@ const RegisterNewUserScreen: React.FC = () => {
                         Create a new User Profile
                     </Button>
                 </form>
-                <Copyright />
+                <Copyright/>
             </div>
-            <ToastContainer />
+            <ToastContainer/>
         </div>
     );
 };

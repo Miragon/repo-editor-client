@@ -5,13 +5,12 @@ import React, {useCallback, useState} from "react";
 import {useDispatch} from "react-redux";
 import * as versionAction from "../../store/actions/versionAction";
 import SettingsSelect from "../../components/Form/SettingsSelect";
-import {BpmnDiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
+import {DiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import {MenuItem} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 
 const useStyles = makeStyles(() => ({
-    container: {
-    }
+    container: {}
 }));
 
 interface Props {
@@ -22,23 +21,24 @@ interface Props {
     diagramId: string;
     diagramTitle: string;
 }
+
 //#TODO: Get the latest version in order to create a new Release etc.
 
 const CreateVersionDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const { open, onCancelled, repoId, diagramId, diagramTitle } = props;
+    const {open, onCancelled, repoId, diagramId, diagramTitle} = props;
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [comment, setComment] = useState("");
-    const [saveType, setSaveType] = useState<BpmnDiagramVersionUploadTOSaveTypeEnum> (BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE);
+    const [saveType, setSaveType] = useState<DiagramVersionUploadTOSaveTypeEnum>(DiagramVersionUploadTOSaveTypeEnum.RELEASE);
 
     const onCreate = useCallback(async () => {
-        try{
+        try {
             //#TODO: Use the XML String from the last version
-            await dispatch(versionAction.createOrUpdateVersion(repoId, diagramId, "latestversion", saveType, comment))
-            dispatch(versionAction.getAllVersions(repoId, diagramId))
+            await dispatch(versionAction.createOrUpdateVersion(diagramId, "latestversion", saveType, comment))
+            dispatch(versionAction.getAllVersions(diagramId))
             onCancelled()
         } catch (err) {
             console.log(err)
@@ -56,7 +56,7 @@ const CreateVersionDialog: React.FC<Props> = props => {
             secondTitle="Cancel"
             onSecond={onCancelled}
             firstTitle="Create"
-            onFirst={() => onCreate() }>
+            onFirst={() => onCreate()}>
 
             <SettingsForm large>
 
@@ -66,14 +66,14 @@ const CreateVersionDialog: React.FC<Props> = props => {
                     disabled={false}
                     onChanged={setSaveType}>
                     <MenuItem
-                    key={BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE}
-                    value={BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE} >
-                        {BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE}
+                        key={DiagramVersionUploadTOSaveTypeEnum.RELEASE}
+                        value={DiagramVersionUploadTOSaveTypeEnum.RELEASE}>
+                        {DiagramVersionUploadTOSaveTypeEnum.RELEASE}
                     </MenuItem>
                     <MenuItem
-                    key={BpmnDiagramVersionUploadTOSaveTypeEnum.MILESTONE}
-                    value={BpmnDiagramVersionUploadTOSaveTypeEnum.MILESTONE}>
-                        {BpmnDiagramVersionUploadTOSaveTypeEnum.MILESTONE}
+                        key={DiagramVersionUploadTOSaveTypeEnum.MILESTONE}
+                        value={DiagramVersionUploadTOSaveTypeEnum.MILESTONE}>
+                        {DiagramVersionUploadTOSaveTypeEnum.MILESTONE}
                     </MenuItem>
                 </SettingsSelect>
 
@@ -83,7 +83,7 @@ const CreateVersionDialog: React.FC<Props> = props => {
                     multiline
                     rows={2}
                     rowsMax={2}
-                    onChanged={setComment} />
+                    onChanged={setComment}/>
             </SettingsForm>
 
         </PopupDialog>

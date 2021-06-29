@@ -1,11 +1,11 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {ACTIVE_REPO} from "../actions/repositoryAction";
+import {ACTIVE_REPO} from "../constants";
 
 const initialState = {
     activeRepo: null
 }
 
-const reducer: CaseReducer = (state= initialState, action) => {
+const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
         case ACTIVE_REPO:
             return {

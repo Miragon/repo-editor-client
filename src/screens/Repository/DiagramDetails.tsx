@@ -1,10 +1,11 @@
 import React, {useCallback, useEffect} from 'react';
-import {BpmnDiagramTO, BpmnRepositoryRequestTO} from "../../api/models";
+import {DiagramTO, RepositoryTO} from "../../api/models";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/reducers/rootReducer";
 import {makeStyles} from "@material-ui/styles";
 import DiagramListItem from "./DiagramListItem";
-import {fetchDiagramsFromRepo, SYNC_STATUS} from "../../store/actions/diagramAction";
+import {SYNC_STATUS} from "../../store/constants"
+import {fetchDiagramsFromRepo} from "../../store/actions/diagramAction";
 import {Card} from "@material-ui/core";
 
 
@@ -24,52 +25,50 @@ const DiagramDetails: React.FC = (() => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const activeDiagrams: Array<BpmnDiagramTO> = useSelector((state: RootState) => state.activeDiagrams.activeDiagrams)
-    const activeRepo: BpmnRepositoryRequestTO = useSelector((state: RootState) => state.activeRepo.activeRepo)
+    const activeDiagrams: Array<DiagramTO> = useSelector((state: RootState) => state.activeDiagrams.activeDiagrams)
+    const activeRepo: RepositoryTO = useSelector((state: RootState) => state.activeRepo.activeRepo)
     const synced: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced)
 
     const fetchActiveDiagrams = useCallback((repoId: string) => {
 
-        try  {
-            if(repoId){
-                console.log("in here")
+        try {
+            if (repoId) {
                 dispatch(fetchDiagramsFromRepo(repoId))
             }
         } catch (err) {
             console.log(err)
         }
-        if(!synced){
+        if (!synced) {
             dispatch(fetchDiagramsFromRepo(repoId))
             dispatch({type: SYNC_STATUS, dataSynced: true})
         }
     }, [dispatch, synced])
 
 
-
     useEffect(() => {
-        fetchActiveDiagrams(activeRepo?.bpmnRepositoryId)
+        fetchActiveDiagrams(activeRepo?.id)
     }, [fetchActiveDiagrams, activeRepo])
 
 
     return (
         <>
-      <div className={classes.container}>
-          {activeDiagrams?.map(diagram => (
-              <Card
-                  key={diagram.bpmnDiagramId}
-              >
+            <div className={classes.container}>
+                {activeDiagrams?.map(diagram => (
+                    <Card
+                        key={diagram.id}
+                    >
 
-              <DiagramListItem diagramTitle={diagram.bpmnDiagramName}
-                               image={diagram.svgPreview}
-                               updatedDate={diagram.updatedDate}
-                               createdDate={diagram.createdDate}
-                               description={diagram.bpmnDiagramDescription}
-                               repoId={diagram.bpmnRepositoryId}
-                               diagramId={diagram.bpmnDiagramId}
-                                />
-              </Card>
-          ))}
-      </div>
+                        <DiagramListItem diagramTitle={diagram.name}
+                                         image={diagram.svgPreview}
+                                         updatedDate={diagram.updatedDate}
+                                         createdDate={diagram.createdDate}
+                                         description={diagram.description}
+                                         repoId={diagram.repositoryId}
+                                         diagramId={diagram.id}
+                        />
+                    </Card>
+                ))}
+            </div>
         </>
     );
 });

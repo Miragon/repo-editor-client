@@ -1,5 +1,5 @@
-import {DIAGRAM_UPLOAD} from "../actions/diagramAction";
 import {CaseReducer} from "@reduxjs/toolkit";
+import {DIAGRAM_UPLOAD} from "../constants";
 
 
 const initialState = {

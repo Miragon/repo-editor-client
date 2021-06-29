@@ -1,6 +1,6 @@
-import {HANDLEDERROR, SUCCESS, UNHANDLEDERROR} from "../actions/diagramAction";
 import {CaseReducer} from "@reduxjs/toolkit";
 import {ActionType} from "../actions/actions";
+import {SUCCESS, UNHANDLEDERROR} from "../constants";
 
 const initialState = {
     errorMessage: "",
@@ -12,13 +12,7 @@ const initialState = {
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
-        case HANDLEDERROR:
-            return {
-                ...state,
-                errorMessage: action.errorMessage,
-                retryMethod: action.retryMethod,
-                retryPayload: action.retryPayload
-            }
+
         case UNHANDLEDERROR:
             return {
                 ...state,

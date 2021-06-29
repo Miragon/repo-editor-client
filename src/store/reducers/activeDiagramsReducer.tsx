@@ -1,9 +1,9 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {BpmnDiagramTO} from "../../api/models";
-import {ACTIVE_DIAGRAMS} from "../actions/repositoryAction";
+import {DiagramTO} from "../../api/models";
+import {ACTIVE_DIAGRAMS} from "../constants";
 
 const initialState = {
-    activeDiagrams: Array<BpmnDiagramTO>()
+    activeDiagrams: Array<DiagramTO>()
 }
 
 const reducer: CaseReducer = (state = initialState, action) => {

@@ -1,9 +1,9 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {SEARCH_DIAGRAMS} from "../actions";
-import {BpmnDiagramTO} from "../../models";
+import {DiagramTO} from "../../api/models";
+import {SEARCH_DIAGRAMS} from "../constants";
 
 const initialState = {
-    searchedDiagrams: Array<BpmnDiagramTO>()
+    searchedDiagrams: Array<DiagramTO>()
 }
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {

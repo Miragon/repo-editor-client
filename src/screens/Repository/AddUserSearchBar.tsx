@@ -17,6 +17,7 @@ const useStyles = makeStyles(() => ({
         paddingRight: "60px"
     }
 }));
+
 interface Props {
     repoId: string;
 }
@@ -31,42 +32,44 @@ const AddUserSearchBar: React.FC<Props> = props => {
     const searchedUsers: Array<UserInfoTO> = useSelector((state: RootState) => state.searchedUsers.searchedUsers)
     const results: number = useSelector((state: RootState) => state.resultsCount.resultsCount)
 
-    const [user, setUser] = useState("");
+    const [userName, setUserName] = useState("");
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState<UserInfoTO[]>([]);
-    let loading = open && options.length === 0 && user != "" && results != 0;
+    const [loading, setLoading] = useState<boolean>(false);
 
-
-    //#TODO: Loading animation is never displayed at the moment
-    React.useEffect(() => {
-        let active = true;
-        if (!loading) {
-            return undefined;
-        }
-
-        if(results === 0){
-            active = false
-            loading = false
-        }
-
-    }, [loading, results]);
 
     useEffect(() => {
         if (!open) {
             setOptions([]);
         }
-        if(open) {
+        if (open) {
             setOptions(searchedUsers)
         }
     }, [open, searchedUsers]);
 
 
+    useEffect(() => {
+        if (searchedUsers.length > 0) {
+            setLoading(false)
+        }
+        if (results == 0) {
+            setLoading(false)
+        }
+    }, [searchedUsers, results])
+
+    useEffect(() => {
+        if (userName === "") {
+            setLoading(false)
+        }
+    }, [userName])
+
     const onChangeWithTimer = ((input: string) => {
-        setUser(input)
-        if(input != "") {
-            if(timeout){
+        setUserName(input)
+        if (input != "") {
+            if (timeout) {
                 clearTimeout(timeout);
             }
+            setLoading(true)
             timeout = setTimeout(() => fetchUserSuggestions(input), 500);
         }
     })
@@ -76,57 +79,70 @@ const AddUserSearchBar: React.FC<Props> = props => {
     }, [dispatch])
 
 
+    //#TODO: Add the UserId prop to AssignmentUpdate in Backend
+
+    const getUserByName = useCallback((username: string) => {
+        console.log("passed Variable: " + username)
+        const selectedUser = searchedUsers.find(user => user.username.toLowerCase() === username.toLowerCase())
+        console.log("Matching ID: " + selectedUser?.id)
+        return selectedUser
+    }, [searchedUsers, userName])
+
+
     const addUser = useCallback(() => {
         try {
-            dispatch(assignmentAction.createOrUpdateUserAssignment(props.repoId, user))
-            setUser("")
+            const user = getUserByName(userName)
+            if (user) {
+                dispatch(assignmentAction.createOrUpdateUserAssignment(props.repoId, user?.id, user?.username))
+                setUserName("")
+            }
         } catch (err) {
             console.log(err)
         }
 
-    }, [dispatch, user, props])
+    }, [dispatch, userName, props])
 
 
     const updateState = (event: any) => {
-        setUser(event.target.textContent)
+        setUserName(event.target.textContent)
     }
 
     return (
         <ListItem className={classes.listItem}>
-        <Autocomplete
-            id="UserSearchBar"
-            freeSolo={true}
-            style={{ width: 500 }}
-            open={open}
-            onOpen={() => {
-                setOpen(true);
-            }}
-            onClose={() => {
-                setOpen(false);
-            }}
-            getOptionSelected={(option, value) => option.userName === value.userName}
-            getOptionLabel={(option) => option.userName}
-            options={options}
-            onChange={updateState}
-            loading={loading}
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    label="Add user"
-                    variant="outlined"
-                    onChange={(event) => onChangeWithTimer(event.target.value)}
-                    InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                            <React.Fragment>
-                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                {params.InputProps.endAdornment}
-                            </React.Fragment>
-                        ),
-                    }}
-                />
-            )}
-        />
+            <Autocomplete
+                id="UserSearchBar"
+                freeSolo={true}
+                style={{width: 500}}
+                open={open}
+                onOpen={() => {
+                    setOpen(true);
+                }}
+                onClose={() => {
+                    setOpen(false);
+                }}
+                getOptionSelected={(option, value) => option.username === value.username}
+                getOptionLabel={(option) => option.username}
+                options={options}
+                onChange={updateState}
+                loading={loading}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        label="Add user"
+                        variant="outlined"
+                        onChange={(event) => onChangeWithTimer(event.target.value)}
+                        InputProps={{
+                            ...params.InputProps,
+                            endAdornment: (
+                                <React.Fragment>
+                                    {loading ? <CircularProgress color="inherit" size={20}/> : null}
+                                    {params.InputProps.endAdornment}
+                                </React.Fragment>
+                            ),
+                        }}
+                    />
+                )}
+            />
             <ListItemSecondaryAction>
                 <IconButton edge="end" onClick={() => addUser()}>
                     <Add/>

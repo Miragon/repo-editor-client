@@ -2,13 +2,14 @@ import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react";
 import React, {useCallback, useEffect} from "react";
 import RepoCard from "./Holder/RepoCard";
-import {BpmnRepositoryRequestTO} from "../../api/models";
+import {RepositoryTO} from "../../api/models";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/reducers/rootReducer";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import 'react-toastify/dist/ReactToastify.css';
-import {ACTIVE_REPO, fetchRepositories} from "../../store/actions/repositoryAction";
+import {fetchRepositories} from "../../store/actions/repositoryAction";
 import {useHistory} from "react-router-dom";
+import {ACTIVE_REPO} from "../../store/constants";
 
 
 const useStyles = makeStyles(() => ({
@@ -32,8 +33,7 @@ const RepoContainer: React.FC = observer(() => {
     const history = useHistory();
 
 
-
-    const allRepos: Array<BpmnRepositoryRequestTO> = useSelector((state: RootState) => state.repos.repos)
+    const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos)
     const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced)
     const fetchRepos = useCallback(() => {
         try {
@@ -45,39 +45,38 @@ const RepoContainer: React.FC = observer(() => {
 
     useEffect(() => {
         fetchRepos();
-        if(!syncStatus){
+        if (!syncStatus) {
             fetchRepos()
         }
 
     }, [dispatch, fetchRepos, syncStatus])
 
 
-
-    const openRepoScreen = (repo: BpmnRepositoryRequestTO) => {
+    const openRepoScreen = (repo: RepositoryTO) => {
         dispatch({type: ACTIVE_REPO, activeRepo: repo})
-        history.push(`/repository/${repo.bpmnRepositoryId}`)
+        history.push(`/repository/${repo.id}`)
     }
 
     return (
         <>
             <div className={classes.header}>
-                <div className={classes.headerText} >
+                <div className={classes.headerText}>
                     Repositories
                 </div>
             </div>
 
             <div className={classes.container}>
                 <ErrorBoundary>
-                {allRepos.map(repo => (
-                    // eslint-disable-next-line react/jsx-key
-                    <RepoCard
-                        key={repo.bpmnRepositoryId}
-                        repoTitle={repo.bpmnRepositoryName}
-                        description={repo.bpmnRepositoryDescription}
-                        existingDiagrams={repo.existingDiagrams}
-                        assignedUsers={repo.assignedUsers}
-                        onClick={() => openRepoScreen(repo)}/>
-                ))}
+                    {allRepos.map(repo => (
+                        // eslint-disable-next-line react/jsx-key
+                        <RepoCard
+                            key={repo.id}
+                            repoTitle={repo.name}
+                            description={repo.description}
+                            existingDiagrams={repo.existingDiagrams}
+                            assignedUsers={repo.assignedUsers}
+                            onClick={() => openRepoScreen(repo)}/>
+                    ))}
                     {allRepos?.length === 0 && (
                         <span>You haven&apos;t added any Repositories yet.</span>
                     )}

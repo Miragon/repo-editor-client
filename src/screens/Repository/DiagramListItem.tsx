@@ -20,9 +20,10 @@ import {KeyboardArrowDown, KeyboardArrowUp, MoreVert} from '@material-ui/icons';
 import {DropdownButtonItem} from "../../components/Form/DropdownButton";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllVersions} from "../../store/actions/versionAction";
-import {BpmnDiagramVersionTO} from "../../api/models";
+import {DiagramVersionTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
-import {deleteDiagram, GET_VERSIONS} from "../../store/actions/diagramAction";
+import {deleteDiagram} from "../../store/actions"
+import {GET_VERSIONS} from "../../store/constants";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import clsx from "clsx";
 import CreateVersionDialog from "./CreateVersionDialog";
@@ -181,7 +182,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const bpmnDiagramVersionTOS: Array<BpmnDiagramVersionTO> = useSelector((state: RootState) => state.versions.versions)
+    const diagramVersionTOs: Array<DiagramVersionTO> = useSelector((state: RootState) => state.versions.versions)
 
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
 
@@ -197,10 +198,10 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
     useEffect(() => {
         //This block checks if th versions of another diagram are being fetched at the moment and if the loading animation has to be displayed
-        if(bpmnDiagramVersionTOS){
-            bpmnDiagramVersionTOS.sort(compare)
-            setCurrentId(bpmnDiagramVersionTOS[0] ? bpmnDiagramVersionTOS[0].bpmnDiagramId : "")
-            if(currentId === bpmnDiagramVersionTOS[0]?.bpmnDiagramId){
+        if (diagramVersionTOs) {
+            diagramVersionTOs.sort(compare)
+            setCurrentId(diagramVersionTOs[0] ? diagramVersionTOs[0].diagramId : "")
+            if (currentId === diagramVersionTOs[0]?.diagramId) {
                 setLoading(false)
             }
         }
@@ -212,20 +213,20 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         checkIfVersionsAreOpen()
 
 
-    }, [bpmnDiagramVersionTOS, currentId])
+    }, [diagramVersionTOs, currentId])
 
-    const compare = (a: BpmnDiagramVersionTO, b: BpmnDiagramVersionTO) => {
-        if(a.bpmnDiagramVersionRelease < b.bpmnDiagramVersionRelease){
+    const compare = (a: DiagramVersionTO, b: DiagramVersionTO) => {
+        if (a.release < b.release) {
             return -1;
         }
-        if(a.bpmnDiagramVersionRelease > b.bpmnDiagramVersionRelease){
+        if (a.release > b.release) {
             return 1;
         }
-        if(a.bpmnDiagramVersionRelease === b.bpmnDiagramVersionRelease){
-            if(a.bpmnDiagramVersionMilestone < b.bpmnDiagramVersionMilestone){
+        if (a.release === b.release) {
+            if (a.milestone < b.milestone) {
                 return -1;
             }
-            if(a.bpmnDiagramVersionMilestone > b.bpmnDiagramVersionMilestone){
+            if (a.milestone > b.milestone) {
                 return 1;
             }
         }
@@ -235,22 +236,21 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const fetchVersions = useCallback(() => {
         try {
             setLoading(true)
-            dispatch(getAllVersions(props.repoId, props.diagramId))
+            dispatch(getAllVersions(props.diagramId))
         } catch (err) {
             console.log(err)
         }
     }, [dispatch, props])
 
     const reformatDate = (date: string | undefined) => {
-        if(date){
+        if (date) {
             return date.split('T')[0]
-        }
-        else {
+        } else {
             return "01.01.2000"
         }
     }
     const removeDiagram = () => {
-        dispatch(deleteDiagram(props.repoId, props.diagramId))
+        dispatch(deleteDiagram(props.diagramId))
     }
     const openSettings = (event: any) => {
         event.stopPropagation()
@@ -270,7 +270,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
     }
     const openModeler = (repoId: string, diagramId: string, versionId?: string) => {
-        if(versionId){
+        if (versionId) {
             window.open(`/modeler/#/${repoId}/${diagramId}/${versionId}/`, '_blank');
         } else {
             window.open(`/modeler/#/${repoId}/${diagramId}/latest`, '_blank');
@@ -278,15 +278,15 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     }
 
     const checkIfVersionsAreOpen = useCallback(() => {
-        if(bpmnDiagramVersionTOS){
-            const openedDiagram = bpmnDiagramVersionTOS[0]
-                if(openedDiagram?.bpmnDiagramId === props.diagramId){
-                    setOpen(true)
-                } else {
-                    setOpen(false)
-                }
+        if (diagramVersionTOs) {
+            const openedDiagram = diagramVersionTOs[0]
+            if (openedDiagram?.diagramId === props.diagramId) {
+                setOpen(true)
+            } else {
+                setOpen(false)
+            }
         }
-    }, [bpmnDiagramVersionTOS, props])
+    }, [diagramVersionTOs, props])
 
 
     const options: DropdownButtonItem[] = [
@@ -312,150 +312,153 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             id: "divider1",
             type: "divider",
             label: "",
-            onClick: () => { /* Do nothing */ }
+            onClick: () => { /* Do nothing */
+            }
         },
         {
             id: "DeleteDiagram",
             label: "Delete Diagram",
             type: "button",
             onClick: () => {
-                if(confirm(`Are you sure you want to delete '${props.diagramTitle}'?`)){
+                if (confirm(`Are you sure you want to delete '${props.diagramTitle}'?`)) {
                     removeDiagram()
                 }
             }
         }
     ];
 
-        return (
-            <>
+    return (
+        <>
             <div className={classes.listWithVersions} onClick={() => openModeler(props.repoId, props.diagramId)}>
-            <div className={classes.listItemWithVersions} >
-                <div className={classes.header}>
-                    <div className={classes.title}>
-                        {props.diagramTitle}
+                <div className={classes.listItemWithVersions}>
+                    <div className={classes.header}>
+                        <div className={classes.title}>
+                            {props.diagramTitle}
+                        </div>
+                        <div className={classes.updatedDate}>
+                            {"modified on " + reformatDate(props.updatedDate)}
+                        </div>
+                        <IconButton ref={ref} className={classes.more} onClick={(event) => openSettings(event)}>
+                            <MoreVert/>
+                        </IconButton>
                     </div>
-                    <div className={classes.updatedDate}>
-                        {"modified on " + reformatDate(props.updatedDate)}
+
+                    {!open &&
+                    <div className={classes.versionsButton} onClick={(event) => openVersions(event)}>
+                        <KeyboardArrowDown/>
                     </div>
-                    <IconButton ref={ref} className={classes.more} onClick={(event) => openSettings(event)}>
-                        <MoreVert/>
-                    </IconButton>
-                </div>
+                    }
 
-                {!open &&
-                <div className={classes.versionsButton} onClick={(event) => openVersions(event)}>
-                    <KeyboardArrowDown/>
+                    <img
+                        alt="Preview"
+                        className={classes.image}
+                        src={image}/>
+                    <div className={classes.description}>
+                        {props.description}
+                    </div>
                 </div>
-                }
-
-                <img
-                    alt="Preview"
-                    className={classes.image}
-                    src={image} />
-                <div className={classes.description}>
-                    {props.description}
-                </div>
-            </div>
 
 
                 <Collapse in={open} timeout={"auto"}>
-                <Table size="small">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>
-                                <b>Version</b>
-                            </TableCell>
-                            <TableCell>
-                                <b>Comment</b>
-                            </TableCell>
-                            <TableCell>
-                                <b>Date</b>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {loading &&
-                        <TableRow key="loading" hover={true}>
-                            <TableCell colSpan={3} align="center">
-                                <React.Fragment>
-                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                </React.Fragment></TableCell>
-                        </TableRow>
-                        }
-                {bpmnDiagramVersionTOS?.map((singleVersion) => (
-                    <TableRow key={singleVersion.bpmnDiagramVersionId} hover={true} onClick={() => openModeler(singleVersion.bpmnRepositoryId, singleVersion.bpmnDiagramId, singleVersion.bpmnDiagramVersionId)}>
-                        <TableCell component="th" scope={"row"}>{singleVersion.bpmnDiagramVersionRelease}.{singleVersion.bpmnDiagramVersionMilestone}</TableCell>
-                        <TableCell>{singleVersion.bpmnDiagramVersionComment}</TableCell>
-                        <TableCell>{reformatDate(singleVersion.updatedDate)}</TableCell>
-                    </TableRow>
-                ))}
+                    <Table size="small">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    <b>Version</b>
+                                </TableCell>
+                                <TableCell>
+                                    <b>Comment</b>
+                                </TableCell>
+                                <TableCell>
+                                    <b>Date</b>
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {loading &&
+                            <TableRow key="loading" hover={true}>
+                                <TableCell colSpan={3} align="center">
+                                    <React.Fragment>
+                                        {loading ? <CircularProgress color="inherit" size={20}/> : null}
+                                    </React.Fragment></TableCell>
+                            </TableRow>
+                            }
+                            {diagramVersionTOs?.map((singleVersion) => (
+                                <TableRow key={singleVersion.id} hover={true}
+                                          onClick={() => openModeler(singleVersion.repositoryId, singleVersion.diagramId, singleVersion.id)}>
+                                    <TableCell component="th"
+                                               scope={"row"}>{singleVersion.release}.{singleVersion.milestone}</TableCell>
+                                    <TableCell>{singleVersion.comment}</TableCell>
+                                    <TableCell>{reformatDate(singleVersion.updatedDate)}</TableCell>
+                                </TableRow>
+                            ))}
 
-                    </TableBody>
-                </Table>
-                <div className={classes.versionsButtonClose} onClick={((event) => closeVersions(event))}>
-                    <KeyboardArrowUp/>
-                </div>
+                        </TableBody>
+                    </Table>
+                    <div className={classes.versionsButtonClose} onClick={((event) => closeVersions(event))}>
+                        <KeyboardArrowUp/>
+                    </div>
                 </Collapse>
 
             </div>
 
 
-    <Popper
-        open={settingsOpen}
-        anchorEl={ref.current}
-        role={undefined}
-        transition
-        disablePortal
-        className={classes.popupContainer}>
-        {({ TransitionProps }) => (
-            <Grow
-                {...TransitionProps}
-                style={{ transformOrigin: "top" }}>
-                <Paper className={classes.popup}>
-                    <ClickAwayListener onClickAway={() => setSettingsOpen(false)}>
-                        <MenuList className={classes.list}>
-                            {options.map(option => (
-                                <MenuItem
-                                    key={option.id}
-                                    disabled={option.disabled || option.type !== "button"}
-                                    className={clsx(
-                                        classes.menuItem,
-                                        option.type === "divider" && classes.menuItemDivider
-                                    )}
-                                    onClick={() => {
-                                        if (option.onClick) {
-                                            option.onClick();
-                                        } else {
-                                            console.log("Some error when clicking")
-                                        }
-                                        setSettingsOpen(false);
-                                    }}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </MenuList>
-                    </ClickAwayListener>
-                </Paper>
-            </Grow>
-        )}
-    </Popper>
+            <Popper
+                open={settingsOpen}
+                anchorEl={ref.current}
+                role={undefined}
+                transition
+                disablePortal
+                className={classes.popupContainer}>
+                {({TransitionProps}) => (
+                    <Grow
+                        {...TransitionProps}
+                        style={{transformOrigin: "top"}}>
+                        <Paper className={classes.popup}>
+                            <ClickAwayListener onClickAway={() => setSettingsOpen(false)}>
+                                <MenuList className={classes.list}>
+                                    {options.map(option => (
+                                        <MenuItem
+                                            key={option.id}
+                                            disabled={option.disabled || option.type !== "button"}
+                                            className={clsx(
+                                                classes.menuItem,
+                                                option.type === "divider" && classes.menuItemDivider
+                                            )}
+                                            onClick={() => {
+                                                if (option.onClick) {
+                                                    option.onClick();
+                                                } else {
+                                                    console.log("Some error when clicking")
+                                                }
+                                                setSettingsOpen(false);
+                                            }}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </MenuList>
+                            </ClickAwayListener>
+                        </Paper>
+                    </Grow>
+                )}
+            </Popper>
 
-                <CreateVersionDialog
-                    open={createVersionOpen}
-                    onCancelled={() => setCreateVersionOpen(false)}
-                    onCreated={() => setCreateVersionOpen(false)}
-                    repoId={props.repoId}
-                    diagramId={props.diagramId}
-                    diagramTitle={props.diagramTitle} />
+            <CreateVersionDialog
+                open={createVersionOpen}
+                onCancelled={() => setCreateVersionOpen(false)}
+                onCreated={() => setCreateVersionOpen(false)}
+                repoId={props.repoId}
+                diagramId={props.diagramId}
+                diagramTitle={props.diagramTitle}/>
 
-                <EditDiagramDialog
-                    open={editDiagramOpen}
-                    onCancelled={() => setEditDiagramOpen(false)}
-                    repoId={props.repoId}
-                    diagramId={props.diagramId}
-                    diagramName={props.diagramTitle}
-                    diagramDescription={props.description} />
-    </>
-        );
+            <EditDiagramDialog
+                open={editDiagramOpen}
+                onCancelled={() => setEditDiagramOpen(false)}
+                repoId={props.repoId}
+                diagramId={props.diagramId}
+                diagramName={props.diagramTitle}
+                diagramDescription={props.description}/>
+        </>
+    );
 });
 export default DiagramListItem;

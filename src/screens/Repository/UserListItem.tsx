@@ -12,7 +12,7 @@ import {
     Paper,
     Popper
 } from "@material-ui/core";
-import {AssignmentTO, AssignmentWithUserNameTORoleEnumEnum} from "../../api/models";
+import {AssignmentTO, AssignmentUpdateTORoleEnumEnum} from "../../api/models";
 import {Settings} from "@material-ui/icons";
 import clsx from "clsx";
 import {makeStyles} from "@material-ui/styles";
@@ -78,17 +78,17 @@ const UserListItem: React.FC<Props> = props => {
     const ref = useRef<HTMLButtonElement>(null);
 
 
-    const changeRole = useCallback((role: AssignmentWithUserNameTORoleEnumEnum) => {
-        try{
-            dispatch(assignmentAction.createOrUpdateUserAssignment(props.assignmentTO.bpmnRepositoryId, props.assignmentTO.userName, role))
+    const changeRole = useCallback((role: AssignmentUpdateTORoleEnumEnum) => {
+        try {
+            dispatch(assignmentAction.createOrUpdateUserAssignment(props.assignmentTO.repositoryId, props.assignmentTO.userId, props.assignmentTO.username, role))
         } catch (err) {
             console.log(err)
         }
     }, [dispatch, props])
 
     const removeUser = useCallback(() => {
-        try{
-            dispatch(assignmentAction.deleteAssignment(props.assignmentTO.bpmnRepositoryId, props.assignmentTO.userName))
+        try {
+            dispatch(assignmentAction.deleteAssignment(props.assignmentTO.repositoryId, props.assignmentTO.username))
         } catch (err) {
             console.log(err)
         }
@@ -101,7 +101,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "Owner",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentWithUserNameTORoleEnumEnum.OWNER)
+                changeRole(AssignmentUpdateTORoleEnumEnum.OWNER)
             }
         },
         {
@@ -109,7 +109,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "Admin",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentWithUserNameTORoleEnumEnum.ADMIN)
+                changeRole(AssignmentUpdateTORoleEnumEnum.ADMIN)
             }
         },
         {
@@ -117,7 +117,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "Member",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentWithUserNameTORoleEnumEnum.MEMBER)
+                changeRole(AssignmentUpdateTORoleEnumEnum.MEMBER)
             }
         },
         {
@@ -125,14 +125,15 @@ const UserListItem: React.FC<Props> = props => {
             label: "Viewer",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentWithUserNameTORoleEnumEnum.VIEWER)
+                changeRole(AssignmentUpdateTORoleEnumEnum.VIEWER)
             }
         },
         {
             id: "divider1",
             type: "divider",
             label: "",
-            onClick: () => { /* Do nothing */ }
+            onClick: () => { /* Do nothing */
+            }
         },
         {
             id: "Remove",
@@ -146,59 +147,59 @@ const UserListItem: React.FC<Props> = props => {
 
     return (
         <>
-        <ListItem>
-            <ListItemText
-                primary={props.assignmentTO.userName}
-                secondary={props.assignmentTO.roleEnum} />
-            {props.hasAdminPermissions && (
-            <ListItemSecondaryAction>
-                <IconButton ref={ref} edge="end" onClick={() => setOpen(true)}>
-                    <Settings/>
-                </IconButton>
-            </ListItemSecondaryAction>
-            )}
-        </ListItem>
+            <ListItem>
+                <ListItemText
+                    primary={props.assignmentTO.username}
+                    secondary={props.assignmentTO.roleEnum}/>
+                {props.hasAdminPermissions && (
+                    <ListItemSecondaryAction>
+                        <IconButton ref={ref} edge="end" onClick={() => setOpen(true)}>
+                            <Settings/>
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                )}
+            </ListItem>
             <Divider/>
-    <Popper
-        open={open}
-        anchorEl={ref.current}
-        role={undefined}
-        transition
-        disablePortal
-        className={classes.popupContainer}>
-        {({ TransitionProps }) => (
-            <Grow
-                {...TransitionProps}
-                style={{ transformOrigin: "top" }}>
-                <Paper className={classes.popup}>
-                    <ClickAwayListener onClickAway={() => setOpen(false)}>
-                        <MenuList className={classes.list}>
-                            {options.map(option => (
-                                <MenuItem
-                                    key={option.id}
-                                    disabled={option.disabled || option.type !== "button"}
-                                    className={clsx(
-                                        classes.menuItem,
-                                        option.type === "hint" && classes.menuItemHint,
-                                        option.type === "divider" && classes.menuItemDivider
-                                    )}
-                                    onClick={() => {
-                                        if (option.onClick) {
-                                            option.onClick();
-                                        } else {
-                                            console.log("Some error when clicking")
-                                        }
-                                        setOpen(false);
-                                    }}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </MenuList>
-                    </ClickAwayListener>
-                </Paper>
-            </Grow>
-        )}
-    </Popper>
+            <Popper
+                open={open}
+                anchorEl={ref.current}
+                role={undefined}
+                transition
+                disablePortal
+                className={classes.popupContainer}>
+                {({TransitionProps}) => (
+                    <Grow
+                        {...TransitionProps}
+                        style={{transformOrigin: "top"}}>
+                        <Paper className={classes.popup}>
+                            <ClickAwayListener onClickAway={() => setOpen(false)}>
+                                <MenuList className={classes.list}>
+                                    {options.map(option => (
+                                        <MenuItem
+                                            key={option.id}
+                                            disabled={option.disabled || option.type !== "button"}
+                                            className={clsx(
+                                                classes.menuItem,
+                                                option.type === "hint" && classes.menuItemHint,
+                                                option.type === "divider" && classes.menuItemDivider
+                                            )}
+                                            onClick={() => {
+                                                if (option.onClick) {
+                                                    option.onClick();
+                                                } else {
+                                                    console.log("Some error when clicking")
+                                                }
+                                                setOpen(false);
+                                            }}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </MenuList>
+                            </ClickAwayListener>
+                        </Paper>
+                    </Grow>
+                )}
+            </Popper>
         </>
     );
 }

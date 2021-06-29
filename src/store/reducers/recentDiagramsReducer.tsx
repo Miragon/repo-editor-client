@@ -1,10 +1,10 @@
-import {BpmnDiagramTO} from "../../api/models";
-import {GET_RECENT} from "../actions/diagramAction";
+import {DiagramTO} from "../../api/models";
 import {CaseReducer} from "@reduxjs/toolkit";
+import {GET_RECENT} from "../constants";
 
 
 const initialState = {
-    recentDiagrams: Array<BpmnDiagramTO>()
+    recentDiagrams: Array<DiagramTO>()
 }
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {

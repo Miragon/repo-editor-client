@@ -8,7 +8,7 @@ import helpers from "../../constants/Functions";
 import {toast, ToastContainer} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/reducers/rootReducer";
-import {CURRENT_USER_INFO, SUCCESS} from "../../store/actions/diagramAction";
+import {CURRENT_USER_INFO, SUCCESS, UNHANDLEDERROR} from "../../store/constants";
 import Toast from "./Toast";
 import {ActionType} from "../../store/actions/actions";
 
@@ -58,16 +58,16 @@ const Layout = (): any => {
     const apiErrorRetryPayload: Array<any> = useSelector((state: RootState) => state.api.retryPayload)
     const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage)
 
-    //#TODO: Add a retry Button to the toast
     useEffect(() => {
         if (apiErrorState) {
-            //toast can contain any component, the Retry Button (and the message: apiErrorState) has to be passed here
-            toast.error(<Toast errorMessage={apiErrorState} retryMethod={apiErrorRetryMethod} retryPayload={apiErrorRetryPayload}/>, {
+            //toast can contain any component, the Retry Method (and the message: apiErrorState) has to be passed here
+            toast.error(<Toast errorMessage={apiErrorState} retryMethod={apiErrorRetryMethod}
+                               retryPayload={apiErrorRetryPayload}/>, {
                 autoClose: 8000,
                 pauseOnHover: true,
                 role: "alert"
             })
-            //toast.error(apiErrorState, {autoClose: 8000, pauseOnHover: true})
+            dispatch({type: UNHANDLEDERROR, errorMessage: ""})
         }
         if (apiSuccessState) {
             toast.success(apiSuccessState, {autoClose: 4000, pauseOnHover: true})

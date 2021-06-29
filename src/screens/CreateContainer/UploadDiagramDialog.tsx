@@ -4,10 +4,10 @@ import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import {BpmnDiagramTO, BpmnDiagramVersionUploadTOSaveTypeEnum, BpmnRepositoryRequestTO} from "../../api/models";
+import {DiagramTO, DiagramVersionUploadTOSaveTypeEnum, RepositoryTO} from "../../api/models";
 import {useDispatch, useSelector} from "react-redux";
 import * as diagramAction from "../../store/actions/diagramAction";
-import {HANDLEDERROR, UNHANDLEDERROR} from "../../store/actions/diagramAction";
+import {UNHANDLEDERROR} from "../../store/constants";
 import * as versionAction from "../../store/actions/versionAction";
 import MenuItem from "@material-ui/core/MenuItem";
 import {RootState} from "../../store/reducers/rootReducer";
@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
 interface Props {
     open: boolean;
     onCancelled: () => void;
-    repo?: BpmnRepositoryRequestTO;
+    repo?: RepositoryTO;
 }
 
 const UploadDiagramDialog: React.FC<Props> = props => {
@@ -36,25 +36,25 @@ const UploadDiagramDialog: React.FC<Props> = props => {
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [repository, setRepository] = useState<string>(props.repo ? props.repo.bpmnRepositoryId : "");
+    const [repository, setRepository] = useState<string>(props.repo ? props.repo.id : "");
     const [file, setFile] = useState<string>("");
 
-    const allRepos: Array<BpmnRepositoryRequestTO> = useSelector((state: RootState) => state.repos.repos)
-    const uploadedDiagram: BpmnDiagramTO = useSelector((state: RootState) => state.uploadedDiagram.uploadedDiagram)
+    const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos)
+    const uploadedDiagram: DiagramTO = useSelector((state: RootState) => state.uploadedDiagram.uploadedDiagram)
 
 
     useEffect(() => {
-        if(uploadedDiagram){
-            dispatch(versionAction.createOrUpdateVersion(uploadedDiagram.bpmnRepositoryId, uploadedDiagram.bpmnDiagramId, file, BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE))
+        if (uploadedDiagram) {
+            dispatch(versionAction.createOrUpdateVersion(uploadedDiagram.id, file, DiagramVersionUploadTOSaveTypeEnum.RELEASE))
         }
     }, [dispatch, uploadedDiagram, file])
 
     useEffect(() => {
-        setRepository(props.repo?.bpmnRepositoryId)
+        setRepository(props.repo?.id)
     }, [props.repo])
 
     const onCreate = useCallback(async () => {
-        try{
+        try {
             dispatch(diagramAction.uploadDiagram(repository, title, description))
             props.onCancelled()
         } catch (err) {
@@ -63,15 +63,14 @@ const UploadDiagramDialog: React.FC<Props> = props => {
     }, [title, description, repository, dispatch]);
 
 
-
     const onFileChanged = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        const { target: { files } } = e;
+        const {target: {files}} = e;
         if (files != null && files.length > 0) {
             const file = files[0];
             const fileExtension = file.name.substring(file.name.lastIndexOf("."), file.name.length)
-            if(fileExtension != ".bpmn"){
-                dispatch({type: HANDLEDERROR, errorMessage: "File must be of type .bpmn"})
+            if (fileExtension != ".bpmn") {
+                dispatch({type: UNHANDLEDERROR, errorMessage: "File must be of type .bpmn"})
             }
             const reader = new FileReader();
             reader.addEventListener("load", (event: ProgressEvent<FileReader>) => {
@@ -101,27 +100,27 @@ const UploadDiagramDialog: React.FC<Props> = props => {
                     accept=".bpmn,.dmn"
                     type="file"
                     name="file"
-                    onChange={onFileChanged} />
+                    onChange={onFileChanged}/>
 
                 <SettingsSelect
                     disabled={false}
-                    value={props.repo ? props.repo.bpmnRepositoryId : repository}
+                    value={props.repo ? props.repo.id : repository}
                     label="Target Repository"
                     onChanged={setRepository}>
                     {props.repo ?
                         <MenuItem
-                            key={props.repo?.bpmnRepositoryId}
-                            value={props.repo?.bpmnRepositoryId} >
-                            {props.repo?.bpmnRepositoryName}
+                            key={props.repo?.id}
+                            value={props.repo?.id}>
+                            {props.repo?.name}
                         </MenuItem>
                         :
                         allRepos?.map(repo => (
-                        <MenuItem
-                            key={repo.bpmnRepositoryId}
-                            value={repo.bpmnRepositoryId}>
-                            {repo.bpmnRepositoryName}
-                        </MenuItem>
-                    ))
+                            <MenuItem
+                                key={repo.id}
+                                value={repo.id}>
+                                {repo.name}
+                            </MenuItem>
+                        ))
                     }
 
 
@@ -130,7 +129,7 @@ const UploadDiagramDialog: React.FC<Props> = props => {
                 <SettingsTextField
                     label="Title"
                     value={title}
-                    onChanged={setTitle} />
+                    onChanged={setTitle}/>
 
                 <SettingsTextField
                     label="Description"
@@ -138,7 +137,7 @@ const UploadDiagramDialog: React.FC<Props> = props => {
                     multiline
                     rows={3}
                     rowsMax={3}
-                    onChanged={setDescription} />
+                    onChanged={setDescription}/>
 
             </SettingsForm>
         </PopupDialog>

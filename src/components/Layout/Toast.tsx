@@ -4,7 +4,7 @@ import {Replay} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
 import * as actions from "../../store/actions/actions";
 import {ActionType} from "../../store/actions/actions";
-import {HANDLEDERROR} from "../../store/actions";
+import {UNHANDLEDERROR} from "../../store/constants";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -27,15 +27,13 @@ interface Props {
 }
 
 
-
-
 const Toast: React.FC<Props> = props => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
 
     const retry = useCallback(() => {
-        dispatch({type: HANDLEDERROR, errorMessage: ""})
+        dispatch({type: UNHANDLEDERROR, errorMessage: ""})
 
 
         dispatch(actions.actionMapper(props.retryMethod, props.retryPayload))
@@ -43,16 +41,16 @@ const Toast: React.FC<Props> = props => {
     }, [dispatch, props])
 
     return (
-    <div className={classes.container}>
-        <p>
-            {props.errorMessage}
-        </p>
-        <IconButton className={classes.retryButton} onClick={() => {
-            retry()
-        }}>
-            <Replay/>
-        </IconButton>
-    </div>
+        <div className={classes.container}>
+            <p>
+                {props.errorMessage}
+            </p>
+            <IconButton className={classes.retryButton} onClick={() => {
+                retry()
+            }}>
+                <Replay/>
+            </IconButton>
+        </div>
     );
 };
 

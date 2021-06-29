@@ -4,7 +4,7 @@ import DropdownButton, {DropdownButtonItem} from "../../components/Form/Dropdown
 import CreateDiagramDialog from "../CreateContainer/CreateDiagramDialog";
 import UploadDiagramDialog from "../CreateContainer/UploadDiagramDialog";
 import {makeStyles} from "@material-ui/core/styles";
-import {BpmnRepositoryRequestTO} from "../../api/models";
+import {RepositoryTO} from "../../api/models";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/reducers/rootReducer";
 
@@ -19,15 +19,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-
-
 const CreateDiagramContainer: React.FC = observer(() => {
     const classes = useStyles();
     const [uploadDiagramOpen, setUploadDiagramOpen] = useState(false);
     const [createDiagramOpen, setCreateDiagramOpen] = useState(false);
     const [createDiagramType, setCreateDiagramType] = useState<"bpmn" | "dmn">("bpmn");
-    const activeRepo: BpmnRepositoryRequestTO = useSelector((state: RootState) => state.activeRepo.activeRepo)
-
+    const activeRepo: RepositoryTO = useSelector((state: RootState) => state.activeRepo.activeRepo)
 
 
     const diagramOptions: DropdownButtonItem[] = [
@@ -53,7 +50,8 @@ const CreateDiagramContainer: React.FC = observer(() => {
             id: "divider1",
             type: "divider",
             label: "",
-            onClick: () => { /* Do nothing */ }
+            onClick: () => { /* Do nothing */
+            }
         },
         {
             id: "upload",
@@ -75,7 +73,7 @@ const CreateDiagramContainer: React.FC = observer(() => {
                 <DropdownButton
                     className={classes.diagramButton}
                     title="Add Diagram"
-                    options={diagramOptions} />
+                    options={diagramOptions}/>
             </div>
 
             <CreateDiagramDialog

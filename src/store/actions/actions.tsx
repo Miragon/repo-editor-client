@@ -58,7 +58,7 @@ export const actionMapper = (actionType: ActionType, payload: Array<any>) => {
             return uploadDiagram(payload[0], payload[1], payload[2]);
 
         case ActionType.DELETE_DIAGRAM:
-            return deleteDiagram(payload[0], payload[1])
+            return deleteDiagram(payload[0])
 
         case ActionType.FETCH_REPOSITORIES:
             return fetchRepositories();
@@ -76,10 +76,10 @@ export const actionMapper = (actionType: ActionType, payload: Array<any>) => {
             return searchUsers(payload[0]);
 
         case ActionType.CREATE_OR_UPDATE_VERSION:
-            return createOrUpdateVersion(payload[0], payload[1], payload[2], payload[3], payload[4] ? payload[4] : "");
+            return createOrUpdateVersion(payload[0], payload[1], payload[2], payload[3] ? payload[3] : "");
 
         case ActionType.GET_ALL_VERSIONS:
-            return getAllVersions(payload[0], payload[1]);
+            return getAllVersions(payload[0]);
 
         case ActionType.GET_ALL_ASSIGNED_USERS:
             return getAllAssignedUsers(payload[0]);

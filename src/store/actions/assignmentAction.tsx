@@ -1,27 +1,25 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import helpers from "../../constants/Functions";
-import {ASSIGNED_USERS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "./diagramAction";
-import {AssignmentWithUserNameTO, AssignmentWithUserNameTORoleEnumEnum} from "../../api/models";
+import {AssignmentUpdateTO, AssignmentUpdateTORoleEnumEnum} from "../../api/models";
 import {ActionType} from "./actions";
 import {handleError} from "./errorAction";
+import {ASSIGNED_USERS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "../constants";
 
 export const getAllAssignedUsers = (repoId: string) => {
     return async (dispatch: Dispatch) => {
         const assignmentController = new api.AssignmentControllerApi()
 
-        try{
+        try {
             const config = helpers.getClientConfig()
             const response = await assignmentController.getAllAssignedUsers(repoId, config)
-            if(Math.floor(response.status/100) === 2) {
+            if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: ASSIGNED_USERS, assignedUsers: response.data})
                 dispatch({type: SYNC_STATUS, dataSynced: true})
-
-            }
-            else {
+            } else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
-        } catch (error){
+        } catch (error) {
             dispatch(handleError(error, ActionType.GET_ALL_ASSIGNED_USERS, [repoId]))
 
         }
@@ -29,8 +27,7 @@ export const getAllAssignedUsers = (repoId: string) => {
 }
 
 
-
-export const createOrUpdateUserAssignment = (repoId: string, userName: string, roleEnum?: AssignmentWithUserNameTORoleEnumEnum) => {
+export const createOrUpdateUserAssignment = (repoId: string, userId: string, username: string, roleEnum?: AssignmentUpdateTORoleEnumEnum) => {
     return async (dispatch: Dispatch) => {
         const assignmentController = new api.AssignmentControllerApi()
         let message = ""
@@ -38,48 +35,46 @@ export const createOrUpdateUserAssignment = (repoId: string, userName: string, r
             if (!roleEnum) {
                 message = "Added User to Repository"
             } else {
-                message = `Changed role of ${userName} to ${roleEnum}`
+                message = `Changed role of ${username} to ${roleEnum}`
             }
 
-            const assignment: AssignmentWithUserNameTO = {
-                bpmnRepositoryId: repoId,
-                userName: userName,
-                roleEnum: (roleEnum) ? roleEnum : AssignmentWithUserNameTORoleEnumEnum.MEMBER
+            const assignmentUpdateTO: AssignmentUpdateTO = {
+                repositoryId: repoId,
+                userId: userId,
+                username: username,
+                roleEnum: (roleEnum) ? roleEnum : AssignmentUpdateTORoleEnumEnum.MEMBER
             }
+            console.log(assignmentUpdateTO)
             const config = helpers.getClientConfig()
-            const response = await assignmentController.createOrUpdateUserAssignment(assignment, config)
+            const response = await assignmentController.createOrUpdateUserAssignment(assignmentUpdateTO, config)
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: SUCCESS, successMessage: message})
                 dispatch({type: SYNC_STATUS, dataSynced: false})
-            }
-
-            else {
+            } else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
-        } catch (error){
-            dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT, [repoId, userName, roleEnum]))
+        } catch (error) {
+            dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT, [repoId, userId, username, roleEnum]))
 
         }
     }
 }
 
 
-
-export const deleteAssignment = (repoId: string, userName: string) => {
+export const deleteAssignment = (repoId: string, username: string) => {
     return async (dispatch: Dispatch) => {
         const assignmentController = new api.AssignmentControllerApi()
-        try{
+        try {
             const config = helpers.getClientConfig()
-            const response = await assignmentController.deleteUserAssignment(repoId, userName, config)
-            if(Math.floor(response.status/100) === 2) {
-                dispatch({type: SUCCESS, successMessage: `Removed ${userName} from Repository`})
+            const response = await assignmentController.deleteUserAssignment(repoId, username, config)
+            if (Math.floor(response.status / 100) === 2) {
+                dispatch({type: SUCCESS, successMessage: `Removed ${username} from Repository`})
                 dispatch({type: SYNC_STATUS, dataSynced: false})
-            }
-            else {
+            } else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
             }
-        } catch (error){
-            dispatch(handleError(error, ActionType.DELETE_ASSIGNMENT, [repoId, userName]))
+        } catch (error) {
+            dispatch(handleError(error, ActionType.DELETE_ASSIGNMENT, [repoId, username]))
 
         }
     }

@@ -3,7 +3,7 @@ import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import {BpmnDiagramVersionUploadTOSaveTypeEnum, BpmnRepositoryRequestTO} from "../../api/models";
+import {DiagramTO, DiagramVersionUploadTOSaveTypeEnum, RepositoryTO} from "../../api/models";
 import {useDispatch, useSelector} from "react-redux";
 import * as diagramAction from "../../store/actions/diagramAction";
 import * as versionAction from "../../store/actions/versionAction";
@@ -11,13 +11,12 @@ import {DEFAULT_FILE} from "../../store/actions/versionAction";
 import MenuItem from "@material-ui/core/MenuItem";
 import {RootState} from "../../store/reducers/rootReducer";
 import 'react-toastify/dist/ReactToastify.css';
-import {BpmnDiagramTO} from "../../models";
 
 interface Props {
     open: boolean;
     onCancelled: () => void;
     type: "bpmn" | "dmn";
-    repo?: BpmnRepositoryRequestTO;
+    repo?: RepositoryTO;
 }
 
 const CreateDiagramDialog: React.FC<Props> = props => {
@@ -27,13 +26,13 @@ const CreateDiagramDialog: React.FC<Props> = props => {
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [repository, setRepository] = useState<string>(props.repo ? props.repo.bpmnRepositoryId : "");
+    const [repository, setRepository] = useState<string>(props.repo ? props.repo.id : "");
 
-    const allRepos: Array<BpmnRepositoryRequestTO> = useSelector((state: RootState) => state.repos.repos)
-    const createdDiagram: BpmnDiagramTO = useSelector((state: RootState) => state.createdDiagram.createdDiagram)
+    const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos)
+    const createdDiagram: DiagramTO = useSelector((state: RootState) => state.createdDiagram.createdDiagram)
 
     const onCreate = useCallback(async () => {
-        try{
+        try {
             dispatch(diagramAction.createDiagram(repository, title, description, props.type))
             props.onCancelled();
         } catch (err) {
@@ -42,13 +41,13 @@ const CreateDiagramDialog: React.FC<Props> = props => {
     }, [dispatch, repository, title, description, props])
 
     useEffect(() => {
-        if(createdDiagram){
-            dispatch(versionAction.createOrUpdateVersion(createdDiagram.bpmnRepositoryId, createdDiagram.bpmnDiagramId, DEFAULT_FILE, BpmnDiagramVersionUploadTOSaveTypeEnum.RELEASE))
+        if (createdDiagram) {
+            dispatch(versionAction.createOrUpdateVersion(createdDiagram.id, DEFAULT_FILE, DiagramVersionUploadTOSaveTypeEnum.RELEASE))
         }
     }, [createdDiagram, dispatch])
 
     useEffect(() => {
-        setRepository(props.repo?.bpmnRepositoryId)
+        setRepository(props.repo?.id)
     }, [props.repo])
 
 
@@ -67,21 +66,21 @@ const CreateDiagramDialog: React.FC<Props> = props => {
 
                 <SettingsSelect
                     disabled={false}
-                    value={props.repo ? props.repo.bpmnRepositoryId : repository}
+                    value={props.repo ? props.repo.id : repository}
                     label="Target Repository"
                     onChanged={setRepository}>
                     {props.repo ?
                         <MenuItem
-                            key={props.repo?.bpmnRepositoryId}
-                            value={props.repo?.bpmnRepositoryId}>
-                            {props.repo?.bpmnRepositoryName}
+                            key={props.repo?.id}
+                            value={props.repo?.id}>
+                            {props.repo?.name}
                         </MenuItem>
                         :
                         allRepos?.map(repo => (
                             <MenuItem
-                                key={repo.bpmnRepositoryId}
-                                value={repo.bpmnRepositoryId}>
-                                {repo.bpmnRepositoryName}
+                                key={repo.id}
+                                value={repo.id}>
+                                {repo.name}
                             </MenuItem>
                         ))
                     }
@@ -90,7 +89,7 @@ const CreateDiagramDialog: React.FC<Props> = props => {
                 <SettingsTextField
                     label="Title"
                     value={title}
-                    onChanged={setTitle} />
+                    onChanged={setTitle}/>
 
                 <SettingsTextField
                     label="Description"
@@ -98,7 +97,7 @@ const CreateDiagramDialog: React.FC<Props> = props => {
                     multiline
                     rows={3}
                     rowsMax={3}
-                    onChanged={setDescription} />
+                    onChanged={setDescription}/>
 
             </SettingsForm>
         </PopupDialog>
