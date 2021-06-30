@@ -1,10 +1,10 @@
-import {RepositoryTO} from "../../api/models";
-import {CaseReducer} from "@reduxjs/toolkit";
-import {GET_REPOS} from "../constants";
+import { CaseReducer } from "@reduxjs/toolkit";
+import { RepositoryTO } from "../../api/models";
+import { GET_REPOS } from "../constants";
 
 const initialState = {
     repos: Array<RepositoryTO>()
-}
+};
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -12,8 +12,9 @@ const reducer: CaseReducer = (state = initialState, action) => {
             return {
                 ...state,
                 repos: action.repos
-            }
+            };
     }
     return state;
-}
+};
+
 export default reducer;

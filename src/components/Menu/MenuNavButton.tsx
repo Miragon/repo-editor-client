@@ -1,8 +1,8 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";
-import {NavLink} from "react-router-dom";
-import MenuButton, {Props as MenuButtonProps} from "./MenuButton";
+import { NavLink } from "react-router-dom";
+import MenuButton, { Props as MenuButtonProps } from "./MenuButton";
 
 interface Props extends MenuButtonProps {
     target: string;

@@ -1,9 +1,9 @@
-import {Button} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import React from "react";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     drawerAppContainer: {
         display: "flex",
         flexDirection: "row",
@@ -95,9 +95,13 @@ const DrawerApp: React.FC<Props> = props => {
             })}
             <div className={classes.drawerText}>
                 <div className={clsx(classes.drawerAppTitle,
-                    props.active && classes.drawerAppTitleActive)}>{props.title}</div>
+                    props.active && classes.drawerAppTitleActive)}>
+                    {props.title}
+                </div>
                 <div className={clsx(classes.drawerAppDescription,
-                    props.active && classes.drawerAppDescriptionActive)}>{props.description}</div>
+                    props.active && classes.drawerAppDescriptionActive)}>
+                    {props.description}
+                </div>
             </div>
         </Button>
     );
@@ -120,7 +124,6 @@ const DrawerApp: React.FC<Props> = props => {
  )}
 
  {!props.description && title}
-
 
  */
 export default DrawerApp;

@@ -1,8 +1,8 @@
-import React, {useCallback, useState} from "react";
+import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import {useDispatch} from "react-redux";
 import * as repositoryAction from "../../store/actions/repositoryAction";
 
 interface Props {
@@ -12,25 +12,22 @@ interface Props {
 }
 
 const CreateRepoDialog: React.FC<Props> = props => {
-
     const dispatch = useDispatch();
 
-    const {open, onCancelled, onCreated} = props;
+    const { open, onCancelled, onCreated } = props;
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
-
     const onCreate = useCallback(() => {
         try {
-            dispatch(repositoryAction.createRepository(title, description))
-            onCancelled()
+            dispatch(repositoryAction.createRepository(title, description));
+            onCancelled();
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
-    }, [dispatch, title, description, onCancelled])
-
+    }, [dispatch, title, description, onCancelled]);
 
     return (
         <PopupDialog
@@ -42,17 +39,16 @@ const CreateRepoDialog: React.FC<Props> = props => {
             onSecond={onCancelled}
             firstTitle="Create"
             onFirst={() => {
-                onCreate()
-                onCreated()
-            }
-            }>
+                onCreate();
+                onCreated();
+            }}>
 
             <SettingsForm large>
 
                 <SettingsTextField
                     label="Title"
                     value={title}
-                    onChanged={setTitle}/>
+                    onChanged={setTitle} />
 
                 <SettingsTextField
                     label="Description"
@@ -60,7 +56,7 @@ const CreateRepoDialog: React.FC<Props> = props => {
                     multiline
                     rows={3}
                     rowsMax={3}
-                    onChanged={setDescription}/>
+                    onChanged={setDescription} />
 
             </SettingsForm>
 

@@ -1,7 +1,7 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 import React from "react";
-import {createTestAttributes} from "../../util/TestUtils";
-import {COLORS} from "../../design";
+import { createTestAttributes } from "../../util/TestUtils";
+import { COLORS } from "../../design";
 
 interface Props {
     testId?: string;
@@ -35,4 +35,3 @@ const MenuBar: React.FC<Props> = props => {
 };
 
 export default MenuBar;
-

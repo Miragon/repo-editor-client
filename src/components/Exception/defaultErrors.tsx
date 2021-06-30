@@ -4,4 +4,4 @@ export const defaultErrors = {
     403: "Your Session has expired - Please refresh",
     404: "404 -Not found",
     409: "Conflict"
-}
+};

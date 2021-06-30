@@ -51,49 +51,48 @@ const useStyles = makeStyles(() => ({
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Layout = (): any => {
-
-    const dispatch = useDispatch()
-    const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage)
-    const apiErrorRetryMethod: ActionType = useSelector((state: RootState) => state.api.retryMethod)
-    const apiErrorRetryPayload: Array<any> = useSelector((state: RootState) => state.api.retryPayload)
-    const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage)
+    const dispatch = useDispatch();
+    const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage);
+    const apiErrorRetryMethod: ActionType = useSelector((state: RootState) => state.api.retryMethod);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const apiErrorRetryPayload: Array<any> = useSelector((state: RootState) => state.api.retryPayload);
+    const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage);
 
     useEffect(() => {
         if (apiErrorState) {
-            //toast can contain any component, the Retry Method (and the message: apiErrorState)
+            // toast can contain any component, the Retry Method (and the message: apiErrorState)
             // has to be passed here
-            toast.error(<Toast errorMessage={apiErrorState} retryMethod={apiErrorRetryMethod}
-                               retryPayload={apiErrorRetryPayload} />, {
+            toast.error(<Toast
+                errorMessage={apiErrorState}
+                retryMethod={apiErrorRetryMethod}
+                retryPayload={apiErrorRetryPayload} />, {
                 autoClose: 8000,
                 pauseOnHover: true,
                 role: "alert"
-            })
-            dispatch({ type: UNHANDLEDERROR, errorMessage: "" })
+            });
+            dispatch({ type: UNHANDLEDERROR, errorMessage: "" });
         }
         if (apiSuccessState) {
-            toast.success(apiSuccessState, { autoClose: 4000, pauseOnHover: true })
-            dispatch({ type: SUCCESS, successMessage: "" })
+            toast.success(apiSuccessState, { autoClose: 4000, pauseOnHover: true });
+            dispatch({ type: SUCCESS, successMessage: "" });
         }
-    }, [apiErrorState, apiSuccessState, apiErrorRetryMethod, apiErrorRetryPayload, dispatch])
+    }, [apiErrorState, apiSuccessState, apiErrorRetryMethod, apiErrorRetryPayload, dispatch]);
 
     const classes = useStyles();
     const [userController] = useState<UserControllerApi>(new UserControllerApi());
 
-
     const [userDoesExist, setUserDoesExist] = useState<boolean | undefined>(undefined);
 
-
     useEffect(() => {
-        const config = helpers.getClientConfig()
+        const config = helpers.getClientConfig();
         userController.getUserInfo(config)
-            .then((response) => {
+            .then(response => {
                 if (response.data) {
-                    setUserDoesExist(true)
-                    dispatch({ type: CURRENT_USER_INFO, currentUserInfo: response.data })
+                    setUserDoesExist(true);
+                    dispatch({ type: CURRENT_USER_INFO, currentUserInfo: response.data });
                 } else {
                     setUserDoesExist(false);
                 }
-
             })
             .catch(() => setUserDoesExist(false));
     }, [userController, dispatch]);
@@ -103,7 +102,7 @@ const Layout = (): any => {
     }
 
     if (!userDoesExist) {
-        return <RegisterNewUserScreen />
+        return <RegisterNewUserScreen />;
     }
 
     return (

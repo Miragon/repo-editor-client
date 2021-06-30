@@ -3,5 +3,5 @@ export const COLORS = {
     primaryLight: "#545454",
     secondary: "#FFCC00"
 
-}
-//Primary and secondary colors need contrast!
+};
+// Primary and secondary colors need contrast!

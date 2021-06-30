@@ -1,3 +1,8 @@
+import {
+    createOrUpdateUserAssignment,
+    deleteAssignment,
+    getAllAssignedUsers
+} from "./assignmentAction";
 import * as diagramAction from "./diagramAction";
 import {
     deleteDiagram,
@@ -14,9 +19,8 @@ import {
     getSingleRepository,
     updateRepository
 } from "./repositoryAction";
-import {searchUsers} from "./userAction";
-import {createOrUpdateVersion, getAllVersions} from "./versionAction";
-import {createOrUpdateUserAssignment, deleteAssignment, getAllAssignedUsers} from "./assignmentAction";
+import { searchUsers } from "./userAction";
+import { createOrUpdateVersion, getAllVersions } from "./versionAction";
 
 export enum ActionType {
     FETCH_FAVORITE_DIAGRAMS,
@@ -39,8 +43,8 @@ export enum ActionType {
     SEARCH_DIAGRAM
 }
 
+// eslint-disable-next-line
 export const actionMapper = (actionType: ActionType, payload: Array<any>) => {
-
     switch (actionType) {
         case ActionType.CREATE_DIAGRAM:
             return diagramAction.createDiagram(payload[0], payload[1], payload[2], payload[3]);
@@ -58,7 +62,7 @@ export const actionMapper = (actionType: ActionType, payload: Array<any>) => {
             return uploadDiagram(payload[0], payload[1], payload[2]);
 
         case ActionType.DELETE_DIAGRAM:
-            return deleteDiagram(payload[0])
+            return deleteDiagram(payload[0]);
 
         case ActionType.FETCH_REPOSITORIES:
             return fetchRepositories();
@@ -88,13 +92,12 @@ export const actionMapper = (actionType: ActionType, payload: Array<any>) => {
             return createOrUpdateUserAssignment(payload[0], payload[1], payload[2]);
 
         case ActionType.DELETE_ASSIGNMENT:
-            return deleteAssignment(payload[0], payload[1])
+            return deleteAssignment(payload[0], payload[1]);
 
         case ActionType.DELETE_REPOSITORY:
-            return deleteRepository(payload[0])
+            return deleteRepository(payload[0]);
 
         case ActionType.SEARCH_DIAGRAM:
-            return searchDiagram(payload[0])
-
+            return searchDiagram(payload[0]);
     }
-}
+};

@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
-import {makeStyles} from "@material-ui/styles";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { makeStyles } from "@material-ui/styles";
 import {
     ClickAwayListener,
     Collapse,
@@ -14,18 +14,18 @@ import {
     TableCell,
     TableHead,
     TableRow
-} from "@material-ui/core"
-import theme from "../../theme";
-import {KeyboardArrowDown, KeyboardArrowUp, MoreVert} from '@material-ui/icons';
-import {DropdownButtonItem} from "../../components/Form/DropdownButton";
-import {useDispatch, useSelector} from "react-redux";
-import {getAllVersions} from "../../store/actions/versionAction";
-import {DiagramVersionTO} from "../../api/models";
-import {RootState} from "../../store/reducers/rootReducer";
-import {deleteDiagram} from "../../store/actions"
-import {GET_VERSIONS} from "../../store/constants";
+} from "@material-ui/core";
+import { KeyboardArrowDown, KeyboardArrowUp, MoreVert } from "@material-ui/icons";
+import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import clsx from "clsx";
+import theme from "../../theme";
+import { DropdownButtonItem } from "../../components/Form/DropdownButton";
+import { getAllVersions, deleteDiagram } from "../../store/actions";
+import { DiagramVersionTO } from "../../api/models";
+import { RootState } from "../../store/reducers/rootReducer";
+
+import { GET_VERSIONS } from "../../store/constants";
 import CreateVersionDialog from "./CreateVersionDialog";
 import EditDiagramDialog from "./EditDiagramDialog";
 
@@ -138,7 +138,6 @@ const useStyles = makeStyles(() => ({
             backgroundColor: "lightgrey"
         },
     },
-
     image: {
         backgroundColor: "#EEE",
         height: "100%",
@@ -182,7 +181,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const diagramVersionTOs: Array<DiagramVersionTO> = useSelector((state: RootState) => state.versions.versions)
+    const diagramVersionTOs: Array<DiagramVersionTO> = useSelector((state: RootState) => state.versions.versions);
 
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
 
@@ -197,34 +196,32 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
     const checkIfVersionsAreOpen = useCallback(() => {
         if (diagramVersionTOs) {
-            const openedDiagram = diagramVersionTOs[0]
+            const openedDiagram = diagramVersionTOs[0];
             if (openedDiagram?.diagramId === props.diagramId) {
-                setOpen(true)
+                setOpen(true);
             } else {
-                setOpen(false)
+                setOpen(false);
             }
         }
-    }, [diagramVersionTOs, props])
-
+    }, [diagramVersionTOs, props]);
 
     useEffect(() => {
-        //This block checks if th versions of another diagram are being fetched at the moment and if the loading animation has to be displayed
+        // This block checks if th versions of another diagram are being fetched at the moment and if the loading animation has to be displayed
         if (diagramVersionTOs) {
-            diagramVersionTOs.sort(compare)
-            setCurrentId(diagramVersionTOs[0] ? diagramVersionTOs[0].diagramId : "")
+            diagramVersionTOs.sort(compare);
+            setCurrentId(diagramVersionTOs[0] ? diagramVersionTOs[0].diagramId : "");
             if (currentId === diagramVersionTOs[0]?.diagramId) {
-                setLoading(false)
+                setLoading(false);
             }
         }
-        /*Runs a check for every DiagramListItem, as soon as the state changes.
-        If the DiagramId of the version that is currently saved in the state matches the DiagramId of this DiagramListItem,
-        The Item is expanded and available versions are displayed.
-        If the IDs don't match, the list is collapsed
-        */
-        checkIfVersionsAreOpen()
-
-
-    }, [diagramVersionTOs, currentId, checkIfVersionsAreOpen])
+        /**
+         * Runs a check for every DiagramListItem, as soon as the state changes. If the DiagramId
+         * of the version that is currently saved in the state matches the DiagramId of this
+         * DiagramListItem, The Item is expanded and available versions are displayed. If the IDs
+         * don't match, the list is collapsed
+         */
+        checkIfVersionsAreOpen();
+    }, [diagramVersionTOs, currentId, checkIfVersionsAreOpen]);
 
     const compare = (a: DiagramVersionTO, b: DiagramVersionTO) => {
         if (a.release < b.release) {
@@ -242,61 +239,64 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             }
         }
         return 0;
-    }
+    };
 
     const fetchVersions = useCallback(() => {
         try {
-            setLoading(true)
-            dispatch(getAllVersions(props.diagramId))
+            setLoading(true);
+            dispatch(getAllVersions(props.diagramId));
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
-    }, [dispatch, props])
+    }, [dispatch, props]);
 
     const reformatDate = (date: string | undefined) => {
         if (date) {
-            return date.split('T')[0]
-        } else {
-            return "01.01.2000"
+            return date.split("T")[0];
         }
-    }
-    const removeDiagram = () => {
-        dispatch(deleteDiagram(props.diagramId))
-    }
-    const openSettings = (event: any) => {
-        event.stopPropagation()
-        setSettingsOpen(true)
-    }
+        return "01.01.2000";
+    };
 
+    const removeDiagram = () => {
+        dispatch(deleteDiagram(props.diagramId));
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const openSettings = (event: any) => {
+        event.stopPropagation();
+        setSettingsOpen(true);
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const openVersions = (event: any): void => {
         event.stopPropagation();
         setLoading(true);
         fetchVersions();
         setOpen(true);
-    }
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const closeVersions = (event: any): void => {
         event.stopPropagation();
-        dispatch({type: GET_VERSIONS, versions: []})
+        dispatch({ type: GET_VERSIONS, versions: [] });
         setOpen(false);
+    };
 
-    }
     const openModeler = (repoId: string, diagramId: string, versionId?: string) => {
         if (versionId) {
-            window.open(`/modeler/#/${repoId}/${diagramId}/${versionId}/`, '_blank');
+            window.open(`/modeler/#/${repoId}/${diagramId}/${versionId}/`, "_blank");
         } else {
-            window.open(`/modeler/#/${repoId}/${diagramId}/latest`, '_blank');
+            window.open(`/modeler/#/${repoId}/${diagramId}/latest`, "_blank");
         }
-    }
-
+    };
 
     const options: DropdownButtonItem[] = [
-
         {
             id: "CreateVersion",
             label: "Create new Version",
             type: "button",
             onClick: () => {
-                setCreateVersionOpen(true)
+                setCreateVersionOpen(true);
             }
         },
         {
@@ -304,7 +304,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             label: "Edit Diagram",
             type: "button",
             onClick: () => {
-                setEditDiagramOpen(true)
+                setEditDiagramOpen(true);
             }
 
         },
@@ -321,7 +321,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             type: "button",
             onClick: () => {
                 if (confirm(`Are you sure you want to delete '${props.diagramTitle}'?`)) {
-                    removeDiagram()
+                    removeDiagram();
                 }
             }
         }
@@ -336,30 +336,30 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                             {props.diagramTitle}
                         </div>
                         <div className={classes.updatedDate}>
-                            {"modified on " + reformatDate(props.updatedDate)}
+                            {`modified on ${reformatDate(props.updatedDate)}`}
                         </div>
-                        <IconButton ref={ref} className={classes.more} onClick={(event) => openSettings(event)}>
-                            <MoreVert/>
+                        <IconButton ref={ref} className={classes.more} onClick={event => openSettings(event)}>
+                            <MoreVert />
                         </IconButton>
                     </div>
 
-                    {!open &&
-                    <div className={classes.versionsButton} onClick={(event) => openVersions(event)}>
-                        <KeyboardArrowDown/>
-                    </div>
-                    }
+                    {!open
+                    && (
+                        <div className={classes.versionsButton} onClick={event => openVersions(event)}>
+                            <KeyboardArrowDown />
+                        </div>
+                    )}
 
                     <img
                         alt="Preview"
                         className={classes.image}
-                        src={image}/>
+                        src={image} />
                     <div className={classes.description}>
                         {props.description}
                     </div>
                 </div>
 
-
-                <Collapse in={open} timeout={"auto"}>
+                <Collapse in={open} timeout="auto">
                     <Table size="small">
                         <TableHead>
                             <TableRow>
@@ -375,19 +375,28 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {loading &&
-                            <TableRow key="loading" hover={true}>
-                                <TableCell colSpan={3} align="center">
-                                    <React.Fragment>
-                                        {loading ? <CircularProgress color="inherit" size={20}/> : null}
-                                    </React.Fragment></TableCell>
-                            </TableRow>
-                            }
-                            {diagramVersionTOs?.map((singleVersion) => (
-                                <TableRow key={singleVersion.id} hover={true}
-                                          onClick={() => openModeler(singleVersion.repositoryId, singleVersion.diagramId, singleVersion.id)}>
-                                    <TableCell component="th"
-                                               scope={"row"}>{singleVersion.release}.{singleVersion.milestone}</TableCell>
+                            {loading
+                            && (
+                                <TableRow key="loading" hover>
+                                    <TableCell colSpan={3} align="center">
+                                        <>
+                                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                        </>
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                            {diagramVersionTOs?.map(singleVersion => (
+                                <TableRow
+                                    key={singleVersion.id}
+                                    hover
+                                    onClick={() => openModeler(singleVersion.repositoryId, singleVersion.diagramId, singleVersion.id)}>
+                                    <TableCell
+                                        component="th"
+                                        scope="row">
+                                        {singleVersion.release}
+                                        .
+                                        {singleVersion.milestone}
+                                    </TableCell>
                                     <TableCell>{singleVersion.comment}</TableCell>
                                     <TableCell>{reformatDate(singleVersion.updatedDate)}</TableCell>
                                 </TableRow>
@@ -395,13 +404,12 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
                         </TableBody>
                     </Table>
-                    <div className={classes.versionsButtonClose} onClick={((event) => closeVersions(event))}>
-                        <KeyboardArrowUp/>
+                    <div className={classes.versionsButtonClose} onClick={(event => closeVersions(event))}>
+                        <KeyboardArrowUp />
                     </div>
                 </Collapse>
 
             </div>
-
 
             <Popper
                 open={settingsOpen}
@@ -410,10 +418,10 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                 transition
                 disablePortal
                 className={classes.popupContainer}>
-                {({TransitionProps}) => (
+                {({ TransitionProps }) => (
                     <Grow
                         {...TransitionProps}
-                        style={{transformOrigin: "top"}}>
+                        style={{ transformOrigin: "top" }}>
                         <Paper className={classes.popup}>
                             <ClickAwayListener onClickAway={() => setSettingsOpen(false)}>
                                 <MenuList className={classes.list}>
@@ -429,7 +437,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                                                 if (option.onClick) {
                                                     option.onClick();
                                                 } else {
-                                                    console.log("Some error when clicking")
+                                                    console.log("Some error when clicking");
                                                 }
                                                 setSettingsOpen(false);
                                             }}>
@@ -448,7 +456,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                 onCancelled={() => setCreateVersionOpen(false)}
                 onCreated={() => setCreateVersionOpen(false)}
                 diagramId={props.diagramId}
-                diagramTitle={props.diagramTitle}/>
+                diagramTitle={props.diagramTitle} />
 
             <EditDiagramDialog
                 open={editDiagramOpen}
@@ -456,7 +464,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                 repoId={props.repoId}
                 diagramId={props.diagramId}
                 diagramName={props.diagramTitle}
-                diagramDescription={props.description}/>
+                diagramDescription={props.description} />
         </>
     );
 });

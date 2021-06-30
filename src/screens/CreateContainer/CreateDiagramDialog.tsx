@@ -1,16 +1,16 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import MenuItem from "@material-ui/core/MenuItem";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import {DiagramTO, DiagramVersionUploadTOSaveTypeEnum, RepositoryTO} from "../../api/models";
-import {useDispatch, useSelector} from "react-redux";
+import { DiagramTO, DiagramVersionUploadTOSaveTypeEnum, RepositoryTO } from "../../api/models";
 import * as diagramAction from "../../store/actions/diagramAction";
 import * as versionAction from "../../store/actions/versionAction";
-import MenuItem from "@material-ui/core/MenuItem";
-import {RootState} from "../../store/reducers/rootReducer";
-import 'react-toastify/dist/ReactToastify.css';
-import {DEFAULT_DMN_FILE, DEFAULT_XML_FILE} from "../../store/constants";
+import { RootState } from "../../store/reducers/rootReducer";
+import "react-toastify/dist/ReactToastify.css";
+import { DEFAULT_DMN_FILE, DEFAULT_XML_FILE } from "../../store/constants";
 
 interface Props {
     open: boolean;
@@ -20,32 +20,29 @@ interface Props {
 }
 
 const CreateDiagramDialog: React.FC<Props> = props => {
-
-
     const dispatch = useDispatch();
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [repository, setRepository] = useState<string>(props.repo ? props.repo.id : "");
 
-    const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos)
-    const createdDiagram: DiagramTO = useSelector((state: RootState) => state.createdDiagram.createdDiagram)
+    const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
+    const createdDiagram: DiagramTO = useSelector((state: RootState) => state.createdDiagram.createdDiagram);
 
     const onCreate = useCallback(async () => {
         try {
-            dispatch(diagramAction.createDiagram(repository, title, description, props.type))
+            dispatch(diagramAction.createDiagram(repository, title, description, props.type));
             props.onCancelled();
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
-    }, [dispatch, repository, title, description, props])
+    }, [dispatch, repository, title, description, props]);
 
     useEffect(() => {
         if (createdDiagram) {
-            dispatch(versionAction.createOrUpdateVersion(createdDiagram.id, (props.type === "bpmn" ? DEFAULT_XML_FILE : DEFAULT_DMN_FILE), DiagramVersionUploadTOSaveTypeEnum.RELEASE))
+            dispatch(versionAction.createOrUpdateVersion(createdDiagram.id, (props.type === "bpmn" ? DEFAULT_XML_FILE : DEFAULT_DMN_FILE), DiagramVersionUploadTOSaveTypeEnum.RELEASE));
         }
-    }, [createdDiagram, dispatch, props.type])
-
+    }, [createdDiagram, dispatch, props.type]);
 
     return (
         <PopupDialog
@@ -65,27 +62,27 @@ const CreateDiagramDialog: React.FC<Props> = props => {
                     value={props.repo ? props.repo.id : repository}
                     label="Target Repository"
                     onChanged={setRepository}>
-                    {props.repo ?
-                        <MenuItem
-                            key={props.repo?.id}
-                            value={props.repo?.id}>
-                            {props.repo?.name}
-                        </MenuItem>
-                        :
-                        allRepos?.map(repo => (
+                    {props.repo
+                        ? (
+                            <MenuItem
+                                key={props.repo?.id}
+                                value={props.repo?.id}>
+                                {props.repo?.name}
+                            </MenuItem>
+                        )
+                        : allRepos?.map(repo => (
                             <MenuItem
                                 key={repo.id}
                                 value={repo.id}>
                                 {repo.name}
                             </MenuItem>
-                        ))
-                    }
+                        ))}
                 </SettingsSelect>
 
                 <SettingsTextField
                     label="Title"
                     value={title}
-                    onChanged={setTitle}/>
+                    onChanged={setTitle} />
 
                 <SettingsTextField
                     label="Description"
@@ -93,7 +90,7 @@ const CreateDiagramDialog: React.FC<Props> = props => {
                     multiline
                     rows={3}
                     rowsMax={3}
-                    onChanged={setDescription}/>
+                    onChanged={setDescription} />
 
             </SettingsForm>
         </PopupDialog>

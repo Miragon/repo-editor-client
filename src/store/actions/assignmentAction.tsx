@@ -1,82 +1,84 @@
-import {Dispatch} from "@reduxjs/toolkit";
+import { Dispatch } from "@reduxjs/toolkit";
 import * as api from "../../api/api";
+import { AssignmentUpdateTO, AssignmentUpdateTORoleEnumEnum } from "../../api/models";
 import helpers from "../../constants/Functions";
-import {AssignmentUpdateTO, AssignmentUpdateTORoleEnumEnum} from "../../api/models";
-import {ActionType} from "./actions";
-import {handleError} from "./errorAction";
-import {ASSIGNED_USERS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "../constants";
+import { ASSIGNED_USERS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR } from "../constants";
+import { ActionType } from "./actions";
+import { handleError } from "./errorAction";
 
 export const getAllAssignedUsers = (repoId: string) => {
-    return async (dispatch: Dispatch) => {
-        const assignmentController = new api.AssignmentControllerApi()
+    return async (dispatch: Dispatch): Promise<void> => {
+        const assignmentController = new api.AssignmentControllerApi();
 
         try {
-            const config = helpers.getClientConfig()
-            const response = await assignmentController.getAllAssignedUsers(repoId, config)
+            const config = helpers.getClientConfig();
+            const response = await assignmentController.getAllAssignedUsers(repoId, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({type: ASSIGNED_USERS, assignedUsers: response.data})
-                dispatch({type: SYNC_STATUS, dataSynced: true})
+                dispatch({ type: ASSIGNED_USERS, assignedUsers: response.data });
+                dispatch({ type: SYNC_STATUS, dataSynced: true });
             } else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.GET_ALL_ASSIGNED_USERS, [repoId]))
-
+            dispatch(handleError(error, ActionType.GET_ALL_ASSIGNED_USERS, [repoId]));
         }
-    }
-}
+    };
+};
 
-
-export const createOrUpdateUserAssignment = (repoId: string, userId: string, username: string, roleEnum?: AssignmentUpdateTORoleEnumEnum) => {
-    return async (dispatch: Dispatch) => {
-        const assignmentController = new api.AssignmentControllerApi()
-        let message = ""
+export const createOrUpdateUserAssignment = (
+    repoId: string,
+    userId: string,
+    username: string,
+    roleEnum?: AssignmentUpdateTORoleEnumEnum
+) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        const assignmentController = new api.AssignmentControllerApi();
+        let message = "";
         try {
             if (!roleEnum) {
-                message = "Added User to Repository"
+                message = "Added User to Repository";
             } else {
-                message = `Changed role of ${username} to ${roleEnum}`
+                message = `Changed role of ${username} to ${roleEnum}`;
             }
 
             const assignmentUpdateTO: AssignmentUpdateTO = {
                 repositoryId: repoId,
                 userId: userId,
                 username: username,
-                roleEnum: (roleEnum) ? roleEnum : AssignmentUpdateTORoleEnumEnum.MEMBER
-            }
-            console.log(assignmentUpdateTO)
-            const config = helpers.getClientConfig()
-            const response = await assignmentController.createOrUpdateUserAssignment(assignmentUpdateTO, config)
+                roleEnum: (roleEnum) || AssignmentUpdateTORoleEnumEnum.MEMBER
+            };
+            const config = helpers.getClientConfig();
+            const response = await assignmentController
+                .createOrUpdateUserAssignment(assignmentUpdateTO, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({type: SUCCESS, successMessage: message})
-                dispatch({type: SYNC_STATUS, dataSynced: false})
+                dispatch({ type: SUCCESS, successMessage: message });
+                dispatch({ type: SYNC_STATUS, dataSynced: false });
             } else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT, [repoId, userId, username, roleEnum]))
-
+            dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_USER_ASSIGNMENT, [
+                repoId, userId, username, roleEnum
+            ]));
         }
-    }
-}
-
+    };
+};
 
 export const deleteAssignment = (repoId: string, username: string) => {
-    return async (dispatch: Dispatch) => {
-        const assignmentController = new api.AssignmentControllerApi()
+    return async (dispatch: Dispatch): Promise<void> => {
+        const assignmentController = new api.AssignmentControllerApi();
         try {
-            const config = helpers.getClientConfig()
-            const response = await assignmentController.deleteUserAssignment(repoId, username, config)
+            const config = helpers.getClientConfig();
+            const response = await assignmentController
+                .deleteUserAssignment(repoId, username, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({type: SUCCESS, successMessage: `Removed ${username} from Repository`})
-                dispatch({type: SYNC_STATUS, dataSynced: false})
+                dispatch({ type: SUCCESS, successMessage: `Removed ${username} from Repository` });
+                dispatch({ type: SYNC_STATUS, dataSynced: false });
             } else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.DELETE_ASSIGNMENT, [repoId, username]))
-
+            dispatch(handleError(error, ActionType.DELETE_ASSIGNMENT, [repoId, username]));
         }
-    }
-}
-
+    };
+};

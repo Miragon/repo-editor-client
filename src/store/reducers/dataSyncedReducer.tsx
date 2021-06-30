@@ -1,10 +1,9 @@
-import {CaseReducer} from "@reduxjs/toolkit";
-import {SYNC_STATUS} from "../constants";
+import { CaseReducer } from "@reduxjs/toolkit";
+import { SYNC_STATUS } from "../constants";
 
 const initialState = {
     dataSynced: true
-}
-
+};
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -12,8 +11,9 @@ const reducer: CaseReducer = (state = initialState, action) => {
             return {
                 ...state,
                 dataSynced: action.dataSynced
-            }
+            };
     }
     return state;
-}
+};
+
 export default reducer;

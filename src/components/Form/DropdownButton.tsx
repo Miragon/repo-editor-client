@@ -1,12 +1,13 @@
-import {Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper} from "@material-ui/core";
-import {makeStyles, Theme} from "@material-ui/core/styles";
-import {ArrowDropDown} from "@material-ui/icons";
+import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { ArrowDropDown } from "@material-ui/icons";
 import clsx from "clsx";
-import React, {useRef, useState} from "react";
+import React, { useRef, useState } from "react";
 
 export interface DropdownButtonItem {
     id: string;
     label: React.ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onClick?: (event?: any) => void;
     disabled?: boolean;
     type?: "button" | "divider" | "hint";

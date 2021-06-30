@@ -1,6 +1,6 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import React from "react";
-import {createTestAttributes} from "../../util/TestUtils";
+import { createTestAttributes } from "../../util/TestUtils";
 
 interface Props {
     growPriority?: number;

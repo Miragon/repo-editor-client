@@ -1,13 +1,13 @@
-import React, {useCallback, useState} from "react";
-import {useDispatch} from "react-redux";
+import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import { IconButton, Typography } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { useHistory } from "react-router-dom";
 import PopupDialog from "../../components/Form/PopupDialog";
-import {makeStyles} from "@material-ui/core/styles";
-import {IconButton, Typography} from "@material-ui/core";
 import * as repositoryAction from "../../store/actions/repositoryAction";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import DeleteIcon from '@material-ui/icons/Delete';
-import {SYNC_STATUS} from "../../store/constants";
-import {useHistory} from "react-router-dom";
+import { SYNC_STATUS } from "../../store/constants";
 
 const useStyles = makeStyles(() => ({
     line: {
@@ -39,7 +39,6 @@ const useStyles = makeStyles(() => ({
         }
     },
 
-
 }));
 
 interface Props {
@@ -50,7 +49,6 @@ interface Props {
     repoDescription: string;
 }
 
-
 const EditRepoDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -60,31 +58,29 @@ const EditRepoDialog: React.FC<Props> = props => {
     const [title, setTitle] = useState<string>(props.repoName);
     const [description, setDescription] = useState<string>(props.repoDescription);
 
-
     const applyChanges = useCallback(async () => {
         try {
-            dispatch(repositoryAction.updateRepository(props.repoId, title, description))
-            props.onCancelled()
+            dispatch(repositoryAction.updateRepository(props.repoId, title, description));
+            props.onCancelled();
         } catch (err) {
-            console.log(err)
+            // eslint-disable-next-line no-console
+            console.log(err);
         }
-    }, [title, description, dispatch, props])
-
+    }, [title, description, dispatch, props]);
 
     const deleteRepo = useCallback(() => {
-        console.log("Deleting")
         try {
-            if (confirm(`Are you sure you want to delete '${title}'?`)) {
-                dispatch(repositoryAction.deleteRepository(props.repoId))
-                history.push('/')
-                dispatch({type: SYNC_STATUS, dataSynced: false})
-                console.log("Sync status = false")
+            if (window.confirm(`Are you sure you want to delete '${title}'?`)) {
+                dispatch(repositoryAction.deleteRepository(props.repoId));
+                history.push("/");
+                dispatch({ type: SYNC_STATUS, dataSynced: false });
+                console.log("Sync status = false");
             }
         } catch (err) {
-            console.log(err)
+            // eslint-disable-next-line no-console
+            console.log(err);
         }
-    }, [dispatch, history, props.repoId, title])
-
+    }, [dispatch, history, props.repoId, title]);
 
     return (
         <PopupDialog
@@ -97,33 +93,32 @@ const EditRepoDialog: React.FC<Props> = props => {
             secondTitle="Close"
             onSecond={props.onCancelled}>
             <div className={classes.deleteSection}>
-                <Typography variant={"h5"}>
+                <Typography variant="h5">
                     Delete Repository
                 </Typography>
                 <IconButton className={classes.deleteButton} onClick={deleteRepo}>
-                    <DeleteIcon/>
+                    <DeleteIcon />
                 </IconButton>
             </div>
 
-            <div className={classes.spacer}/>
-
-            <SettingsTextField label={"Title"}
-                               value={title}
-                               onChanged={setTitle}/>
-
-            <div className={classes.spacer}/>
+            <div className={classes.spacer} />
 
             <SettingsTextField
-                label={"Description"}
+                label="Title"
+                value={title}
+                onChanged={setTitle} />
+
+            <div className={classes.spacer} />
+
+            <SettingsTextField
+                label="Description"
                 value={description}
                 onChanged={setDescription}
-                multiline={true}
-                rows={4}
-            />
-
+                multiline
+                rows={4} />
 
         </PopupDialog>
     );
-}
+};
 
 export default EditRepoDialog;

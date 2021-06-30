@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
     ClickAwayListener,
     Divider,
@@ -12,15 +12,14 @@ import {
     Paper,
     Popper
 } from "@material-ui/core";
-import {AssignmentTO, AssignmentUpdateTORoleEnumEnum} from "../../api/models";
-import {Settings} from "@material-ui/icons";
+import { Settings } from "@material-ui/icons";
 import clsx from "clsx";
-import {makeStyles} from "@material-ui/styles";
-import {Theme} from "@material-ui/core/styles";
-import {DropdownButtonItem} from "../../components/Form/DropdownButton";
-import {useDispatch} from "react-redux";
+import { makeStyles } from "@material-ui/styles";
+import { Theme } from "@material-ui/core/styles";
+import { useDispatch } from "react-redux";
+import { DropdownButtonItem } from "../../components/Form/DropdownButton";
+import { AssignmentTO, AssignmentUpdateTORoleEnumEnum } from "../../api/models";
 import * as assignmentAction from "../../store/actions/assignmentAction";
-
 
 interface Props {
     assignmentTO: AssignmentTO;
@@ -66,34 +65,40 @@ const useStyles = makeStyles((theme: Theme) => ({
         marginBottom: "0.5rem",
         padding: 0
     }
-}))
-
+}));
 
 const UserListItem: React.FC<Props> = props => {
-
     const classes = useStyles();
     const dispatch = useDispatch();
 
     const [open, setOpen] = useState<boolean>(false);
     const ref = useRef<HTMLButtonElement>(null);
 
-
     const changeRole = useCallback((role: AssignmentUpdateTORoleEnumEnum) => {
         try {
-            dispatch(assignmentAction.createOrUpdateUserAssignment(props.assignmentTO.repositoryId, props.assignmentTO.userId, props.assignmentTO.username, role))
+            dispatch(assignmentAction.createOrUpdateUserAssignment(
+                props.assignmentTO.repositoryId,
+                props.assignmentTO.userId,
+                props.assignmentTO.username,
+                role
+            ));
         } catch (err) {
-            console.log(err)
+            // eslint-disable-next-line no-console
+            console.log(err);
         }
-    }, [dispatch, props])
+    }, [dispatch, props]);
 
     const removeUser = useCallback(() => {
         try {
-            dispatch(assignmentAction.deleteAssignment(props.assignmentTO.repositoryId, props.assignmentTO.username))
+            dispatch(assignmentAction.deleteAssignment(
+                props.assignmentTO.repositoryId,
+                props.assignmentTO.username
+            ));
         } catch (err) {
-            console.log(err)
+            // eslint-disable-next-line no-console
+            console.log(err);
         }
-    }, [dispatch, props])
-
+    }, [dispatch, props]);
 
     const options: DropdownButtonItem[] = [
         {
@@ -101,7 +106,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "Owner",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentUpdateTORoleEnumEnum.OWNER)
+                changeRole(AssignmentUpdateTORoleEnumEnum.OWNER);
             }
         },
         {
@@ -109,7 +114,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "Admin",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentUpdateTORoleEnumEnum.ADMIN)
+                changeRole(AssignmentUpdateTORoleEnumEnum.ADMIN);
             }
         },
         {
@@ -117,7 +122,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "Member",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentUpdateTORoleEnumEnum.MEMBER)
+                changeRole(AssignmentUpdateTORoleEnumEnum.MEMBER);
             }
         },
         {
@@ -125,7 +130,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "Viewer",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentUpdateTORoleEnumEnum.VIEWER)
+                changeRole(AssignmentUpdateTORoleEnumEnum.VIEWER);
             }
         },
         {
@@ -140,7 +145,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "Remove from Repo",
             type: "button",
             onClick: () => {
-                removeUser()
+                removeUser();
             }
         }
     ];
@@ -150,16 +155,16 @@ const UserListItem: React.FC<Props> = props => {
             <ListItem>
                 <ListItemText
                     primary={props.assignmentTO.username}
-                    secondary={props.assignmentTO.roleEnum}/>
+                    secondary={props.assignmentTO.roleEnum} />
                 {props.hasAdminPermissions && (
                     <ListItemSecondaryAction>
                         <IconButton ref={ref} edge="end" onClick={() => setOpen(true)}>
-                            <Settings/>
+                            <Settings />
                         </IconButton>
                     </ListItemSecondaryAction>
                 )}
             </ListItem>
-            <Divider/>
+            <Divider />
             <Popper
                 open={open}
                 anchorEl={ref.current}
@@ -167,10 +172,10 @@ const UserListItem: React.FC<Props> = props => {
                 transition
                 disablePortal
                 className={classes.popupContainer}>
-                {({TransitionProps}) => (
+                {({ TransitionProps }) => (
                     <Grow
                         {...TransitionProps}
-                        style={{transformOrigin: "top"}}>
+                        style={{ transformOrigin: "top" }}>
                         <Paper className={classes.popup}>
                             <ClickAwayListener onClickAway={() => setOpen(false)}>
                                 <MenuList className={classes.list}>
@@ -187,7 +192,8 @@ const UserListItem: React.FC<Props> = props => {
                                                 if (option.onClick) {
                                                     option.onClick();
                                                 } else {
-                                                    console.log("Some error when clicking")
+                                                    // eslint-disable-next-line no-console
+                                                    console.log("Some error when clicking");
                                                 }
                                                 setOpen(false);
                                             }}>
@@ -202,6 +208,6 @@ const UserListItem: React.FC<Props> = props => {
             </Popper>
         </>
     );
-}
+};
 
 export default UserListItem;

@@ -1,16 +1,15 @@
-import {makeStyles} from "@material-ui/core/styles";
-import {observer} from "mobx-react";
-import React, {useCallback, useEffect} from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { observer } from "mobx-react";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import RepoCard from "./Holder/RepoCard";
-import {RepositoryTO} from "../../api/models";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../store/reducers/rootReducer";
-import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
-import 'react-toastify/dist/ReactToastify.css';
-import {fetchRepositories} from "../../store/actions/repositoryAction";
-import {useHistory} from "react-router-dom";
-import {ACTIVE_REPO} from "../../store/constants";
-
+import { RepositoryTO } from "../../api/models";
+import { RootState } from "../../store/reducers/rootReducer";
+import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
+import "react-toastify/dist/ReactToastify.css";
+import { fetchRepositories } from "../../store/actions/repositoryAction";
+import { ACTIVE_REPO } from "../../store/constants";
 
 const useStyles = makeStyles(() => ({
     header: {
@@ -29,33 +28,30 @@ const useStyles = makeStyles(() => ({
 
 const RepoContainer: React.FC = observer(() => {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const history = useHistory();
 
-
-    const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos)
-    const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced)
+    const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
+    const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced);
     const fetchRepos = useCallback(() => {
         try {
-            dispatch(fetchRepositories())
+            dispatch(fetchRepositories());
         } catch (err) {
             console.log(err);
         }
-    }, [dispatch])
+    }, [dispatch]);
 
     useEffect(() => {
         fetchRepos();
         if (!syncStatus) {
-            fetchRepos()
+            fetchRepos();
         }
-
-    }, [dispatch, fetchRepos, syncStatus])
-
+    }, [dispatch, fetchRepos, syncStatus]);
 
     const openRepoScreen = (repo: RepositoryTO) => {
-        dispatch({type: ACTIVE_REPO, activeRepo: repo})
-        history.push(`/repository/${repo.id}`)
-    }
+        dispatch({ type: ACTIVE_REPO, activeRepo: repo });
+        history.push(`/repository/${repo.id}`);
+    };
 
     return (
         <>
@@ -75,7 +71,7 @@ const RepoContainer: React.FC = observer(() => {
                             description={repo.description}
                             existingDiagrams={repo.existingDiagrams}
                             assignedUsers={repo.assignedUsers}
-                            onClick={() => openRepoScreen(repo)}/>
+                            onClick={() => openRepoScreen(repo)} />
                     ))}
                     {allRepos?.length === 0 && (
                         <span>You haven&apos;t added any Repositories yet.</span>
@@ -87,4 +83,3 @@ const RepoContainer: React.FC = observer(() => {
 });
 
 export default RepoContainer;
-

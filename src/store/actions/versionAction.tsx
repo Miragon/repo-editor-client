@@ -1,53 +1,57 @@
-import {Dispatch} from "@reduxjs/toolkit";
+import { Dispatch } from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import {DiagramVersionUploadTO, DiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
+import { DiagramVersionUploadTO, DiagramVersionUploadTOSaveTypeEnum } from "../../api/models";
 import helpers from "../../constants/Functions";
-import {CREATED_DIAGRAM, GET_VERSIONS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "../constants";
-import {ActionType} from "./actions";
-import {handleError} from "./errorAction";
+import { CREATED_DIAGRAM, GET_VERSIONS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR } from "../constants";
+import { ActionType } from "./actions";
+import { handleError } from "./errorAction";
 
-
-export const createOrUpdateVersion = (bpmnDiagramId: string, file: string, saveType: DiagramVersionUploadTOSaveTypeEnum, comment?: string) => {
-
-    return async (dispatch: Dispatch) => {
-        const versionController = new api.DiagramVersionControllerApi()
+export const createOrUpdateVersion = (
+    bpmnDiagramId: string,
+    file: string,
+    saveType: DiagramVersionUploadTOSaveTypeEnum,
+    comment?: string
+) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        const versionController = new api.DiagramVersionControllerApi();
         try {
-            const DiagramVersionUploadTO: DiagramVersionUploadTO = {
+            const diagramVersionUploadTO: DiagramVersionUploadTO = {
                 xml: file,
                 versionComment: comment,
                 saveType: saveType
-            }
-            const config = helpers.getClientConfig()
-            const response = await versionController.createOrUpdateVersion(DiagramVersionUploadTO, bpmnDiagramId, config)
+            };
+            const config = helpers.getClientConfig();
+            const response = await versionController.createOrUpdateVersion(
+                diagramVersionUploadTO, bpmnDiagramId, config
+            );
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({type: SUCCESS, successMessage: "Version Created"})
-                dispatch({type: CREATED_DIAGRAM, createdDiagram: null})
-                dispatch({type: SYNC_STATUS, dataSynced: false})
+                dispatch({ type: SUCCESS, successMessage: "Version Created" });
+                dispatch({ type: CREATED_DIAGRAM, createdDiagram: null });
+                dispatch({ type: SYNC_STATUS, dataSynced: false });
             } else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_VERSION, [bpmnDiagramId, file, saveType, comment]))
-
+            dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_VERSION, [
+                bpmnDiagramId, file, saveType, comment
+            ]));
         }
-    }
-}
-
+    };
+};
 
 export const getAllVersions = (bpmnDiagramId: string) => {
-    return async (dispatch: Dispatch) => {
+    return async (dispatch: Dispatch): Promise<void> => {
         try {
-            const versionController = new api.DiagramVersionControllerApi()
-            const config = helpers.getClientConfig()
-            const response = await versionController.getAllVersions(bpmnDiagramId, config)
+            const versionController = new api.DiagramVersionControllerApi();
+            const config = helpers.getClientConfig();
+            const response = await versionController.getAllVersions(bpmnDiagramId, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({type: GET_VERSIONS, versions: response.data})
+                dispatch({ type: GET_VERSIONS, versions: response.data });
             } else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.GET_ALL_VERSIONS, [bpmnDiagramId]))
-
+            dispatch(handleError(error, ActionType.GET_ALL_VERSIONS, [bpmnDiagramId]));
         }
-    }
-}
+    };
+};

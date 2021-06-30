@@ -1,10 +1,9 @@
-import {CaseReducer} from "@reduxjs/toolkit";
-import {CREATED_DIAGRAM} from "../constants";
+import { CaseReducer } from "@reduxjs/toolkit";
+import { CREATED_DIAGRAM } from "../constants";
 
 const initialState = {
     createdDiagram: null
-}
-
+};
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -12,8 +11,9 @@ const reducer: CaseReducer = (state = initialState, action) => {
             return {
                 ...state,
                 createdDiagram: action.createdDiagram
-            }
+            };
     }
     return state;
-}
+};
+
 export default reducer;

@@ -1,10 +1,10 @@
-import {CaseReducer} from "@reduxjs/toolkit";
-import {AssignmentTO} from "../../api/models/assignment-to";
-import {ASSIGNED_USERS} from "../constants";
+import { CaseReducer } from "@reduxjs/toolkit";
+import { AssignmentTO } from "../../api/models/assignment-to";
+import { ASSIGNED_USERS } from "../constants";
 
 const initialState = {
     assignedUsers: Array<AssignmentTO>()
-}
+};
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -12,8 +12,9 @@ const reducer: CaseReducer = (state = initialState, action) => {
             return {
                 ...state,
                 assignedUsers: action.assignedUsers
-            }
+            };
     }
     return state;
-}
+};
+
 export default reducer;

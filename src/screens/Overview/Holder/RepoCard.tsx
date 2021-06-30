@@ -1,9 +1,9 @@
-import {makeStyles} from "@material-ui/core/styles";
-import DescriptionIcon from '@material-ui/icons/Description';
-import PeopleIcon from '@material-ui/icons/People';
+import { makeStyles } from "@material-ui/core/styles";
+import DescriptionIcon from "@material-ui/icons/Description";
+import PeopleIcon from "@material-ui/icons/People";
 import React from "react";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     repoBox: {
         display: "flex",
         flexDirection: "column",
@@ -59,10 +59,8 @@ interface RepoProps {
     onClick?: () => void;
 }
 
-
 const RepoCard: React.FC<RepoProps> = props => {
     const classes = useStyles();
-
 
     return (
         <div className={classes.repoBox} onClick={props.onClick}>

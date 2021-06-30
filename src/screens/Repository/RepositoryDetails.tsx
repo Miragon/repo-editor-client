@@ -1,14 +1,13 @@
-import React, {useState} from 'react';
-import {makeStyles} from "@material-ui/core/styles";
-import {RepositoryTO} from "../../api/models";
-import {useSelector} from "react-redux";
-import {RootState} from "../../store/reducers/rootReducer";
-import {Description, People} from '@material-ui/icons/';
-import UserManagementDialog from "./UserManagementDialog";
-import {IconButton} from "@material-ui/core";
-import {Settings} from "@material-ui/icons";
+import { IconButton } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Description, People, Settings } from "@material-ui/icons/";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RepositoryTO } from "../../api/models";
+import { RootState } from "../../store/reducers/rootReducer";
 import EditRepoDialog from "./EditRepoDialog";
 
+import UserManagementDialog from "./UserManagementDialog";
 
 const useStyles = makeStyles(() => ({
     header: {
@@ -40,11 +39,10 @@ const useStyles = makeStyles(() => ({
 const RepositoryDetails: React.FC = (() => {
     const classes = useStyles();
 
-    const activeRepo: RepositoryTO = useSelector((state: RootState) => state.activeRepo.activeRepo)
+    const activeRepo: RepositoryTO = useSelector((state: RootState) => state.activeRepo.activeRepo);
 
     const [userManagementOpen, setUserManagementOpen] = useState<boolean>(false);
     const [repoManagementOpen, setRepoManagementOpen] = useState<boolean>(false);
-
 
     if (activeRepo) {
         return (
@@ -55,15 +53,15 @@ const RepositoryDetails: React.FC = (() => {
                     </div>
                     <div className={classes.repoInfo}>
                         <IconButton>
-                            <Description/>
+                            <Description />
                             {activeRepo.existingDiagrams}
                         </IconButton>
                         <IconButton onClick={() => setUserManagementOpen(true)}>
-                            <People/>
+                            <People />
                             {activeRepo.assignedUsers}
                         </IconButton>
                         <IconButton onClick={() => setRepoManagementOpen(true)}>
-                            <Settings/>
+                            <Settings />
                         </IconButton>
 
                     </div>
@@ -74,23 +72,19 @@ const RepositoryDetails: React.FC = (() => {
                 <UserManagementDialog
                     open={userManagementOpen}
                     onCancelled={() => setUserManagementOpen(false)}
-                    repoId={activeRepo.id}
-                />
+                    repoId={activeRepo.id} />
 
                 <EditRepoDialog
                     open={repoManagementOpen}
                     onCancelled={() => setRepoManagementOpen(false)}
                     repoId={activeRepo.id}
                     repoName={activeRepo.name}
-                    repoDescription={activeRepo.description}
-                />
+                    repoDescription={activeRepo.description} />
             </>
         );
-    } else {
-        return (
-            <div></div>
-        );
     }
-
+    return (
+        <div />
+    );
 });
 export default RepositoryDetails;

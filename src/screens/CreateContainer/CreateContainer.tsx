@@ -1,7 +1,7 @@
-import {makeStyles} from "@material-ui/core/styles";
-import {observer} from "mobx-react";
-import React, {useState} from "react";
-import DropdownButton, {DropdownButtonItem} from "../../components/Form/DropdownButton";
+import { makeStyles } from "@material-ui/core/styles";
+import { observer } from "mobx-react";
+import React, { useState } from "react";
+import DropdownButton, { DropdownButtonItem } from "../../components/Form/DropdownButton";
 import SimpleButton from "../../components/Form/SimpleButton";
 import CreateDiagramDialog from "./CreateDiagramDialog";
 import CreateRepoDialog from "./CreateRepoDialog";
@@ -28,7 +28,6 @@ const RepoContainer: React.FC = observer(() => {
     const [uploadDiagramOpen, setUploadDiagramOpen] = useState(false);
     const [createDiagramOpen, setCreateDiagramOpen] = useState(false);
     const [createDiagramType, setCreateDiagramType] = useState<"bpmn" | "dmn">("bpmn");
-
 
     const diagramOptions: DropdownButtonItem[] = [
         {
@@ -99,4 +98,3 @@ const RepoContainer: React.FC = observer(() => {
 });
 
 export default RepoContainer;
-

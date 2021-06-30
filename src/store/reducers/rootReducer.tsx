@@ -1,19 +1,19 @@
-import {combineReducers} from "@reduxjs/toolkit";
+import { combineReducers } from "@reduxjs/toolkit";
+import resultsCount from "./userResultsReducer";
+import searchedUsers from "./usersReducer";
+import activeDiagramsReducer from "./activeDiagramsReducer";
+import activeRepoReducer from "./activeRepoReducer";
+import apiResponseReducer from "./apiResponseReducer";
+import assignedUsersReducer from "./assignedUsersReducer";
+import createdDiagramReducer from "./createdDiagramReducer";
+import currentUserReducer from "./currentUserReducer";
+import dataSyncedReducer from "./dataSyncedReducer";
+import favoriteDiagramReducer from "./favoriteDiagramsReducer";
 import diagramReducer from "./recentDiagramsReducer";
 import repoReducer from "./repositoriesReducer";
-import favoriteDiagramReducer from "./favoriteDiagramsReducer"
-import uploadDiagramReducer from "./uploadDiagramReducer";
-import apiResponseReducer from "./apiResponseReducer";
-import dataSyncedReducer from "./dataSyncedReducer";
-import activeRepoReducer from "./activeRepoReducer";
-import activeDiagramsReducer from "./activeDiagramsReducer";
-import versionsReducer from "./versionsReducer";
-import assignedUsersReducer from "./assignedUsersReducer";
-import currentUserReducer from "./currentUserReducer";
-import searchedUsers from "../reducers/usersReducer";
-import resultsCount from "../reducers/userResultsReducer";
 import searchDiagramsReducer from "./searchDiagramsReducer";
-import createdDiagramReducer from "./createdDiagramReducer";
+import uploadDiagramReducer from "./uploadDiagramReducer";
+import versionsReducer from "./versionsReducer";
 
 export const rootReducer = combineReducers({
     recentDiagrams: diagramReducer,
@@ -31,6 +31,6 @@ export const rootReducer = combineReducers({
     resultsCount: resultsCount,
     searchedDiagrams: searchDiagramsReducer,
     createdDiagram: createdDiagramReducer,
-})
+});
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;

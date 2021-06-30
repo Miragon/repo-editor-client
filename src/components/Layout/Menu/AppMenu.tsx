@@ -1,12 +1,11 @@
-import {Drawer} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
-import {BarChart, Brush, FormatShapes, Help, Home, Widgets} from "@material-ui/icons";
-import React, {useCallback, useRef, useState} from "react";
+import { Drawer } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { BarChart, Brush, FormatShapes, Help, Home, Widgets } from "@material-ui/icons";
+import React, { useCallback, useRef, useState } from "react";
 import MenuSpacer from "../../Menu/MenuSpacer";
 import DrawerApp from "./AppMenu/DrawerApp";
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     button: {
         textTransform: "none",
         fontFamily: "Arial",
@@ -76,9 +75,8 @@ const AppMenu: React.FC = () => {
     return (
         <>
 
-
             <Drawer
-                classes={{paper: classes.drawerPaper}}
+                classes={{ paper: classes.drawerPaper }}
                 variant="permanent"
                 BackdropProps={{
                     className: classes.drawerBackdrop
@@ -87,54 +85,53 @@ const AppMenu: React.FC = () => {
                 open={open}
                 onClose={handleClose}>
 
-
                 <div className={classes.drawerContent}>
 
                     <DrawerApp
                         active
                         title="Home"
                         onClick={() => window.open("/", "_self")}
-                        icon={Home}/>
+                        icon={Home} />
 
                     <DrawerApp
                         title="Modeler"
                         onClick={() => window.open("/modeler/", "_self")}
-                        icon={Brush}/>
+                        icon={Brush} />
 
                     <DrawerApp
                         title="Forms"
                         onClick={() => window.open("localhost:8082/", "_blank")}
-                        icon={FormatShapes}/>
+                        icon={FormatShapes} />
 
                     <DrawerApp
                         title="Building Blocks"
                         onClick={() => window.open("/blocks/ui/", "_self")}
-                        icon={Widgets}/>
+                        icon={Widgets} />
 
                     <DrawerApp
                         title="FlowCov"
                         onClick={() => window.open("https://flowcov.miragon.cloud/", "_self")}
-                        icon={BarChart}/>
+                        icon={BarChart} />
 
-                    <MenuSpacer/>
+                    <MenuSpacer />
 
                     <DrawerApp
                         dense
                         title="Contact Support"
                         description="info@flowsquad.io"
-                        icon={Help}/>
+                        icon={Help} />
 
-                    {/*<DrawerApp*/}
-                    {/*    dense*/}
-                    {/*    title="Your Account"*/}
-                    {/*    description={user.email}*/}
-                    {/*    icon={AccountCircle} />*/}
+                    {/* <DrawerApp */}
+                    {/*    dense */}
+                    {/*    title="Your Account" */}
+                    {/*    description={user.email} */}
+                    {/*    icon={AccountCircle} /> */}
 
-                    {/*<DrawerApp*/}
-                    {/*    dense*/}
-                    {/*    title="Sign Out"*/}
-                    {/*    onClick={logout}*/}
-                    {/*    icon={ExitToApp} />*/}
+                    {/* <DrawerApp */}
+                    {/*    dense */}
+                    {/*    title="Sign Out" */}
+                    {/*    onClick={logout} */}
+                    {/*    icon={ExitToApp} /> */}
 
                 </div>
 

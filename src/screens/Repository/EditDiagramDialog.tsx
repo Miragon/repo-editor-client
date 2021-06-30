@@ -1,10 +1,9 @@
-import React, {useCallback, useState} from "react";
-import {useDispatch} from "react-redux";
-import {makeStyles} from "@material-ui/core/styles";
-import {Input, InputLabel} from "@material-ui/core";
+import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import { Input, InputLabel } from "@material-ui/core";
 import * as diagramAction from "../../store/actions/diagramAction";
 import PopupDialog from "../../components/Form/PopupDialog";
-
 
 const useStyles = makeStyles(() => ({
     line: {
@@ -29,7 +28,6 @@ interface Props {
     diagramDescription: string;
 }
 
-
 const EditDiagramDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -38,16 +36,14 @@ const EditDiagramDialog: React.FC<Props> = props => {
     const [title, setTitle] = useState<string>(props.diagramName);
     const [description, setDescription] = useState<string>(props.diagramDescription);
 
-
     const applyChanges = useCallback(async () => {
         try {
-            dispatch(diagramAction.createDiagram(props.repoId, title, description, "BPMN"))
-            props.onCancelled()
+            dispatch(diagramAction.createDiagram(props.repoId, title, description, "BPMN"));
+            props.onCancelled();
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
-    }, [title, description, props, dispatch])
-
+    }, [title, description, props, dispatch]);
 
     return (
         <PopupDialog
@@ -59,24 +55,22 @@ const EditDiagramDialog: React.FC<Props> = props => {
             onFirst={applyChanges}
             secondTitle="Close"
             onSecond={props.onCancelled}>
-            <InputLabel style={{'fontSize': '12px'}} htmlFor="Title">Title</InputLabel>
+            <InputLabel style={{ fontSize: "12px" }} htmlFor="Title">Title</InputLabel>
             <Input
                 id="Name"
                 value={title}
-                onChange={(event) => setTitle(event.target.value)}/>
-            <div className={classes.spacer}/>
-            <InputLabel style={{'fontSize': '12px'}} htmlFor="Description">Description</InputLabel>
+                onChange={event => setTitle(event.target.value)} />
+            <div className={classes.spacer} />
+            <InputLabel style={{ fontSize: "12px" }} htmlFor="Description">Description</InputLabel>
             <Input
                 id="Description"
                 value={description}
                 multiline
                 rows={4}
-                onChange={(event) => setDescription(event.target.value)}
-            />
-
+                onChange={event => setDescription(event.target.value)} />
 
         </PopupDialog>
     );
-}
+};
 
 export default EditDiagramDialog;

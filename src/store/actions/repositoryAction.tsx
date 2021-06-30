@@ -1,118 +1,110 @@
-import {Dispatch} from "@reduxjs/toolkit";
+import { Dispatch } from "@reduxjs/toolkit";
+import * as api from "../../api/api";
+import { NewRepositoryTO, RepositoryUpdateTO } from "../../api/models";
 import helpers from "../../constants/Functions";
-import * as api from "../../api/api"
-import {NewRepositoryTO, RepositoryUpdateTO} from "../../api/models";
-import {ActionType} from "./actions";
-import {handleError} from "./errorAction";
-import {ACTIVE_REPO, GET_REPOS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "../constants";
-
+import { ACTIVE_REPO, GET_REPOS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR } from "../constants";
+import { ActionType } from "./actions";
+import { handleError } from "./errorAction";
 
 export const fetchRepositories = () => {
-    return async (dispatch: Dispatch) => {
-        const repositoryController = new api.BpmRepositoryControllerApi() //config was passed before
+    return async (dispatch: Dispatch): Promise<void> => {
+        // config was passed before
+        const repositoryController = new api.BpmRepositoryControllerApi();
         try {
-            const config = helpers.getClientConfig()
+            const config = helpers.getClientConfig();
 
-            const response = await repositoryController.getAllRepositories(config)
+            const response = await repositoryController.getAllRepositories(config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({type: GET_REPOS, repos: response.data})
-                dispatch({type: SYNC_STATUS, dataSynced: true})
-
+                dispatch({ type: GET_REPOS, repos: response.data });
+                dispatch({ type: SYNC_STATUS, dataSynced: true });
             } else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.FETCH_REPOSITORIES, []))
-
+            dispatch(handleError(error, ActionType.FETCH_REPOSITORIES, []));
         }
-    }
-}
-
+    };
+};
 
 export const getSingleRepository = (id: string) => {
-    return async (dispatch: Dispatch) => {
-        const repositoryController = new api.BpmRepositoryControllerApi() //config was passed before
+    return async (dispatch: Dispatch): Promise<void> => {
+        // config was passed before
+        const repositoryController = new api.BpmRepositoryControllerApi();
         try {
-            const config = helpers.getClientConfig()
+            const config = helpers.getClientConfig();
 
-            const response = await repositoryController.getSingleRepository(id, config)
+            const response = await repositoryController.getSingleRepository(id, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({type: ACTIVE_REPO, activeRepo: response.data})
-
+                dispatch({ type: ACTIVE_REPO, activeRepo: response.data });
             } else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.GET_SINGLE_REPOSITORY, [id]))
-
+            dispatch(handleError(error, ActionType.GET_SINGLE_REPOSITORY, [id]));
         }
-    }
-}
-
+    };
+};
 
 export const createRepository = (name: string, description: string) => {
-    return async (dispatch: Dispatch) => {
-        const repositoryController = new api.BpmRepositoryControllerApi() //config was passed before
+    return async (dispatch: Dispatch): Promise<void> => {
+        // config was passed before
+        const repositoryController = new api.BpmRepositoryControllerApi();
         try {
             const newRepositoryTO: NewRepositoryTO = {
-                name: name,
-                description: description
-            }
-            const config = helpers.getClientConfig()
-            const response = await repositoryController.createRepository(newRepositoryTO, config)
+                name,
+                description
+            };
+            const config = helpers.getClientConfig();
+            const response = await repositoryController.createRepository(newRepositoryTO, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({type: SUCCESS, successMessage: "Repository created"})
-                dispatch({type: SYNC_STATUS, dataSynced: false})
+                dispatch({ type: SUCCESS, successMessage: "Repository created" });
+                dispatch({ type: SYNC_STATUS, dataSynced: false });
             } else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.CREATE_REPOSITORY, [name, description]))
-
+            dispatch(handleError(error, ActionType.CREATE_REPOSITORY, [name, description]));
         }
-    }
-}
-
+    };
+};
 
 export const updateRepository = (id: string, name: string, description: string) => {
-    return async (dispatch: Dispatch) => {
-        const repositoryController = new api.BpmRepositoryControllerApi()
+    return async (dispatch: Dispatch): Promise<void> => {
+        const repositoryController = new api.BpmRepositoryControllerApi();
         try {
             const repositoryUpdateTO: RepositoryUpdateTO = {
-                name: name,
-                description: description
-            }
-            const config = helpers.getClientConfig()
-            const response = await repositoryController.updateRepository(repositoryUpdateTO, id, config)
+                name,
+                description
+            };
+            const config = helpers.getClientConfig();
+            const response = await repositoryController
+                .updateRepository(repositoryUpdateTO, id, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({type: SUCCESS, successMessage: "Repository updated"})
-                dispatch({type: SYNC_STATUS, dataSynced: false})
+                dispatch({ type: SUCCESS, successMessage: "Repository updated" });
+                dispatch({ type: SYNC_STATUS, dataSynced: false });
             } else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.UPDATE_REPOSITORY, [id, name, description]))
-
+            dispatch(handleError(error, ActionType.UPDATE_REPOSITORY, [id, name, description]));
         }
-    }
-}
-
+    };
+};
 
 export const deleteRepository = (id: string) => {
-    return async (dispatch: Dispatch) => {
-        const repositoryController = new api.BpmRepositoryControllerApi() //config was passed before
+    return async (dispatch: Dispatch): Promise<void> => {
+        // config was passed before
+        const repositoryController = new api.BpmRepositoryControllerApi();
         try {
-
-            const config = helpers.getClientConfig()
-            const response = await repositoryController.deleteRepository(id, config)
+            const config = helpers.getClientConfig();
+            const response = await repositoryController.deleteRepository(id, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({type: SUCCESS, successMessage: "Repository deleted"})
+                dispatch({ type: SUCCESS, successMessage: "Repository deleted" });
             } else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: "Could not process request"})
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.DELETE_REPOSITORY, [id]))
-
+            dispatch(handleError(error, ActionType.DELETE_REPOSITORY, [id]));
         }
-    }
-}
+    };
+};

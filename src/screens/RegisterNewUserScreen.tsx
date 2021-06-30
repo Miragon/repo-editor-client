@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -6,14 +6,14 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import LockIcon from "@material-ui/icons/Lock";
 import Typography from "@material-ui/core/Typography";
-import {makeStyles} from "@material-ui/core/styles";
-import {useHistory} from "react-router-dom";
-import {toast, ToastContainer} from "react-toastify";
-import {UserControllerApi} from "../api/api";
+import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { UserControllerApi } from "../api/api";
 import helpers from "../constants/Functions";
-import {SUCCESS, UNHANDLEDERROR} from "../store/constants";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../store/reducers/rootReducer";
+import { SUCCESS, UNHANDLEDERROR } from "../store/constants";
+import { RootState } from "../store/reducers/rootReducer";
 
 function Copyright() {
     return (
@@ -77,47 +77,33 @@ const useStyles = makeStyles(theme => ({
 const RegisterNewUserScreen: React.FC = () => {
     const classes = useStyles();
     const history = useHistory();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const [userController] = useState<UserControllerApi>(new UserControllerApi());
-    const [userName, setUserName] = useState<string>("");
     const [isButtonDisabled, setButtonDisabled] = useState<boolean>(true);
 
-    const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage)
-    const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage)
-
+    const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage);
+    const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage);
 
     useEffect(() => {
         if (apiErrorState) {
-            //toast can contain any component, the Retry Button (and the message: apiErrorState) has to be passed here
-            //toast.error(<RepoCard repoTitle={"abc"} description={"def"} existingDiagrams={3} assignedUsers={2}></RepoCard>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
-            toast.error(apiErrorState, {autoClose: 8000, pauseOnHover: true})
-            dispatch({type: UNHANDLEDERROR, errorMessage: ""})
+            // toast can contain any component, the Retry Button (and the message: apiErrorState) has to be passed here
+            // toast.error(<RepoCard repoTitle={"abc"} description={"def"} existingDiagrams={3} assignedUsers={2}></RepoCard>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
+            toast.error(apiErrorState, { autoClose: 8000, pauseOnHover: true });
+            dispatch({ type: UNHANDLEDERROR, errorMessage: "" });
         }
         if (apiSuccessState) {
-            toast.success(apiSuccessState, {autoClose: 4000, pauseOnHover: true})
-            dispatch({type: SUCCESS, successMessage: ""})
+            toast.success(apiSuccessState, { autoClose: 4000, pauseOnHover: true });
+            dispatch({ type: SUCCESS, successMessage: "" });
         }
-
-        (async () => {
-            try {
-                const config = helpers.getClientConfig()
-                userController.getUserName(config).then(userName => {
-                    setUserName(userName.data);
-                })
-            } catch (response) {
-                toast.error("Could not get the email of the authenticated User. "
-                    + "Please check your network-connection or try to reload the page");
-            }
-        })();
-    }, [userController, setUserName, dispatch, apiErrorState, apiSuccessState]);
+    }, [userController, dispatch, apiErrorState, apiSuccessState]);
 
     /**
      * Persist a new User-profile in the FlowRepo-backend
      */
     const handleCreateUserProfile = useCallback(async (): Promise<void> => {
         try {
-            const config = helpers.getClientConfig()
+            const config = helpers.getClientConfig();
             await userController.createUser(config);
             history.push("/");
         } catch (response) {
@@ -125,12 +111,11 @@ const RegisterNewUserScreen: React.FC = () => {
         }
     }, [history, userController]);
 
-
     return (
         <div className={classes.createUserProfilePage}>
             <div className={classes.createUserProfileContent}>
                 <Avatar className={classes.avatar}>
-                    <LockIcon/>
+                    <LockIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign up for Miragon Cloud Services
@@ -138,7 +123,7 @@ const RegisterNewUserScreen: React.FC = () => {
 
                 <p className={classes.infoText}>
                     This is the first time you are trying to access Miragon Cloud Services.
-                    <br/>
+                    <br />
                     To use this service you need an account.
                     To create a new account, choose a name and accept the Terms and Conditions.
                 </p>
@@ -147,12 +132,14 @@ const RegisterNewUserScreen: React.FC = () => {
 
                     <FormControlLabel
                         className={classes.confirmationCheckbox}
-                        control={<Checkbox
-                            checked={!isButtonDisabled}
-                            onClick={() => setButtonDisabled(!isButtonDisabled)}
-                            value="allowExtraEmails"
-                            color="primary"/>}
-                        label="I agree to the terms of service"/>
+                        control={(
+                            <Checkbox
+                                checked={!isButtonDisabled}
+                                onClick={() => setButtonDisabled(!isButtonDisabled)}
+                                value="allowExtraEmails"
+                                color="primary" />
+                        )}
+                        label="I agree to the terms of service" />
 
                     <Button
                         type="submit"
@@ -165,9 +152,9 @@ const RegisterNewUserScreen: React.FC = () => {
                         Create a new User Profile
                     </Button>
                 </form>
-                <Copyright/>
+                <Copyright />
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </div>
     );
 };
