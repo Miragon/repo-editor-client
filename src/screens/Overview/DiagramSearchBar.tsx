@@ -138,7 +138,7 @@ const DiagramSearchBar: React.FC = () => {
                         renderInput={params => (
                             <TextField
                                 {...params}
-                                label="Search Diagram"
+                                label="Suchen..."
                                 variant="outlined"
                                 onChange={event => onChangeWithTimer(event.target.value)}
                                 value={diagram}

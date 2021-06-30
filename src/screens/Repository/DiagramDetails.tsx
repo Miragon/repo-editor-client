@@ -13,7 +13,6 @@ const useStyles = makeStyles(() => ({
         display: "flex",
         flexDirection: "column",
         flexWrap: "wrap",
-        backgroundColor: "white"
     },
     unstyledButton: {
         all: "unset"

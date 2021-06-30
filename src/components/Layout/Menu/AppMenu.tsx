@@ -67,36 +67,26 @@ const AppMenu: React.FC<Props> = props => {
 
                     <DrawerApp
                         active
-                        title="Home"
+                        title="Modellverwaltung"
                         onClick={() => window.open("/", "_self")}
                         icon={Home} />
 
                     <DrawerApp
-                        title="Modeler"
-                        onClick={() => window.open("/modeler/", "_self")}
-                        icon={Brush} />
-
-                    <DrawerApp
-                        title="Forms"
-                        onClick={() => window.open("localhost:8082/", "_blank")}
+                        title="Formulare"
+                        onClick={() => window.open("/formulare", "_self")}
                         icon={FormatShapes} />
 
                     <DrawerApp
-                        title="Building Blocks"
-                        onClick={() => window.open("/blocks/ui/", "_self")}
+                        title="Integrationsbausteine"
+                        onClick={() => window.open("/bausteine", "_self")}
                         icon={Widgets} />
-
-                    <DrawerApp
-                        title="FlowCov"
-                        onClick={() => window.open("https://flowcov.miragon.cloud/", "_self")}
-                        icon={BarChart} />
 
                     <MenuSpacer />
 
                     <DrawerApp
                         dense
-                        title="Contact Support"
-                        description="info@flowsquad.io"
+                        title="Support kontaktieren"
+                        description="lhm.digitalwf@muenchen.de"
                         icon={Help} />
 
                 </div>

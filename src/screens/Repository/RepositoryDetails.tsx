@@ -10,6 +10,9 @@ import EditRepoDialog from "./EditRepoDialog";
 import UserManagementDialog from "./UserManagementDialog";
 
 const useStyles = makeStyles(() => ({
+    root: {
+        marginBottom: "1rem"
+    },
     header: {
         display: "flex",
         width: "100%",
@@ -31,8 +34,8 @@ const useStyles = makeStyles(() => ({
         fontStyle: "italic"
     },
     icon: {
-        width: "70px",
-        margin: "0 0.25rem 0 0.5rem"
+        marginRight: "0.1rem",
+        marginLeft: "0.5rem"
     }
 
 }));
@@ -46,22 +49,32 @@ const RepositoryDetails: React.FC = (() => {
 
     if (activeRepo) {
         return (
-            <>
+            <div className={classes.root}>
                 <div className={classes.header}>
                     <div className={classes.headerText}>
                         {activeRepo.name}
                     </div>
                     <div className={classes.repoInfo}>
-                        <IconButton>
-                            <Description />
+                        <IconButton size="small">
+                            <Description
+                                className={classes.icon}
+                                fontSize="small" />
                             {activeRepo.existingDiagrams}
                         </IconButton>
-                        <IconButton onClick={() => setUserManagementOpen(true)}>
-                            <People />
+                        <IconButton
+                            size="small"
+                            onClick={() => setUserManagementOpen(true)}>
+                            <People
+                                className={classes.icon}
+                                fontSize="small" />
                             {activeRepo.assignedUsers}
                         </IconButton>
-                        <IconButton onClick={() => setRepoManagementOpen(true)}>
-                            <Settings />
+                        <IconButton
+                            size="small"
+                            onClick={() => setRepoManagementOpen(true)}>
+                            <Settings
+                                className={classes.icon}
+                                fontSize="small" />
                         </IconButton>
 
                     </div>
@@ -80,7 +93,7 @@ const RepositoryDetails: React.FC = (() => {
                     repoId={activeRepo.id}
                     repoName={activeRepo.name}
                     repoDescription={activeRepo.description} />
-            </>
+            </div>
         );
     }
     return (

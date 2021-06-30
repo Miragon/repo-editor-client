@@ -11,7 +11,8 @@ import { RootState } from "../../store/reducers/rootReducer";
 const useStyles = makeStyles(() => ({
     container: {
         display: "flex",
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
+        marginBottom: "1rem"
     },
     diagramButton: {
         minWidth: "180px"

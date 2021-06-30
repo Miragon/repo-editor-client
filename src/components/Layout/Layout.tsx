@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) => ({
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Layout = (): any => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const dispatch = useDispatch();
     const apiErrorState = useSelector((state: RootState) => state.api.errorMessage);
     const apiErrorRetryMethod = useSelector((state: RootState) => state.api.retryMethod);
