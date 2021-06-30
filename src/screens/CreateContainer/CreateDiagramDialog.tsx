@@ -1,16 +1,16 @@
+import MenuItem from "@material-ui/core/MenuItem";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import MenuItem from "@material-ui/core/MenuItem";
+import "react-toastify/dist/ReactToastify.css";
+import { DiagramVersionUploadTOSaveTypeEnum, RepositoryTO } from "../../api/models";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import { DiagramTO, DiagramVersionUploadTOSaveTypeEnum, RepositoryTO } from "../../api/models";
 import * as diagramAction from "../../store/actions/diagramAction";
 import * as versionAction from "../../store/actions/versionAction";
-import { RootState } from "../../store/reducers/rootReducer";
-import "react-toastify/dist/ReactToastify.css";
 import { DEFAULT_DMN_FILE, DEFAULT_XML_FILE } from "../../store/constants";
+import { RootState } from "../../store/reducers/rootReducer";
 
 interface Props {
     open: boolean;
@@ -26,14 +26,15 @@ const CreateDiagramDialog: React.FC<Props> = props => {
     const [description, setDescription] = useState("");
     const [repository, setRepository] = useState<string>(props.repo ? props.repo.id : "");
 
-    const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
-    const createdDiagram: DiagramTO = useSelector((state: RootState) => state.createdDiagram.createdDiagram);
+    const allRepos = useSelector((state: RootState) => state.repos.repos);
+    const createdDiagram = useSelector((state: RootState) => state.createdDiagram.createdDiagram);
 
     const onCreate = useCallback(async () => {
         try {
             dispatch(diagramAction.createDiagram(repository, title, description, props.type));
             props.onCancelled();
         } catch (err) {
+            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [dispatch, repository, title, description, props]);

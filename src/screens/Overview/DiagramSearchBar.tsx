@@ -1,14 +1,14 @@
+import CircularProgress from "@material-ui/core/CircularProgress";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { makeStyles } from "@material-ui/styles";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import TextField from "@material-ui/core/TextField";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { makeStyles } from "@material-ui/styles";
-import { DiagramTO, RepositoryTO } from "../../api/models";
-import { RootState } from "../../store/reducers/rootReducer";
-import DiagramCard from "./Holder/DiagramCard";
+import { DiagramTO } from "../../api/models";
 import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
 import * as diagramAction from "../../store/actions/diagramAction";
+import { RootState } from "../../store/reducers/rootReducer";
+import DiagramCard from "./Holder/DiagramCard";
 
 const useStyles = makeStyles(() => ({
     headerText: {
@@ -49,8 +49,10 @@ const DiagramSearchBar: React.FC = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const searchedDiagrams: Array<DiagramTO> = useSelector((state: RootState) => state.searchedDiagrams.searchedDiagrams);
-    const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
+    const searchedDiagrams = useSelector(
+        (state: RootState) => state.searchedDiagrams.searchedDiagrams
+    );
+    const repos = useSelector((state: RootState) => state.repos.repos);
 
     const [diagram, setDiagram] = useState("");
     const [open, setOpen] = useState(false);
@@ -93,7 +95,7 @@ const DiagramSearchBar: React.FC = () => {
         } else {
             setDisplayResult(true);
         }
-        if (input != "") {
+        if (input !== "") {
             if (timeout) {
                 clearTimeout(timeout);
             }
@@ -111,7 +113,6 @@ const DiagramSearchBar: React.FC = () => {
         setDiagram(event.target.textContent);
     };
 
-    //            getOptionLabel={(option) => option.bpmnDiagramName + "  " + <Typography>{getRepoName(option.bpmnRepositoryId)}</Typography>}
     return (
         <>
             <div className={classes.container}>
@@ -143,28 +144,32 @@ const DiagramSearchBar: React.FC = () => {
                                     ...params.InputProps,
                                     endAdornment: (
                                         <>
-                                            {(loading && diagram != "")
-                                                ? <CircularProgress color="inherit" size={20} /> : null}
+                                            {(loading && diagram !== "")
+                                                ? (
+                                                    <CircularProgress
+                                                        color="inherit"
+                                                        size={20} />
+                                                ) : null}
                                             {params.InputProps.endAdornment}
                                         </>
                                     ),
                                 }} />
                         )} />
                     <div className={classes.resultsContainer}>
-                        {!loading && searchedDiagrams?.map(diagram => (
+                        {!loading && searchedDiagrams?.map(searchedDiagram => (
                             <a
                                 className={classes.card}
-                                key={diagram.id}
+                                key={searchedDiagram.id}
                                 rel="noreferrer"
                                 target="_blank"
-                                href={`/modeler/#/${diagram.repositoryId}/${diagram.id}/latest/`}>
+                                href={`/modeler/#/${searchedDiagram.repositoryId}/${searchedDiagram.id}/latest/`}>
                                 <DiagramCard
-                                    diagramRepo={getRepoName(diagram.repositoryId)}
-                                    diagramTitle={diagram.name}
-                                    image={diagram.svgPreview}
-                                    updatedDate={diagram.updatedDate}
-                                    description={diagram.description}
-                                    repositoryId={diagram.repositoryId} />
+                                    diagramRepo={getRepoName(searchedDiagram.repositoryId)}
+                                    diagramTitle={searchedDiagram.name}
+                                    image={searchedDiagram.svgPreview}
+                                    updatedDate={searchedDiagram.updatedDate}
+                                    description={searchedDiagram.description}
+                                    repositoryId={searchedDiagram.repositoryId} />
                             </a>
                         ))}
                         {!loading && searchedDiagrams?.length === 0 && (

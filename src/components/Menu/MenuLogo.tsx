@@ -19,6 +19,7 @@ const useStyles = makeStyles(() => ({
 const MenuLogo: React.FC<Props> = props => {
     const classes = useStyles();
     return (
+        // eslint-disable-next-line
         <span
             onClick={props.onClick}
             className={classes.logo}>

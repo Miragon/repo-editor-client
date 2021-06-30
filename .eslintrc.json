@@ -119,6 +119,9 @@
         "react-hooks/exhaustive-deps": "error",
         // Just more readable
         "arrow-body-style": "off",
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        // TODO: Temporary fixes only!
+        "import/no-cycle": "off",
+        "import/no-extraneous-dependencies": "off"
     }
 }

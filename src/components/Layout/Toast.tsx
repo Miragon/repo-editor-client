@@ -33,9 +33,7 @@ const Toast: React.FC<Props> = props => {
 
     const retry = useCallback(() => {
         dispatch({ type: UNHANDLEDERROR, errorMessage: "" });
-
         dispatch(actions.actionMapper(props.retryMethod, props.retryPayload));
-        console.log("dispatched retry");
     }, [dispatch, props]);
 
     return (

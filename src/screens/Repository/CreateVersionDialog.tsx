@@ -31,7 +31,9 @@ const CreateVersionDialog: React.FC<Props> = props => {
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [comment, setComment] = useState("");
-    const [saveType, setSaveType] = useState<DiagramVersionUploadTOSaveTypeEnum>(DiagramVersionUploadTOSaveTypeEnum.RELEASE);
+    const [saveType, setSaveType] = useState<DiagramVersionUploadTOSaveTypeEnum>(
+        DiagramVersionUploadTOSaveTypeEnum.RELEASE
+    );
 
     const onCreate = useCallback(async () => {
         try {
@@ -40,6 +42,7 @@ const CreateVersionDialog: React.FC<Props> = props => {
             dispatch(versionAction.getAllVersions(diagramId));
             onCancelled();
         } catch (err) {
+            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [diagramId, comment, saveType, dispatch, onCancelled]);

@@ -14,8 +14,8 @@ export class ErrorBoundary extends React.Component<unknown, { [key: string]: str
         this.setState({ hasError: error.message });
         // You can also log the error to an error reporting service
         // logErrorToMyService(error, info);
-        console.log(error);
-        console.log(info);
+        // eslint-disable-next-line no-console
+        console.log(error, info);
     }
 
     render(): React.ReactNode {

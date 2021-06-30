@@ -1,15 +1,15 @@
 const helpers = {
-    isNumber: function (value: string): boolean {
+    isNumber: (value: string): boolean => {
         return !isNaN(Number(value));
     },
-    isPositiveInt: function (value: string): boolean {
+    isPositiveInt: (value: string): boolean => {
         return /^\d+$/.test(value);
     },
-    throwError: function (errorMessage: string): boolean {
+    throwError: (errorMessage: string): boolean => {
         throw new Error(errorMessage);
     },
 
-    getClientConfig: function (): Record<string, string> {
+    getClientConfig: (): Record<string, string> => {
         return {
             // basePath: "",
             //         "headers": {

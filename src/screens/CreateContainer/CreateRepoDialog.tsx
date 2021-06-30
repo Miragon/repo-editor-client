@@ -25,6 +25,7 @@ const CreateRepoDialog: React.FC<Props> = props => {
             dispatch(repositoryAction.createRepository(title, description));
             onCancelled();
         } catch (err) {
+            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [dispatch, title, description, onCancelled]);

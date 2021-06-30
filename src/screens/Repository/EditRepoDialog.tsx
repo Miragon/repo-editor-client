@@ -70,10 +70,12 @@ const EditRepoDialog: React.FC<Props> = props => {
 
     const deleteRepo = useCallback(() => {
         try {
+            // eslint-disable-next-line no-alert
             if (window.confirm(`Are you sure you want to delete '${title}'?`)) {
                 dispatch(repositoryAction.deleteRepository(props.repoId));
                 history.push("/");
                 dispatch({ type: SYNC_STATUS, dataSynced: false });
+                // eslint-disable-next-line no-console
                 console.log("Sync status = false");
             }
         } catch (err) {

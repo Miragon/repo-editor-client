@@ -4,12 +4,5 @@ type ContainerProps = {
     category: string;
 };
 
-type ContainerState = {
-
-};
-
-export default class CategoryContainer extends React.Component<ContainerProps, ContainerState> {
-    render() {
-        return null;
-    }
-}
+const CategoryContainer: React.FC<ContainerProps> = () => null;
+export default CategoryContainer;

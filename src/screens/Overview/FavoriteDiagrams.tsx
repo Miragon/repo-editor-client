@@ -2,11 +2,10 @@ import { makeStyles } from "@material-ui/styles";
 import { observer } from "mobx-react";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DiagramCard from "./Holder/DiagramCard";
-import { DiagramTO, RepositoryTO } from "../../api/models";
+import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
 import * as diagramAction from "../../store/actions/diagramAction";
 import { RootState } from "../../store/reducers/rootReducer";
-import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
+import DiagramCard from "./Holder/DiagramCard";
 
 const useStyles = makeStyles(() => ({
     diagramContainer: {
@@ -32,13 +31,16 @@ const FavoriteDiagrams: React.FC = observer(() => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const favoriteDiagrams: Array<DiagramTO> = useSelector((state: RootState) => state.favoriteDiagrams.favoriteDiagrams);
-    const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
+    const favoriteDiagrams = useSelector(
+        (state: RootState) => state.favoriteDiagrams.favoriteDiagrams
+    );
+    const repos = useSelector((state: RootState) => state.repos.repos);
 
     const fetchFavorite = useCallback(() => {
         try {
             dispatch(diagramAction.fetchFavoriteDiagrams());
         } catch (err) {
+            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [dispatch]);

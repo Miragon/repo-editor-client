@@ -87,8 +87,6 @@ const RegisterNewUserScreen: React.FC = () => {
 
     useEffect(() => {
         if (apiErrorState) {
-            // toast can contain any component, the Retry Button (and the message: apiErrorState) has to be passed here
-            // toast.error(<RepoCard repoTitle={"abc"} description={"def"} existingDiagrams={3} assignedUsers={2}></RepoCard>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
             toast.error(apiErrorState, { autoClose: 8000, pauseOnHover: true });
             dispatch({ type: UNHANDLEDERROR, errorMessage: "" });
         }

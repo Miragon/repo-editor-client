@@ -2,11 +2,10 @@ import { makeStyles } from "@material-ui/styles";
 import { observer } from "mobx-react";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DiagramCard from "./Holder/DiagramCard";
-import { DiagramTO, RepositoryTO } from "../../api/models";
-import { RootState } from "../../store/reducers/rootReducer";
-import * as diagramAction from "../../store/actions/diagramAction";
 import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
+import * as diagramAction from "../../store/actions/diagramAction";
+import { RootState } from "../../store/reducers/rootReducer";
+import DiagramCard from "./Holder/DiagramCard";
 
 const useStyles = makeStyles(() => ({
     diagramContainer: {
@@ -33,14 +32,15 @@ const RecentDiagrams: React.FC = observer(() => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const recentDiagrams: Array<DiagramTO> = useSelector((state: RootState) => state.recentDiagrams.recentDiagrams);
-    const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
-    const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced);
+    const recentDiagrams = useSelector((state: RootState) => state.recentDiagrams.recentDiagrams);
+    const repos = useSelector((state: RootState) => state.repos.repos);
+    const syncStatus = useSelector((state: RootState) => state.dataSynced.dataSynced);
 
     const fetchRecent = useCallback(() => {
         try {
             dispatch(diagramAction.fetchRecentDiagrams());
         } catch (err) {
+            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [dispatch]);

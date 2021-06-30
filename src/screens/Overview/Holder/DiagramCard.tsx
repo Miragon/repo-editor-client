@@ -49,9 +49,6 @@ const useStyles = makeStyles(theme => ({
 interface DiagramProps {
     diagramTitle: string;
     image: string | undefined;
-    updatedDate: Date | undefined;
-    description: string;
-    repositoryId: string;
     diagramRepo: string;
     className?: string;
 }

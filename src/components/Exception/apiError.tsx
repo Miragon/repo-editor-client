@@ -5,13 +5,14 @@ class ApiError {
     ) {
     }
 
-    getUserError() {
-        if (this.errorMessage === "502" || "400") {
+    getUserError(): string {
+        if (this.errorMessage === "502" || this.errorMessage === "400") {
             return "Ups. Da ist etwas schief gelaufen. 🤭 \nWir beheben den Fehler so schnell wie möglich.";
         }
         if (this.errorMessage === "Network request failed") {
             return "Der Service konnte nicht erreicht werden. Prüfe deine Internetverbindung und versuche es erneut.";
         }
+        return this.errorMessage;
     }
 }
 

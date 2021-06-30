@@ -63,6 +63,7 @@ const RepoCard: React.FC<RepoProps> = props => {
     const classes = useStyles();
 
     return (
+        // eslint-disable-next-line
         <div className={classes.repoBox} onClick={props.onClick}>
             <div className={classes.repoHeader}>
                 {props.repoTitle}

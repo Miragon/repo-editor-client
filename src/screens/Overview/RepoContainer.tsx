@@ -37,6 +37,7 @@ const RepoContainer: React.FC = observer(() => {
         try {
             dispatch(fetchRepositories());
         } catch (err) {
+            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [dispatch]);

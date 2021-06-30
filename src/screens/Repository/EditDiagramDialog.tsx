@@ -41,6 +41,7 @@ const EditDiagramDialog: React.FC<Props> = props => {
             dispatch(diagramAction.createDiagram(props.repoId, title, description, "BPMN"));
             props.onCancelled();
         } catch (err) {
+            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [title, description, props, dispatch]);

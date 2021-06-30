@@ -5,7 +5,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { UserControllerApi } from "../../api/api";
 import helpers from "../../constants/Functions";
 import RegisterNewUserScreen from "../../screens/RegisterNewUserScreen";
-import { ActionType } from "../../store/actions/actions";
 import { CURRENT_USER_INFO, SUCCESS, UNHANDLEDERROR } from "../../store/constants";
 import { RootState } from "../../store/reducers/rootReducer";
 import Menu from "./Menu";
@@ -52,11 +51,11 @@ const useStyles = makeStyles(() => ({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Layout = (): any => {
     const dispatch = useDispatch();
-    const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage);
-    const apiErrorRetryMethod: ActionType = useSelector((state: RootState) => state.api.retryMethod);
+    const apiErrorState = useSelector((state: RootState) => state.api.errorMessage);
+    const apiErrorRetryMethod = useSelector((state: RootState) => state.api.retryMethod);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const apiErrorRetryPayload: Array<any> = useSelector((state: RootState) => state.api.retryPayload);
-    const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage);
+    const apiErrorRetryPayload = useSelector((state: RootState) => state.api.retryPayload);
+    const apiSuccessState = useSelector((state: RootState) => state.api.successMessage);
 
     useEffect(() => {
         if (apiErrorState) {

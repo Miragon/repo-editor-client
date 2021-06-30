@@ -1,5 +1,3 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { makeStyles } from "@material-ui/styles";
 import {
     ClickAwayListener,
     Collapse,
@@ -15,17 +13,19 @@ import {
     TableHead,
     TableRow
 } from "@material-ui/core";
-import { KeyboardArrowDown, KeyboardArrowUp, MoreVert } from "@material-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { KeyboardArrowDown, KeyboardArrowUp, MoreVert } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/styles";
 import clsx from "clsx";
-import theme from "../../theme";
-import { DropdownButtonItem } from "../../components/Form/DropdownButton";
-import { getAllVersions, deleteDiagram } from "../../store/actions";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { DiagramVersionTO } from "../../api/models";
-import { RootState } from "../../store/reducers/rootReducer";
+import { DropdownButtonItem } from "../../components/Form/DropdownButton";
+import { deleteDiagram, getAllVersions } from "../../store/actions";
 
 import { GET_VERSIONS } from "../../store/constants";
+import { RootState } from "../../store/reducers/rootReducer";
+import theme from "../../theme";
 import CreateVersionDialog from "./CreateVersionDialog";
 import EditDiagramDialog from "./EditDiagramDialog";
 
@@ -181,7 +181,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const diagramVersionTOs: Array<DiagramVersionTO> = useSelector((state: RootState) => state.versions.versions);
+    const diagramVersionTOs = useSelector((state: RootState) => state.versions.versions);
 
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
 
@@ -206,7 +206,8 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     }, [diagramVersionTOs, props]);
 
     useEffect(() => {
-        // This block checks if th versions of another diagram are being fetched at the moment and if the loading animation has to be displayed
+        // This block checks if th versions of another diagram are being fetched at the moment and
+        // if the loading animation has to be displayed
         if (diagramVersionTOs) {
             diagramVersionTOs.sort(compare);
             setCurrentId(diagramVersionTOs[0] ? diagramVersionTOs[0].diagramId : "");
@@ -246,6 +247,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             setLoading(true);
             dispatch(getAllVersions(props.diagramId));
         } catch (err) {
+            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [dispatch, props]);
@@ -320,7 +322,8 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             label: "Delete Diagram",
             type: "button",
             onClick: () => {
-                if (confirm(`Are you sure you want to delete '${props.diagramTitle}'?`)) {
+                // eslint-disable-next-line no-alert
+                if (window.confirm(`Are you sure you want to delete '${props.diagramTitle}'?`)) {
                     removeDiagram();
                 }
             }
@@ -329,7 +332,10 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
     return (
         <>
-            <div className={classes.listWithVersions} onClick={() => openModeler(props.repoId, props.diagramId)}>
+            { /* eslint-disable-next-line */ }
+            <div
+                className={classes.listWithVersions}
+                onClick={() => openModeler(props.repoId, props.diagramId)}>
                 <div className={classes.listItemWithVersions}>
                     <div className={classes.header}>
                         <div className={classes.title}>
@@ -338,14 +344,20 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                         <div className={classes.updatedDate}>
                             {`modified on ${reformatDate(props.updatedDate)}`}
                         </div>
-                        <IconButton ref={ref} className={classes.more} onClick={event => openSettings(event)}>
+                        <IconButton
+                            ref={ref}
+                            className={classes.more}
+                            onClick={event => openSettings(event)}>
                             <MoreVert />
                         </IconButton>
                     </div>
 
                     {!open
                     && (
-                        <div className={classes.versionsButton} onClick={event => openVersions(event)}>
+                        // eslint-disable-next-line
+                        <div
+                            className={classes.versionsButton}
+                            onClick={event => openVersions(event)}>
                             <KeyboardArrowDown />
                         </div>
                     )}
@@ -380,7 +392,11 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                                 <TableRow key="loading" hover>
                                     <TableCell colSpan={3} align="center">
                                         <>
-                                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                            {loading ? (
+                                                <CircularProgress
+                                                    color="inherit"
+                                                    size={20} />
+                                            ) : null}
                                         </>
                                     </TableCell>
                                 </TableRow>
@@ -389,7 +405,11 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                                 <TableRow
                                     key={singleVersion.id}
                                     hover
-                                    onClick={() => openModeler(singleVersion.repositoryId, singleVersion.diagramId, singleVersion.id)}>
+                                    onClick={() => openModeler(
+                                        singleVersion.repositoryId,
+                                        singleVersion.diagramId,
+                                        singleVersion.id
+                                    )}>
                                     <TableCell
                                         component="th"
                                         scope="row">
@@ -404,7 +424,10 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
                         </TableBody>
                     </Table>
-                    <div className={classes.versionsButtonClose} onClick={(event => closeVersions(event))}>
+                    { /* eslint-disable-next-line */}
+                    <div
+                        className={classes.versionsButtonClose}
+                        onClick={(event => closeVersions(event))}>
                         <KeyboardArrowUp />
                     </div>
                 </Collapse>
@@ -437,6 +460,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                                                 if (option.onClick) {
                                                     option.onClick();
                                                 } else {
+                                                    // eslint-disable-next-line no-console
                                                     console.log("Some error when clicking");
                                                 }
                                                 setSettingsOpen(false);

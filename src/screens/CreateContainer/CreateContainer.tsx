@@ -64,6 +64,7 @@ const RepoContainer: React.FC = observer(() => {
             id: "import",
             label: "Import from Cawemo",
             type: "button",
+            // eslint-disable-next-line no-console
             onClick: () => console.log("Import")
         }
     ];

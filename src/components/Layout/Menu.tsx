@@ -1,8 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
+import logo from "../../img/logo-free.png";
 import MenuBar from "../Menu/MenuBar";
 import AppMenu from "./Menu/AppMenu";
-import logo from "../../img/logo-free.png";
 
 const useStyles = makeStyles(() => ({
     icon: {
@@ -17,7 +17,10 @@ const Menu: React.FC = () => {
     return (
         <MenuBar>
             <AppMenu />
-            <img className={classes.icon} src={logo} />
+            <img
+                alt="Logo"
+                className={classes.icon}
+                src={logo} />
         </MenuBar>
 
     );

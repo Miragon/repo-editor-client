@@ -1,17 +1,17 @@
+import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import MenuItem from "@material-ui/core/MenuItem";
+import "react-toastify/dist/ReactToastify.css";
+import { DiagramVersionUploadTOSaveTypeEnum, RepositoryTO } from "../../api/models";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import { DiagramTO, DiagramVersionUploadTOSaveTypeEnum, RepositoryTO } from "../../api/models";
 import * as diagramAction from "../../store/actions/diagramAction";
-import { UNHANDLEDERROR } from "../../store/constants";
 import * as versionAction from "../../store/actions/versionAction";
+import { UNHANDLEDERROR } from "../../store/constants";
 import { RootState } from "../../store/reducers/rootReducer";
-import "react-toastify/dist/ReactToastify.css";
 
 const useStyles = makeStyles(() => ({
     input: {
@@ -38,12 +38,16 @@ const UploadDiagramDialog: React.FC<Props> = props => {
     const [repository, setRepository] = useState<string>(props.repo ? props.repo.id : "");
     const [file, setFile] = useState<string>("");
 
-    const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
-    const uploadedDiagram: DiagramTO = useSelector((state: RootState) => state.uploadedDiagram.uploadedDiagram);
+    const allRepos = useSelector((state: RootState) => state.repos.repos);
+    const uploadedDiagram = useSelector(
+        (state: RootState) => state.uploadedDiagram.uploadedDiagram
+    );
 
     useEffect(() => {
         if (uploadedDiagram) {
-            dispatch(versionAction.createOrUpdateVersion(uploadedDiagram.id, file, DiagramVersionUploadTOSaveTypeEnum.RELEASE));
+            dispatch(versionAction.createOrUpdateVersion(
+                uploadedDiagram.id, file, DiagramVersionUploadTOSaveTypeEnum.RELEASE
+            ));
         }
     }, [dispatch, uploadedDiagram, file]);
 
@@ -64,9 +68,9 @@ const UploadDiagramDialog: React.FC<Props> = props => {
         e.preventDefault();
         const { target: { files } } = e;
         if (files != null && files.length > 0) {
-            const file = files[0];
-            const fileExtension = file.name.substring(file.name.lastIndexOf("."), file.name.length);
-            if (fileExtension != ".bpmn") {
+            const f = files[0];
+            const fileExtension = f.name.substring(f.name.lastIndexOf("."), f.name.length);
+            if (fileExtension !== ".bpmn") {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "File must be of type .bpmn" });
             }
             const reader = new FileReader();
@@ -75,7 +79,7 @@ const UploadDiagramDialog: React.FC<Props> = props => {
                     setFile(event.target?.result);
                 }
             });
-            reader.readAsText(file);
+            reader.readAsText(f);
         }
     }, [dispatch]);
 

@@ -28,7 +28,9 @@ const AddUserSearchBar: React.FC<Props> = props => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const searchedUsers: Array<UserInfoTO> = useSelector((state: RootState) => state.searchedUsers.searchedUsers);
+    const searchedUsers: Array<UserInfoTO> = useSelector(
+        (state: RootState) => state.searchedUsers.searchedUsers
+    );
     const results: number = useSelector((state: RootState) => state.resultsCount.resultsCount);
 
     const [userName, setUserName] = useState("");
@@ -49,7 +51,7 @@ const AddUserSearchBar: React.FC<Props> = props => {
         if (searchedUsers.length > 0) {
             setLoading(false);
         }
-        if (results == 0) {
+        if (results === 0) {
             setLoading(false);
         }
     }, [searchedUsers, results]);
@@ -62,7 +64,7 @@ const AddUserSearchBar: React.FC<Props> = props => {
 
     const onChangeWithTimer = ((input: string) => {
         setUserName(input);
-        if (input != "") {
+        if (input !== "") {
             if (timeout) {
                 clearTimeout(timeout);
             }
@@ -78,20 +80,19 @@ const AddUserSearchBar: React.FC<Props> = props => {
     // #TODO: Add the UserId prop to AssignmentUpdate in Backend
 
     const getUserByName = useCallback((username: string) => {
-        console.log(`passed Variable: ${username}`);
-        const selectedUser = searchedUsers.find(user => user.username.toLowerCase() === username.toLowerCase());
-        console.log(`Matching ID: ${selectedUser?.id}`);
-        return selectedUser;
+        return searchedUsers.find(user => user.username.toLowerCase() === username.toLowerCase());
     }, [searchedUsers]);
 
     const addUser = useCallback(() => {
         try {
             const user = getUserByName(userName);
             if (user) {
-                dispatch(assignmentAction.createOrUpdateUserAssignment(props.repoId, user?.id, user?.username));
+                dispatch(assignmentAction
+                    .createOrUpdateUserAssignment(props.repoId, user?.id, user?.username));
                 setUserName("");
             }
         } catch (err) {
+            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [dispatch, userName, props, getUserByName]);
