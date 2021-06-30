@@ -1,4 +1,3 @@
-import { Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +11,7 @@ const useStyles = makeStyles(() => ({
     container: {
         display: "flex",
         flexDirection: "column",
-        flexWrap: "wrap",
+        flexWrap: "wrap"
     },
     unstyledButton: {
         all: "unset"
@@ -52,18 +51,14 @@ const DiagramDetails: React.FC = (() => {
         <>
             <div className={classes.container}>
                 {activeDiagrams?.map(diagram => (
-                    <Card
-                        key={diagram.id}>
-
-                        <DiagramListItem
-                            diagramTitle={diagram.name}
-                            image={diagram.svgPreview}
-                            updatedDate={diagram.updatedDate}
-                            createdDate={diagram.createdDate}
-                            description={diagram.description}
-                            repoId={diagram.repositoryId}
-                            diagramId={diagram.id} />
-                    </Card>
+                    <DiagramListItem
+                        diagramTitle={diagram.name}
+                        image={diagram.svgPreview}
+                        updatedDate={diagram.updatedDate}
+                        createdDate={diagram.createdDate}
+                        description={diagram.description}
+                        repoId={diagram.repositoryId}
+                        diagramId={diagram.id} />
                 ))}
             </div>
         </>

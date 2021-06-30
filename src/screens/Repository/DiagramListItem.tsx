@@ -14,6 +14,7 @@ import {
     TableRow
 } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { Theme } from "@material-ui/core/styles";
 import { KeyboardArrowDown, KeyboardArrowUp, MoreVert } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 import clsx from "clsx";
@@ -25,33 +26,29 @@ import { deleteDiagram, getAllVersions } from "../../store/actions";
 
 import { GET_VERSIONS } from "../../store/constants";
 import { RootState } from "../../store/reducers/rootReducer";
-import theme from "../../theme";
 import CreateVersionDialog from "./CreateVersionDialog";
 import EditDiagramDialog from "./EditDiagramDialog";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     listWithVersions: {
         display: "flex",
         flexDirection: "column",
         position: "relative",
         transition: "box-shadow .3s",
         borderRadius: "4px",
-        marginTop: "10px",
+        marginTop: "1rem",
         border: "1px solid lightgrey",
         width: "100%",
         "&:hover": {
             boxShadow: theme.shadows[4]
-        },
+        }
     },
     listItemWithVersions: {
         transition: "box-shadow .3s",
         cursor: "pointer",
         borderRadius: "4px",
         width: "100%",
-        height: "200px",
-        "&:hover": {
-            boxShadow: theme.shadows[4]
-        },
+        height: "200px"
     },
     listItem: {
         paddingTop: "10px",
@@ -61,10 +58,7 @@ const useStyles = makeStyles(() => ({
         borderRadius: "4px",
         border: "1px solid lightgrey",
         width: "100%",
-        height: "200px",
-        "&:hover": {
-            boxShadow: theme.shadows[4]
-        },
+        height: "200px"
     },
     header: {
         position: "absolute",
@@ -72,8 +66,8 @@ const useStyles = makeStyles(() => ({
         justifyContent: "space-between",
         flexDirection: "row",
         flexWrap: "nowrap",
-        left: "220px",
-        width: "calc(100% - 220px)",
+        left: "420px",
+        width: "calc(100% - 420px)",
         padding: "8px",
         color: "black",
     },
@@ -84,6 +78,7 @@ const useStyles = makeStyles(() => ({
         whiteSpace: "nowrap",
     },
     updatedDate: {
+        marginTop: "8px",
         marginRight: "10px",
         whiteSpace: "nowrap",
         fontWeight: "lighter",
@@ -97,7 +92,7 @@ const useStyles = makeStyles(() => ({
     },
     description: {
         position: "absolute",
-        left: "220px",
+        left: "420px",
         top: "30px",
         padding: "8px",
         color: "black"
@@ -125,12 +120,12 @@ const useStyles = makeStyles(() => ({
     versionsButton: {
         position: "absolute",
         bottom: "0px",
-        left: "200px",
+        left: "400px",
         padding: "0px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        width: "calc(100% - 200px)",
+        width: "calc(100% - 400px)",
         border: "none",
         transition: "background-color .3s",
         backgroundColor: "transparent",
@@ -141,7 +136,7 @@ const useStyles = makeStyles(() => ({
     image: {
         backgroundColor: "#EEE",
         height: "100%",
-        width: "200px",
+        width: "400px",
         border: "1px solid #ccc",
         borderBottomLeftRadius: "4px",
         borderTopLeftRadius: "4px",
@@ -334,7 +329,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
     return (
         <>
-            { /* eslint-disable-next-line */ }
+            { /* eslint-disable-next-line */}
             <div
                 className={classes.listWithVersions}
                 onClick={() => openModeler(props.repoId, props.diagramId)}>
