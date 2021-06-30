@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/styles";
 import { observer } from "mobx-react";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DiagramTO, RepositoryTO } from "../../api/models";
 import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
 import * as diagramAction from "../../store/actions/diagramAction";
 import { RootState } from "../../store/reducers/rootReducer";
@@ -32,8 +33,10 @@ const RecentDiagrams: React.FC = observer(() => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const recentDiagrams = useSelector((state: RootState) => state.recentDiagrams.recentDiagrams);
-    const repos = useSelector((state: RootState) => state.repos.repos);
+    const recentDiagrams: Array<DiagramTO> = useSelector(
+        (state: RootState) => state.recentDiagrams.recentDiagrams
+    );
+    const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
     const syncStatus = useSelector((state: RootState) => state.dataSynced.dataSynced);
 
     const fetchRecent = useCallback(() => {
@@ -72,10 +75,7 @@ const RecentDiagrams: React.FC = observer(() => {
                             <DiagramCard
                                 diagramRepo={getRepoName(diagram.repositoryId)}
                                 diagramTitle={diagram.name}
-                                image={diagram.svgPreview}
-                                updatedDate={diagram.updatedDate}
-                                description={diagram.description}
-                                repositoryId={diagram.repositoryId} />
+                                image={diagram.svgPreview} />
                         </a>
                     ))}
                     {recentDiagrams?.length === 0 && (

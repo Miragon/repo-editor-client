@@ -181,7 +181,9 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const diagramVersionTOs = useSelector((state: RootState) => state.versions.versions);
+    const diagramVersionTOs: Array<DiagramVersionTO> = useSelector(
+        (state: RootState) => state.versions.versions
+    );
 
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
 

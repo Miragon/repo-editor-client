@@ -4,7 +4,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { makeStyles } from "@material-ui/styles";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DiagramTO } from "../../api/models";
+import { DiagramTO, RepositoryTO } from "../../api/models";
 import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
 import * as diagramAction from "../../store/actions/diagramAction";
 import { RootState } from "../../store/reducers/rootReducer";
@@ -49,10 +49,10 @@ const DiagramSearchBar: React.FC = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const searchedDiagrams = useSelector(
+    const searchedDiagrams: Array<DiagramTO> = useSelector(
         (state: RootState) => state.searchedDiagrams.searchedDiagrams
     );
-    const repos = useSelector((state: RootState) => state.repos.repos);
+    const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
 
     const [diagram, setDiagram] = useState("");
     const [open, setOpen] = useState(false);
@@ -166,10 +166,7 @@ const DiagramSearchBar: React.FC = () => {
                                 <DiagramCard
                                     diagramRepo={getRepoName(searchedDiagram.repositoryId)}
                                     diagramTitle={searchedDiagram.name}
-                                    image={searchedDiagram.svgPreview}
-                                    updatedDate={searchedDiagram.updatedDate}
-                                    description={searchedDiagram.description}
-                                    repositoryId={searchedDiagram.repositoryId} />
+                                    image={searchedDiagram.svgPreview} />
                             </a>
                         ))}
                         {!loading && searchedDiagrams?.length === 0 && (

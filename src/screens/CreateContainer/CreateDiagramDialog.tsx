@@ -2,7 +2,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import { DiagramVersionUploadTOSaveTypeEnum, RepositoryTO } from "../../api/models";
+import { DiagramTO, DiagramVersionUploadTOSaveTypeEnum, RepositoryTO } from "../../api/models";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
@@ -26,8 +26,12 @@ const CreateDiagramDialog: React.FC<Props> = props => {
     const [description, setDescription] = useState("");
     const [repository, setRepository] = useState<string>(props.repo ? props.repo.id : "");
 
-    const allRepos = useSelector((state: RootState) => state.repos.repos);
-    const createdDiagram = useSelector((state: RootState) => state.createdDiagram.createdDiagram);
+    const allRepos: Array<RepositoryTO> = useSelector(
+        (state: RootState) => state.repos.repos
+    );
+    const createdDiagram: DiagramTO = useSelector(
+        (state: RootState) => state.createdDiagram.createdDiagram
+    );
 
     const onCreate = useCallback(async () => {
         try {

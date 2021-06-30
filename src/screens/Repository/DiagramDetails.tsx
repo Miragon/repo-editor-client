@@ -2,6 +2,7 @@ import { Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DiagramTO } from "../../api/models";
 import { fetchDiagramsFromRepo } from "../../store/actions";
 import { SYNC_STATUS } from "../../store/constants";
 import { RootState } from "../../store/reducers/rootReducer";
@@ -23,7 +24,9 @@ const DiagramDetails: React.FC = (() => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const activeDiagrams = useSelector((state: RootState) => state.activeDiagrams.activeDiagrams);
+    const activeDiagrams: Array<DiagramTO> = useSelector(
+        (state: RootState) => state.activeDiagrams.activeDiagrams
+    );
     const activeRepo = useSelector((state: RootState) => state.activeRepo.activeRepo);
     const synced = useSelector((state: RootState) => state.dataSynced.dataSynced);
 

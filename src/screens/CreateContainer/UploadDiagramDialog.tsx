@@ -38,7 +38,9 @@ const UploadDiagramDialog: React.FC<Props> = props => {
     const [repository, setRepository] = useState<string>(props.repo ? props.repo.id : "");
     const [file, setFile] = useState<string>("");
 
-    const allRepos = useSelector((state: RootState) => state.repos.repos);
+    const allRepos: Array<RepositoryTO> = useSelector(
+        (state: RootState) => state.repos.repos
+    );
     const uploadedDiagram = useSelector(
         (state: RootState) => state.uploadedDiagram.uploadedDiagram
     );

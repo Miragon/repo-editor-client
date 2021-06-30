@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/styles";
 import { observer } from "mobx-react";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { DiagramTO, RepositoryTO } from "../../api/models";
 import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
 import * as diagramAction from "../../store/actions/diagramAction";
 import { RootState } from "../../store/reducers/rootReducer";
@@ -31,10 +32,10 @@ const FavoriteDiagrams: React.FC = observer(() => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const favoriteDiagrams = useSelector(
+    const favoriteDiagrams: Array<DiagramTO> = useSelector(
         (state: RootState) => state.favoriteDiagrams.favoriteDiagrams
     );
-    const repos = useSelector((state: RootState) => state.repos.repos);
+    const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
 
     const fetchFavorite = useCallback(() => {
         try {
@@ -69,10 +70,7 @@ const FavoriteDiagrams: React.FC = observer(() => {
                             <DiagramCard
                                 diagramRepo={getRepoName(diagram.repositoryId)}
                                 diagramTitle={diagram.name}
-                                image={diagram.svgPreview}
-                                updatedDate={diagram.updatedDate}
-                                description={diagram.description}
-                                repositoryId={diagram.repositoryId} />
+                                image={diagram.svgPreview} />
                         </a>
                     ))}
                     {favoriteDiagrams?.length === 0 && (

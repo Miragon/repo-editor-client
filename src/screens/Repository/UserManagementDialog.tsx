@@ -1,7 +1,7 @@
 import { List, Paper } from "@material-ui/core";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AssignmentTORoleEnumEnum } from "../../api/models";
+import { AssignmentTO, AssignmentTORoleEnumEnum } from "../../api/models";
 import PopupDialog from "../../components/Form/PopupDialog";
 import { getAllAssignedUsers } from "../../store/actions/assignmentAction";
 import { SEARCH_USERS, UNHANDLEDERROR } from "../../store/constants";
@@ -20,7 +20,9 @@ const UserManagementDialog: React.FC<Props> = props => {
 
     const { open, onCancelled } = props;
 
-    const assignmentTOs = useSelector((state: RootState) => state.assignedUsers.assignedUsers);
+    const assignmentTOs: Array<AssignmentTO> = useSelector(
+        (state: RootState) => state.assignedUsers.assignedUsers
+    );
     const syncStatus = useSelector((state: RootState) => state.dataSynced.dataSynced);
     const currentUser = useSelector((state: RootState) => state.currentUserInfo.currentUserInfo);
 
