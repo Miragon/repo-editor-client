@@ -1,8 +1,10 @@
 import { makeStyles } from "@material-ui/core";
+import { Theme } from "@material-ui/core/styles";
+import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
-import { UserControllerApi } from "../../api/api";
+import { UserControllerApi } from "../../api";
 import helpers from "../../constants/Functions";
 import RegisterNewUserScreen from "../../screens/RegisterNewUserScreen";
 import { CURRENT_USER_INFO, SUCCESS, UNHANDLEDERROR } from "../../store/constants";
@@ -11,11 +13,15 @@ import Menu from "./Menu";
 import Router from "./Router";
 import Toast from "./Toast";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     contentWrapper: {
         flexGrow: 1,
         display: "flex",
-        paddingLeft: "65px"
+        paddingLeft: "32px",
+        transition: theme.transitions.create("margin")
+    },
+    contentWrapperShift: {
+        marginLeft: "350px"
     },
     content: {
         display: "flex",
@@ -50,6 +56,7 @@ const useStyles = makeStyles(() => ({
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Layout = (): any => {
+    const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const apiErrorState = useSelector((state: RootState) => state.api.errorMessage);
     const apiErrorRetryMethod = useSelector((state: RootState) => state.api.retryMethod);
@@ -106,8 +113,13 @@ const Layout = (): any => {
 
     return (
         <>
-            <Menu />
-            <div className={classes.contentWrapper}>
+            <Menu
+                open={open}
+                setOpen={setOpen} />
+            <div className={clsx(
+                open && classes.contentWrapperShift,
+                classes.contentWrapper
+            )}>
                 <div className={classes.content}>
                     <Router />
                     <ToastContainer />

@@ -1,12 +1,11 @@
 import { observer } from "mobx-react";
 import React from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
 import CreateContainer from "../CreateContainer/CreateContainer";
+import FavoriteDiagrams from "./FavoriteDiagrams";
 import RecentDiagrams from "./RecentDiagrams";
 import RepoContainer from "./RepoContainer";
-import FavoriteDiagrams from "./FavoriteDiagrams";
-import "react-toastify/dist/ReactToastify.css";
-import DiagramSearchBar from "./DiagramSearchBar";
-import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
 
 const Overview: React.FC = observer(() => {
     return (
@@ -16,9 +15,6 @@ const Overview: React.FC = observer(() => {
             </ErrorBoundary>
             <ErrorBoundary>
                 <RepoContainer />
-            </ErrorBoundary>
-            <ErrorBoundary>
-                <DiagramSearchBar />
             </ErrorBoundary>
             <ErrorBoundary>
                 <RecentDiagrams />

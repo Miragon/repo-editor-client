@@ -23,6 +23,8 @@ const CreateRepoDialog: React.FC<Props> = props => {
     const onCreate = useCallback(() => {
         try {
             dispatch(repositoryAction.createRepository(title, description));
+            setTitle("");
+            setDescription("");
             onCancelled();
         } catch (err) {
             // eslint-disable-next-line no-console

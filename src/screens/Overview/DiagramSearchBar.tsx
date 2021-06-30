@@ -16,7 +16,8 @@ const useStyles = makeStyles(() => ({
         fontSize: "20px"
     },
     container: {
-        marginTop: "15px"
+        flexGrow: 1,
+        marginRight: "6rem"
     },
     resultsContainer: {
         marginTop: "15px",
@@ -118,6 +119,7 @@ const DiagramSearchBar: React.FC = () => {
             <div className={classes.container}>
                 <ErrorBoundary>
                     <Autocomplete
+                        size="small"
                         id="DiagramSearchBar"
                         freeSolo
                         style={{ width: "100%" }}
@@ -169,7 +171,7 @@ const DiagramSearchBar: React.FC = () => {
                                     image={searchedDiagram.svgPreview} />
                             </a>
                         ))}
-                        {!loading && searchedDiagrams?.length === 0 && (
+                        {!loading && searchedDiagrams?.length === 0 && diagram.length > 0 && (
                             <span>No Results</span>
                         )}
                     </div>

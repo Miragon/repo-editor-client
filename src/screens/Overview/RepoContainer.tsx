@@ -13,7 +13,8 @@ import { ACTIVE_REPO } from "../../store/constants";
 
 const useStyles = makeStyles(() => ({
     header: {
-        display: "flex"
+        display: "flex",
+        marginTop: "2rem"
     },
     headerText: {
         color: "black",

@@ -6,14 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/Menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Menu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu/DrawerApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu/DrawerApp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Menu/MenuBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/MenuBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/CreateContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/CreateContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/CreateRepoDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/CreateRepoDialog.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Overview/DiagramSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/DiagramSearchBar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Overview/FavoriteDiagrams.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/FavoriteDiagrams.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Overview/Overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/Overview.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Overview/RecentDiagrams.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/RecentDiagrams.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,7 +255,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625054604136</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="fix(eslint): Fix compilation problems">
+      <created>1625054871838</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1625054871838</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,6 +310,7 @@
     <MESSAGE value="fix(development): Use cross-env for passing environment variables" />
     <MESSAGE value="fix(eslint): Update ESLint config and fix most errors" />
     <MESSAGE value="fix(eslint): Fix or suppress the remaining errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(eslint): Fix or suppress the remaining errors" />
+    <MESSAGE value="fix(eslint): Fix compilation problems" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(eslint): Fix compilation problems" />
   </component>
 </project>

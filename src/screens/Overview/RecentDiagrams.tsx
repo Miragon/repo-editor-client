@@ -10,7 +10,7 @@ import DiagramCard from "./Holder/DiagramCard";
 
 const useStyles = makeStyles(() => ({
     diagramContainer: {
-        paddingTop: "15px",
+        marginTop: "1rem",
         "&>h1": {
             color: "black",
             fontSize: "20px",
