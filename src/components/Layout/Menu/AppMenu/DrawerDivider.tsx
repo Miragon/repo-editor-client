@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import React from "react";
 
 const useStyles = makeStyles(() => ({
@@ -13,7 +13,7 @@ const DrawerDivider: React.FC = () => {
     const classes = useStyles();
 
     return (
-        <div className={classes.divider} />
+        <div className={classes.divider}/>
     );
 };
 

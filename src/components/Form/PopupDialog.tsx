@@ -1,4 +1,4 @@
-import { fade, makeStyles, Theme } from "@material-ui/core";
+import {fade, makeStyles, Theme} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -6,8 +6,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
-import React, { ReactNode } from "react";
-import { Toast } from "./Toast";
+import React, {ReactNode} from "react";
+import {Toast} from "./Toast";
 
 interface Props {
     open: boolean;
@@ -98,7 +98,7 @@ const PopupDialog: React.FC<Props> = props => {
     const classes = useStyles(props);
     return (
         <Dialog
-            BackdropProps={{ className: clsx(classes.backdrop, props.backdropClassName) }}
+            BackdropProps={{className: clsx(classes.backdrop, props.backdropClassName)}}
             PaperProps={{
                 className: clsx(classes.paper, props.paperClassName),
                 elevation: 16
@@ -117,7 +117,7 @@ const PopupDialog: React.FC<Props> = props => {
                 <Toast
                     message={props.error}
                     onClose={props.onCloseError}
-                    className={clsx(classes.error, props.errorClassName)} />
+                    className={clsx(classes.error, props.errorClassName)}/>
 
             </DialogTitle>
 

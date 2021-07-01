@@ -1,8 +1,4 @@
-import {
-    createOrUpdateUserAssignment,
-    deleteAssignment,
-    getAllAssignedUsers
-} from "./assignmentAction";
+import { createOrUpdateUserAssignment, deleteAssignment, getAllAssignedUsers } from "./assignmentAction";
 import * as diagramAction from "./diagramAction";
 import {
     deleteDiagram,
@@ -10,6 +6,7 @@ import {
     fetchFavoriteDiagrams,
     fetchRecentDiagrams,
     searchDiagram,
+    updateDiagram,
     uploadDiagram
 } from "./diagramAction";
 import {
@@ -40,7 +37,8 @@ export enum ActionType {
     DELETE_ASSIGNMENT,
     UPDATE_REPOSITORY,
     DELETE_REPOSITORY,
-    SEARCH_DIAGRAM
+    SEARCH_DIAGRAM,
+    UPDATE_DIAGRAM
 }
 
 // eslint-disable-next-line
@@ -99,5 +97,8 @@ export const actionMapper = (actionType: ActionType, payload: Array<any>) => {
 
         case ActionType.SEARCH_DIAGRAM:
             return searchDiagram(payload[0]);
+
+        case ActionType.UPDATE_DIAGRAM:
+            return updateDiagram(payload[0], payload[1], payload[2]);
     }
 };

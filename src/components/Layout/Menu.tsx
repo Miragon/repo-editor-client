@@ -1,6 +1,6 @@
-import { IconButton } from "@material-ui/core";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import { Menu as MenuIcon } from "@material-ui/icons";
+import {IconButton} from "@material-ui/core";
+import {makeStyles, Theme} from "@material-ui/core/styles";
+import {Menu as MenuIcon} from "@material-ui/icons";
 import clsx from "clsx";
 import React from "react";
 import logo from "../../img/logo-free.png";
@@ -39,15 +39,15 @@ const Menu: React.FC<Props> = props => {
                     disableRipple
                     className={classes.menuIcon}
                     onClick={() => props.setOpen(!props.open)}>
-                    <MenuIcon />
+                    <MenuIcon/>
                 </IconButton>
                 <img
                     alt="Logo"
                     className={classes.icon}
-                    src={logo} />
+                    src={logo}/>
             </MenuBar>
 
-            <AppMenu open={props.open} />
+            <AppMenu open={props.open}/>
         </>
     );
 };

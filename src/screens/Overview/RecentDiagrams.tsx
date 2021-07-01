@@ -75,7 +75,8 @@ const RecentDiagrams: React.FC = observer(() => {
                             <DiagramCard
                                 diagramRepo={getRepoName(diagram.repositoryId)}
                                 diagramTitle={diagram.name}
-                                image={diagram.svgPreview} />
+                                image={diagram.svgPreview}
+                                fileType={diagram.fileType}/>
                         </a>
                     ))}
                     {recentDiagrams?.length === 0 && (

@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 import React from "react";
 
 const useStyles = makeStyles(() => ({
@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
 const SettingsSpacer: React.FC = () => {
     const classes = useStyles();
     return (
-        <div className={classes.root} />
+        <div className={classes.root}/>
     );
 };
 

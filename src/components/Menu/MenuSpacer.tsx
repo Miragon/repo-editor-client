@@ -1,6 +1,6 @@
-import { makeStyles } from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 import React from "react";
-import { createTestAttributes } from "../../util/TestUtils";
+import {createTestAttributes} from "../../util/TestUtils";
 
 interface Props {
     growPriority?: number;
@@ -20,7 +20,7 @@ const MenuSpacer: React.FC<Props> = props => {
         <div
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...createTestAttributes(props.testId)}
-            className={classes.spacer} />
+            className={classes.spacer}/>
     );
 };
 

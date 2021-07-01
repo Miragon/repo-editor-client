@@ -1,14 +1,14 @@
-import { makeStyles } from "@material-ui/core";
-import { Theme } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core";
+import {Theme} from "@material-ui/core/styles";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
-import { UserControllerApi } from "../../api";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {toast, ToastContainer} from "react-toastify";
+import {UserControllerApi} from "../../api";
 import helpers from "../../constants/Functions";
 import RegisterNewUserScreen from "../../screens/RegisterNewUserScreen";
-import { CURRENT_USER_INFO, SUCCESS, UNHANDLEDERROR } from "../../store/constants";
-import { RootState } from "../../store/reducers/rootReducer";
+import {CURRENT_USER_INFO, SUCCESS, UNHANDLEDERROR} from "../../store/constants";
+import {RootState} from "../../store/reducers/rootReducer";
 import Menu from "./Menu";
 import Router from "./Router";
 import Toast from "./Toast";
@@ -71,16 +71,16 @@ const Layout = (): any => {
             toast.error(<Toast
                 errorMessage={apiErrorState}
                 retryMethod={apiErrorRetryMethod}
-                retryPayload={apiErrorRetryPayload} />, {
+                retryPayload={apiErrorRetryPayload}/>, {
                 autoClose: 8000,
                 pauseOnHover: true,
                 role: "alert"
             });
-            dispatch({ type: UNHANDLEDERROR, errorMessage: "" });
+            dispatch({type: UNHANDLEDERROR, errorMessage: ""});
         }
         if (apiSuccessState) {
-            toast.success(apiSuccessState, { autoClose: 4000, pauseOnHover: true });
-            dispatch({ type: SUCCESS, successMessage: "" });
+            toast.success(apiSuccessState, {autoClose: 4000, pauseOnHover: true});
+            dispatch({type: SUCCESS, successMessage: ""});
         }
     }, [apiErrorState, apiSuccessState, apiErrorRetryMethod, apiErrorRetryPayload, dispatch]);
 
@@ -95,7 +95,7 @@ const Layout = (): any => {
             .then(response => {
                 if (response.data) {
                     setUserDoesExist(true);
-                    dispatch({ type: CURRENT_USER_INFO, currentUserInfo: response.data });
+                    dispatch({type: CURRENT_USER_INFO, currentUserInfo: response.data});
                 } else {
                     setUserDoesExist(false);
                 }
@@ -108,21 +108,21 @@ const Layout = (): any => {
     }
 
     if (!userDoesExist) {
-        return <RegisterNewUserScreen />;
+        return <RegisterNewUserScreen/>;
     }
 
     return (
         <>
             <Menu
                 open={open}
-                setOpen={setOpen} />
+                setOpen={setOpen}/>
             <div className={clsx(
                 open && classes.contentWrapperShift,
                 classes.contentWrapper
             )}>
                 <div className={classes.content}>
-                    <Router />
-                    <ToastContainer />
+                    <Router/>
+                    <ToastContainer/>
                 </div>
             </div>
         </>

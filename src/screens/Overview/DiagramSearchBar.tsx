@@ -168,7 +168,8 @@ const DiagramSearchBar: React.FC = () => {
                                 <DiagramCard
                                     diagramRepo={getRepoName(searchedDiagram.repositoryId)}
                                     diagramTitle={searchedDiagram.name}
-                                    image={searchedDiagram.svgPreview} />
+                                    image={searchedDiagram.svgPreview}
+                                    fileType={searchedDiagram.fileType} />
                             </a>
                         ))}
                         {!loading && searchedDiagrams?.length === 0 && diagram.length > 0 && (

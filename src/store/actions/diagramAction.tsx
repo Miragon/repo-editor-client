@@ -1,15 +1,15 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import { NewDiagramTO } from "../../api/models";
+import {DiagramUpdateTO, NewDiagramTO} from "../../api/models";
 import helpers from "../../constants/Functions";
 import {
     ACTIVE_DIAGRAMS,
     CREATED_DIAGRAM,
-    DEFAULT_SVG,
+    DEFAULT_BPMN_SVG, DEFAULT_DMN_SVG,
     DIAGRAM_UPLOAD,
     GET_FAVORITE,
     GET_RECENT,
-    SEARCH_DIAGRAMS,
+    SEARCH_DIAGRAMS, SUCCESS,
     SYNC_STATUS,
     UNHANDLEDERROR
 } from "../constants";
@@ -65,7 +65,7 @@ export const createDiagram = (
                 name: name,
                 description: description,
                 fileType: fileType || "BPMN",
-                svgPreview: DEFAULT_SVG
+                svgPreview: fileType === "dmn" ? DEFAULT_DMN_SVG : DEFAULT_BPMN_SVG
             };
             const response = await diagramController.createDiagram(newDiagramTO, repoId, config);
             if (Math.floor(response.status / 100) === 2) {
@@ -78,6 +78,28 @@ export const createDiagram = (
             dispatch(handleError(error, ActionType.CREATE_DIAGRAM, [
                 repoId, name, description, fileType
             ]));
+        }
+    };
+};
+
+export const updateDiagram = (name: string, description: any, diagramId: string) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        const diagramController = new api.DiagramControllerApi();
+        try {
+            const config = helpers.getClientConfig();
+            // eslint-disable-next-line object-shorthand
+            const diagramUpdateTO: DiagramUpdateTO = {
+                name: name,
+                description: description
+            }
+            const response = await diagramController.updateDiagram(diagramUpdateTO, diagramId, config);
+            if (Math.floor(response.status / 100) === 2) {
+                dispatch({ type: SUCCESS, successMessage: "Diagram updated" });
+            } else {
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
+            }
+        } catch (error) {
+            dispatch(handleError(error, ActionType.FETCH_DIAGRAMS_FROM_REPO, [name, description]));
         }
     };
 };

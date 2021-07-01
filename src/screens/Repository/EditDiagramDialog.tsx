@@ -38,7 +38,7 @@ const EditDiagramDialog: React.FC<Props> = props => {
 
     const applyChanges = useCallback(async () => {
         try {
-            dispatch(diagramAction.createDiagram(props.repoId, title, description, "BPMN"));
+            dispatch(diagramAction.updateDiagram(title, description, props.diagramId));
             props.onCancelled();
         } catch (err) {
             // eslint-disable-next-line no-console

@@ -1,9 +1,9 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import {makeStyles, Theme} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import clsx from "clsx";
 import React from "react";
-import { createTestAttributes } from "../../util/TestUtils";
+import {createTestAttributes} from "../../util/TestUtils";
 
 export interface Props {
     icon?: React.ElementType;
@@ -61,7 +61,7 @@ const MenuButton: React.FC<Props> = props => {
             disableElevation
             variant="outlined"
             onClick={props.onClick}
-            classes={{ label: classes.label }}
+            classes={{label: classes.label}}
             startIcon={props.icon && React.createElement(props.icon)}
             endIcon={props.iconRight && React.createElement(props.iconRight)}
             className={clsx(
@@ -82,7 +82,7 @@ const MenuButton: React.FC<Props> = props => {
                 arrow
                 placement="top"
                 title={props.tooltip}
-                classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}>
+                classes={{tooltip: classes.tooltip, arrow: classes.arrow}}>
 
                 {button}
 

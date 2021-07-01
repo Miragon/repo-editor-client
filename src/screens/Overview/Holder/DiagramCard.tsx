@@ -1,6 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import React from "react";
+import TableChartIcon from "@material-ui/icons/TableChart";
+import {ReactComponent as BpmnIcon} from "../../../img/bpmnIcon_gears.svg";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -13,15 +15,21 @@ const useStyles = makeStyles(theme => ({
         marginBottom: "0.5rem",
         background: `linear-gradient(to bottom, ${theme.palette.primary.main} 30%, transparent)`,
         borderRadius: "4px",
+        textDecoration: "none",
         "&:hover": {
             boxShadow: theme.shadows[4]
         }
     },
     header: {
-        padding: "8px",
         color: "white",
         display: "flex",
-        flexDirection: "column"
+        justifyContent: "space-between",
+        flexDirection: "row",
+    },
+    text: {
+        padding: "8px",
+        display: "flex",
+        flexDirection: "column",
     },
     title: {
         fontWeight: "bold",
@@ -31,10 +39,20 @@ const useStyles = makeStyles(theme => ({
         overflow: "hidden"
     },
     repository: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
         fontSize: "12px",
         whiteSpace: "nowrap",
         textOverflow: "ellipsis",
         overflow: "hidden"
+    },
+    fileType: {
+        width: "25px",
+        height: "25px",
+        margin: "5px",
+        color: "#FFFFFF",
+        textDecoration: "none"
     },
     image: {
         backgroundColor: "#EEE",
@@ -44,12 +62,14 @@ const useStyles = makeStyles(theme => ({
         borderBottomRightRadius: "4px",
         borderTop: "none"
     }
+
 }));
 
 interface DiagramProps {
     diagramTitle: string;
     image: string | undefined;
     diagramRepo: string;
+    fileType: string;
     className?: string;
 }
 
@@ -61,18 +81,31 @@ const DiagramCard: React.FC<DiagramProps> = (props: DiagramProps) => {
     return (
         <div className={clsx(classes.container, props.className)}>
             <div className={classes.header}>
-                <span className={classes.repository}>
-                    {props.diagramRepo}
-                </span>
-                <span className={classes.title}>
-                    {props.diagramTitle}
-                </span>
+                <div className={classes.text}>
+                    <span className={classes.repository}>
+                        {props.diagramRepo}
+                    </span>
+                    <span className={classes.title}>
+                        {props.diagramTitle}
+                    </span>
+                </div>
+                    
+                <div className={classes.fileType} >
+                    {(props.fileType === "dmn") ?
+                        <TableChartIcon/>
+                        :
+                        <BpmnIcon/>
+
+                    }
+                </div>
+
             </div>
 
             <img
                 alt="Preview"
                 className={classes.image}
                 src={image} />
+
         </div>
     );
 };

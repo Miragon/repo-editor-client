@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { makeStyles } from "@material-ui/styles";
 import {
     ClickAwayListener,
     Collapse,
@@ -13,72 +16,80 @@ import {
     TableHead,
     TableRow
 } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { Theme } from "@material-ui/core/styles";
 import { KeyboardArrowDown, KeyboardArrowUp, MoreVert } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/styles";
-import clsx from "clsx";
-import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DiagramVersionTO } from "../../api/models";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import clsx from "clsx";
+import theme from "../../theme";
 import { DropdownButtonItem } from "../../components/Form/DropdownButton";
-import { deleteDiagram, getAllVersions } from "../../store/actions";
-
-import { GET_VERSIONS } from "../../store/constants";
+import { getAllVersions } from "../../store/actions/versionAction";
+import { DiagramVersionTO } from "../../api/models";
 import { RootState } from "../../store/reducers/rootReducer";
+import { deleteDiagram } from "../../store/actions";
+import { GET_VERSIONS } from "../../store/constants";
 import CreateVersionDialog from "./CreateVersionDialog";
 import EditDiagramDialog from "./EditDiagramDialog";
+import TableChartIcon from "@material-ui/icons/TableChart";
+import {ReactComponent as BpmnIcon} from "../../img/bpmnIcon_gears.svg";
 
-const useStyles = makeStyles((theme: Theme) => ({
-    listWithVersions: {
+const useStyles = makeStyles(() => ({
+    listItemWithVersions: {
         display: "flex",
         flexDirection: "column",
         position: "relative",
         transition: "box-shadow .3s",
         borderRadius: "4px",
-        marginTop: "1rem",
+        marginTop: "10px",
         border: "1px solid lightgrey",
         width: "100%",
         "&:hover": {
             boxShadow: theme.shadows[4]
-        }
-    },
-    listItemWithVersions: {
-        transition: "box-shadow .3s",
-        cursor: "pointer",
-        borderRadius: "4px",
-        width: "100%",
-        height: "200px"
+        },
     },
     listItem: {
-        paddingTop: "10px",
-        position: "relative",
+        display: "flex",
+        flexDirection: "row",
         transition: "box-shadow .3s",
         cursor: "pointer",
         borderRadius: "4px",
         border: "1px solid lightgrey",
         width: "100%",
+        height: "200px",
+        "&:hover": {
+            boxShadow: theme.shadows[4]
+        },
+    },
+    image: {
+        backgroundColor: "#EEE",
+        height: "100%",
+        width: "200px",
+        borderRight: "1px solid #ccc",
+        borderBottomLeftRadius: "4px",
+        borderTopLeftRadius: "4px",
+    },
+    content: {
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
         height: "200px"
     },
     header: {
-        position: "absolute",
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "row",
         flexWrap: "nowrap",
-        left: "420px",
-        width: "calc(100% - 420px)",
         padding: "8px",
-        color: "black",
+        color: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.primary.main,
     },
     title: {
         fontWeight: "bold",
         fontSize: "14px",
+        marginLeft: "15px",
         flexGrow: 1,
         whiteSpace: "nowrap",
     },
     updatedDate: {
-        marginTop: "8px",
         marginRight: "10px",
         whiteSpace: "nowrap",
         fontWeight: "lighter",
@@ -89,13 +100,26 @@ const useStyles = makeStyles((theme: Theme) => ({
         alignSelf: "flex-end",
         height: "25px",
         width: "25px",
+        color: theme.palette.primary.contrastText,
     },
     description: {
-        position: "absolute",
-        left: "420px",
-        top: "30px",
-        padding: "8px",
+        flexGrow: 1,
+        padding: "16px",
         color: "black"
+    },
+    versionsButton: {
+        width: "100%",
+        alignSelf: "flex-end",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        border: "none",
+        borderBottomRightRadius: "4px",
+        transition: "background-color .3s",
+        backgroundColor: "transparent",
+        "&:hover": {
+            backgroundColor: "lightgrey"
+        },
     },
     popupContainer: {
         width: "150px",
@@ -117,30 +141,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             backgroundColor: "rgba(0, 0, 0, 0.1)"
         }
     },
-    versionsButton: {
-        position: "absolute",
-        bottom: "0px",
-        left: "400px",
-        padding: "0px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "calc(100% - 400px)",
-        border: "none",
-        transition: "background-color .3s",
-        backgroundColor: "transparent",
-        "&:hover": {
-            backgroundColor: "lightgrey"
-        },
-    },
-    image: {
-        backgroundColor: "#EEE",
-        height: "100%",
-        width: "400px",
-        border: "1px solid #ccc",
-        borderBottomLeftRadius: "4px",
-        borderTopLeftRadius: "4px",
-    },
+
     menuItemDivider: {
         height: "1px",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -160,6 +161,12 @@ const useStyles = makeStyles((theme: Theme) => ({
             backgroundColor: "lightgrey"
         },
     },
+    fileType: {
+        width: "20px",
+        height: "20px",
+        color: "#FFFFFF",
+        textDecoration: "none"
+    },
 }));
 
 interface Props {
@@ -170,16 +177,13 @@ interface Props {
     description: string;
     repoId: string;
     diagramId: string;
+    fileType: string;
 }
 
 const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-
-    const diagramVersionTOs: Array<DiagramVersionTO> = useSelector(
-        (state: RootState) => state.versions.versions
-    );
-
+    const diagramVersionTOs: Array<DiagramVersionTO> = useSelector((state: RootState) => state.versions.versions);
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
 
     const [open, setOpen] = useState(false);
@@ -203,8 +207,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     }, [diagramVersionTOs, props]);
 
     useEffect(() => {
-        // This block checks if th versions of another diagram are being fetched at the moment and
-        // if the loading animation has to be displayed
+        // This block checks if th versions of another diagram are being fetched at the moment and if the loading animation has to be displayed
         if (diagramVersionTOs) {
             diagramVersionTOs.sort(compare);
             setCurrentId(diagramVersionTOs[0] ? diagramVersionTOs[0].diagramId : "");
@@ -212,12 +215,11 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                 setLoading(false);
             }
         }
-        /**
-         * Runs a check for every DiagramListItem, as soon as the state changes. If the DiagramId
-         * of the version that is currently saved in the state matches the DiagramId of this
-         * DiagramListItem, The Item is expanded and available versions are displayed. If the IDs
-         * don't match, the list is collapsed
-         */
+        /* Runs a check for every DiagramListItem, as soon as the state changes.
+        If the DiagramId of the version that is currently saved in the state matches the DiagramId of this DiagramListItem,
+        The Item is expanded and available versions are displayed.
+        If the IDs don't match, the list is collapsed
+        */
         checkIfVersionsAreOpen();
     }, [diagramVersionTOs, currentId, checkIfVersionsAreOpen]);
 
@@ -244,7 +246,6 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             setLoading(true);
             dispatch(getAllVersions(props.diagramId));
         } catch (err) {
-            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [dispatch, props]);
@@ -255,32 +256,25 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         }
         return "01.01.2000";
     };
-
     const removeDiagram = () => {
         dispatch(deleteDiagram(props.diagramId));
     };
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const openSettings = (event: any) => {
         event.stopPropagation();
         setSettingsOpen(true);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const openVersions = (event: any): void => {
         event.stopPropagation();
         setLoading(true);
         fetchVersions();
         setOpen(true);
     };
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const closeVersions = (event: any): void => {
         event.stopPropagation();
         dispatch({ type: GET_VERSIONS, versions: [] });
         setOpen(false);
     };
-
     const openModeler = (repoId: string, diagramId: string, versionId?: string) => {
         if (versionId) {
             window.open(`/modeler/#/${repoId}/${diagramId}/${versionId}/`, "_blank");
@@ -290,6 +284,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     };
 
     const options: DropdownButtonItem[] = [
+
         {
             id: "CreateVersion",
             label: "Create new Version",
@@ -319,8 +314,8 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             label: "Delete Diagram",
             type: "button",
             onClick: () => {
-                // eslint-disable-next-line no-alert
-                if (window.confirm(`Are you sure you want to delete '${props.diagramTitle}'?`)) {
+                // eslint-disable-next-line no-restricted-globals
+                if (confirm(`Are you sure you want to delete '${props.diagramTitle}'?`)) {
                     removeDiagram();
                 }
             }
@@ -329,42 +324,44 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
     return (
         <>
-            { /* eslint-disable-next-line */}
-            <div
-                className={classes.listWithVersions}
-                onClick={() => openModeler(props.repoId, props.diagramId)}>
-                <div className={classes.listItemWithVersions}>
-                    <div className={classes.header}>
-                        <div className={classes.title}>
-                            {props.diagramTitle}
-                        </div>
-                        <div className={classes.updatedDate}>
-                            {`modified on ${reformatDate(props.updatedDate)}`}
-                        </div>
-                        <IconButton
-                            ref={ref}
-                            className={classes.more}
-                            onClick={event => openSettings(event)}>
-                            <MoreVert />
-                        </IconButton>
-                    </div>
-
-                    {!open
-                    && (
-                        // eslint-disable-next-line
-                        <div
-                            className={classes.versionsButton}
-                            onClick={event => openVersions(event)}>
-                            <KeyboardArrowDown />
-                        </div>
-                    )}
-
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+            <div className={classes.listItemWithVersions} onClick={() => openModeler(props.repoId, props.diagramId)}>
+                <div className={classes.listItem}>
                     <img
                         alt="Preview"
                         className={classes.image}
                         src={image} />
-                    <div className={classes.description}>
-                        {props.description}
+                    <div className={classes.content}>
+
+                        <div className={classes.header}>
+                            <div className={classes.fileType}>
+                                {(props.fileType === "dmn") ?
+                                    <TableChartIcon/>
+                                    :
+                                    <BpmnIcon/>
+                                }
+                            </div>
+                            <div className={classes.title}>
+                                {props.diagramTitle}
+                            </div>
+
+                            <div className={classes.updatedDate}>
+                                {`modified on ${reformatDate(props.updatedDate)}`}
+                            </div>
+                            <IconButton ref={ref} className={classes.more} onClick={event => openSettings(event)}>
+                                <MoreVert />
+                            </IconButton>
+                        </div>
+                        <div className={classes.description}>
+                            {props.description}
+                        </div>
+                        {!open
+                        && (
+                            // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+                            <div className={classes.versionsButton} onClick={event => openVersions(event)}>
+                                <KeyboardArrowDown />
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -389,11 +386,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                                 <TableRow key="loading" hover>
                                     <TableCell colSpan={3} align="center">
                                         <>
-                                            {loading ? (
-                                                <CircularProgress
-                                                    color="inherit"
-                                                    size={20} />
-                                            ) : null}
+                                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
                                         </>
                                     </TableCell>
                                 </TableRow>
@@ -402,11 +395,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                                 <TableRow
                                     key={singleVersion.id}
                                     hover
-                                    onClick={() => openModeler(
-                                        singleVersion.repositoryId,
-                                        singleVersion.diagramId,
-                                        singleVersion.id
-                                    )}>
+                                    onClick={() => openModeler(singleVersion.repositoryId, singleVersion.diagramId, singleVersion.id)}>
                                     <TableCell
                                         component="th"
                                         scope="row">
@@ -421,10 +410,8 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
                         </TableBody>
                     </Table>
-                    { /* eslint-disable-next-line */}
-                    <div
-                        className={classes.versionsButtonClose}
-                        onClick={(event => closeVersions(event))}>
+                    {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+                    <div className={classes.versionsButtonClose} onClick={(event => closeVersions(event))}>
                         <KeyboardArrowUp />
                     </div>
                 </Collapse>
@@ -457,7 +444,6 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                                                 if (option.onClick) {
                                                     option.onClick();
                                                 } else {
-                                                    // eslint-disable-next-line no-console
                                                     console.log("Some error when clicking");
                                                 }
                                                 setSettingsOpen(false);

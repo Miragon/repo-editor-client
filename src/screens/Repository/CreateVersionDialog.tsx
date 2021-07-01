@@ -27,7 +27,9 @@ const CreateVersionDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const { open, onCancelled, diagramId, diagramTitle } = props;
+    const {
+        open, onCancelled, diagramId, diagramTitle
+    } = props;
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [comment, setComment] = useState("");

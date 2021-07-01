@@ -71,7 +71,8 @@ const FavoriteDiagrams: React.FC = observer(() => {
                             <DiagramCard
                                 diagramRepo={getRepoName(diagram.repositoryId)}
                                 diagramTitle={diagram.name}
-                                image={diagram.svgPreview} />
+                                image={diagram.svgPreview}
+                                fileType={diagram.fileType} />
                         </a>
                     ))}
                     {favoriteDiagrams?.length === 0 && (

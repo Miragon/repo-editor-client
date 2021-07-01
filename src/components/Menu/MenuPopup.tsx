@@ -1,4 +1,4 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import {makeStyles, Theme} from "@material-ui/core";
 import Backdrop from "@material-ui/core/Backdrop";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
@@ -6,9 +6,9 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import clsx from "clsx";
-import React, { useState } from "react";
-import { createTestAttributes } from "../../util/TestUtils";
-import MenuButton, { Props as MenuButtonProps } from "./MenuButton";
+import React, {useState} from "react";
+import {createTestAttributes} from "../../util/TestUtils";
+import MenuButton, {Props as MenuButtonProps} from "./MenuButton";
 
 interface Props extends Omit<MenuButtonProps, "onClick" | "className" | "testId"> {
     popup: React.ReactNode;
@@ -64,7 +64,7 @@ const MenuPopup: React.FC<Props> = props => {
             <Backdrop
                 open={!!anchor}
                 onClick={() => setAnchor(undefined)}
-                className={classes.backdrop} />
+                className={classes.backdrop}/>
 
             <MenuButton
                 testId={testIdButton}
@@ -82,11 +82,11 @@ const MenuPopup: React.FC<Props> = props => {
                 className={classes.menu}
                 placement="bottom-end">
 
-                {({ TransitionProps }) => (
+                {({TransitionProps}) => (
                     <Grow
                         // eslint-disable-next-line react/jsx-props-no-spreading
                         {...TransitionProps}
-                        style={{ transformOrigin: "right top" }}>
+                        style={{transformOrigin: "right top"}}>
 
                         <Paper
                             // eslint-disable-next-line react/jsx-props-no-spreading

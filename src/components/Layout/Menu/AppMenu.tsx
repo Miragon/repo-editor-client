@@ -1,6 +1,6 @@
-import { Drawer } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { BarChart, Brush, FormatShapes, Help, Home, Widgets } from "@material-ui/icons";
+import {Drawer} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
+import {FormatShapes, Help, Home, Widgets} from "@material-ui/icons";
 import React from "react";
 import MenuSpacer from "../../Menu/MenuSpacer";
 import DrawerApp from "./AppMenu/DrawerApp";
@@ -58,7 +58,7 @@ const AppMenu: React.FC<Props> = props => {
         <>
 
             <Drawer
-                classes={{ paper: classes.drawerPaper }}
+                classes={{paper: classes.drawerPaper}}
                 variant="persistent"
                 anchor="left"
                 open={props.open}>
@@ -69,25 +69,25 @@ const AppMenu: React.FC<Props> = props => {
                         active
                         title="Modellverwaltung"
                         onClick={() => window.open("/", "_self")}
-                        icon={Home} />
+                        icon={Home}/>
 
                     <DrawerApp
                         title="Formulare"
                         onClick={() => window.open("/formulare", "_self")}
-                        icon={FormatShapes} />
+                        icon={FormatShapes}/>
 
                     <DrawerApp
                         title="Integrationsbausteine"
                         onClick={() => window.open("/bausteine", "_self")}
-                        icon={Widgets} />
+                        icon={Widgets}/>
 
-                    <MenuSpacer />
+                    <MenuSpacer/>
 
                     <DrawerApp
                         dense
                         title="Support kontaktieren"
                         description="lhm.digitalwf@muenchen.de"
-                        icon={Help} />
+                        icon={Help}/>
 
                 </div>
 

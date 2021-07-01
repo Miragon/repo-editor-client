@@ -34,8 +34,9 @@ const CreateDiagramDialog: React.FC<Props> = props => {
     );
 
     const onCreate = useCallback(async () => {
+        setRepository(props.repo?.id)
         try {
-            dispatch(diagramAction.createDiagram(repository, title, description, props.type));
+            dispatch(diagramAction.createDiagram(props.repo?.id ? props.repo.id : repository, title, description, props.type));
             props.onCancelled();
         } catch (err) {
             // eslint-disable-next-line no-console

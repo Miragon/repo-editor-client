@@ -1,8 +1,8 @@
-import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from "@material-ui/core";
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import { ArrowDropDown } from "@material-ui/icons";
+import {Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper} from "@material-ui/core";
+import {makeStyles, Theme} from "@material-ui/core/styles";
+import {ArrowDropDown} from "@material-ui/icons";
 import clsx from "clsx";
-import React, { useRef, useState } from "react";
+import React, {useRef, useState} from "react";
 
 export interface DropdownButtonItem {
     id: string;
@@ -93,7 +93,7 @@ const DropdownButton: React.FC<Props> = props => {
                 disabled={props.disabled}
                 onClick={() => setOpen(true)}
                 variant="contained"
-                endIcon={<ArrowDropDown />}>
+                endIcon={<ArrowDropDown/>}>
                 {props.title}
             </Button>
             <Popper
@@ -102,12 +102,12 @@ const DropdownButton: React.FC<Props> = props => {
                 role={undefined}
                 transition
                 disablePortal
-                style={{ width: ref.current?.offsetWidth }}
+                style={{width: ref.current?.offsetWidth}}
                 className={classes.popupContainer}>
-                {({ TransitionProps }) => (
+                {({TransitionProps}) => (
                     <Grow
                         {...TransitionProps}
-                        style={{ transformOrigin: "top" }}>
+                        style={{transformOrigin: "top"}}>
                         <Paper className={classes.popup}>
                             <ClickAwayListener onClickAway={() => setOpen(false)}>
                                 <MenuList className={classes.list}>

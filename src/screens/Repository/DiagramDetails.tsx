@@ -58,7 +58,8 @@ const DiagramDetails: React.FC = (() => {
                         createdDate={diagram.createdDate}
                         description={diagram.description}
                         repoId={diagram.repositoryId}
-                        diagramId={diagram.id} />
+                        diagramId={diagram.id}
+                        fileType={diagram.fileType} />
                 ))}
             </div>
         </>

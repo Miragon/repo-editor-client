@@ -1,10 +1,10 @@
-import React, { useCallback } from "react";
-import { IconButton, makeStyles } from "@material-ui/core";
-import { Replay } from "@material-ui/icons";
-import { useDispatch } from "react-redux";
+import React, {useCallback} from "react";
+import {IconButton, makeStyles} from "@material-ui/core";
+import {Replay} from "@material-ui/icons";
+import {useDispatch} from "react-redux";
 import * as actions from "../../store/actions/actions";
-import { ActionType } from "../../store/actions/actions";
-import { UNHANDLEDERROR } from "../../store/constants";
+import {ActionType} from "../../store/actions/actions";
+import {UNHANDLEDERROR} from "../../store/constants";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -32,7 +32,7 @@ const Toast: React.FC<Props> = props => {
     const dispatch = useDispatch();
 
     const retry = useCallback(() => {
-        dispatch({ type: UNHANDLEDERROR, errorMessage: "" });
+        dispatch({type: UNHANDLEDERROR, errorMessage: ""});
         dispatch(actions.actionMapper(props.retryMethod, props.retryPayload));
     }, [dispatch, props]);
 
@@ -46,7 +46,7 @@ const Toast: React.FC<Props> = props => {
                 onClick={() => {
                     retry();
                 }}>
-                <Replay />
+                <Replay/>
             </IconButton>
         </div>
     );

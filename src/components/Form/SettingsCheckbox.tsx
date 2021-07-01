@@ -22,8 +22,8 @@ const SettingsCheckbox: React.FC<Props> = props => {
                     disabled={props.disabled}
                     checked={props.checked}
                     onChange={(e, checked) => props.onChanged(checked)}
-                    color="primary" />
-            )} />
+                    color="primary"/>
+            )}/>
     );
 };
 
