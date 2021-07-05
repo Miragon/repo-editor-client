@@ -5,7 +5,6 @@ import React from "react";
 import Theme from "../../theme";
 import Layout from "./Layout";
 
-
 const useStyles = makeStyles(() => ({
     root: {
         minHeight: "100vh",
@@ -14,16 +13,15 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-
 const App: React.FC = () => {
     const classes = useStyles();
 
     return (
         <ThemeProvider theme={Theme}>
-                    <div className={classes.root}>
-                        <CssBaseline/>
-                        <Layout/>
-                    </div>
+            <div className={classes.root}>
+                <CssBaseline/>
+                <Layout/>
+            </div>
         </ThemeProvider>
     );
 };

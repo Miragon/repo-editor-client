@@ -1,20 +1,13 @@
-import React, {useCallback, useEffect, useMemo, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { List, Paper } from "@material-ui/core";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AssignmentTO, AssignmentTORoleEnumEnum } from "../../api/models";
 import PopupDialog from "../../components/Form/PopupDialog";
-import * as assignmentAction from "../../store/actions/assignmentAction";
-import * as userAction from "../../store/actions/userAction";
-import {getAllAssignedUsers} from "../../store/actions/assignmentAction";
-import {AssignmentTORoleEnumEnum, UserInfoTO} from "../../api/models";
-import {RootState} from "../../store/reducers/rootReducer";
-import {IconButton, List, ListItem, ListItemSecondaryAction, Paper, TextField} from "@material-ui/core";
-import {Add} from "@material-ui/icons";
-import {AssignmentTO} from "../../api/models/assignment-to";
-import UserListItem from "./UserListItem";
-import SettingsTextField from "../../components/Form/SettingsTextField";
-import {makeStyles} from "@material-ui/core/styles";
-import {HANDLEDERROR, SEARCH_USERS} from "../../store/actions/diagramAction";
-import {Autocomplete} from "@material-ui/lab";
+import { getAllAssignedUsers } from "../../store/actions/assignmentAction";
+import { SEARCH_USERS, UNHANDLEDERROR } from "../../store/constants";
+import { RootState } from "../../store/reducers/rootReducer";
 import AddUserSearchBar from "./AddUserSearchBar";
+import UserListItem from "./UserListItem";
 
 interface Props {
     open: boolean;
@@ -22,98 +15,88 @@ interface Props {
     repoId: string;
 }
 
-const useStyles = makeStyles(() => ({
-    textField: {
-        left: "0px",
-        width: "80%"
-    },
-    button: {
-
-        right: "0px",
-        width: "80%"
-    }
-}));
-
-
 const UserManagementDialog: React.FC<Props> = props => {
-    const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const { open, onCancelled } = props;
 
-    const assignmentTOs: Array<AssignmentTO> = useSelector((state: RootState) => state.assignedUsers.assignedUsers)
-    const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced)
-    const currentUser: UserInfoTO = useSelector((state: RootState) => state.currentUserInfo.currentUserInfo)
+    const assignmentTOs: Array<AssignmentTO> = useSelector(
+        (state: RootState) => state.assignedUsers.assignedUsers
+    );
+    const syncStatus = useSelector((state: RootState) => state.dataSynced.dataSynced);
+    const currentUser = useSelector((state: RootState) => state.currentUserInfo.currentUserInfo);
 
     const [error, setError] = useState<string | undefined>(undefined);
-    const [user, setUser] = useState<string>("");
     const [hasAdminPermissions, setHasAdminPermissions] = useState<boolean>(false);
-
 
     const fetchAssignedUsers = useCallback((repoId: string) => {
         try {
-            dispatch(getAllAssignedUsers(repoId))
+            dispatch(getAllAssignedUsers(repoId));
         } catch (err) {
-            console.log(err)
+            // eslint-disable-next-line no-console
+            console.log(err);
         }
-    }, [dispatch])
+    }, [dispatch]);
 
     useEffect(() => {
-        fetchAssignedUsers(props.repoId)
-        if(!syncStatus){
-            fetchAssignedUsers(props.repoId)
+        fetchAssignedUsers(props.repoId);
+        if (!syncStatus) {
+            fetchAssignedUsers(props.repoId);
         }
-    }, [fetchAssignedUsers, syncStatus])
-
-
+    }, [fetchAssignedUsers, syncStatus, props]);
 
     const checkForAdminPermissions = useMemo(() => {
-            const currentUserAssignment = assignmentTOs.find(assignmentTO => assignmentTO.userName === currentUser.userName)
-            try{
-                if(currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.ADMIN || currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.OWNER){
-                    setHasAdminPermissions(true)
-                    return true
-                } else {
-                    setHasAdminPermissions(false)
-                    return  false
-                }
-            } catch (err){
-                dispatch({type: HANDLEDERROR, message: "Error while checking permissions for this repository"})
+        const currentUserAssignment = assignmentTOs
+            .find(assignmentTO => assignmentTO.username === currentUser.username);
+        try {
+            if (currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.ADMIN
+                || currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.OWNER) {
+                setHasAdminPermissions(true);
+                return true;
             }
-        }, [assignmentTOs])
+            setHasAdminPermissions(false);
+            return false;
+        } catch (err) {
+            dispatch({
+                type: UNHANDLEDERROR,
+                message: "Error while checking permissions for this repository"
+            });
+            return false;
+        }
+    }, [assignmentTOs, currentUser, dispatch]);
 
-    const onCancel= (() => {
-        setUser("")
-        dispatch({type: SEARCH_USERS, searchedUsers: []})
-        onCancelled()
-    })
+    const onCancel = (() => {
+        dispatch({ type: SEARCH_USERS, searchedUsers: [] });
+        onCancelled();
+    });
 
-
-    //#TODO: Style the Input field
+    // #TODO: Style the Input field
     return (
         <PopupDialog
             open={open}
-            title={"Users"}
+            title="Users"
             error={error}
             onCloseError={() => setError(undefined)}
             secondTitle="close"
-            onSecond={onCancel} >
+            onSecond={onCancel}>
             <List dense={false}>
                 {checkForAdminPermissions && (
-                    <AddUserSearchBar repoId={props.repoId}/>
+                    <AddUserSearchBar repoId={props.repoId} />
                 )}
                 <Paper>
 
-                {assignmentTOs?.map(assignmentTO => (
-                    <UserListItem assignmentTO={assignmentTO} hasAdminPermissions={hasAdminPermissions} key={assignmentTO.userId} />
+                    {assignmentTOs?.map(assignmentTO => (
+                        <UserListItem
+                            assignmentTO={assignmentTO}
+                            hasAdminPermissions={hasAdminPermissions}
+                            key={assignmentTO.userId} />
 
-                ))}
+                    ))}
                 </Paper>
 
             </List>
         </PopupDialog>
     );
 };
-
 
 export default UserManagementDialog;

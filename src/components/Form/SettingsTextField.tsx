@@ -38,7 +38,7 @@ const SettingsTextField: React.FC<Props> = props => {
             className={clsx(classes.root, props.className)}
             disabled={props.disabled}
             onChange={e => props.onChanged && props.onChanged(e.target.value)}
-            value={props.value} />
+            value={props.value}/>
     );
 };
 

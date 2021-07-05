@@ -7,11 +7,14 @@ const Router: React.FC = () => {
     return (
         <Switch>
             <Route
-                exact path="/"
+                exact
+                path="/"
                 component={Overview}/>
 
-            <Route exact path ="/repository/:repoId"
-                   component={Repository}/>
+            <Route
+                exact
+                path="/repository/:repoId"
+                component={Repository}/>
         </Switch>
     );
 };

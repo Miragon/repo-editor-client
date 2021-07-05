@@ -1,9 +1,11 @@
 import {makeStyles, Theme} from "@material-ui/core";
+import clsx from "clsx";
 import React from "react";
 import {createTestAttributes} from "../../util/TestUtils";
 import {COLORS} from "../../design";
 
 interface Props {
+    className?: string;
     testId?: string;
 }
 
@@ -28,11 +30,10 @@ const MenuBar: React.FC<Props> = props => {
         <div
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...createTestAttributes(props.testId)}
-            className={classes.root}>
+            className={clsx(classes.root, props.className)}>
             {props.children}
         </div>
     );
 };
 
 export default MenuBar;
-

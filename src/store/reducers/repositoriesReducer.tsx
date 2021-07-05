@@ -1,10 +1,10 @@
-import {BpmnRepositoryRequestTO} from "../../api/models";
-import {GET_REPOS} from "../actions/repositoryAction";
-import {CaseReducer} from "@reduxjs/toolkit";
+import { CaseReducer } from "@reduxjs/toolkit";
+import { RepositoryTO } from "../../api/models";
+import { GET_REPOS } from "../constants";
 
 const initialState = {
-    repos: Array<BpmnRepositoryRequestTO>()
-}
+    repos: Array<RepositoryTO>()
+};
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -12,8 +12,9 @@ const reducer: CaseReducer = (state = initialState, action) => {
             return {
                 ...state,
                 repos: action.repos
-            }
+            };
     }
     return state;
-}
+};
+
 export default reducer;

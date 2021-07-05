@@ -1,8 +1,9 @@
-import {makeStyles} from "@material-ui/core/styles";
-import {observer} from "mobx-react";
-import React, {useState} from "react";
-import DropdownButton, {DropdownButtonItem} from "../../components/Form/DropdownButton";
+import { makeStyles } from "@material-ui/core/styles";
+import { observer } from "mobx-react";
+import React, { useState } from "react";
+import DropdownButton, { DropdownButtonItem } from "../../components/Form/DropdownButton";
 import SimpleButton from "../../components/Form/SimpleButton";
+import DiagramSearchBar from "../Overview/DiagramSearchBar";
 import CreateDiagramDialog from "./CreateDiagramDialog";
 import CreateRepoDialog from "./CreateRepoDialog";
 import UploadDiagramDialog from "./UploadDiagramDialog";
@@ -10,7 +11,7 @@ import UploadDiagramDialog from "./UploadDiagramDialog";
 const useStyles = makeStyles(() => ({
     container: {
         display: "flex",
-        justifyContent: "flex-end"
+        justifyContent: "space-between"
     },
     diagramButton: {
         minWidth: "180px"
@@ -28,7 +29,6 @@ const RepoContainer: React.FC = observer(() => {
     const [uploadDiagramOpen, setUploadDiagramOpen] = useState(false);
     const [createDiagramOpen, setCreateDiagramOpen] = useState(false);
     const [createDiagramType, setCreateDiagramType] = useState<"bpmn" | "dmn">("bpmn");
-
 
     const diagramOptions: DropdownButtonItem[] = [
         {
@@ -53,7 +53,8 @@ const RepoContainer: React.FC = observer(() => {
             id: "divider1",
             type: "divider",
             label: "",
-            onClick: () => { /* Do nothing */ }
+            onClick: () => { /* Do nothing */
+            }
         },
         {
             id: "upload",
@@ -65,6 +66,7 @@ const RepoContainer: React.FC = observer(() => {
             id: "import",
             label: "Import from Cawemo",
             type: "button",
+            // eslint-disable-next-line no-console
             onClick: () => console.log("Import")
         }
     ];
@@ -72,14 +74,17 @@ const RepoContainer: React.FC = observer(() => {
     return (
         <>
             <div className={classes.container}>
-                <SimpleButton
-                    className={classes.repositoryButton}
-                    title="Create Repository"
-                    onClick={() => setCreateRepoOpen(true)} />
-                <DropdownButton
-                    className={classes.diagramButton}
-                    title="Add Diagram"
-                    options={diagramOptions} />
+                <DiagramSearchBar />
+                <div>
+                    <SimpleButton
+                        className={classes.repositoryButton}
+                        title="Create Repository"
+                        onClick={() => setCreateRepoOpen(true)} />
+                    <DropdownButton
+                        className={classes.diagramButton}
+                        title="Add Diagram"
+                        options={diagramOptions} />
+                </div>
             </div>
             <CreateRepoDialog
                 open={createRepoOpen}
@@ -99,4 +104,3 @@ const RepoContainer: React.FC = observer(() => {
 });
 
 export default RepoContainer;
-

@@ -4,30 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="User management">
-      <change afterPath="$PROJECT_DIR$/src/components/Layout/Toast.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Repository/CreateDiagramContainer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" afterDir="false" />
+    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="fix: Added default SVG-images when creating Diagrams; update design">
+      <change afterPath="$PROJECT_DIR$/src/screens/Repository/VersionDetails.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/DropdownButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/DropdownButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/apis/diagram-version-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/diagram-version-controller-api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/Repository.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/Repository.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/userAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/userAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/actions.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/apiResponseReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/apiResponseReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/apiResponseWithRetryReducer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/constants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/constants.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/versionsReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/versionsReducer.tsx" afterDir="false" />
     </list>
+    <list id="9cf6af5f-1a50-4925-923b-48671a504db0" name="DiagramListItem" comment="Switched to Flexbox, adjusted colors to Theme" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,6 +24,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JavaScript File" />
         <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
       </list>
@@ -44,7 +33,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="dev" />
+        <entry key="$PROJECT_DIR$" value="feat/Exceptions" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,6 +46,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
   <component name="ProjectId" id="1s9a2RVro70gzqz3gnd1dd8NY3R" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -67,7 +59,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/store/actions" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/api" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -75,24 +68,38 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/api" />
+      <recent name="$PROJECT_DIR$/src/screens/Repository" />
       <recent name="$PROJECT_DIR$/src/store/actions" />
       <recent name="$PROJECT_DIR$/src/models" />
       <recent name="$PROJECT_DIR$/src/constants" />
-      <recent name="$PROJECT_DIR$/src/state-test" />
-      <recent name="$PROJECT_DIR$/src/screens" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/api/apis" />
+      <recent name="$PROJECT_DIR$/src/img" />
       <recent name="$PROJECT_DIR$/src/api" />
       <recent name="$PROJECT_DIR$/src/screens/Repository" />
       <recent name="$PROJECT_DIR$/src/screens" />
-      <recent name="$PROJECT_DIR$/src/screens/CreateContainer" />
-      <recent name="$PROJECT_DIR$/src/screens/Overview" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -122,6 +129,13 @@
       <workItem from="1623328837825" duration="1709000" />
       <workItem from="1623651414140" duration="14190000" />
       <workItem from="1623737626571" duration="22510000" />
+      <workItem from="1624342123896" duration="18946000" />
+      <workItem from="1624517860625" duration="18089000" />
+      <workItem from="1624860658747" duration="15486000" />
+      <workItem from="1624883396236" duration="3196000" />
+      <workItem from="1625124991729" duration="4317000" />
+      <workItem from="1625130144658" duration="10038000" />
+      <workItem from="1625465902504" duration="8132000" />
     </task>
     <task id="LOCAL-00001" summary="Update Modeler URLs">
       <created>1620297569688</created>
@@ -179,7 +193,84 @@
       <option name="project" value="LOCAL" />
       <updated>1623668610554</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added searchDiagramEndpoint, resolved Conflicts">
+      <created>1624269987801</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1624269987801</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added searchDiagramEndpoint, fixed Version-overwriting-bug">
+      <created>1624272651653</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1624272651653</updated>
+    </task>
+    <task id="LOCAL-00011" summary="RepoManagement, Create Version Fix, Version Sortierung fix">
+      <created>1624375081650</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1624375081651</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Exceptions, Repo- and Diagram Editing, Searching for Diagrams">
+      <created>1624540792839</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1624540792839</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Exceptions and Repo Handling">
+      <created>1624876987283</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1624876987283</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix: Adjusted to new API">
+      <created>1624974085384</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1624974085384</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fix(development): Use cross-env for passing environment variables">
+      <created>1625051130292</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1625051130292</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fix(eslint): Update ESLint config and fix most errors">
+      <created>1625053391202</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1625053391202</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix(eslint): Fix or suppress the remaining errors">
+      <created>1625054604136</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1625054604136</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fix(eslint): Fix compilation problems">
+      <created>1625054871838</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1625054871838</updated>
+    </task>
+    <task id="LOCAL-00019" summary="fix: Added default SVG-images when creating Diagrams; update design">
+      <created>1625147377897</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1625147377897</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,7 +281,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="feat/lhm_showcase" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -205,6 +308,22 @@
     <MESSAGE value="UserManagement" />
     <MESSAGE value="API Dateien" />
     <MESSAGE value="User management" />
-    <option name="LAST_COMMIT_MESSAGE" value="User management" />
+    <MESSAGE value="Added searchDiagramEndpoint, resolved Conflicts" />
+    <MESSAGE value="Added searchDiagramEndpoint, fixed Version-overwriting-bug" />
+    <MESSAGE value="RepoManagement, Create Version Fix, Version Sortierung fix" />
+    <MESSAGE value="Exceptions, Repo- and Diagram Editing, Searching for Diagrams" />
+    <MESSAGE value="Exceptions and" />
+    <MESSAGE value="Exceptions and Repo Handling" />
+    <MESSAGE value="fix: Adjusted to new API" />
+    <MESSAGE value="fix(development): Use cross-env for passing environment variables" />
+    <MESSAGE value="fix(eslint): Update ESLint config and fix most errors" />
+    <MESSAGE value="fix(eslint): Fix or suppress the remaining errors" />
+    <MESSAGE value="fix(eslint): Fix compilation problems" />
+    <MESSAGE value="fix: Added default SVG-images when creating Diagrams; update design" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Added default SVG-images when creating Diagrams; update design" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

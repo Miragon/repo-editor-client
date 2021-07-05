@@ -7,6 +7,7 @@ import React, {useRef, useState} from "react";
 export interface DropdownButtonItem {
     id: string;
     label: React.ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onClick?: (event?: any) => void;
     disabled?: boolean;
     type?: "button" | "divider" | "hint";
@@ -92,7 +93,7 @@ const DropdownButton: React.FC<Props> = props => {
                 disabled={props.disabled}
                 onClick={() => setOpen(true)}
                 variant="contained"
-                endIcon={<ArrowDropDown />}>
+                endIcon={<ArrowDropDown/>}>
                 {props.title}
             </Button>
             <Popper
@@ -101,12 +102,12 @@ const DropdownButton: React.FC<Props> = props => {
                 role={undefined}
                 transition
                 disablePortal
-                style={{ width: ref.current?.offsetWidth }}
+                style={{width: ref.current?.offsetWidth}}
                 className={classes.popupContainer}>
-                {({ TransitionProps }) => (
+                {({TransitionProps}) => (
                     <Grow
                         {...TransitionProps}
-                        style={{ transformOrigin: "top" }}>
+                        style={{transformOrigin: "top"}}>
                         <Paper className={classes.popup}>
                             <ClickAwayListener onClickAway={() => setOpen(false)}>
                                 <MenuList className={classes.list}>

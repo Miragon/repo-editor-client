@@ -46,7 +46,7 @@ const MenuNavButton: React.FC<Props> = props => {
             <MenuButton
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...buttonProps}
-                className={buttonClassName} />
+                className={buttonClassName}/>
 
         </NavLink>
     );

@@ -1,25 +1,23 @@
 const helpers = {
-    isNumber: function (value: string) {
-        return !isNaN(Number(value))
+    isNumber: (value: string): boolean => {
+        return !isNaN(Number(value));
     },
-    isPositiveInt: function (value: string) {
+    isPositiveInt: (value: string): boolean => {
         return /^\d+$/.test(value);
     },
-    throwError: function(errorMessage: string) {
+    throwError: (errorMessage: string): boolean => {
         throw new Error(errorMessage);
     },
 
-    getClientConfig: function(token: string | null) {
+    getClientConfig: (): Record<string, string> => {
         return {
-            //#TODO change to cloud backend
-            basePath: "http://localhost:8080",
-                    "headers": {
-                        'Authorization': `${token}`,
-                    }
+            // basePath: "",
+            //         "headers": {
+            //             'Authorization': `${token}`,
+            //         }
 
-            }
+        };
     }
-}
+};
 
-
-export default helpers
+export default helpers;

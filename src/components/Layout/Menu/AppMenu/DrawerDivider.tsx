@@ -13,7 +13,7 @@ const DrawerDivider: React.FC = () => {
     const classes = useStyles();
 
     return (
-        <div className={classes.divider} />
+        <div className={classes.divider}/>
     );
 };
 

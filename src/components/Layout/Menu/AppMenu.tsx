@@ -1,13 +1,11 @@
-import {useAuth0} from "@auth0/auth0-react";
 import {Drawer} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import {AccountCircle, BarChart, Brush, ExitToApp, FormatShapes, Help, Home, PowerSettingsNew, Widgets} from "@material-ui/icons";
-import React, {useCallback, useRef, useState} from "react";
+import {FormatShapes, Help, Home, Widgets} from "@material-ui/icons";
+import React from "react";
 import MenuSpacer from "../../Menu/MenuSpacer";
 import DrawerApp from "./AppMenu/DrawerApp";
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     button: {
         textTransform: "none",
         fontFamily: "Arial",
@@ -26,27 +24,16 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         marginTop: "56px",
-        boxShadow: theme.shadows[24],
-        width: "65px",
+        width: "350px",
         padding: "0px",
         height: "calc(100% - 56px)",
-        background: theme.palette.primary.main,
-        overflow: "hidden",
-        transition: "width .3s",
-        border: "none",
-        "&:hover": {
-            width: "400px"
-        }
-    },
-
-    drawerBackdrop: {
-        backgroundColor: "rgba(0, 0, 0, 0)"
+        background: "white",
+        overflow: "hidden"
     },
     drawerTitle: {
         margin: "2.5rem 13px 0 13px",
         fontSize: "1.5rem",
-        fontWeight: 600,
-
+        fontWeight: 600
     },
     drawerSubtitle: {
         margin: "0.5rem 13px 1.5rem 13px",
@@ -58,86 +45,49 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         flexGrow: 1
     }
-
 }));
 
-const AppMenu: React.FC = () => {
+interface Props {
+    open: boolean;
+}
+
+const AppMenu: React.FC<Props> = props => {
     const classes = useStyles();
-
-    const [open, setOpen] = useState(true);
-    const anchorRef = useRef<HTMLButtonElement>(null);
-    const handleClose = useCallback((event: React.MouseEvent<EventTarget>) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
-            return;
-        }
-
-        setOpen(false);
-    }, []);
-
-    const { logout, user } = useAuth0();
 
     return (
         <>
 
-
             <Drawer
-                classes={{ paper: classes.drawerPaper }}
-                variant="permanent"
-                BackdropProps={{
-                    className: classes.drawerBackdrop
-                }}
+                classes={{paper: classes.drawerPaper}}
+                variant="persistent"
                 anchor="left"
-                open={open}
-                onClose={handleClose}>
-
+                open={props.open}>
 
                 <div className={classes.drawerContent}>
 
                     <DrawerApp
                         active
-                        title="Home"
+                        title="Modellverwaltung"
                         onClick={() => window.open("/", "_self")}
-                        icon={Home} />
+                        icon={Home}/>
 
                     <DrawerApp
-                        title="Modeler"
-                        onClick={() => window.open("/modeler/", "_self")}
-                        icon={Brush} />
+                        title="Formulare"
+                        onClick={() => window.open("/formulare", "_self")}
+                        icon={FormatShapes}/>
 
                     <DrawerApp
-                        title="Forms"
-                        onClick={() => window.open("localhost:8082/", "_blank")}
-                        icon={FormatShapes} />
+                        title="Integrationsbausteine"
+                        onClick={() => window.open("/bausteine", "_self")}
+                        icon={Widgets}/>
 
-                    <DrawerApp
-                        title="Building Blocks"
-                        onClick={() => window.open("/blocks/ui/", "_self")}
-                        icon={Widgets} />
-
-                    <DrawerApp
-                        title="FlowCov"
-                        onClick={() => window.open("https://flowcov.miragon.cloud/", "_self")}
-                        icon={BarChart} />
-
-                    <MenuSpacer />
+                    <MenuSpacer/>
 
                     <DrawerApp
                         dense
-                        title="Contact Support"
-                        description="info@flowsquad.io"
-                        icon={Help} />
-
-                    <DrawerApp
-                        dense
-                        title="Your Account"
-                        description={user.email}
-                        icon={AccountCircle} />
-
-                    <DrawerApp
-                        dense
-                        title="Sign Out"
-                        onClick={logout}
-                        icon={ExitToApp} />
+                        title="Support kontaktieren"
+                        description="lhm.digitalwf@muenchen.de"
+                        icon={Help}/>
 
                 </div>
 

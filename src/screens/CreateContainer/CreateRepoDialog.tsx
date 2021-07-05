@@ -1,8 +1,8 @@
-import React, {useCallback, useState} from "react";
+import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import {useDispatch} from "react-redux";
 import * as repositoryAction from "../../store/actions/repositoryAction";
 
 interface Props {
@@ -12,7 +12,6 @@ interface Props {
 }
 
 const CreateRepoDialog: React.FC<Props> = props => {
-
     const dispatch = useDispatch();
 
     const { open, onCancelled, onCreated } = props;
@@ -21,16 +20,17 @@ const CreateRepoDialog: React.FC<Props> = props => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
-
     const onCreate = useCallback(() => {
-        try{
-            dispatch(repositoryAction.createRepository(title, description))
-            onCancelled()
+        try {
+            dispatch(repositoryAction.createRepository(title, description));
+            setTitle("");
+            setDescription("");
+            onCancelled();
         } catch (err) {
-            console.log(err)
+            // eslint-disable-next-line no-console
+            console.log(err);
         }
-    }, [dispatch, title, description])
-
+    }, [dispatch, title, description, onCancelled]);
 
     return (
         <PopupDialog
@@ -42,9 +42,9 @@ const CreateRepoDialog: React.FC<Props> = props => {
             onSecond={onCancelled}
             firstTitle="Create"
             onFirst={() => {
-                onCreate()
-                onCreated()}
-            }>
+                onCreate();
+                onCreated();
+            }}>
 
             <SettingsForm large>
 

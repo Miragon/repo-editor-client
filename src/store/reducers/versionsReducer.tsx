@@ -1,19 +1,26 @@
-import {BpmnDiagramVersionTO} from "../../api/models";
-import {CaseReducer} from "@reduxjs/toolkit";
-import {GET_VERSIONS} from "../actions/diagramAction";
+import { CaseReducer } from "@reduxjs/toolkit";
+import { DiagramVersionTO } from "../../api/models";
+import {GET_VERSIONS, LATEST_VERSION} from "../constants";
 
 const initialState = {
-    versions: Array<BpmnDiagramVersionTO>()
-}
+    versions: Array<DiagramVersionTO>(),
+    latestVersion: null
+};
 
 const reducer: CaseReducer = (state = initialState, action) => {
-switch (action.type) {
-    case GET_VERSIONS:
-        return {
-            ...state,
-            versions: action.versions
-        }
+    switch (action.type) {
+        case GET_VERSIONS:
+            return {
+                ...state,
+                versions: action.versions
+            };
+        case LATEST_VERSION:
+            return {
+                ...state,
+                latestVersion: action.latestVersion
+            }
     }
     return state;
-}
+};
+
 export default reducer;

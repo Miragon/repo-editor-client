@@ -1,11 +1,9 @@
-import {DIAGRAM_UPLOAD} from "../actions/diagramAction";
-import {CaseReducer} from "@reduxjs/toolkit";
-
+import { CaseReducer } from "@reduxjs/toolkit";
+import { DIAGRAM_UPLOAD } from "../constants";
 
 const initialState = {
     uploadedDiagram: undefined
-}
-
+};
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -13,8 +11,9 @@ const reducer: CaseReducer = (state = initialState, action) => {
             return {
                 ...state,
                 uploadedDiagram: action.uploadedDiagram
-            }
+            };
     }
     return state;
-}
+};
+
 export default reducer;

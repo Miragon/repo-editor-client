@@ -1,4 +1,4 @@
-import {createMuiTheme, responsiveFontSizes} from "@material-ui/core/styles";
+import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 
 const theme = responsiveFontSizes(
     createMuiTheme({
@@ -7,7 +7,7 @@ const theme = responsiveFontSizes(
                 dark: "#000000",
                 main: "#333333",
                 light: "#545454",
-                contrastText: "rgba(255, 255, 255, 0.87)"
+                contrastText: "#FFFFFF"
             },
             secondary: {
                 dark: "#E5B700",

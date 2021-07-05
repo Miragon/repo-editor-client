@@ -1,36 +1,30 @@
-import {observer} from "mobx-react";
-import React, {useEffect, useState} from "react";
-import DropdownButton, {DropdownButtonItem} from "../../components/Form/DropdownButton";
-import SimpleButton from "../../components/Form/SimpleButton";
-import CreateRepoDialog from "../CreateContainer/CreateRepoDialog";
+import { observer } from "mobx-react";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
+import DropdownButton, { DropdownButtonItem } from "../../components/Form/DropdownButton";
 import CreateDiagramDialog from "../CreateContainer/CreateDiagramDialog";
 import UploadDiagramDialog from "../CreateContainer/UploadDiagramDialog";
-import {makeStyles} from "@material-ui/core/styles";
-import {BpmnRepositoryRequestTO} from "../../api/models";
-import {useSelector} from "react-redux";
-import {RootState} from "../../store/reducers/rootReducer";
+import { RepositoryTO } from "../../api/models";
+import { RootState } from "../../store/reducers/rootReducer";
 
 const useStyles = makeStyles(() => ({
     container: {
         display: "flex",
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
+        marginBottom: "1rem"
     },
     diagramButton: {
         minWidth: "180px"
     }
 }));
 
-
-
-
 const CreateDiagramContainer: React.FC = observer(() => {
     const classes = useStyles();
     const [uploadDiagramOpen, setUploadDiagramOpen] = useState(false);
     const [createDiagramOpen, setCreateDiagramOpen] = useState(false);
     const [createDiagramType, setCreateDiagramType] = useState<"bpmn" | "dmn">("bpmn");
-    const activeRepo: BpmnRepositoryRequestTO = useSelector((state: RootState) => state.activeRepo.activeRepo)
-
-
+    const activeRepo: RepositoryTO = useSelector((state: RootState) => state.activeRepo.activeRepo);
 
     const diagramOptions: DropdownButtonItem[] = [
         {
@@ -55,7 +49,8 @@ const CreateDiagramContainer: React.FC = observer(() => {
             id: "divider1",
             type: "divider",
             label: "",
-            onClick: () => { /* Do nothing */ }
+            onClick: () => { /* Do nothing */
+            }
         },
         {
             id: "upload",
@@ -67,6 +62,7 @@ const CreateDiagramContainer: React.FC = observer(() => {
             id: "import",
             label: "Import from Cawemo",
             type: "button",
+            // eslint-disable-next-line no-console
             onClick: () => console.log("Import")
         }
     ];
@@ -84,11 +80,12 @@ const CreateDiagramContainer: React.FC = observer(() => {
                 open={createDiagramOpen}
                 type={createDiagramType}
                 onCancelled={() => setCreateDiagramOpen(false)}
-                repo={activeRepo}/>
+                repo={activeRepo} />
 
             <UploadDiagramDialog
                 open={uploadDiagramOpen}
-                onCancelled={() => setUploadDiagramOpen(false)} />
+                onCancelled={() => setUploadDiagramOpen(false)}
+                repo={activeRepo} />
         </>
     );
 });

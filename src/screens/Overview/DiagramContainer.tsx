@@ -1,5 +1,5 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 interface ContainerProps {
     category: string;
@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
     body: {
         background: "#fff",
     },
-DiagramContainer: {
+    DiagramContainer: {
         height: "400px",
         width: "93%",
         top: "75px",
@@ -18,16 +18,15 @@ DiagramContainer: {
         position: "relative",
         backgroundColor: "white",
         borderTop: "2px solid #ccc",
-    "&:h1": {
-        paddingLeft: "20px",
-        color:"black",
-        fontSize: "20px",
-        fontWeight: "normal",
+        "&:h1": {
+            paddingLeft: "20px",
+            color: "black",
+            fontSize: "20px",
+            fontWeight: "normal",
         }
     },
 
-
-ScrollBarDiagram: {
+    ScrollBarDiagram: {
         height: "340px",
         top: "50px",
         overflowX: "auto",
@@ -36,16 +35,15 @@ ScrollBarDiagram: {
     }
 }));
 
-
-const DiagramContainer: React.FC<ContainerProps> = (props: ContainerProps) =>{
+const DiagramContainer: React.FC<ContainerProps> = (props: ContainerProps) => {
     const classes = useStyles();
 
-
-        return <div className={classes.DiagramContainer}><h1>{props.category}</h1>
-            <div className={classes.ScrollBarDiagram}>
-
- </div>
+    return (
+        <div className={classes.DiagramContainer}>
+            <h1>{props.category}</h1>
+            <div className={classes.ScrollBarDiagram} />
         </div>
-}
+    );
+};
 
 export default DiagramContainer;

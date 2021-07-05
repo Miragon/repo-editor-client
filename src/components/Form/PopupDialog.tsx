@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         border: "none !important"
     },
     titleWrapper: {
-        padding: "16px 24px 0px 24px"
+        padding: "16px 24px 0px 24px",
     },
     error: {
         margin: "calc(0.5rem + 3px)"
@@ -98,7 +98,7 @@ const PopupDialog: React.FC<Props> = props => {
     const classes = useStyles(props);
     return (
         <Dialog
-            BackdropProps={{ className: clsx(classes.backdrop, props.backdropClassName) }}
+            BackdropProps={{className: clsx(classes.backdrop, props.backdropClassName)}}
             PaperProps={{
                 className: clsx(classes.paper, props.paperClassName),
                 elevation: 16
@@ -117,7 +117,7 @@ const PopupDialog: React.FC<Props> = props => {
                 <Toast
                     message={props.error}
                     onClose={props.onCloseError}
-                    className={clsx(classes.error, props.errorClassName)} />
+                    className={clsx(classes.error, props.errorClassName)}/>
 
             </DialogTitle>
 

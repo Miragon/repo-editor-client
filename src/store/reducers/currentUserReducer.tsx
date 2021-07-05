@@ -1,9 +1,9 @@
-import {CaseReducer} from "@reduxjs/toolkit";
-import {CURRENT_USER_INFO} from "../actions/diagramAction";
+import { CaseReducer } from "@reduxjs/toolkit";
+import { CURRENT_USER_INFO } from "../constants";
 
 const initialState = {
     currentUserInfo: null
-}
+};
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -11,8 +11,9 @@ const reducer: CaseReducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentUserInfo: action.currentUserInfo
-            }
+            };
     }
     return state;
-}
+};
+
 export default reducer;

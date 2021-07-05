@@ -1,138 +1,148 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import {useDispatch, useSelector} from "react-redux";
+import React, { useCallback, useEffect, useState } from "react";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { useDispatch, useSelector } from "react-redux";
+import { IconButton, ListItem, ListItemSecondaryAction } from "@material-ui/core";
+import { Add } from "@material-ui/icons";
+import { makeStyles } from "@material-ui/styles";
 import * as userAction from "../../store/actions/userAction";
-import {UserInfoTO} from "../../api/models";
-import {RootState} from "../../store/reducers/rootReducer";
-import {searchUsers} from "../../store/actions/userAction";
-import {IconButton, ListItem, ListItemSecondaryAction} from "@material-ui/core";
-import {Add} from "@material-ui/icons";
+import { UserInfoTO } from "../../api/models";
+import { RootState } from "../../store/reducers/rootReducer";
 import * as assignmentAction from "../../store/actions/assignmentAction";
 
+const useStyles = makeStyles(() => ({
+    listItem: {
+        paddingLeft: "0px",
+        paddingRight: "60px"
+    }
+}));
 
 interface Props {
     repoId: string;
 }
 
-function sleep(delay = 0) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay);
-    });
-}
-
-let timeout: NodeJS.Timeout | undefined = undefined;
+let timeout: NodeJS.Timeout | undefined;
 
 const AddUserSearchBar: React.FC<Props> = props => {
+    const classes = useStyles();
     const dispatch = useDispatch();
 
-    const searchedUsers: Array<UserInfoTO> = useSelector((state: RootState) => state.searchedUsers.searchedUsers)
-    const results: number = useSelector((state: RootState) => state.resultsCount.resultsCount)
+    const searchedUsers: Array<UserInfoTO> = useSelector(
+        (state: RootState) => state.searchedUsers.searchedUsers
+    );
+    const results: number = useSelector((state: RootState) => state.resultsCount.resultsCount);
 
-    const [user, setUser] = useState("");
+    const [userName, setUserName] = useState("");
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState<UserInfoTO[]>([]);
-    let loading = open && options.length === 0 && user != "" && results != 0;
-
-
-    //#TODO: Loading animation is never displayed at the moment
-    React.useEffect(() => {
-        let active = true;
-        if (!loading) {
-            return undefined;
-        }
-
-        if(results === 0){
-            active = false
-            loading = false
-        }
-
-        return () => {
-            active = false;
-        };
-    }, [loading, results]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (!open) {
             setOptions([]);
         }
-        if(open) {
-            setOptions(searchedUsers)
+        if (open) {
+            setOptions(searchedUsers);
         }
     }, [open, searchedUsers]);
 
+    useEffect(() => {
+        if (searchedUsers.length > 0) {
+            setLoading(false);
+        }
+        if (results === 0) {
+            setLoading(false);
+        }
+    }, [searchedUsers, results]);
+
+    useEffect(() => {
+        if (userName === "") {
+            setLoading(false);
+        }
+    }, [userName]);
 
     const onChangeWithTimer = ((input: string) => {
-        //#TODO: How to reset the timer if this method is called a second time?
-        setUser(input)
-        console.log(input, "__________")
-        if(input != "") {
-            if(timeout){
+        setUserName(input);
+        if (input !== "") {
+            if (timeout) {
                 clearTimeout(timeout);
             }
+            setLoading(true);
             timeout = setTimeout(() => fetchUserSuggestions(input), 500);
         }
-    })
+    });
 
     const fetchUserSuggestions = useCallback((input: string) => {
-        dispatch(userAction.searchUsers(input))
-    }, [dispatch])
+        dispatch(userAction.searchUsers(input));
+    }, [dispatch]);
 
+    // #TODO: Add the UserId prop to AssignmentUpdate in Backend
+
+    const getUserByName = useCallback((username: string) => {
+        return searchedUsers.find(user => user.username.toLowerCase() === username.toLowerCase());
+    }, [searchedUsers]);
 
     const addUser = useCallback(() => {
         try {
-            dispatch(assignmentAction.createOrUpdateUserAssignment(props.repoId, user))
-            setUser("")
+            const user = getUserByName(userName);
+            if (user) {
+                dispatch(assignmentAction
+                    .createOrUpdateUserAssignment(props.repoId, user?.id, user?.username));
+                setUserName("");
+            }
         } catch (err) {
-            console.log(err)
+            // eslint-disable-next-line no-console
+            console.log(err);
         }
+    }, [dispatch, userName, props, getUserByName]);
 
-    }, [dispatch, user])
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updateState = (event: any) => {
+        setUserName(event.target.textContent);
+    };
 
     return (
-        <ListItem>
-        <Autocomplete
-            id="asynchronous-demo"
-            style={{ width: 500 }}
-            open={open}
-            onOpen={() => {
-                setOpen(true);
-            }}
-            onClose={() => {
-                setOpen(false);
-            }}
-            getOptionSelected={(option, value) => option.userName === value.userName}
-            getOptionLabel={(option) => option.userName}
-            options={options}
-            loading={loading}
-            onChange={(event, value) => setUser(value?.userName)}
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    label="Add user"
-                    variant="outlined"
-                    onChange={(event) => onChangeWithTimer(event.target.value)}
-                    InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                            <React.Fragment>
-                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                {params.InputProps.endAdornment}
-                            </React.Fragment>
-                        ),
-                    }}
-                />
-            )}
-        />
+        <ListItem className={classes.listItem}>
+            <Autocomplete
+                id="UserSearchBar"
+                freeSolo
+                style={{ width: 500 }}
+                open={open}
+                onOpen={() => {
+                    setOpen(true);
+                }}
+                onClose={() => {
+                    setOpen(false);
+                }}
+                getOptionSelected={(option, value) => option.username === value.username}
+                getOptionLabel={option => option.username}
+                options={options}
+                onChange={updateState}
+                loading={loading}
+                renderInput={params => (
+                    <TextField
+                        {...params}
+                        label="Add user"
+                        variant="outlined"
+                        onChange={event => onChangeWithTimer(event.target.value)}
+                        InputProps={{
+                            ...params.InputProps,
+                            endAdornment: (
+                                <>
+                                    {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                    {params.InputProps.endAdornment}
+                                </>
+                            ),
+                        }} />
+                )} />
             <ListItemSecondaryAction>
                 <IconButton edge="end" onClick={() => addUser()}>
-                    <Add/>
+                    <Add />
                 </IconButton>
             </ListItemSecondaryAction>
         </ListItem>
     );
-}
+};
 
-export default AddUserSearchBar
+export default AddUserSearchBar;

@@ -3,23 +3,23 @@ import {makeStyles} from "@material-ui/core/styles";
 import clsx from "clsx";
 import React from "react";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     drawerAppContainer: {
         display: "flex",
         flexDirection: "row",
         width: "100%",
         height: "64px",
-        color: "white",
+        color: "black",
         justifyContent: "flex-start",
         margin: "0px 0",
         "&:hover": {
-            backgroundColor: "rgba(255, 255, 255, 0.1)"
+            backgroundColor: "rgba(0, 0, 0, 0.05)"
         }
     },
     drawerAppContainerActive: {
-        backgroundColor: "rgba(255, 255, 255, 0.1) !important",
+        backgroundColor: "rgba(0, 0, 0, 0.05) !important",
         "&:hover": {
-            backgroundColor: "rgba(255, 255, 255, 0.1) !important"
+            backgroundColor: "rgba(0, 0, 0, 0.05) !important"
         }
     },
     drawerAppIcon: {
@@ -27,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "0px",
         width: "32px",
         height: "32px",
-        color: "white"
+        color: "rgba(0, 0, 0, 0.54)"
     },
     drawerAppIconActive: {
         color: theme.palette.secondary.main
     },
     drawerAppTitle: {
-        color: "white",
+        color: "rgba(0, 0, 0, 0.87)",
         textTransform: "none",
         whiteSpace: "nowrap",
         fontSize: "1.1rem",
@@ -43,11 +43,11 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 600
     },
     drawerAppTitleActive: {
-        color: theme.palette.secondary.main
+        color: "rgba(0, 0, 0, 0.87)"
     },
     drawerAppDescription: {
         fontSize: "0.85rem",
-        color: "white",
+        color: "rgba(0, 0, 0, 0.54)",
         textTransform: "none",
         wordWrap: "break-word",
         marginLeft: "10px",
@@ -55,11 +55,11 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "left"
     },
     drawerAppDescriptionActive: {
-        color: theme.palette.secondary.main,
+        color: "rgba(0, 0, 0, 0.87)",
         fontWeight: 400
     },
     drawerText: {
-        color: "white",
+        color: "rgba(0, 0, 0, 0.54)",
         display: "flex",
         paddingRight: "16px",
         paddingLeft: "10px",
@@ -95,9 +95,13 @@ const DrawerApp: React.FC<Props> = props => {
             })}
             <div className={classes.drawerText}>
                 <div className={clsx(classes.drawerAppTitle,
-                    props.active && classes.drawerAppTitleActive)}>{props.title}</div>
+                    props.active && classes.drawerAppTitleActive)}>
+                    {props.title}
+                </div>
                 <div className={clsx(classes.drawerAppDescription,
-                    props.active && classes.drawerAppDescriptionActive)}>{props.description}</div>
+                    props.active && classes.drawerAppDescriptionActive)}>
+                    {props.description}
+                </div>
             </div>
         </Button>
     );
@@ -120,7 +124,6 @@ const DrawerApp: React.FC<Props> = props => {
  )}
 
  {!props.description && title}
-
 
  */
 export default DrawerApp;

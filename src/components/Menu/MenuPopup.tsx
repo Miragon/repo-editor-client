@@ -64,7 +64,7 @@ const MenuPopup: React.FC<Props> = props => {
             <Backdrop
                 open={!!anchor}
                 onClick={() => setAnchor(undefined)}
-                className={classes.backdrop} />
+                className={classes.backdrop}/>
 
             <MenuButton
                 testId={testIdButton}
@@ -82,11 +82,11 @@ const MenuPopup: React.FC<Props> = props => {
                 className={classes.menu}
                 placement="bottom-end">
 
-                {({ TransitionProps }) => (
+                {({TransitionProps}) => (
                     <Grow
                         // eslint-disable-next-line react/jsx-props-no-spreading
                         {...TransitionProps}
-                        style={{ transformOrigin: "right top" }}>
+                        style={{transformOrigin: "right top"}}>
 
                         <Paper
                             // eslint-disable-next-line react/jsx-props-no-spreading

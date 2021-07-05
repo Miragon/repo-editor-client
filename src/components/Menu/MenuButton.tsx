@@ -61,7 +61,7 @@ const MenuButton: React.FC<Props> = props => {
             disableElevation
             variant="outlined"
             onClick={props.onClick}
-            classes={{ label: classes.label }}
+            classes={{label: classes.label}}
             startIcon={props.icon && React.createElement(props.icon)}
             endIcon={props.iconRight && React.createElement(props.iconRight)}
             className={clsx(
@@ -82,7 +82,7 @@ const MenuButton: React.FC<Props> = props => {
                 arrow
                 placement="top"
                 title={props.tooltip}
-                classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}>
+                classes={{tooltip: classes.tooltip, arrow: classes.arrow}}>
 
                 {button}
 

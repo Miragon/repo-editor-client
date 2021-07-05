@@ -38,8 +38,8 @@ const MenuPopupItem: React.FC<Props> = props => {
             </ListItemIcon>
 
             <ListItemText
-                classes={{ primary: classes.menuText }}
-                primary={props.text} />
+                classes={{primary: classes.menuText}}
+                primary={props.text}/>
 
         </MenuItem>
     );

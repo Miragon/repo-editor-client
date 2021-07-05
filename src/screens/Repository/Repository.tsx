@@ -1,40 +1,30 @@
-import {observer} from "mobx-react";
-import React, {useCallback, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import CreateContainer from "../CreateContainer/CreateContainer";
-import {BpmnDiagramTO, BpmnRepositoryRequestTO} from "../../api/models";
-import {RootState} from "../../store/reducers/rootReducer";
-import RepositoryDetails from "./RepositoryDetails";
-import DiagramDetails from "./DiagramDetails";
-import {useParams} from "react-router";
-import {getSingleRepository} from "../../store/actions/repositoryAction";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router";
+import { getSingleRepository } from "../../store/actions";
 import CreateDiagramContainer from "./CreateDiagramContainer";
-
+import DiagramDetails from "./DiagramDetails";
+import RepositoryDetails from "./RepositoryDetails";
 
 const Repository: React.FC = (() => {
     const dispatch = useDispatch();
-    const { repoId } = useParams<{repoId: string}>();
-
-    const [ready, setReady] = useState<boolean>(false);
+    const { repoId } = useParams<{ repoId: string }>();
 
     useEffect(() => {
-        console.log(repoId)
-        getRepo()
-    })
-
+        getRepo();
+    });
 
     const getRepo = useCallback(() => {
-        dispatch(getSingleRepository(repoId))
-    }, [dispatch])
-
+        dispatch(getSingleRepository(repoId));
+    }, [dispatch, repoId]);
 
     return (
-    <>
-        <RepositoryDetails/>
-        <CreateDiagramContainer/>
-        <DiagramDetails/>
-    </>
-);
+        <>
+            <RepositoryDetails />
+            <CreateDiagramContainer />
+            <DiagramDetails />
+        </>
+    );
 });
 
 export default Repository;

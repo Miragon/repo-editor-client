@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
 const SettingsSpacer: React.FC = () => {
     const classes = useStyles();
     return (
-        <div className={classes.root} />
+        <div className={classes.root}/>
     );
 };
 

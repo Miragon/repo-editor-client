@@ -1,48 +1,53 @@
+import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { MenuItem } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import React, {useCallback, useState} from "react";
-import {useDispatch} from "react-redux";
 import * as versionAction from "../../store/actions/versionAction";
 import SettingsSelect from "../../components/Form/SettingsSelect";
-import {BpmnDiagramVersionTOSaveTypeEnum} from "../../api/models";
-import {MenuItem} from "@material-ui/core";
-import {makeStyles} from "@material-ui/styles";
+import { DiagramVersionUploadTOSaveTypeEnum } from "../../api/models";
 
 const useStyles = makeStyles(() => ({
-    container: {
-    }
+    container: {}
 }));
 
 interface Props {
     open: boolean;
     onCancelled: () => void;
     onCreated: () => void;
-    repoId: string;
     diagramId: string;
     diagramTitle: string;
 }
-//#TODO: Get the latest version in order to create a new Release etc.
+
+// #TODO: Get the latest version in order to create a new Release etc.
 
 const CreateVersionDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const { open, onCancelled, onCreated, repoId, diagramId, diagramTitle } = props;
+    const {
+        open, onCancelled, diagramId, diagramTitle
+    } = props;
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [comment, setComment] = useState("");
-    const [saveType, setSaveType] = useState<BpmnDiagramVersionTOSaveTypeEnum>(BpmnDiagramVersionTOSaveTypeEnum.RELEASE);
+    const [saveType, setSaveType] = useState<DiagramVersionUploadTOSaveTypeEnum>(
+        DiagramVersionUploadTOSaveTypeEnum.RELEASE
+    );
 
     const onCreate = useCallback(async () => {
-        try{
-            dispatch(versionAction.createOrUpdateVersion(repoId, diagramId, "latestversion", comment))
-            onCancelled()
+        try {
+            // #TODO: Use the XML String from the last version
+            await dispatch(versionAction.createOrUpdateVersion(diagramId, "latestversion", saveType, comment));
+            dispatch(versionAction.getAllVersions(diagramId));
+            onCancelled();
         } catch (err) {
-            console.log(err)
+            // eslint-disable-next-line no-console
+            console.log(err);
         }
-    }, [repoId, diagramId, comment, dispatch])
-
+    }, [diagramId, comment, saveType, dispatch, onCancelled]);
 
     return (
         <PopupDialog
@@ -54,7 +59,7 @@ const CreateVersionDialog: React.FC<Props> = props => {
             secondTitle="Cancel"
             onSecond={onCancelled}
             firstTitle="Create"
-            onFirst={() => onCreate() }>
+            onFirst={() => onCreate()}>
 
             <SettingsForm large>
 
@@ -64,14 +69,14 @@ const CreateVersionDialog: React.FC<Props> = props => {
                     disabled={false}
                     onChanged={setSaveType}>
                     <MenuItem
-                    key={BpmnDiagramVersionTOSaveTypeEnum.RELEASE}
-                    value={BpmnDiagramVersionTOSaveTypeEnum.RELEASE} >
-                        {BpmnDiagramVersionTOSaveTypeEnum.RELEASE}
+                        key={DiagramVersionUploadTOSaveTypeEnum.RELEASE}
+                        value={DiagramVersionUploadTOSaveTypeEnum.RELEASE}>
+                        {DiagramVersionUploadTOSaveTypeEnum.RELEASE}
                     </MenuItem>
                     <MenuItem
-                    key={BpmnDiagramVersionTOSaveTypeEnum.MILESTONE}
-                    value={BpmnDiagramVersionTOSaveTypeEnum.MILESTONE}>
-                        {BpmnDiagramVersionTOSaveTypeEnum.MILESTONE}
+                        key={DiagramVersionUploadTOSaveTypeEnum.MILESTONE}
+                        value={DiagramVersionUploadTOSaveTypeEnum.MILESTONE}>
+                        {DiagramVersionUploadTOSaveTypeEnum.MILESTONE}
                     </MenuItem>
                 </SettingsSelect>
 

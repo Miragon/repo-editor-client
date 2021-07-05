@@ -1,23 +1,27 @@
-import {useAuth0} from "@auth0/auth0-react";
-import {CircularProgress, makeStyles} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
+import {Theme} from "@material-ui/core/styles";
+import clsx from "clsx";
 import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {toast, ToastContainer} from "react-toastify";
+import {UserControllerApi} from "../../api";
+import helpers from "../../constants/Functions";
+import RegisterNewUserScreen from "../../screens/RegisterNewUserScreen";
+import {CURRENT_USER_INFO, SUCCESS, UNHANDLEDERROR} from "../../store/constants";
+import {RootState} from "../../store/reducers/rootReducer";
 import Menu from "./Menu";
 import Router from "./Router";
-import {UserControllerApi} from "../../api/api";
-import RegisterNewUserScreen from "../../screens/RegisterNewUserScreen";
-import helpers from "../../constants/Functions";
-import {toast, ToastContainer} from "react-toastify";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../store/reducers/rootReducer";
-import RepoCard from "../../screens/Overview/Holder/RepoCard";
-import {CURRENT_USER_INFO, HANDLEDERROR, SUCCESS} from "../../store/actions/diagramAction";
 import Toast from "./Toast";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     contentWrapper: {
         flexGrow: 1,
         display: "flex",
-        paddingLeft: "65px"
+        paddingLeft: "32px",
+        transition: theme.transitions.create("margin")
+    },
+    contentWrapperShift: {
+        marginLeft: "350px"
     },
     content: {
         display: "flex",
@@ -43,119 +47,82 @@ const useStyles = makeStyles(() => ({
 
 /**
  * Diese Komponente erzeugt das Layout auf oberster Ebene der Anwendung.
- * Es enthält sowohl das Menü als auch sämtlichen Inhalt der Anwendung. + Toasts für Fehlgeschlagene bzw. erfolgreiche API calls
- * Die primäre Aufgabe des Layouts ist die einheitliche Darstellung des
- * globalen Menüs sowie das Routing.
+ * Es enthält sowohl das Menü als auch sämtlichen Inhalt der Anwendung. + Toasts für
+ * Fehlgeschlagene bzw. erfolgreiche API calls Die primäre Aufgabe des Layouts ist die einheitliche
+ * Darstellung des globalen Menüs sowie das Routing.
  *
  * Die Komponente bietet keine Anpassungsmöglichkeiten und besitzt
  * keine Parameter.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Layout = (): any => {
+    const [open, setOpen] = useState(true);
+    const dispatch = useDispatch();
+    const apiErrorState = useSelector((state: RootState) => state.api.errorMessage);
+    const apiErrorRetryMethod = useSelector((state: RootState) => state.api.retryMethod);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const apiErrorRetryPayload = useSelector((state: RootState) => state.api.retryPayload);
+    const apiSuccessState = useSelector((state: RootState) => state.api.successMessage);
 
-
-
-    const dispatch = useDispatch()
-    const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage)
-    const apiErrorRetryMethod: () => void = useSelector((state: RootState) => state.api.retryMethod)
-    const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage)
-
-
-    //#TODO: Add a retry Button to the toast
     useEffect(() => {
-        if(apiErrorState){
-            //toast can contain any component, the Retry Button (and the message: apiErrorState) has to be passed here
-            //toast.error(<Toast errorMessage={apiErrorState} retryMethod={apiErrorRetryMethod}/>, {autoClose: 8000, pauseOnHover: true, role: "alert"})
-            toast.error(apiErrorState, {autoClose: 8000, pauseOnHover: true})
-            dispatch({type: HANDLEDERROR, errorMessage: ""})
+        if (apiErrorState) {
+            // toast can contain any component, the Retry Method (and the message: apiErrorState)
+            // has to be passed here
+            toast.error(<Toast
+                errorMessage={apiErrorState}
+                retryMethod={apiErrorRetryMethod}
+                retryPayload={apiErrorRetryPayload}/>, {
+                autoClose: 8000,
+                pauseOnHover: true,
+                role: "alert"
+            });
+            dispatch({type: UNHANDLEDERROR, errorMessage: ""});
         }
-        if(apiSuccessState){
-            toast.success(apiSuccessState, {autoClose: 4000, pauseOnHover: true})
-            dispatch({type: SUCCESS, successMessage: ""})
+        if (apiSuccessState) {
+            toast.success(apiSuccessState, {autoClose: 4000, pauseOnHover: true});
+            dispatch({type: SUCCESS, successMessage: ""});
         }
-    }, [apiErrorState, apiSuccessState, apiErrorRetryMethod, dispatch])
+    }, [apiErrorState, apiSuccessState, apiErrorRetryMethod, apiErrorRetryPayload, dispatch]);
 
     const classes = useStyles();
     const [userController] = useState<UserControllerApi>(new UserControllerApi());
 
-
-    //const [securityIsOn, setSecurityIsOn] = useState<boolean>(true);
-    const [initializing, setInitializing] = useState<boolean>(false);
-    const [initialized, setInitialized] = useState<boolean>(false);
-    const [userDoesExist, setUserDoesExist] = useState<boolean>(false);
-    const {
-        loginWithRedirect,
-        isAuthenticated,
-        isLoading,
-        error,
-        getAccessTokenSilently
-    } = useAuth0();
-
+    const [userDoesExist, setUserDoesExist] = useState<boolean | undefined>(undefined);
 
     useEffect(() => {
-        if (isAuthenticated && initialized) {
-            const config = helpers.getClientConfig(localStorage.getItem("oauth_token"))
-            userController.getUserInfo(config)
-                .then((response) => {
-                    if(response.data) {
-                        setUserDoesExist(true)
-                        dispatch({type: CURRENT_USER_INFO, currentUserInfo: response.data})
-                    } else {
-                        setUserDoesExist(false);
-                    }
+        const config = helpers.getClientConfig();
+        userController.getUserInfo(config)
+            .then(response => {
+                if (response.data) {
+                    setUserDoesExist(true);
+                    dispatch({type: CURRENT_USER_INFO, currentUserInfo: response.data});
+                } else {
+                    setUserDoesExist(false);
+                }
+            })
+            .catch(() => setUserDoesExist(false));
+    }, [userController, dispatch]);
 
-                })
-                .catch(() => setUserDoesExist(false));
-        }
-
-
-    }, [isAuthenticated, initialized, userController]);
-
-
-
-    if (isLoading) {
-        return (
-            <div className={classes.loadingScreen}>
-                <h1>Developer Platform it@M</h1>
-                <CircularProgress className={classes.loadingCircle} />
-            </div>
-        );
+    if (userDoesExist === undefined) {
+        return null;
     }
 
-    if (error) {
-        return <div>Oops... {error.message}</div>;
-    }
-
-    if (!isAuthenticated) {
-        return loginWithRedirect();
-    }
-
-    if (!initialized) {
-        if (!initializing) {
-            setInitializing(true);
-            getAccessTokenSilently().then((token) => {
-                localStorage.setItem("oauth_token", "Bearer " + token)
-
-            });
-            setInitialized(true)
-            setInitializing(false)
-        }
-        //return null;
-    }
-
-
-
-    if(!userDoesExist){
-        return <RegisterNewUserScreen/>
+    if (!userDoesExist) {
+        return <RegisterNewUserScreen/>;
     }
 
     return (
         <>
-            <Menu />
-            <div className={classes.contentWrapper}>
+            <Menu
+                open={open}
+                setOpen={setOpen}/>
+            <div className={clsx(
+                open && classes.contentWrapperShift,
+                classes.contentWrapper
+            )}>
                 <div className={classes.content}>
-                    <Router />
-                    <ToastContainer />
+                    <Router/>
+                    <ToastContainer/>
                 </div>
             </div>
         </>

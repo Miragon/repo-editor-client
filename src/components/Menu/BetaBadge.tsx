@@ -1,5 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
-import {default as React} from "react";
+import React from "react";
 
 const useStyles = makeStyles({
     beta: {
@@ -25,6 +25,6 @@ const BetaBadge: React.FC = () => {
             BETA
         </span>
     );
-}
+};
 
 export default BetaBadge;
