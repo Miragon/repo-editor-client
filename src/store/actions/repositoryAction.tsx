@@ -1,10 +1,10 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import { NewRepositoryTO, RepositoryUpdateTO } from "../../api/models";
+import {NewRepositoryTO, RepositoryUpdateTO} from "../../api/models";
 import helpers from "../../constants/Functions";
-import { ACTIVE_REPO, GET_REPOS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR } from "../constants";
-import { ActionType } from "./actions";
-import { handleError } from "./errorAction";
+import {ACTIVE_REPO, GET_REPOS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "../constants";
+import {ActionType} from "./actions";
+import {handleError} from "./errorAction";
 
 export const fetchRepositories = () => {
     return async (dispatch: Dispatch): Promise<void> => {

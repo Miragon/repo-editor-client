@@ -1,17 +1,18 @@
 import MenuItem from "@material-ui/core/MenuItem";
-import { makeStyles } from "@material-ui/core/styles";
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {makeStyles} from "@material-ui/core/styles";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import { DiagramVersionUploadTOSaveTypeEnum, RepositoryTO } from "../../api/models";
+import {DiagramVersionUploadTOSaveTypeEnum, RepositoryTO} from "../../api/models";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
 import SettingsTextField from "../../components/Form/SettingsTextField";
 import * as diagramAction from "../../store/actions/diagramAction";
 import * as versionAction from "../../store/actions/versionAction";
-import { UNHANDLEDERROR } from "../../store/constants";
-import { RootState } from "../../store/reducers/rootReducer";
+import {UNHANDLEDERROR} from "../../store/constants";
+import {RootState} from "../../store/reducers/rootReducer";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     input: {
@@ -31,6 +32,8 @@ interface Props {
 const UploadDiagramDialog: React.FC<Props> = props => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
+
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState("");
@@ -42,7 +45,7 @@ const UploadDiagramDialog: React.FC<Props> = props => {
         (state: RootState) => state.repos.repos
     );
     const uploadedDiagram = useSelector(
-        (state: RootState) => state.uploadedDiagram.uploadedDiagram
+        (state: RootState) => state.diagrams.uploadedDiagram
     );
 
     useEffect(() => {
@@ -90,10 +93,10 @@ const UploadDiagramDialog: React.FC<Props> = props => {
             error={error}
             onCloseError={() => setError(undefined)}
             open={props.open}
-            title="Upload Diagram File"
-            secondTitle="Cancel"
+            title={t("diagram.upload")}
+            secondTitle={t("dialog.cancel")}
             onSecond={props.onCancelled}
-            firstTitle="Create"
+            firstTitle={t("dialog.create")}
             onFirst={onCreate}>
 
             <SettingsForm large>
@@ -108,7 +111,7 @@ const UploadDiagramDialog: React.FC<Props> = props => {
                 <SettingsSelect
                     disabled={false}
                     value={props.repo ? props.repo.id : repository}
-                    label="Target Repository"
+                    label={t("repository.target")}
                     onChanged={setRepository}>
                     {props.repo
                         ? (
@@ -129,12 +132,12 @@ const UploadDiagramDialog: React.FC<Props> = props => {
                 </SettingsSelect>
 
                 <SettingsTextField
-                    label="Title"
+                    label={t("properties.title")}
                     value={title}
                     onChanged={setTitle} />
 
                 <SettingsTextField
-                    label="Description"
+                    label={t("properties.description")}
                     value={description}
                     multiline
                     rows={3}

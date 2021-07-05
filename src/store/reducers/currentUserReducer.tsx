@@ -1,5 +1,5 @@
-import { CaseReducer } from "@reduxjs/toolkit";
-import { CURRENT_USER_INFO } from "../constants";
+import {CaseReducer} from "@reduxjs/toolkit";
+import {CURRENT_USER_INFO} from "../constants";
 
 const initialState = {
     currentUserInfo: null

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, {useCallback, useRef, useState} from "react";
 import {
     ClickAwayListener,
     Divider,
@@ -12,14 +12,15 @@ import {
     Paper,
     Popper
 } from "@material-ui/core";
-import { Settings } from "@material-ui/icons";
+import {Settings} from "@material-ui/icons";
 import clsx from "clsx";
-import { makeStyles } from "@material-ui/styles";
-import { Theme } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
-import { DropdownButtonItem } from "../../components/Form/DropdownButton";
-import { AssignmentTO, AssignmentUpdateTORoleEnumEnum } from "../../api/models";
+import {makeStyles} from "@material-ui/styles";
+import {Theme} from "@material-ui/core/styles";
+import {useDispatch} from "react-redux";
+import {DropdownButtonItem} from "../../components/Form/DropdownButton";
+import {AssignmentTO, AssignmentUpdateTORoleEnumEnum} from "../../api/models";
 import * as assignmentAction from "../../store/actions/assignmentAction";
+import {useTranslation} from "react-i18next";
 
 interface Props {
     assignmentTO: AssignmentTO;
@@ -70,6 +71,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 const UserListItem: React.FC<Props> = props => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
+
 
     const [open, setOpen] = useState<boolean>(false);
     const ref = useRef<HTMLButtonElement>(null);
@@ -103,7 +106,7 @@ const UserListItem: React.FC<Props> = props => {
     const options: DropdownButtonItem[] = [
         {
             id: "Owner",
-            label: "Owner",
+            label: "user.OWNER",
             type: "button",
             onClick: () => {
                 changeRole(AssignmentUpdateTORoleEnumEnum.OWNER);
@@ -111,7 +114,7 @@ const UserListItem: React.FC<Props> = props => {
         },
         {
             id: "Admin",
-            label: "Admin",
+            label: "user.ADMIN",
             type: "button",
             onClick: () => {
                 changeRole(AssignmentUpdateTORoleEnumEnum.ADMIN);
@@ -119,7 +122,7 @@ const UserListItem: React.FC<Props> = props => {
         },
         {
             id: "Member",
-            label: "Member",
+            label: "user.MEMBER",
             type: "button",
             onClick: () => {
                 changeRole(AssignmentUpdateTORoleEnumEnum.MEMBER);
@@ -127,7 +130,7 @@ const UserListItem: React.FC<Props> = props => {
         },
         {
             id: "Viewer",
-            label: "Viewer",
+            label: "user.VIEWER",
             type: "button",
             onClick: () => {
                 changeRole(AssignmentUpdateTORoleEnumEnum.VIEWER);
@@ -142,7 +145,7 @@ const UserListItem: React.FC<Props> = props => {
         },
         {
             id: "Remove",
-            label: "Remove from Repo",
+            label: "user.remove",
             type: "button",
             onClick: () => {
                 removeUser();
@@ -155,7 +158,7 @@ const UserListItem: React.FC<Props> = props => {
             <ListItem>
                 <ListItemText
                     primary={props.assignmentTO.username}
-                    secondary={props.assignmentTO.roleEnum} />
+                    secondary={t(`user.${props.assignmentTO.roleEnum}`)} />
                 {props.hasAdminPermissions && (
                     <ListItemSecondaryAction>
                         <IconButton ref={ref} edge="end" onClick={() => setOpen(true)}>
@@ -197,7 +200,7 @@ const UserListItem: React.FC<Props> = props => {
                                                 }
                                                 setOpen(false);
                                             }}>
-                                            {option.label}
+                                            {t( `user.${option.label}`)}
                                         </MenuItem>
                                     ))}
                                 </MenuList>

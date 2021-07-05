@@ -1,14 +1,15 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { makeStyles } from "@material-ui/styles";
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { DiagramTO, RepositoryTO } from "../../api/models";
-import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
+import {makeStyles} from "@material-ui/styles";
+import React, {useCallback, useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {DiagramTO, RepositoryTO} from "../../api/models";
+import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import * as diagramAction from "../../store/actions/diagramAction";
-import { RootState } from "../../store/reducers/rootReducer";
+import {RootState} from "../../store/reducers/rootReducer";
 import DiagramCard from "./Holder/DiagramCard";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     headerText: {
@@ -49,11 +50,14 @@ let timeout: NodeJS.Timeout | undefined;
 const DiagramSearchBar: React.FC = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const {t, i18n} = useTranslation("common");
+
 
     const searchedDiagrams: Array<DiagramTO> = useSelector(
-        (state: RootState) => state.searchedDiagrams.searchedDiagrams
+        (state: RootState) => state.diagrams.searchedDiagrams
     );
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
+    const results: number = useSelector((state: RootState) => state.resultsCount.diagramResultsCount)
 
     const [diagram, setDiagram] = useState("");
     const [open, setOpen] = useState(false);
@@ -81,8 +85,10 @@ const DiagramSearchBar: React.FC = () => {
         if (searchedDiagrams.length > 0) {
             setLoading(false);
         }
-        // if (searchedDiagrams.)
-    }, [searchedDiagrams]);
+        if (results === 0) {
+            setLoading(false);
+        }
+    }, [searchedDiagrams, results]);
 
     const getRepoName = ((repoId: string) => {
         const assignedRepo = repos.find(repo => repo.id === repoId);
@@ -138,7 +144,7 @@ const DiagramSearchBar: React.FC = () => {
                         renderInput={params => (
                             <TextField
                                 {...params}
-                                label="Suchen..."
+                                label={t("search.search")}
                                 variant="outlined"
                                 onChange={event => onChangeWithTimer(event.target.value)}
                                 value={diagram}
@@ -173,7 +179,7 @@ const DiagramSearchBar: React.FC = () => {
                             </a>
                         ))}
                         {!loading && searchedDiagrams?.length === 0 && diagram.length > 0 && (
-                            <span>No Results</span>
+                            <span>{t("search.noResults")}</span>
                         )}
                     </div>
                 </ErrorBoundary>

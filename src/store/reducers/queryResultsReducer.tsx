@@ -1,23 +1,23 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {DiagramVersionTO} from "../../api/models";
-import {GET_VERSIONS, LATEST_VERSION} from "../constants";
+import {DIAGRAMQUERY_EXECUTED, USERQUERY_EXECUTED} from "../constants";
 
 const initialState = {
-    versions: Array<DiagramVersionTO>(),
-    latestVersion: null
+    userResultsCount: 0,
+    diagramResultsCount: 0
 };
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_VERSIONS:
+        case USERQUERY_EXECUTED:
             return {
                 ...state,
-                versions: action.versions
+                userResultsCount: action.userResultsCount
             };
-        case LATEST_VERSION:
+        case DIAGRAMQUERY_EXECUTED:
             return {
                 ...state,
-                latestVersion: action.latestVersion
+                diagramResultsCount: action.diagramResultsCount
+
             }
     }
     return state;

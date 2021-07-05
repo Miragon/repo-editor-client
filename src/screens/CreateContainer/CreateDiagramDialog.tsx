@@ -1,16 +1,17 @@
 import MenuItem from "@material-ui/core/MenuItem";
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useCallback, useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import { DiagramTO, DiagramVersionUploadTOSaveTypeEnum, RepositoryTO } from "../../api/models";
+import {DiagramTO, DiagramVersionUploadTOSaveTypeEnum, RepositoryTO} from "../../api/models";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
 import SettingsTextField from "../../components/Form/SettingsTextField";
 import * as diagramAction from "../../store/actions/diagramAction";
 import * as versionAction from "../../store/actions/versionAction";
-import { DEFAULT_DMN_FILE, DEFAULT_XML_FILE } from "../../store/constants";
-import { RootState } from "../../store/reducers/rootReducer";
+import {DEFAULT_DMN_FILE, DEFAULT_XML_FILE} from "../../store/constants";
+import {RootState} from "../../store/reducers/rootReducer";
+import {useTranslation} from "react-i18next";
 
 interface Props {
     open: boolean;
@@ -21,6 +22,9 @@ interface Props {
 
 const CreateDiagramDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
+
+
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -30,7 +34,7 @@ const CreateDiagramDialog: React.FC<Props> = props => {
         (state: RootState) => state.repos.repos
     );
     const createdDiagram: DiagramTO = useSelector(
-        (state: RootState) => state.createdDiagram.createdDiagram
+        (state: RootState) => state.diagrams.createdDiagram
     );
 
     const onCreate = useCallback(async () => {
@@ -55,7 +59,7 @@ const CreateDiagramDialog: React.FC<Props> = props => {
             error={error}
             onCloseError={() => setError(undefined)}
             open={props.open}
-            title={`Create ${props.type === "bpmn" ? "BPMN" : "DMN"} Diagram`}
+            title={props.type === "bpmn" ? t("diagram.createBpmn") : t("diagram.createDmn")}
             secondTitle="Cancel"
             onSecond={props.onCancelled}
             firstTitle="Create"
@@ -66,7 +70,7 @@ const CreateDiagramDialog: React.FC<Props> = props => {
                 <SettingsSelect
                     disabled={false}
                     value={props.repo ? props.repo.id : repository}
-                    label="Target Repository"
+                    label={t("repository.target")}
                     onChanged={setRepository}>
                     {props.repo
                         ? (
@@ -86,12 +90,12 @@ const CreateDiagramDialog: React.FC<Props> = props => {
                 </SettingsSelect>
 
                 <SettingsTextField
-                    label="Title"
+                    label={t("properties.title")}
                     value={title}
                     onChanged={setTitle} />
 
                 <SettingsTextField
-                    label="Description"
+                    label={t("properties.description")}
                     value={description}
                     multiline
                     rows={3}

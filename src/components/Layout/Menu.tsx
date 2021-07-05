@@ -3,7 +3,7 @@ import {makeStyles, Theme} from "@material-ui/core/styles";
 import {Menu as MenuIcon} from "@material-ui/icons";
 import clsx from "clsx";
 import React from "react";
-import logo from "../../img/logo-free.png";
+import logo from "../../img/logo.png";
 import MenuBar from "../Menu/MenuBar";
 import AppMenu from "./Menu/AppMenu";
 

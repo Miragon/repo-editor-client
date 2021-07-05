@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
-import { Input, InputLabel } from "@material-ui/core";
+import React, {useCallback, useState} from "react";
+import {useDispatch} from "react-redux";
+import {makeStyles} from "@material-ui/core/styles";
+import {Input, InputLabel} from "@material-ui/core";
 import * as diagramAction from "../../store/actions/diagramAction";
 import PopupDialog from "../../components/Form/PopupDialog";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     line: {
@@ -31,6 +32,8 @@ interface Props {
 const EditDiagramDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const {t, i18n} = useTranslation("common");
+
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState<string>(props.diagramName);
@@ -52,17 +55,17 @@ const EditDiagramDialog: React.FC<Props> = props => {
             title={props.diagramName}
             error={error}
             onCloseError={() => setError(undefined)}
-            firstTitle="Apply Changes"
+            firstTitle={t("dialog.applyChanges")}
             onFirst={applyChanges}
-            secondTitle="Close"
+            secondTitle={t("dialog.cancel")}
             onSecond={props.onCancelled}>
-            <InputLabel style={{ fontSize: "12px" }} htmlFor="Title">Title</InputLabel>
+            <InputLabel style={{ fontSize: "12px" }} htmlFor="Title">{t("properties.title")}</InputLabel>
             <Input
                 id="Name"
                 value={title}
                 onChange={event => setTitle(event.target.value)} />
             <div className={classes.spacer} />
-            <InputLabel style={{ fontSize: "12px" }} htmlFor="Description">Description</InputLabel>
+            <InputLabel style={{ fontSize: "12px" }} htmlFor="Description">{t("properties.description")}</InputLabel>
             <Input
                 id="Description"
                 value={description}

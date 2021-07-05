@@ -1,37 +1,23 @@
 /* eslint-disable max-len */
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { makeStyles } from "@material-ui/styles";
-import {
-    ClickAwayListener,
-    Collapse,
-    Grow,
-    IconButton,
-    MenuItem,
-    MenuList,
-    Paper,
-    Popper,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow
-} from "@material-ui/core";
-import { KeyboardArrowDown, KeyboardArrowUp, MoreVert } from "@material-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import React, {useCallback, useEffect, useRef, useState} from "react";
+import {makeStyles} from "@material-ui/styles";
+import {ClickAwayListener, Collapse, Grow, IconButton, MenuItem, MenuList, Paper, Popper} from "@material-ui/core";
+import {KeyboardArrowDown, MoreVert} from "@material-ui/icons";
+import {useDispatch, useSelector} from "react-redux";
 import clsx from "clsx";
 import theme from "../../theme";
-import { DropdownButtonItem } from "../../components/Form/DropdownButton";
+import {DropdownButtonItem} from "../../components/Form/DropdownButton";
 import {downloadVersion, getAllVersions, getLatestVersion} from "../../store/actions/versionAction";
-import { DiagramVersionTO } from "../../api/models";
-import { RootState } from "../../store/reducers/rootReducer";
-import { deleteDiagram } from "../../store/actions";
-import {GET_VERSIONS, LATEST_VERSION} from "../../store/constants";
+import {DiagramVersionTO} from "../../api/models";
+import {RootState} from "../../store/reducers/rootReducer";
+import {deleteDiagram} from "../../store/actions";
+import {LATEST_VERSION} from "../../store/constants";
 import CreateVersionDialog from "./CreateVersionDialog";
 import EditDiagramDialog from "./EditDiagramDialog";
 import TableChartIcon from "@material-ui/icons/TableChart";
 import {ReactComponent as BpmnIcon} from "../../img/bpmnIcon_gears.svg";
 import VersionDetails from "./VersionDetails";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     listItemWithVersions: {
@@ -123,7 +109,6 @@ const useStyles = makeStyles(() => ({
         },
     },
     popupContainer: {
-        width: "150px",
         zIndex: 1000
     },
     popup: {
@@ -184,6 +169,7 @@ interface Props {
 const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
     const diagramVersionTOs: Array<DiagramVersionTO> = useSelector((state: RootState) => state.versions.versions);
     const latestVersion: DiagramVersionTO | null = useSelector((state: RootState) => state.versions.latestVersion);
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
@@ -289,7 +275,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
         {
             id: "CreateVersion",
-            label: "Create new Version",
+            label: "version.create",
             type: "button",
             onClick: () => {
                 setCreateVersionOpen(true);
@@ -297,7 +283,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         },
         {
             id: "EditDiagram",
-            label: "Edit Diagram",
+            label: "diagram.edit",
             type: "button",
             onClick: () => {
                 setEditDiagramOpen(true);
@@ -306,7 +292,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         },
         {
             id: "DownloadDiagram",
-            label: "Download Diagram",
+            label: "diagram.download",
             type: "button",
             onClick: () => {
                 initDownload();
@@ -322,11 +308,11 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         },
         {
             id: "DeleteDiagram",
-            label: "Delete Diagram",
+            label: "diagram.delete",
             type: "button",
             onClick: () => {
                 // eslint-disable-next-line no-restricted-globals
-                if (confirm(`Are you sure you want to delete '${props.diagramTitle}'?`)) {
+                if (confirm(t("diagram.confirmDelete", {diagramName: props.diagramTitle}))) {
                     removeDiagram();
                 }
             }
@@ -357,7 +343,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                             </div>
 
                             <div className={classes.updatedDate}>
-                                {`modified on ${reformatDate(props.updatedDate)}`}
+                                {`${t("diagram.modifiedOn")} ${reformatDate(props.updatedDate)}`}
                             </div>
                             <IconButton ref={ref} className={classes.more} onClick={event => openSettings(event)}>
                                 <MoreVert />
@@ -412,7 +398,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                                                 }
                                                 setSettingsOpen(false);
                                             }}>
-                                            {option.label}
+                                            {t(option.label)}
                                         </MenuItem>
                                     ))}
                                 </MenuList>

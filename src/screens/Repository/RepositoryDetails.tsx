@@ -1,10 +1,10 @@
-import { IconButton } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { Description, People, Settings } from "@material-ui/icons/";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { RepositoryTO } from "../../api/models";
-import { RootState } from "../../store/reducers/rootReducer";
+import {IconButton} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
+import {Description, People, Settings} from "@material-ui/icons/";
+import React, {useState} from "react";
+import {useSelector} from "react-redux";
+import {RepositoryTO} from "../../api/models";
+import {RootState} from "../../store/reducers/rootReducer";
 import EditRepoDialog from "./EditRepoDialog";
 
 import UserManagementDialog from "./UserManagementDialog";
@@ -42,7 +42,7 @@ const useStyles = makeStyles(() => ({
 const RepositoryDetails: React.FC = (() => {
     const classes = useStyles();
 
-    const activeRepo: RepositoryTO = useSelector((state: RootState) => state.activeRepo.activeRepo);
+    const activeRepo: RepositoryTO = useSelector((state: RootState) => state.repos.activeRepo);
 
     const [userManagementOpen, setUserManagementOpen] = useState<boolean>(false);
     const [repoManagementOpen, setRepoManagementOpen] = useState<boolean>(false);

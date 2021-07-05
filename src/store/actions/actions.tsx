@@ -1,4 +1,4 @@
-import { createOrUpdateUserAssignment, deleteAssignment, getAllAssignedUsers } from "./assignmentAction";
+import {createOrUpdateUserAssignment, deleteAssignment, getAllAssignedUsers} from "./assignmentAction";
 import * as diagramAction from "./diagramAction";
 import {
     deleteDiagram,
@@ -16,7 +16,7 @@ import {
     getSingleRepository,
     updateRepository
 } from "./repositoryAction";
-import { searchUsers } from "./userAction";
+import {searchUsers} from "./userAction";
 import {createOrUpdateVersion, getAllVersions, getLatestVersion} from "./versionAction";
 
 export enum ActionType {

@@ -1,7 +1,7 @@
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
+import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import CreateContainer from "../CreateContainer/CreateContainer";
 import FavoriteDiagrams from "./FavoriteDiagrams";
 import RecentDiagrams from "./RecentDiagrams";

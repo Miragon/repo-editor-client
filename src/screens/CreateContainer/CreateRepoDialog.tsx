@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, {useCallback, useState} from "react";
+import {useDispatch} from "react-redux";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsTextField from "../../components/Form/SettingsTextField";
 import * as repositoryAction from "../../store/actions/repositoryAction";
+import {useTranslation} from "react-i18next";
 
 interface Props {
     open: boolean;
@@ -13,6 +14,8 @@ interface Props {
 
 const CreateRepoDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
+
 
     const { open, onCancelled, onCreated } = props;
 
@@ -37,10 +40,10 @@ const CreateRepoDialog: React.FC<Props> = props => {
             error={error}
             onCloseError={() => setError(undefined)}
             open={open}
-            title="Create New Repository"
-            secondTitle="Cancel"
+            title={t("repository.create")}
+            secondTitle={t("dialog.cancel")}
             onSecond={onCancelled}
-            firstTitle="Create"
+            firstTitle={t("dialog.create")}
             onFirst={() => {
                 onCreate();
                 onCreated();
@@ -49,12 +52,12 @@ const CreateRepoDialog: React.FC<Props> = props => {
             <SettingsForm large>
 
                 <SettingsTextField
-                    label="Title"
+                    label={t("properties.title")}
                     value={title}
                     onChanged={setTitle} />
 
                 <SettingsTextField
-                    label="Description"
+                    label={t("properties.description")}
                     value={description}
                     multiline
                     rows={3}

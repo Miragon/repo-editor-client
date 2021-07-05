@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
-import { getSingleRepository } from "../../store/actions";
+import React, {useCallback, useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {useParams} from "react-router";
+import {getSingleRepository} from "../../store/actions";
 import CreateDiagramContainer from "./CreateDiagramContainer";
 import DiagramDetails from "./DiagramDetails";
 import RepositoryDetails from "./RepositoryDetails";

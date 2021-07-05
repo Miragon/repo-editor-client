@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -6,14 +6,14 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import LockIcon from "@material-ui/icons/Lock";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { UserControllerApi } from "../api/api";
+import {makeStyles} from "@material-ui/core/styles";
+import {useHistory} from "react-router-dom";
+import {toast, ToastContainer} from "react-toastify";
+import {useDispatch, useSelector} from "react-redux";
+import {UserControllerApi} from "../api/api";
 import helpers from "../constants/Functions";
-import { SUCCESS, UNHANDLEDERROR } from "../store/constants";
-import { RootState } from "../store/reducers/rootReducer";
+import {SUCCESS, UNHANDLEDERROR} from "../store/constants";
+import {RootState} from "../store/reducers/rootReducer";
 
 function Copyright() {
     return (

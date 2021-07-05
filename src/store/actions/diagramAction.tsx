@@ -1,20 +1,22 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import {DiagramUpdateTO, NewDiagramTO} from "../../api/models";
 import helpers from "../../constants/Functions";
 import {
     ACTIVE_DIAGRAMS,
     CREATED_DIAGRAM,
-    DEFAULT_BPMN_SVG, DEFAULT_DMN_SVG,
-    DIAGRAM_UPLOAD,
+    DEFAULT_BPMN_SVG,
+    DEFAULT_DMN_SVG,
+    DIAGRAM_UPLOAD, DIAGRAMQUERY_EXECUTED,
     GET_FAVORITE,
     GET_RECENT,
-    SEARCH_DIAGRAMS, SUCCESS,
+    SEARCH_DIAGRAMS,
+    SUCCESS,
     SYNC_STATUS,
     UNHANDLEDERROR
 } from "../constants";
-import { ActionType } from "./actions";
-import { handleError } from "./errorAction";
+import {ActionType} from "./actions";
+import {handleError} from "./errorAction";
 
 export const fetchFavoriteDiagrams = () => {
     return async (dispatch: Dispatch): Promise<void> => {
@@ -82,7 +84,7 @@ export const createDiagram = (
     };
 };
 
-export const updateDiagram = (name: string, description: any, diagramId: string) => {
+export const updateDiagram = (name: string, description: string | undefined, diagramId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         const diagramController = new api.DiagramControllerApi();
         try {
@@ -111,7 +113,7 @@ export const fetchDiagramsFromRepo = (repoId: string) => {
             const config = helpers.getClientConfig();
             const response = await diagramController.getDiagramsFromRepo(repoId, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: ACTIVE_DIAGRAMS, activeDiagrams: response.data });
+                dispatch({ type: ACTIVE_DIAGRAMS, diagrams: response.data });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -151,6 +153,7 @@ export const searchDiagram = (typedTitle: string) => {
             const response = await diagramController.searchDiagrams(typedTitle, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SEARCH_DIAGRAMS, searchedDiagrams: response.data });
+                dispatch({type: DIAGRAMQUERY_EXECUTED, diagramResultsCount: response.data.length})
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }

@@ -1,12 +1,13 @@
-import { makeStyles } from "@material-ui/styles";
-import { observer } from "mobx-react";
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { DiagramTO, RepositoryTO } from "../../api/models";
-import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
+import {makeStyles} from "@material-ui/styles";
+import {observer} from "mobx-react";
+import React, {useCallback, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {DiagramTO, RepositoryTO} from "../../api/models";
+import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import * as diagramAction from "../../store/actions/diagramAction";
-import { RootState } from "../../store/reducers/rootReducer";
+import {RootState} from "../../store/reducers/rootReducer";
 import DiagramCard from "./Holder/DiagramCard";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     diagramContainer: {
@@ -32,9 +33,11 @@ const useStyles = makeStyles(() => ({
 const RecentDiagrams: React.FC = observer(() => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
+
 
     const recentDiagrams: Array<DiagramTO> = useSelector(
-        (state: RootState) => state.recentDiagrams.recentDiagrams
+        (state: RootState) => state.diagrams.recentDiagrams
     );
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
     const syncStatus = useSelector((state: RootState) => state.dataSynced.dataSynced);
@@ -62,7 +65,7 @@ const RecentDiagrams: React.FC = observer(() => {
 
     return (
         <div className={classes.diagramContainer}>
-            <h1>Recently Used</h1>
+            <h1>{t("category.recent")}</h1>
             <div className={classes.container}>
                 <ErrorBoundary>
                     {recentDiagrams?.map(diagram => (
@@ -80,7 +83,7 @@ const RecentDiagrams: React.FC = observer(() => {
                         </a>
                     ))}
                     {recentDiagrams?.length === 0 && (
-                        <span>You haven&apos;t added any diagrams yet</span>
+                        <span>{t("category.recent")}</span>
                     )}
                 </ErrorBoundary>
             </div>

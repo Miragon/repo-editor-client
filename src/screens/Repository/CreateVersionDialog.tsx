@@ -1,13 +1,14 @@
-import React, { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
-import { MenuItem } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
+import React, {useCallback, useState} from "react";
+import {useDispatch} from "react-redux";
+import {MenuItem} from "@material-ui/core";
+import {makeStyles} from "@material-ui/styles";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsTextField from "../../components/Form/SettingsTextField";
 import * as versionAction from "../../store/actions/versionAction";
 import SettingsSelect from "../../components/Form/SettingsSelect";
-import { DiagramVersionUploadTOSaveTypeEnum } from "../../api/models";
+import {DiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     container: {}
@@ -26,6 +27,8 @@ interface Props {
 const CreateVersionDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const {t, i18n} = useTranslation("common");
+
 
     const {
         open, onCancelled, diagramId, diagramTitle
@@ -55,33 +58,33 @@ const CreateVersionDialog: React.FC<Props> = props => {
             error={error}
             onCloseError={() => setError(undefined)}
             open={open}
-            title={`Create New Version of ${diagramTitle}`}
-            secondTitle="Cancel"
+            title={t("version.dialogHeader", {diagramName: diagramTitle})}
+            secondTitle={t("dialog.cancel")}
             onSecond={onCancelled}
-            firstTitle="Create"
+            firstTitle={t("dialog.create")}
             onFirst={() => onCreate()}>
 
             <SettingsForm large>
 
                 <SettingsSelect
                     value={saveType}
-                    label="Type"
+                    label={t("properties.type")}
                     disabled={false}
                     onChanged={setSaveType}>
                     <MenuItem
                         key={DiagramVersionUploadTOSaveTypeEnum.RELEASE}
                         value={DiagramVersionUploadTOSaveTypeEnum.RELEASE}>
-                        {DiagramVersionUploadTOSaveTypeEnum.RELEASE}
+                        {t("version.RELEASE")}
                     </MenuItem>
                     <MenuItem
                         key={DiagramVersionUploadTOSaveTypeEnum.MILESTONE}
                         value={DiagramVersionUploadTOSaveTypeEnum.MILESTONE}>
-                        {DiagramVersionUploadTOSaveTypeEnum.MILESTONE}
+                        {t("version.MILESTONE")}
                     </MenuItem>
                 </SettingsSelect>
 
                 <SettingsTextField
-                    label="Comment"
+                    label={t("properties.comment")}
                     value={comment}
                     multiline
                     rows={2}

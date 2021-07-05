@@ -1,0 +1,66 @@
+{
+  "repository": {
+    "confirmDelete": "Are you sure you want to delete {{repoName}}?",
+    "repository": "Repository",
+    "create": "Create Repository",
+    "delete": "Delete Repository",
+    "edit": "Edit Repository",
+    "notAvailable": "You haven't added any Repositories yet.",
+    "target": "Target Repository"
+  },
+  "diagram": {
+    "confirmDelete": "Are you sure want to delete {{diagramName}}?",
+    "create": "Create Diagram",
+    "createBpmn": "Create BPMN Diagram",
+    "createDmn": "Create DMN Diagram",
+    "delete": "Delete Diagram",
+    "download": "Download Diagram",
+    "edit": "Edit Diagram",
+    "modifiedOn": "Modified on",
+    "upload": "Upload Diagram",
+    "import": "Import from Cawemo",
+    "notAvailable": "You haven't added any diagrams yet"
+  },
+  "version": {
+    "create": "Create new Version",
+    "edit": "Edit version",
+    "dialogHeader": "Create new Version of {{diagramName}}",
+    "download": "Download version",
+    "delete": "Delete version",
+    "version": "Version",
+    "RELEASE": "Release",
+    "MILESTONE": "Milestone"
+  },
+  "user": {
+    "users": "Users",
+    "OWNER": "Owner",
+    "ADMIN": "Admin",
+    "MEMBER": "Member",
+    "VIEWER": "Viewer",
+    "remove": "Remove from Repository"
+  },
+  "category": {
+    "favorite": "Favorites",
+    "recent": "Recently used",
+
+    "noFavoritesAvailable": "You haven't added any diagrams to your favorites yet."
+
+  },
+  "search": {
+    "search": "Search...",
+    "noResults": "No Results"
+  },
+  "dialog": {
+    "applyChanges": "Apply Changes",
+    "cancel": "Cancel",
+    "close": "Close",
+    "create": "Create"
+  },
+  "properties": {
+    "title": "Title",
+    "description": "Description",
+    "comment": "Comment",
+    "date": "Date",
+    "type": "Type"
+  }
+}

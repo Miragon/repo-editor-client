@@ -1,0 +1,66 @@
+{
+  "repository": {
+    "confirmDelete": "Wollen Sie {{repoName}} wirklich löschen?",
+    "repository": "Sammlung",
+    "create": "Sammlung erstellen",
+    "delete": "Sammlung löschen",
+    "edit": "Sammlung bearbeiten",
+    "notAvailable": "Sie haben noch keine Sammlungen erstellt",
+    "target": "Sammlung"
+
+  },
+  "diagram": {
+
+    "confirmDelete": "Wollen Sie {{diagramName}} wirklich löschen?",
+    "create": "Diagramm erstellen",
+    "createBpmn": "BPMN Diagramm erstellen",
+    "createDmn": "DMN Diagramm erstellen",
+    "delete": "Diagramm löschen",
+    "download": "Diagramm herunterladen",
+    "edit": "Diagramm bearbeiten",
+    "modifiedOn": "Bearbeitet am",
+    "upload": "Diagramm hochladen",
+    "import": "Aus Cawemo importieren",
+    "notAvailable": "Sie haben noch keine Diagramme erstellt"
+  },
+  "version": {
+    "create": "Version erstellen",
+    "dialogHeader": "Neue Version von {{diagramName}} erstellen",
+    "edit": "Version bearbeiten",
+    "download": "Version herunterladen",
+    "delete": "Version löschen",
+    "version": "Version",
+    "RELEASE": "Veröffentlichung",
+    "MILESTONE": "Meilenstein"
+  },
+  "user": {
+    "users": "Benutzer",
+    "OWNER": "Eigentümer",
+    "ADMIN": "Administrator",
+    "MEMBER": "Mitglied",
+    "VIEWER": "Gast",
+    "remove": "Von Sammlung entfernen"
+  },
+  "category": {
+    "favorite": "Favoriten",
+    "recent": "Vor Kurzem bearbeitet",
+    "noFavoritesAvailable": "Sie haben noch keine Diagramme zu Ihren Favoriten hinzugefügt."
+  },
+  "search": {
+    "search": "Suchen...",
+    "noResults": "Keine Ergebnisse"
+  },
+  "dialog": {
+    "applyChanges": "Bestätigen",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "create": "Erstellen"
+  },
+  "properties": {
+    "title": "Titel",
+    "description": "Beschreibung",
+    "comment": "Kommentar",
+    "date": "Datum",
+    "type": "Typ"
+  }
+}

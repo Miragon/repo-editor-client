@@ -1,5 +1,5 @@
-import { CaseReducer } from "@reduxjs/toolkit";
-import { SYNC_STATUS } from "../constants";
+import {CaseReducer} from "@reduxjs/toolkit";
+import {SYNC_STATUS} from "../constants";
 
 const initialState = {
     dataSynced: true

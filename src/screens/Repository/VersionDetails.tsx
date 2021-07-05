@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {Collapse, Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
+import React, {useEffect} from "react";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {KeyboardArrowUp} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/styles";
 import {DiagramVersionTO} from "../../api/models";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../store/reducers/rootReducer";
+import {useDispatch} from "react-redux";
 import {GET_VERSIONS} from "../../store/constants";
+import {useTranslation} from "react-i18next";
 
 
 const useStyles = makeStyles(() => ({
@@ -31,6 +31,7 @@ interface Props {
 const VersionDetails: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
 
 
 
@@ -85,13 +86,13 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
                 <TableHead>
                     <TableRow>
                         <TableCell>
-                            <b>Version</b>
+                            <b>{t("version.version")}</b>
                         </TableCell>
                         <TableCell>
-                            <b>Comment</b>
+                            <b>{t("properties.comment")}</b>
                         </TableCell>
                         <TableCell>
-                            <b>Date</b>
+                            <b>{t("properties.date")}</b>
                         </TableCell>
                     </TableRow>
                 </TableHead>

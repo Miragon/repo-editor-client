@@ -1,15 +1,16 @@
-import { makeStyles } from "@material-ui/core/styles";
-import { observer } from "mobx-react";
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import {makeStyles} from "@material-ui/core/styles";
+import {observer} from "mobx-react";
+import React, {useCallback, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
 import RepoCard from "./Holder/RepoCard";
-import { RepositoryTO } from "../../api/models";
-import { RootState } from "../../store/reducers/rootReducer";
-import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
+import {RepositoryTO} from "../../api/models";
+import {RootState} from "../../store/reducers/rootReducer";
+import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import "react-toastify/dist/ReactToastify.css";
-import { fetchRepositories } from "../../store/actions/repositoryAction";
-import { ACTIVE_REPO } from "../../store/constants";
+import {fetchRepositories} from "../../store/actions/repositoryAction";
+import {ACTIVE_REPO} from "../../store/constants";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     header: {
@@ -31,6 +32,7 @@ const RepoContainer: React.FC = observer(() => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
+    const {t, i18n} = useTranslation("common");
 
     const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
     const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced);
@@ -59,7 +61,7 @@ const RepoContainer: React.FC = observer(() => {
         <>
             <div className={classes.header}>
                 <div className={classes.headerText}>
-                    Repositories
+                    {t("repository.repository")}
                 </div>
             </div>
 
@@ -76,7 +78,7 @@ const RepoContainer: React.FC = observer(() => {
                             onClick={() => openRepoScreen(repo)} />
                     ))}
                     {allRepos?.length === 0 && (
-                        <span>You haven&apos;t added any Repositories yet.</span>
+                        <span>{t("repository.notAvailable")}</span>
                     )}
                 </ErrorBoundary>
             </div>

@@ -1,10 +1,10 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import { DiagramVersionUploadTO, DiagramVersionUploadTOSaveTypeEnum } from "../../api/models";
+import {DiagramVersionUploadTO, DiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import helpers from "../../constants/Functions";
 import {CREATED_DIAGRAM, GET_VERSIONS, LATEST_VERSION, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "../constants";
-import { ActionType } from "./actions";
-import { handleError } from "./errorAction";
+import {ActionType} from "./actions";
+import {handleError} from "./errorAction";
 
 export const createOrUpdateVersion = (
     bpmnDiagramId: string,

@@ -45,3 +45,4 @@ export const DEFAULT_DMN_FILE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
     + "  </dmndi:DMNDI>\n"
     + "</definitions>\n";
 export const LATEST_VERSION = "LATEST_VERSION";
+export const DIAGRAMQUERY_EXECUTED = "DIAGRAMQUERY_EXECUTED";

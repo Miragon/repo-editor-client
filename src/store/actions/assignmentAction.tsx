@@ -1,10 +1,10 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import { AssignmentUpdateTO, AssignmentUpdateTORoleEnumEnum } from "../../api/models";
+import {AssignmentUpdateTO, AssignmentUpdateTORoleEnumEnum} from "../../api/models";
 import helpers from "../../constants/Functions";
-import { ASSIGNED_USERS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR } from "../constants";
-import { ActionType } from "./actions";
-import { handleError } from "./errorAction";
+import {ASSIGNED_USERS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "../constants";
+import {ActionType} from "./actions";
+import {handleError} from "./errorAction";
 
 export const getAllAssignedUsers = (repoId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
