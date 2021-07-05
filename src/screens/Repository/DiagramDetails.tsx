@@ -52,6 +52,7 @@ const DiagramDetails: React.FC = (() => {
             <div className={classes.container}>
                 {activeDiagrams?.map(diagram => (
                     <DiagramListItem
+                        key={diagram.id}
                         diagramTitle={diagram.name}
                         image={diagram.svgPreview}
                         updatedDate={diagram.updatedDate}

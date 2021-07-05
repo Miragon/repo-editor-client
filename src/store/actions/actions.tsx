@@ -17,7 +17,7 @@ import {
     updateRepository
 } from "./repositoryAction";
 import { searchUsers } from "./userAction";
-import { createOrUpdateVersion, getAllVersions } from "./versionAction";
+import {createOrUpdateVersion, getAllVersions, getLatestVersion} from "./versionAction";
 
 export enum ActionType {
     FETCH_FAVORITE_DIAGRAMS,
@@ -38,7 +38,8 @@ export enum ActionType {
     UPDATE_REPOSITORY,
     DELETE_REPOSITORY,
     SEARCH_DIAGRAM,
-    UPDATE_DIAGRAM
+    UPDATE_DIAGRAM,
+    LATEST_VERSION
 }
 
 // eslint-disable-next-line
@@ -100,5 +101,8 @@ export const actionMapper = (actionType: ActionType, payload: Array<any>) => {
 
         case ActionType.UPDATE_DIAGRAM:
             return updateDiagram(payload[0], payload[1], payload[2]);
+
+        case ActionType.LATEST_VERSION:
+            return getLatestVersion(payload[0]);
     }
 };

@@ -4,85 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="fix: Flexboxes in DiagramListItem">
-      <change afterPath="$PROJECT_DIR$/src/img/bpmnIcon_gears.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintignore" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/saveactions_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/saveactions_settings.xml" afterDir="false" />
+    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="fix: Added default SVG-images when creating Diagrams; update design">
+      <change afterPath="$PROJECT_DIR$/src/screens/Repository/VersionDetails.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FlowSquadLogo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlowSquadLogo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/assignment-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/assignment-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/bpm-repository-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/bpm-repository-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/diagram-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/diagram-controller-api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/apis/diagram-version-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/diagram-version-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/base.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/configuration.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/configuration.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/assignment-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/assignment-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/assignment-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/assignment-update-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-svgupload-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-svgupload-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-update-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-version-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-version-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-version-upload-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-version-upload-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/new-diagram-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/new-diagram-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/new-repository-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/new-repository-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/repository-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/repository-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/repository-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/repository-update-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/user-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/user-update-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Exception/ErrorBoundary.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Exception/ErrorBoundary.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/DropdownButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/DropdownButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/PopupDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/PopupDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/SettingsButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/SettingsButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/SettingsButtonRow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/SettingsButtonRow.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/SettingsCheckbox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/SettingsCheckbox.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/SettingsForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/SettingsForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/SettingsFormRow.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/SettingsFormRow.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/SettingsSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/SettingsSelect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/SettingsSpacer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/SettingsSpacer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/SettingsText.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/SettingsText.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/SettingsTextField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/SettingsTextField.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/SimpleButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/SimpleButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/Toast.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/Toast.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Menu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu/DrawerApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu/DrawerApp.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu/DrawerDivider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Menu/AppMenu/DrawerDivider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Router.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Router.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Toast.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Toast.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu/BetaBadge.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/BetaBadge.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu/MenuBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/MenuBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu/MenuButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/MenuButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu/MenuLogo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/MenuLogo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu/MenuNavButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/MenuNavButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu/MenuPopup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/MenuPopup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu/MenuPopupItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/MenuPopupItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menu/MenuSpacer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menu/MenuSpacer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/logo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reportWebVitals.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/reportWebVitals.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/DiagramSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/DiagramSearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/FavoriteDiagrams.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/FavoriteDiagrams.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/Holder/DiagramCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/Holder/DiagramCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/RecentDiagrams.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/RecentDiagrams.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/EditDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/EditDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/diagram-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/diagram-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/team-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/team-icon.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/actions/actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/actions.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/constants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/constants.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theme.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/theme.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/versionsReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/versionsReducer.tsx" afterDir="false" />
     </list>
     <list id="9cf6af5f-1a50-4925-923b-48671a504db0" name="DiagramListItem" comment="Switched to Flexbox, adjusted colors to Theme" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,9 +24,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
         <option value="JavaScript File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -150,11 +81,11 @@
       <recent name="$PROJECT_DIR$/src/constants" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/api/apis" />
       <recent name="$PROJECT_DIR$/src/img" />
       <recent name="$PROJECT_DIR$/src/api" />
       <recent name="$PROJECT_DIR$/src/screens/Repository" />
       <recent name="$PROJECT_DIR$/src/screens" />
-      <recent name="$PROJECT_DIR$/src/screens/CreateContainer" />
     </key>
   </component>
   <component name="RunManager">
@@ -203,7 +134,8 @@
       <workItem from="1624860658747" duration="15486000" />
       <workItem from="1624883396236" duration="3196000" />
       <workItem from="1625124991729" duration="4317000" />
-      <workItem from="1625130144658" duration="9724000" />
+      <workItem from="1625130144658" duration="10038000" />
+      <workItem from="1625465902504" duration="8132000" />
     </task>
     <task id="LOCAL-00001" summary="Update Modeler URLs">
       <created>1620297569688</created>
@@ -331,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625054871838</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fix: Added default SVG-images when creating Diagrams; update design">
+      <created>1625147377897</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1625147377897</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -348,7 +287,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="feat/Exceptions" />
+                        <option value="feat/lhm_showcase" />
                       </list>
                     </value>
                   </entry>
@@ -380,7 +319,8 @@
     <MESSAGE value="fix(eslint): Update ESLint config and fix most errors" />
     <MESSAGE value="fix(eslint): Fix or suppress the remaining errors" />
     <MESSAGE value="fix(eslint): Fix compilation problems" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(eslint): Fix compilation problems" />
+    <MESSAGE value="fix: Added default SVG-images when creating Diagrams; update design" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Added default SVG-images when creating Diagrams; update design" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

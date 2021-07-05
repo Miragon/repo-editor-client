@@ -1,9 +1,10 @@
 import { CaseReducer } from "@reduxjs/toolkit";
 import { DiagramVersionTO } from "../../api/models";
-import { GET_VERSIONS } from "../constants";
+import {GET_VERSIONS, LATEST_VERSION} from "../constants";
 
 const initialState = {
-    versions: Array<DiagramVersionTO>()
+    versions: Array<DiagramVersionTO>(),
+    latestVersion: null
 };
 
 const reducer: CaseReducer = (state = initialState, action) => {
@@ -13,6 +14,11 @@ const reducer: CaseReducer = (state = initialState, action) => {
                 ...state,
                 versions: action.versions
             };
+        case LATEST_VERSION:
+            return {
+                ...state,
+                latestVersion: action.latestVersion
+            }
     }
     return state;
 };
