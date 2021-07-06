@@ -1,4 +1,4 @@
-import {Draft, PayloadAction} from "@reduxjs/toolkit";
+import { Draft, PayloadAction } from "@reduxjs/toolkit";
 
 /**
  * The base representation of a redux old state. Can be used as base class for any state

@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import React from "react";
 import TableChartIcon from "@material-ui/icons/TableChart";
