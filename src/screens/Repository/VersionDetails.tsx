@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
+import {IconButton, Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {KeyboardArrowUp} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/styles";
@@ -7,7 +7,8 @@ import {DiagramVersionTO} from "../../api/models";
 import {useDispatch} from "react-redux";
 import {GET_VERSIONS} from "../../store/constants";
 import {useTranslation} from "react-i18next";
-
+import GetAppIcon from "@material-ui/icons/GetApp";
+import {downloadVersion} from "../../store/actions";
 
 const useStyles = makeStyles(() => ({
     versionsButtonClose: {
@@ -21,7 +22,10 @@ const useStyles = makeStyles(() => ({
             backgroundColor: "lightgrey"
         },
     },
-
+    splitCell: {
+        display: "flex",
+        justifyContent: "space-between"
+    },
 }));
 interface Props {
     diagramId: string;
@@ -80,6 +84,11 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
         dispatch({ type: GET_VERSIONS, versions: [] });
     };
 
+    //TODO: Fix Download
+    const download = (diagramId: string, versionId: string) => {
+        dispatch(downloadVersion(diagramId, versionId))
+    }
+
     return (
         <>
             <Table size="small">
@@ -115,9 +124,18 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
                             <TableCell
                                 component="th"
                                 scope="row">
-                                {singleVersion.release}
-                                .
-                                {singleVersion.milestone}
+                                <div className={classes.splitCell} >
+                                    <div>
+                                        {singleVersion.release}
+                                        .
+                                        {singleVersion.milestone}
+                                    </div>
+                                    <div>
+                                        <IconButton size={"small"} onClick={() => download(singleVersion.diagramId, singleVersion.id)}>
+                                            <GetAppIcon/>
+                                        </IconButton>
+                                    </div>
+                                </div>
                             </TableCell>
                             <TableCell>{singleVersion.comment}</TableCell>
                             <TableCell>{reformatDate(singleVersion.updatedDate)}</TableCell>

@@ -4,74 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="feat: Diagram Downloads">
-      <change afterPath="$PROJECT_DIR$/src/translations/custom/common.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/translations/default/common.json" afterDir="false" />
+    <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="fix: New Api">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.test.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CategoryContainer.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/apis/assignment-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/assignment-controller-api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/apis/bpm-repository-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/bpm-repository-controller-api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/apis/diagram-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/diagram-controller-api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/apis/diagram-version-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/diagram-version-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Form/DropdownButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form/DropdownButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Menu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reportWebVitals.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/reportWebVitals.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/CreateContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/CreateContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/CreateDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/CreateRepoDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/CreateRepoDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/CreateContainer/UploadDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/DiagramContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/DiagramContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/DiagramSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/DiagramSearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/FavoriteDiagrams.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/FavoriteDiagrams.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/Holder/DiagramCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/Holder/DiagramCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/Holder/RepoCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/Holder/RepoCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/Overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/Overview.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/RecentDiagrams.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/RecentDiagrams.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Overview/RepoContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/AddUserSearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/CreateDiagramContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/CreateDiagramContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/CreateVersionDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/DiagramListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/EditDiagramDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/EditDiagramDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/EditRepoDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/EditRepoDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/Repository.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/Repository.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/RepositoryDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/RepositoryDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/UserListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/UserListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/UserManagementDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/base.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/configuration.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/configuration.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/assignment-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/assignment-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/assignment-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/assignment-update-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-svgupload-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-svgupload-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-update-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-version-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-version-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-version-upload-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-version-upload-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/new-diagram-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/new-diagram-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/new-repository-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/new-repository-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/repository-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/repository-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/repository-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/repository-update-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/user-info-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/user-info-to.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/models/user-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/user-update-to.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Repository/VersionDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/VersionDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/setupTests.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/setupTests.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state-test/ApiState.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/state-test/ApiState.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/actions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/actions.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/assignmentAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/diagramAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/errorAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/errorAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/repositoryAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/userAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/userAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/versionAction.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/constants.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/constants.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/activeDiagramsReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/DiagramsReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/activeRepoReducer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/apiResponseReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/apiResponseReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/assignedUsersReducer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/createdDiagramReducer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/currentUserReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/currentUserReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/dataSyncedReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/dataSyncedReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/favoriteDiagramsReducer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/recentDiagramsReducer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/repositoriesReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/repositoriesReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/rootReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/searchDiagramsReducer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/uploadDiagramReducer.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/userResultsReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/queryResultsReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/usersReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/usersReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/versionsReducer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/versionsReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/store.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/store.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/theme.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/theme.tsx" afterDir="false" />
     </list>
     <list id="9cf6af5f-1a50-4925-923b-48671a504db0" name="DiagramListItem" comment="Switched to Flexbox, adjusted colors to Theme" />
     <option name="SHOW_DIALOG" value="false" />
@@ -139,11 +96,11 @@
       <recent name="$PROJECT_DIR$/src/constants" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/img" />
-      <recent name="$PROJECT_DIR$/src/api/apis" />
       <recent name="$PROJECT_DIR$/src/api" />
+      <recent name="$PROJECT_DIR$/src/api/models" />
+      <recent name="$PROJECT_DIR$/src/api/apis" />
+      <recent name="$PROJECT_DIR$/src/img" />
       <recent name="$PROJECT_DIR$/src/screens/Repository" />
-      <recent name="$PROJECT_DIR$/src/screens" />
     </key>
   </component>
   <component name="RunManager">
@@ -335,7 +292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625483545544</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="fix: merged">
+      <created>1625571803692</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1625571803692</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -352,7 +316,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="feat/lhm_showcase" />
+                        <option value="origin/dev" />
                       </list>
                     </value>
                   </entry>
@@ -386,7 +350,9 @@
     <MESSAGE value="fix(eslint): Fix compilation problems" />
     <MESSAGE value="fix: Added default SVG-images when creating Diagrams; update design" />
     <MESSAGE value="feat: Diagram Downloads" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Diagram Downloads" />
+    <MESSAGE value="fix: merged" />
+    <MESSAGE value="fix: New Api" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: New Api" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
