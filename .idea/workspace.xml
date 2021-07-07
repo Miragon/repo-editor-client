@@ -5,30 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="729ff4ed-bfcf-4736-b82f-531f358411b5" name="Default Changelist" comment="fix: New Api">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/assignment-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/assignment-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/bpm-repository-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/bpm-repository-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/diagram-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/diagram-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/diagram-version-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/diagram-version-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/apis/user-controller-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/base.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/base.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/configuration.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/configuration.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/assignment-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/assignment-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/assignment-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/assignment-update-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-svgupload-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-svgupload-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-update-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-version-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-version-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/diagram-version-upload-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/diagram-version-upload-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/new-diagram-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/new-diagram-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/new-repository-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/new-repository-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/repository-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/repository-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/repository-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/repository-update-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/user-info-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/user-info-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/models/user-update-to.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/models/user-update-to.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Repository/VersionDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Repository/VersionDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/homescreen-modeller.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/saveactions_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RegisterNewUserScreen.tsx" afterDir="false" />
     </list>
     <list id="9cf6af5f-1a50-4925-923b-48671a504db0" name="DiagramListItem" comment="Switched to Flexbox, adjusted colors to Theme" />
     <option name="SHOW_DIALOG" value="false" />
@@ -151,6 +139,7 @@
       <workItem from="1625124991729" duration="4317000" />
       <workItem from="1625130144658" duration="10038000" />
       <workItem from="1625465902504" duration="19720000" />
+      <workItem from="1625650143762" duration="805000" />
     </task>
     <task id="LOCAL-00001" summary="Update Modeler URLs">
       <created>1620297569688</created>
