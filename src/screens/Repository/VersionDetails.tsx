@@ -10,6 +10,15 @@ import {GET_VERSIONS} from "../../store/constants";
 import {useTranslation} from "react-i18next";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import {downloadVersion} from "../../store/actions";
+import { ClickAwayListener } from "@material-ui/core";
+import { Grow } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
+import { MenuList } from "@material-ui/core";
+import { MenuItem } from "@material-ui/core";
+import theme from "../../theme";
+import { useRef } from "react";
+import { DropdownButtonItem } from "../../components/Form/DropdownButton";
+import VersionItem from "./VersionItem";
 
 const useStyles = makeStyles(() => ({
     versionsButtonClose: {
@@ -23,13 +32,9 @@ const useStyles = makeStyles(() => ({
             backgroundColor: "lightgrey"
         },
     },
-    splitCell: {
-        display: "flex",
-        justifyContent: "space-between"
-    },
-    popupContainer: {
-        zIndex: 1000
-    },
+
+
+
 }));
 interface Props {
     diagramId: string;
@@ -40,10 +45,6 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const {t, i18n} = useTranslation("common");
-
-    const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
-
-    const ref = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
         if (props.diagramVersionTOs) {
@@ -61,56 +62,13 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
         return 0;
     };
 
-    const openModeler = (repoId: string, diagramId: string, versionId?: string) => {
-        if (versionId) {
-            window.open(`/modeler/#/${repoId}/${diagramId}/${versionId}/`, "_blank");
-        } else {
-            window.open(`/modeler/#/${repoId}/${diagramId}/latest`, "_blank");
-        }
-    };
 
-    const reformatDate = (date: string | undefined) => {
-        if (date) {
-            return date.split("T")[0];
-        }
-        return "01.01.2000";
-    };
-
-    const openSettings = (event: any) => {
-        event.stopPropagation();
-        setSettingsOpen(true);
-    };
 
     const closeVersions = (event: any): void => {
         event.stopPropagation();
         dispatch({ type: GET_VERSIONS, versions: [] });
     };
 
-    //TODO: Fix Download
-    const download = (diagramId: string, versionId: string) => {
-        dispatch(downloadVersion(diagramId, versionId))
-    }
-
-    const options: DropdownButtonItem[] = [
-
-        {
-            id: "DeploayVersion",
-            label: "version.deploy",
-            type: "button",
-            onClick: () => {
-                console.log("deployed Version");
-            }
-        },
-        {
-            id: "DownloadVersion",
-            label: "version.download",
-            type: "button",
-            onClick: () => {
-                dispatch(downloadVersion(props.diagramId, ));
-            }
-
-        },
-    ];
 
     return (
         <>
@@ -140,79 +98,17 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
                 </TableRow>
             )}
                     {props.diagramVersionTOs?.map(singleVersion => (
-                        <TableRow
-                            key={singleVersion.id}
-                            hover
-                            onClick={() => openModeler(singleVersion.repositoryId, singleVersion.diagramId, singleVersion.id)}>
-                            <TableCell
-                                component="th"
-                                scope="row">
-                                <div>
-                                    {singleVersion.milestone}
-                                </div>
-                            </TableCell>
-                            <TableCell>{singleVersion.comment}</TableCell>
-                                <TableCell>
-                                    <div className={classes.splitCell}>
-
-                                        <div>
-                                            {reformatDate(singleVersion.updatedDate)}
-                                        </div>
-                                        <IconButton size="small" ref={ref} onClick={event => openSettings(event)}>
-                                            <MoreVert />
-                                        </IconButton>
-
-                                    </div>
-                                </TableCell>
-                        </TableRow>
+                        <VersionItem key={singleVersion.id} diagramVersion={singleVersion}/>
                     ))}
-
                 </TableBody>
             </Table>
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-            <div className={classes.versionsButtonClose} onClick={(event => closeVersions(event))}>
-                <KeyboardArrowUp />
-            </div>
 
-            <Popper
-                open={settingsOpen}
-                anchorEl={ref.current}
-                role={undefined}
-                transition
-                disablePortal
-                className={classes.popupContainer}>
-                {({ TransitionProps }) => (
-                    <Grow
-                        {...TransitionProps}
-                        style={{ transformOrigin: "top" }}>
-                        <Paper className={classes.popup}>
-                            <ClickAwayListener onClickAway={() => setSettingsOpen(false)}>
-                                <MenuList className={classes.list}>
-                                    {options.map(option => (
-                                        <MenuItem
-                                            key={option.id}
-                                            disabled={option.disabled || option.type !== "button"}
-                                            className={clsx(
-                                                classes.menuItem,
-                                                option.type === "divider" && classes.menuItemDivider
-                                            )}
-                                            onClick={() => {
-                                                if (option.onClick) {
-                                                    option.onClick();
-                                                } else {
-                                                    console.log("Some error when clicking");
-                                                }
-                                                setSettingsOpen(false);
-                                            }}>
-                                            {t(option.label)}
-                                        </MenuItem>
-                                    ))}
-                                </MenuList>
-                            </ClickAwayListener>
-                        </Paper>
-                    </Grow>
-                )}
-            </Popper>
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+                    <div className={classes.versionsButtonClose} onClick={(event => closeVersions(event))}>
+                        <KeyboardArrowUp />
+                    </div>
+
+
         </>
     );
 });
