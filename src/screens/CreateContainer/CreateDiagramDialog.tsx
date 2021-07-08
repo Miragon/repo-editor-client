@@ -50,7 +50,7 @@ const CreateDiagramDialog: React.FC<Props> = props => {
 
     useEffect(() => {
         if (createdDiagram) {
-            dispatch(versionAction.createOrUpdateVersion(createdDiagram.id, (props.type === "bpmn" ? DEFAULT_XML_FILE : DEFAULT_DMN_FILE), DiagramVersionUploadTOSaveTypeEnum.RELEASE));
+            dispatch(versionAction.createOrUpdateVersion(createdDiagram.id, (props.type === "bpmn" ? DEFAULT_XML_FILE : DEFAULT_DMN_FILE), DiagramVersionUploadTOSaveTypeEnum.MILESTONE));
         }
     }, [createdDiagram, dispatch, props.type]);
 

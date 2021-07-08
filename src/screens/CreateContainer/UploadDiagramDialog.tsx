@@ -51,7 +51,7 @@ const UploadDiagramDialog: React.FC<Props> = props => {
     useEffect(() => {
         if (uploadedDiagram) {
             dispatch(versionAction.createOrUpdateVersion(
-                uploadedDiagram.id, file, DiagramVersionUploadTOSaveTypeEnum.RELEASE
+                uploadedDiagram.id, file, DiagramVersionUploadTOSaveTypeEnum.MILESTONE
             ));
         }
     }, [dispatch, uploadedDiagram, file]);

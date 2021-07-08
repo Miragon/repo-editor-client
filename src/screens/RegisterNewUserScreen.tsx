@@ -79,7 +79,7 @@ const RegisterNewUserScreen: React.FC = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const [userController] = useState<UserControllerApi>(new UserControllerApi());
+    const [userController] = useState<UserApi>(new UserApi());
     const [isButtonDisabled, setButtonDisabled] = useState<boolean>(true);
 
     const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage);

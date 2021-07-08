@@ -37,7 +37,7 @@ const CreateVersionDialog: React.FC<Props> = props => {
     const [error, setError] = useState<string | undefined>(undefined);
     const [comment, setComment] = useState("");
     const [saveType, setSaveType] = useState<DiagramVersionUploadTOSaveTypeEnum>(
-        DiagramVersionUploadTOSaveTypeEnum.RELEASE
+        DiagramVersionUploadTOSaveTypeEnum.MILESTONE
     );
 
     const onCreate = useCallback(async () => {
@@ -65,23 +65,6 @@ const CreateVersionDialog: React.FC<Props> = props => {
             onFirst={() => onCreate()}>
 
             <SettingsForm large>
-
-                <SettingsSelect
-                    value={saveType}
-                    label={t("properties.type")}
-                    disabled={false}
-                    onChanged={setSaveType}>
-                    <MenuItem
-                        key={DiagramVersionUploadTOSaveTypeEnum.RELEASE}
-                        value={DiagramVersionUploadTOSaveTypeEnum.RELEASE}>
-                        {t("version.RELEASE")}
-                    </MenuItem>
-                    <MenuItem
-                        key={DiagramVersionUploadTOSaveTypeEnum.MILESTONE}
-                        value={DiagramVersionUploadTOSaveTypeEnum.MILESTONE}>
-                        {t("version.MILESTONE")}
-                    </MenuItem>
-                </SettingsSelect>
 
                 <SettingsTextField
                     label={t("properties.comment")}

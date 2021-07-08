@@ -47,19 +47,11 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
     }, [props.diagramVersionTOs]);
 
     const compare = (a: DiagramVersionTO, b: DiagramVersionTO) => {
-        if (a.release < b.release) {
+        if (a.milestone < b.milestone) {
             return -1;
         }
-        if (a.release > b.release) {
+        if (a.milestone > b.milestone) {
             return 1;
-        }
-        if (a.release === b.release) {
-            if (a.milestone < b.milestone) {
-                return -1;
-            }
-            if (a.milestone > b.milestone) {
-                return 1;
-            }
         }
         return 0;
     };
@@ -126,8 +118,6 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
                                 scope="row">
                                 <div className={classes.splitCell} >
                                     <div>
-                                        {singleVersion.release}
-                                        .
                                         {singleVersion.milestone}
                                     </div>
                                     <div>
