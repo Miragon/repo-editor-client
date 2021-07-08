@@ -1,28 +1,18 @@
-import React, {useEffect, useState} from "react";
-import {IconButton, Table, TableBody, TableCell, TableHead, TableRow, Popper} from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import {KeyboardArrowUp} from "@material-ui/icons";
-import {makeStyles} from "@material-ui/styles";
+import React, {useRef, useState} from "react";
+import {ClickAwayListener, Grow, IconButton, MenuItem, MenuList, Paper, Popper, TableCell, TableRow} from "@material-ui/core";
 import {MoreVert} from "@material-ui/icons";
+import {makeStyles} from "@material-ui/styles";
 import {DiagramVersionTO} from "../../api/models";
 import {useDispatch} from "react-redux";
-import {GET_VERSIONS} from "../../store/constants";
 import {useTranslation} from "react-i18next";
-import GetAppIcon from "@material-ui/icons/GetApp";
 import {downloadVersion} from "../../store/actions";
-import { ClickAwayListener } from "@material-ui/core";
-import { Grow } from "@material-ui/core";
-import { Paper } from "@material-ui/core";
-import { MenuList } from "@material-ui/core";
-import { MenuItem } from "@material-ui/core";
 import theme from "../../theme";
-import { useRef } from "react";
-import { DropdownButtonItem } from "../../components/Form/DropdownButton";
+import {DropdownButtonItem} from "../../components/Form/DropdownButton";
 
 const useStyles = makeStyles(() => ({
     splitCell: {
         display: "flex",
-            justifyContent: "space-between"
+        justifyContent: "space-between"
     },
     popupContainer: {
         zIndex: 1000
@@ -105,69 +95,68 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
     ];
     return (
         <>
-        <TableRow
-            key={props.diagramVersion.id}
-            hover
-            onClick={() => openModeler(props.diagramVersion.repositoryId, props.diagramVersion.diagramId, props.diagramVersion.id)}>
-            <TableCell
-                component="th"
-                scope="row">
-                <div>
-                    {props.diagramVersion.milestone}
-                </div>
-            </TableCell>
-            <TableCell>{props.diagramVersion.comment}</TableCell>
-            <TableCell>
-                <div className={classes.splitCell}>
-
+            <TableRow
+                key={props.diagramVersion.id}
+                hover
+                onClick={() => openModeler(props.diagramVersion.repositoryId, props.diagramVersion.diagramId, props.diagramVersion.id)}>
+                <TableCell
+                    component="th"
+                    scope="row">
                     <div>
-                        {reformatDate(props.diagramVersion.updatedDate)}
+                        {props.diagramVersion.milestone}
                     </div>
-                    <IconButton size="small" ref={ref} onClick={event => openSettings(event)}>
-                        <MoreVert />
-                    </IconButton>
-                </div>
-            </TableCell>
-        </TableRow>
+                </TableCell>
+                <TableCell>{props.diagramVersion.comment}</TableCell>
+                <TableCell>
+                    <div className={classes.splitCell}>
+
+                        <div>
+                            {reformatDate(props.diagramVersion.updatedDate)}
+                        </div>
+                        <IconButton size="small" ref={ref} onClick={event => openSettings(event)}>
+                            <MoreVert/>
+                        </IconButton>
+                    </div>
+                </TableCell>
+            </TableRow>
 
 
-
-    <Popper
-        open={settingsOpen}
-        anchorEl={ref.current}
-        role={undefined}
-        transition
-        disablePortal
-        className={classes.popupContainer}>
-        {({ TransitionProps }) => (
-            <Grow
-                {...TransitionProps}
-                style={{ transformOrigin: "top" }}>
-                <Paper className={classes.popup}>
-                    <ClickAwayListener onClickAway={() => setSettingsOpen(false)}>
-                        <MenuList className={classes.list}>
-                            {options.map(option => (
-                                <MenuItem
-                                    key={option.id}
-                                    disabled={option.disabled || option.type !== "button"}
-                                    className={classes.menuItem}
-                                    onClick={() => {
-                                        if (option.onClick) {
-                                            option.onClick();
-                                        } else {
-                                            console.log("Some error when clicking");
-                                        }
-                                        setSettingsOpen(false);
-                                    }}>
-                                    {t(option.label)}
-                                </MenuItem>
-                            ))}
-                        </MenuList>
-                    </ClickAwayListener>
-                </Paper>
-            </Grow>
-        )}
-    </Popper>
+            <Popper
+                open={settingsOpen}
+                anchorEl={ref.current}
+                role={undefined}
+                transition
+                disablePortal
+                className={classes.popupContainer}>
+                {({TransitionProps}) => (
+                    <Grow
+                        {...TransitionProps}
+                        style={{transformOrigin: "top"}}>
+                        <Paper className={classes.popup}>
+                            <ClickAwayListener onClickAway={() => setSettingsOpen(false)}>
+                                <MenuList className={classes.list}>
+                                    {options.map(option => (
+                                        <MenuItem
+                                            key={option.id}
+                                            disabled={option.disabled || option.type !== "button"}
+                                            className={classes.menuItem}
+                                            onClick={() => {
+                                                if (option.onClick) {
+                                                    option.onClick();
+                                                } else {
+                                                    console.log("Some error when clicking");
+                                                }
+                                                setSettingsOpen(false);
+                                            }}>
+                                            {t(option.label)}
+                                        </MenuItem>
+                                    ))}
+                                </MenuList>
+                            </ClickAwayListener>
+                        </Paper>
+                    </Grow>
+                )}
+            </Popper>
         </>
     )
 })
