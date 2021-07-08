@@ -104,9 +104,9 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
             </Table>
 
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-                    <div className={classes.versionsButtonClose} onClick={(event => closeVersions(event))}>
-                        <KeyboardArrowUp />
-                    </div>
+            <div className={classes.versionsButtonClose} onClick={(event => closeVersions(event))}>
+                <KeyboardArrowUp />
+            </div>
 
 
         </>
