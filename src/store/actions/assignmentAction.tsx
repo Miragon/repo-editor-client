@@ -8,7 +8,7 @@ import {handleError} from "./errorAction";
 
 export const getAllAssignedUsers = (repoId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const assignmentController = new api.AssignmentControllerApi();
+        const assignmentController = new api.AssignmentApi();
 
         try {
             const config = helpers.getClientConfig();
@@ -32,7 +32,7 @@ export const createOrUpdateUserAssignment = (
     roleEnum?: AssignmentUpdateTORoleEnumEnum
 ) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const assignmentController = new api.AssignmentControllerApi();
+        const assignmentController = new api.AssignmentApi();
         let message = "";
         try {
             if (!roleEnum) {
@@ -66,7 +66,7 @@ export const createOrUpdateUserAssignment = (
 
 export const deleteAssignment = (repoId: string, username: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const assignmentController = new api.AssignmentControllerApi();
+        const assignmentController = new api.AssignmentApi();
         try {
             const config = helpers.getClientConfig();
             const response = await assignmentController

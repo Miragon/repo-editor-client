@@ -16,28 +16,32 @@ import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
-import { NewRepositoryTO } from '../models';
-import { RepositoryTO } from '../models';
-import { RepositoryUpdateTO } from '../models';
+import { DiagramVersionTO } from '../models';
+import { DiagramVersionUploadTO } from '../models';
 /**
- * BpmRepositoryControllerApi - axios parameter creator
+ * VersionApi - axios parameter creator
  * @export
  */
-export const BpmRepositoryControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const VersionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Create a new Repository
-         * @param {NewRepositoryTO} body 
+         * @param {DiagramVersionUploadTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRepository: async (body: NewRepositoryTO, options: any = {}): Promise<RequestArgs> => {
+        createOrUpdateVersion: async (body: DiagramVersionUploadTO, diagramId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createRepository.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createOrUpdateVersion.');
             }
-            const localVarPath = `/api/bpmnrepo`;
+            // verify required parameter 'diagramId' is not null or undefined
+            if (diagramId === null || diagramId === undefined) {
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling createOrUpdateVersion.');
+            }
+            const localVarPath = `/api/version/{diagramId}`
+                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -70,52 +74,23 @@ export const BpmRepositoryControllerApiAxiosParamCreator = function (configurati
         },
         /**
          * 
-         * @summary Delete a Repository if you own it
-         * @param {string} repositoryId 
+         * @param {string} diagramId 
+         * @param {string} versionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRepository: async (repositoryId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'repositoryId' is not null or undefined
-            if (repositoryId === null || repositoryId === undefined) {
-                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling deleteRepository.');
+        downloadVersion: async (diagramId: string, versionId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'diagramId' is not null or undefined
+            if (diagramId === null || diagramId === undefined) {
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling downloadVersion.');
             }
-            const localVarPath = `/api/bpmnrepo/{repositoryId}`
-                .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
+            // verify required parameter 'versionId' is not null or undefined
+            if (versionId === null || versionId === undefined) {
+                throw new RequiredError('versionId','Required parameter versionId was null or undefined when calling downloadVersion.');
             }
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get all Repositories
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllRepositories: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/bpmnrepo`;
+            const localVarPath = `/api/version/{diagramId}/{versionId}/download`
+                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)))
+                .replace(`{${"versionId"}}`, encodeURIComponent(String(versionId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -144,18 +119,17 @@ export const BpmRepositoryControllerApiAxiosParamCreator = function (configurati
         },
         /**
          * 
-         * @summary Get a single Repository by providing its ID
-         * @param {string} repositoryId 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSingleRepository: async (repositoryId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'repositoryId' is not null or undefined
-            if (repositoryId === null || repositoryId === undefined) {
-                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling getSingleRepository.');
+        getAllVersions: async (diagramId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'diagramId' is not null or undefined
+            if (diagramId === null || diagramId === undefined) {
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling getAllVersions.');
             }
-            const localVarPath = `/api/bpmnrepo/{repositoryId}`
-                .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
+            const localVarPath = `/api/version/{diagramId}/all`
+                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -184,34 +158,27 @@ export const BpmRepositoryControllerApiAxiosParamCreator = function (configurati
         },
         /**
          * 
-         * @summary Update a Repository
-         * @param {RepositoryUpdateTO} body 
-         * @param {string} repositoryId 
+         * @summary Return the latest version of the requested diagram
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateRepository: async (body: RepositoryUpdateTO, repositoryId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateRepository.');
+        getLatestVersion: async (diagramId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'diagramId' is not null or undefined
+            if (diagramId === null || diagramId === undefined) {
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling getLatestVersion.');
             }
-            // verify required parameter 'repositoryId' is not null or undefined
-            if (repositoryId === null || repositoryId === undefined) {
-                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling updateRepository.');
-            }
-            const localVarPath = `/api/bpmnrepo/{repositoryId}`
-                .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
+            const localVarPath = `/api/version/{diagramId}/latest`
+                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
@@ -223,8 +190,51 @@ export const BpmRepositoryControllerApiAxiosParamCreator = function (configurati
             localVarUrlObj.search = (new URLSearchParams(query)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} diagramId 
+         * @param {string} versionId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getVersion: async (diagramId: string, versionId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'diagramId' is not null or undefined
+            if (diagramId === null || diagramId === undefined) {
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling getVersion.');
+            }
+            // verify required parameter 'versionId' is not null or undefined
+            if (versionId === null || versionId === undefined) {
+                throw new RequiredError('versionId','Required parameter versionId was null or undefined when calling getVersion.');
+            }
+            const localVarPath = `/api/version/{diagramId}/{versionId}`
+                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)))
+                .replace(`{${"versionId"}}`, encodeURIComponent(String(versionId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -235,20 +245,20 @@ export const BpmRepositoryControllerApiAxiosParamCreator = function (configurati
 };
 
 /**
- * BpmRepositoryControllerApi - functional programming interface
+ * VersionApi - functional programming interface
  * @export
  */
-export const BpmRepositoryControllerApiFp = function(configuration?: Configuration) {
+export const VersionApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Create a new Repository
-         * @param {NewRepositoryTO} body 
+         * @param {DiagramVersionUploadTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createRepository(body: NewRepositoryTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await BpmRepositoryControllerApiAxiosParamCreator(configuration).createRepository(body, options);
+        async createOrUpdateVersion(body: DiagramVersionUploadTO, diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await VersionApiAxiosParamCreator(configuration).createOrUpdateVersion(body, diagramId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -256,13 +266,13 @@ export const BpmRepositoryControllerApiFp = function(configuration?: Configurati
         },
         /**
          * 
-         * @summary Delete a Repository if you own it
-         * @param {string} repositoryId 
+         * @param {string} diagramId 
+         * @param {string} versionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteRepository(repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await BpmRepositoryControllerApiAxiosParamCreator(configuration).deleteRepository(repositoryId, options);
+        async downloadVersion(diagramId: string, versionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await VersionApiAxiosParamCreator(configuration).downloadVersion(diagramId, versionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -270,12 +280,12 @@ export const BpmRepositoryControllerApiFp = function(configuration?: Configurati
         },
         /**
          * 
-         * @summary Get all Repositories
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllRepositories(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RepositoryTO>>> {
-            const localVarAxiosArgs = await BpmRepositoryControllerApiAxiosParamCreator(configuration).getAllRepositories(options);
+        async getAllVersions(diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DiagramVersionTO>>> {
+            const localVarAxiosArgs = await VersionApiAxiosParamCreator(configuration).getAllVersions(diagramId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -283,13 +293,13 @@ export const BpmRepositoryControllerApiFp = function(configuration?: Configurati
         },
         /**
          * 
-         * @summary Get a single Repository by providing its ID
-         * @param {string} repositoryId 
+         * @summary Return the latest version of the requested diagram
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSingleRepository(repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepositoryTO>> {
-            const localVarAxiosArgs = await BpmRepositoryControllerApiAxiosParamCreator(configuration).getSingleRepository(repositoryId, options);
+        async getLatestVersion(diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DiagramVersionTO>> {
+            const localVarAxiosArgs = await VersionApiAxiosParamCreator(configuration).getLatestVersion(diagramId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -297,14 +307,13 @@ export const BpmRepositoryControllerApiFp = function(configuration?: Configurati
         },
         /**
          * 
-         * @summary Update a Repository
-         * @param {RepositoryUpdateTO} body 
-         * @param {string} repositoryId 
+         * @param {string} diagramId 
+         * @param {string} versionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateRepository(body: RepositoryUpdateTO, repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await BpmRepositoryControllerApiAxiosParamCreator(configuration).updateRepository(body, repositoryId, options);
+        async getVersion(diagramId: string, versionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DiagramVersionTO>> {
+            const localVarAxiosArgs = await VersionApiAxiosParamCreator(configuration).getVersion(diagramId, versionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -314,124 +323,122 @@ export const BpmRepositoryControllerApiFp = function(configuration?: Configurati
 };
 
 /**
- * BpmRepositoryControllerApi - factory interface
+ * VersionApi - factory interface
  * @export
  */
-export const BpmRepositoryControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const VersionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
          * 
-         * @summary Create a new Repository
-         * @param {NewRepositoryTO} body 
+         * @param {DiagramVersionUploadTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRepository(body: NewRepositoryTO, options?: any): AxiosPromise<void> {
-            return BpmRepositoryControllerApiFp(configuration).createRepository(body, options).then((request) => request(axios, basePath));
+        createOrUpdateVersion(body: DiagramVersionUploadTO, diagramId: string, options?: any): AxiosPromise<void> {
+            return VersionApiFp(configuration).createOrUpdateVersion(body, diagramId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Delete a Repository if you own it
-         * @param {string} repositoryId 
+         * @param {string} diagramId 
+         * @param {string} versionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteRepository(repositoryId: string, options?: any): AxiosPromise<void> {
-            return BpmRepositoryControllerApiFp(configuration).deleteRepository(repositoryId, options).then((request) => request(axios, basePath));
+        downloadVersion(diagramId: string, versionId: string, options?: any): AxiosPromise<string> {
+            return VersionApiFp(configuration).downloadVersion(diagramId, versionId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get all Repositories
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllRepositories(options?: any): AxiosPromise<Array<RepositoryTO>> {
-            return BpmRepositoryControllerApiFp(configuration).getAllRepositories(options).then((request) => request(axios, basePath));
+        getAllVersions(diagramId: string, options?: any): AxiosPromise<Array<DiagramVersionTO>> {
+            return VersionApiFp(configuration).getAllVersions(diagramId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get a single Repository by providing its ID
-         * @param {string} repositoryId 
+         * @summary Return the latest version of the requested diagram
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSingleRepository(repositoryId: string, options?: any): AxiosPromise<RepositoryTO> {
-            return BpmRepositoryControllerApiFp(configuration).getSingleRepository(repositoryId, options).then((request) => request(axios, basePath));
+        getLatestVersion(diagramId: string, options?: any): AxiosPromise<DiagramVersionTO> {
+            return VersionApiFp(configuration).getLatestVersion(diagramId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update a Repository
-         * @param {RepositoryUpdateTO} body 
-         * @param {string} repositoryId 
+         * @param {string} diagramId 
+         * @param {string} versionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateRepository(body: RepositoryUpdateTO, repositoryId: string, options?: any): AxiosPromise<void> {
-            return BpmRepositoryControllerApiFp(configuration).updateRepository(body, repositoryId, options).then((request) => request(axios, basePath));
+        getVersion(diagramId: string, versionId: string, options?: any): AxiosPromise<DiagramVersionTO> {
+            return VersionApiFp(configuration).getVersion(diagramId, versionId, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * BpmRepositoryControllerApi - object-oriented interface
+ * VersionApi - object-oriented interface
  * @export
- * @class BpmRepositoryControllerApi
+ * @class VersionApi
  * @extends {BaseAPI}
  */
-export class BpmRepositoryControllerApi extends BaseAPI {
+export class VersionApi extends BaseAPI {
     /**
      * 
-     * @summary Create a new Repository
-     * @param {NewRepositoryTO} body 
+     * @param {DiagramVersionUploadTO} body 
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BpmRepositoryControllerApi
+     * @memberof VersionApi
      */
-    public createRepository(body: NewRepositoryTO, options?: any) {
-        return BpmRepositoryControllerApiFp(this.configuration).createRepository(body, options).then((request) => request(this.axios, this.basePath));
+    public createOrUpdateVersion(body: DiagramVersionUploadTO, diagramId: string, options?: any) {
+        return VersionApiFp(this.configuration).createOrUpdateVersion(body, diagramId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
-     * @summary Delete a Repository if you own it
-     * @param {string} repositoryId 
+     * @param {string} diagramId 
+     * @param {string} versionId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BpmRepositoryControllerApi
+     * @memberof VersionApi
      */
-    public deleteRepository(repositoryId: string, options?: any) {
-        return BpmRepositoryControllerApiFp(this.configuration).deleteRepository(repositoryId, options).then((request) => request(this.axios, this.basePath));
+    public downloadVersion(diagramId: string, versionId: string, options?: any) {
+        return VersionApiFp(this.configuration).downloadVersion(diagramId, versionId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
-     * @summary Get all Repositories
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BpmRepositoryControllerApi
+     * @memberof VersionApi
      */
-    public getAllRepositories(options?: any) {
-        return BpmRepositoryControllerApiFp(this.configuration).getAllRepositories(options).then((request) => request(this.axios, this.basePath));
+    public getAllVersions(diagramId: string, options?: any) {
+        return VersionApiFp(this.configuration).getAllVersions(diagramId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
-     * @summary Get a single Repository by providing its ID
-     * @param {string} repositoryId 
+     * @summary Return the latest version of the requested diagram
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BpmRepositoryControllerApi
+     * @memberof VersionApi
      */
-    public getSingleRepository(repositoryId: string, options?: any) {
-        return BpmRepositoryControllerApiFp(this.configuration).getSingleRepository(repositoryId, options).then((request) => request(this.axios, this.basePath));
+    public getLatestVersion(diagramId: string, options?: any) {
+        return VersionApiFp(this.configuration).getLatestVersion(diagramId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
-     * @summary Update a Repository
-     * @param {RepositoryUpdateTO} body 
-     * @param {string} repositoryId 
+     * @param {string} diagramId 
+     * @param {string} versionId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BpmRepositoryControllerApi
+     * @memberof VersionApi
      */
-    public updateRepository(body: RepositoryUpdateTO, repositoryId: string, options?: any) {
-        return BpmRepositoryControllerApiFp(this.configuration).updateRepository(body, repositoryId, options).then((request) => request(this.axios, this.basePath));
+    public getVersion(diagramId: string, versionId: string, options?: any) {
+        return VersionApiFp(this.configuration).getVersion(diagramId, versionId, options).then((request) => request(this.axios, this.basePath));
     }
 }

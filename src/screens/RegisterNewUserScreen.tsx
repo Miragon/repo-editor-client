@@ -10,7 +10,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
-import {UserControllerApi} from "../api/api";
+import {UserApi} from "../api/api";
 import helpers from "../constants/Functions";
 import {SUCCESS, UNHANDLEDERROR} from "../store/constants";
 import {RootState} from "../store/reducers/rootReducer";

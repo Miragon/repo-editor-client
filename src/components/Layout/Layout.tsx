@@ -4,7 +4,7 @@ import clsx from "clsx";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
-import {UserControllerApi} from "../../api";
+import {UserApi} from "../../api";
 import helpers from "../../constants/Functions";
 import RegisterNewUserScreen from "../../screens/RegisterNewUserScreen";
 import {CURRENT_USER_INFO, SUCCESS, UNHANDLEDERROR} from "../../store/constants";
@@ -85,7 +85,7 @@ const Layout = (): any => {
     }, [apiErrorState, apiSuccessState, apiErrorRetryMethod, apiErrorRetryPayload, dispatch]);
 
     const classes = useStyles();
-    const [userController] = useState<UserControllerApi>(new UserControllerApi());
+    const [userController] = useState<UserApi>(new UserApi());
 
     const [userDoesExist, setUserDoesExist] = useState<boolean | undefined>(undefined);
 

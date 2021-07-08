@@ -42,7 +42,6 @@ export interface DiagramVersionUploadTO {
     * @enum {string}
     */
 export enum DiagramVersionUploadTOSaveTypeEnum {
-    RELEASE = 'RELEASE',
     MILESTONE = 'MILESTONE',
     AUTOSAVE = 'AUTOSAVE'
 }

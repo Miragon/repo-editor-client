@@ -7,7 +7,7 @@ import {handleError} from "./errorAction";
 
 export const searchUsers = (typedName: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const userController = new api.UserControllerApi();
+        const userController = new api.UserApi();
         try {
             const config = helpers.getClientConfig();
             const response = await userController.searchUsers(typedName, config);

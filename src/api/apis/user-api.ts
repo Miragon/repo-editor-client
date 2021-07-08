@@ -19,10 +19,10 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 import { UserInfoTO } from '../models';
 import { UserUpdateTO } from '../models';
 /**
- * UserControllerApi - axios parameter creator
+ * UserApi - axios parameter creator
  * @export
  */
-export const UserControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const UserApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -208,10 +208,10 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
 };
 
 /**
- * UserControllerApi - functional programming interface
+ * UserApi - functional programming interface
  * @export
  */
-export const UserControllerApiFp = function(configuration?: Configuration) {
+export const UserApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -219,7 +219,7 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async createUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).createUser(options);
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).createUser(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -231,7 +231,7 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async getUserInfo(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserInfoTO>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).getUserInfo(options);
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).getUserInfo(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -243,7 +243,7 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async getUserName(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).getUserName(options);
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).getUserName(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -256,7 +256,7 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async searchUsers(typedName: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserInfoTO>>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).searchUsers(typedName, options);
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).searchUsers(typedName, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -269,7 +269,7 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async updateUser(body: UserUpdateTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).updateUser(body, options);
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).updateUser(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -279,10 +279,10 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * UserControllerApi - factory interface
+ * UserApi - factory interface
  * @export
  */
-export const UserControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const UserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
          * 
@@ -290,7 +290,7 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         createUser(options?: any): AxiosPromise<void> {
-            return UserControllerApiFp(configuration).createUser(options).then((request) => request(axios, basePath));
+            return UserApiFp(configuration).createUser(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -298,7 +298,7 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         getUserInfo(options?: any): AxiosPromise<UserInfoTO> {
-            return UserControllerApiFp(configuration).getUserInfo(options).then((request) => request(axios, basePath));
+            return UserApiFp(configuration).getUserInfo(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -306,7 +306,7 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         getUserName(options?: any): AxiosPromise<string> {
-            return UserControllerApiFp(configuration).getUserName(options).then((request) => request(axios, basePath));
+            return UserApiFp(configuration).getUserName(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -315,7 +315,7 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         searchUsers(typedName: string, options?: any): AxiosPromise<Array<UserInfoTO>> {
-            return UserControllerApiFp(configuration).searchUsers(typedName, options).then((request) => request(axios, basePath));
+            return UserApiFp(configuration).searchUsers(typedName, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -324,63 +324,63 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         updateUser(body: UserUpdateTO, options?: any): AxiosPromise<void> {
-            return UserControllerApiFp(configuration).updateUser(body, options).then((request) => request(axios, basePath));
+            return UserApiFp(configuration).updateUser(body, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * UserControllerApi - object-oriented interface
+ * UserApi - object-oriented interface
  * @export
- * @class UserControllerApi
+ * @class UserApi
  * @extends {BaseAPI}
  */
-export class UserControllerApi extends BaseAPI {
+export class UserApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof UserApi
      */
     public createUser(options?: any) {
-        return UserControllerApiFp(this.configuration).createUser(options).then((request) => request(this.axios, this.basePath));
+        return UserApiFp(this.configuration).createUser(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof UserApi
      */
     public getUserInfo(options?: any) {
-        return UserControllerApiFp(this.configuration).getUserInfo(options).then((request) => request(this.axios, this.basePath));
+        return UserApiFp(this.configuration).getUserInfo(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof UserApi
      */
     public getUserName(options?: any) {
-        return UserControllerApiFp(this.configuration).getUserName(options).then((request) => request(this.axios, this.basePath));
+        return UserApiFp(this.configuration).getUserName(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {string} typedName 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof UserApi
      */
     public searchUsers(typedName: string, options?: any) {
-        return UserControllerApiFp(this.configuration).searchUsers(typedName, options).then((request) => request(this.axios, this.basePath));
+        return UserApiFp(this.configuration).searchUsers(typedName, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {UserUpdateTO} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof UserApi
      */
     public updateUser(body: UserUpdateTO, options?: any) {
-        return UserControllerApiFp(this.configuration).updateUser(body, options).then((request) => request(this.axios, this.basePath));
+        return UserApiFp(this.configuration).updateUser(body, options).then((request) => request(this.axios, this.basePath));
     }
 }

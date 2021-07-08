@@ -20,7 +20,7 @@ import {handleError} from "./errorAction";
 
 export const fetchFavoriteDiagrams = () => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const diagramController = new api.DiagramControllerApi();
+        const diagramController = new api.DiagramApi();
         try {
             const config = helpers.getClientConfig();
             const response = await diagramController.getStarred(config);
@@ -37,7 +37,7 @@ export const fetchFavoriteDiagrams = () => {
 
 export const fetchRecentDiagrams = () => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const diagramController = new api.DiagramControllerApi();
+        const diagramController = new api.DiagramApi();
         try {
             const config = helpers.getClientConfig();
             const response = await diagramController.getRecent(config);
@@ -60,7 +60,7 @@ export const createDiagram = (
 ) => {
     // TODO update muss wieder funktionieren
     return async (dispatch: Dispatch): Promise<void> => {
-        const diagramController = new api.DiagramControllerApi();
+        const diagramController = new api.DiagramApi();
         try {
             const config = helpers.getClientConfig();
             const newDiagramTO: NewDiagramTO = {
@@ -86,7 +86,7 @@ export const createDiagram = (
 
 export const updateDiagram = (name: string, description: string | undefined, diagramId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const diagramController = new api.DiagramControllerApi();
+        const diagramController = new api.DiagramApi();
         try {
             const config = helpers.getClientConfig();
             // eslint-disable-next-line object-shorthand
@@ -108,7 +108,7 @@ export const updateDiagram = (name: string, description: string | undefined, dia
 
 export const fetchDiagramsFromRepo = (repoId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const diagramController = new api.DiagramControllerApi();
+        const diagramController = new api.DiagramApi();
         try {
             const config = helpers.getClientConfig();
             const response = await diagramController.getDiagramsFromRepo(repoId, config);
@@ -125,7 +125,7 @@ export const fetchDiagramsFromRepo = (repoId: string) => {
 
 export const uploadDiagram = (repoId: string, name: string, description: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const diagramController = new api.DiagramControllerApi();
+        const diagramController = new api.DiagramApi();
         try {
             const newDiagram: NewDiagramTO = {
                 name: name,
@@ -147,7 +147,7 @@ export const uploadDiagram = (repoId: string, name: string, description: string)
 
 export const searchDiagram = (typedTitle: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const diagramController = new api.DiagramControllerApi();
+        const diagramController = new api.DiagramApi();
         try {
             const config = helpers.getClientConfig();
             const response = await diagramController.searchDiagrams(typedTitle, config);
@@ -165,7 +165,7 @@ export const searchDiagram = (typedTitle: string) => {
 
 export const deleteDiagram = (diagramId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const diagramController = new api.DiagramControllerApi();
+        const diagramController = new api.DiagramApi();
         try {
             const config = helpers.getClientConfig();
             const response = await diagramController.deleteDiagram(diagramId, config);

@@ -16,32 +16,28 @@ import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
-import { DiagramVersionTO } from '../models';
-import { DiagramVersionUploadTO } from '../models';
+import { NewRepositoryTO } from '../models';
+import { RepositoryTO } from '../models';
+import { RepositoryUpdateTO } from '../models';
 /**
- * DiagramVersionControllerApi - axios parameter creator
+ * RepositoryApi - axios parameter creator
  * @export
  */
-export const DiagramVersionControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const RepositoryApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {DiagramVersionUploadTO} body 
-         * @param {string} diagramId 
+         * @summary Create a new Repository
+         * @param {NewRepositoryTO} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrUpdateVersion: async (body: DiagramVersionUploadTO, diagramId: string, options: any = {}): Promise<RequestArgs> => {
+        createRepository: async (body: NewRepositoryTO, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createOrUpdateVersion.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createRepository.');
             }
-            // verify required parameter 'diagramId' is not null or undefined
-            if (diagramId === null || diagramId === undefined) {
-                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling createOrUpdateVersion.');
-            }
-            const localVarPath = `/api/version/{diagramId}`
-                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
+            const localVarPath = `/api/bpmnrepo`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -74,23 +70,52 @@ export const DiagramVersionControllerApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @param {string} diagramId 
-         * @param {string} versionId 
+         * @summary Delete a Repository if you own it
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadVersion: async (diagramId: string, versionId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'diagramId' is not null or undefined
-            if (diagramId === null || diagramId === undefined) {
-                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling downloadVersion.');
+        deleteRepository: async (repositoryId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'repositoryId' is not null or undefined
+            if (repositoryId === null || repositoryId === undefined) {
+                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling deleteRepository.');
             }
-            // verify required parameter 'versionId' is not null or undefined
-            if (versionId === null || versionId === undefined) {
-                throw new RequiredError('versionId','Required parameter versionId was null or undefined when calling downloadVersion.');
+            const localVarPath = `/api/bpmnrepo/{repositoryId}`
+                .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
             }
-            const localVarPath = `/api/version/{diagramId}/{versionId}/download`
-                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)))
-                .replace(`{${"versionId"}}`, encodeURIComponent(String(versionId)));
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all Repositories
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllRepositories: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/bpmnrepo`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -119,17 +144,18 @@ export const DiagramVersionControllerApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @param {string} diagramId 
+         * @summary Get a single Repository by providing its ID
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllVersions: async (diagramId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'diagramId' is not null or undefined
-            if (diagramId === null || diagramId === undefined) {
-                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling getAllVersions.');
+        getSingleRepository: async (repositoryId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'repositoryId' is not null or undefined
+            if (repositoryId === null || repositoryId === undefined) {
+                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling getSingleRepository.');
             }
-            const localVarPath = `/api/version/{diagramId}/all`
-                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
+            const localVarPath = `/api/bpmnrepo/{repositoryId}`
+                .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -158,27 +184,34 @@ export const DiagramVersionControllerApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Return the latest version of the requested diagram
-         * @param {string} diagramId 
+         * @summary Update a Repository
+         * @param {RepositoryUpdateTO} body 
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLatestVersion: async (diagramId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'diagramId' is not null or undefined
-            if (diagramId === null || diagramId === undefined) {
-                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling getLatestVersion.');
+        updateRepository: async (body: RepositoryUpdateTO, repositoryId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateRepository.');
             }
-            const localVarPath = `/api/version/{diagramId}/latest`
-                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
+            // verify required parameter 'repositoryId' is not null or undefined
+            if (repositoryId === null || repositoryId === undefined) {
+                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling updateRepository.');
+            }
+            const localVarPath = `/api/bpmnrepo/{repositoryId}`
+                .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
@@ -190,51 +223,8 @@ export const DiagramVersionControllerApiAxiosParamCreator = function (configurat
             localVarUrlObj.search = (new URLSearchParams(query)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} diagramId 
-         * @param {string} versionId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSingleVersion: async (diagramId: string, versionId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'diagramId' is not null or undefined
-            if (diagramId === null || diagramId === undefined) {
-                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling getSingleVersion.');
-            }
-            // verify required parameter 'versionId' is not null or undefined
-            if (versionId === null || versionId === undefined) {
-                throw new RequiredError('versionId','Required parameter versionId was null or undefined when calling getSingleVersion.');
-            }
-            const localVarPath = `/api/version/{diagramId}/{versionId}`
-                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)))
-                .replace(`{${"versionId"}}`, encodeURIComponent(String(versionId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -245,20 +235,20 @@ export const DiagramVersionControllerApiAxiosParamCreator = function (configurat
 };
 
 /**
- * DiagramVersionControllerApi - functional programming interface
+ * RepositoryApi - functional programming interface
  * @export
  */
-export const DiagramVersionControllerApiFp = function(configuration?: Configuration) {
+export const RepositoryApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {DiagramVersionUploadTO} body 
-         * @param {string} diagramId 
+         * @summary Create a new Repository
+         * @param {NewRepositoryTO} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createOrUpdateVersion(body: DiagramVersionUploadTO, diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await DiagramVersionControllerApiAxiosParamCreator(configuration).createOrUpdateVersion(body, diagramId, options);
+        async createRepository(body: NewRepositoryTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await RepositoryApiAxiosParamCreator(configuration).createRepository(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -266,13 +256,13 @@ export const DiagramVersionControllerApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @param {string} diagramId 
-         * @param {string} versionId 
+         * @summary Delete a Repository if you own it
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async downloadVersion(diagramId: string, versionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await DiagramVersionControllerApiAxiosParamCreator(configuration).downloadVersion(diagramId, versionId, options);
+        async deleteRepository(repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await RepositoryApiAxiosParamCreator(configuration).deleteRepository(repositoryId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -280,12 +270,12 @@ export const DiagramVersionControllerApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @param {string} diagramId 
+         * @summary Get all Repositories
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllVersions(diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DiagramVersionTO>>> {
-            const localVarAxiosArgs = await DiagramVersionControllerApiAxiosParamCreator(configuration).getAllVersions(diagramId, options);
+        async getAllRepositories(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RepositoryTO>>> {
+            const localVarAxiosArgs = await RepositoryApiAxiosParamCreator(configuration).getAllRepositories(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -293,13 +283,13 @@ export const DiagramVersionControllerApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Return the latest version of the requested diagram
-         * @param {string} diagramId 
+         * @summary Get a single Repository by providing its ID
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLatestVersion(diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DiagramVersionTO>> {
-            const localVarAxiosArgs = await DiagramVersionControllerApiAxiosParamCreator(configuration).getLatestVersion(diagramId, options);
+        async getSingleRepository(repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepositoryTO>> {
+            const localVarAxiosArgs = await RepositoryApiAxiosParamCreator(configuration).getSingleRepository(repositoryId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -307,13 +297,14 @@ export const DiagramVersionControllerApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @param {string} diagramId 
-         * @param {string} versionId 
+         * @summary Update a Repository
+         * @param {RepositoryUpdateTO} body 
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSingleVersion(diagramId: string, versionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DiagramVersionTO>> {
-            const localVarAxiosArgs = await DiagramVersionControllerApiAxiosParamCreator(configuration).getSingleVersion(diagramId, versionId, options);
+        async updateRepository(body: RepositoryUpdateTO, repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await RepositoryApiAxiosParamCreator(configuration).updateRepository(body, repositoryId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -323,122 +314,124 @@ export const DiagramVersionControllerApiFp = function(configuration?: Configurat
 };
 
 /**
- * DiagramVersionControllerApi - factory interface
+ * RepositoryApi - factory interface
  * @export
  */
-export const DiagramVersionControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const RepositoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
          * 
-         * @param {DiagramVersionUploadTO} body 
-         * @param {string} diagramId 
+         * @summary Create a new Repository
+         * @param {NewRepositoryTO} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrUpdateVersion(body: DiagramVersionUploadTO, diagramId: string, options?: any): AxiosPromise<void> {
-            return DiagramVersionControllerApiFp(configuration).createOrUpdateVersion(body, diagramId, options).then((request) => request(axios, basePath));
+        createRepository(body: NewRepositoryTO, options?: any): AxiosPromise<void> {
+            return RepositoryApiFp(configuration).createRepository(body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} diagramId 
-         * @param {string} versionId 
+         * @summary Delete a Repository if you own it
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadVersion(diagramId: string, versionId: string, options?: any): AxiosPromise<string> {
-            return DiagramVersionControllerApiFp(configuration).downloadVersion(diagramId, versionId, options).then((request) => request(axios, basePath));
+        deleteRepository(repositoryId: string, options?: any): AxiosPromise<void> {
+            return RepositoryApiFp(configuration).deleteRepository(repositoryId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} diagramId 
+         * @summary Get all Repositories
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllVersions(diagramId: string, options?: any): AxiosPromise<Array<DiagramVersionTO>> {
-            return DiagramVersionControllerApiFp(configuration).getAllVersions(diagramId, options).then((request) => request(axios, basePath));
+        getAllRepositories(options?: any): AxiosPromise<Array<RepositoryTO>> {
+            return RepositoryApiFp(configuration).getAllRepositories(options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Return the latest version of the requested diagram
-         * @param {string} diagramId 
+         * @summary Get a single Repository by providing its ID
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLatestVersion(diagramId: string, options?: any): AxiosPromise<DiagramVersionTO> {
-            return DiagramVersionControllerApiFp(configuration).getLatestVersion(diagramId, options).then((request) => request(axios, basePath));
+        getSingleRepository(repositoryId: string, options?: any): AxiosPromise<RepositoryTO> {
+            return RepositoryApiFp(configuration).getSingleRepository(repositoryId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} diagramId 
-         * @param {string} versionId 
+         * @summary Update a Repository
+         * @param {RepositoryUpdateTO} body 
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSingleVersion(diagramId: string, versionId: string, options?: any): AxiosPromise<DiagramVersionTO> {
-            return DiagramVersionControllerApiFp(configuration).getSingleVersion(diagramId, versionId, options).then((request) => request(axios, basePath));
+        updateRepository(body: RepositoryUpdateTO, repositoryId: string, options?: any): AxiosPromise<void> {
+            return RepositoryApiFp(configuration).updateRepository(body, repositoryId, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * DiagramVersionControllerApi - object-oriented interface
+ * RepositoryApi - object-oriented interface
  * @export
- * @class DiagramVersionControllerApi
+ * @class RepositoryApi
  * @extends {BaseAPI}
  */
-export class DiagramVersionControllerApi extends BaseAPI {
+export class RepositoryApi extends BaseAPI {
     /**
      * 
-     * @param {DiagramVersionUploadTO} body 
-     * @param {string} diagramId 
+     * @summary Create a new Repository
+     * @param {NewRepositoryTO} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramVersionControllerApi
+     * @memberof RepositoryApi
      */
-    public createOrUpdateVersion(body: DiagramVersionUploadTO, diagramId: string, options?: any) {
-        return DiagramVersionControllerApiFp(this.configuration).createOrUpdateVersion(body, diagramId, options).then((request) => request(this.axios, this.basePath));
+    public createRepository(body: NewRepositoryTO, options?: any) {
+        return RepositoryApiFp(this.configuration).createRepository(body, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
-     * @param {string} diagramId 
-     * @param {string} versionId 
+     * @summary Delete a Repository if you own it
+     * @param {string} repositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramVersionControllerApi
+     * @memberof RepositoryApi
      */
-    public downloadVersion(diagramId: string, versionId: string, options?: any) {
-        return DiagramVersionControllerApiFp(this.configuration).downloadVersion(diagramId, versionId, options).then((request) => request(this.axios, this.basePath));
+    public deleteRepository(repositoryId: string, options?: any) {
+        return RepositoryApiFp(this.configuration).deleteRepository(repositoryId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
-     * @param {string} diagramId 
+     * @summary Get all Repositories
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramVersionControllerApi
+     * @memberof RepositoryApi
      */
-    public getAllVersions(diagramId: string, options?: any) {
-        return DiagramVersionControllerApiFp(this.configuration).getAllVersions(diagramId, options).then((request) => request(this.axios, this.basePath));
+    public getAllRepositories(options?: any) {
+        return RepositoryApiFp(this.configuration).getAllRepositories(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
-     * @summary Return the latest version of the requested diagram
-     * @param {string} diagramId 
+     * @summary Get a single Repository by providing its ID
+     * @param {string} repositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramVersionControllerApi
+     * @memberof RepositoryApi
      */
-    public getLatestVersion(diagramId: string, options?: any) {
-        return DiagramVersionControllerApiFp(this.configuration).getLatestVersion(diagramId, options).then((request) => request(this.axios, this.basePath));
+    public getSingleRepository(repositoryId: string, options?: any) {
+        return RepositoryApiFp(this.configuration).getSingleRepository(repositoryId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
-     * @param {string} diagramId 
-     * @param {string} versionId 
+     * @summary Update a Repository
+     * @param {RepositoryUpdateTO} body 
+     * @param {string} repositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramVersionControllerApi
+     * @memberof RepositoryApi
      */
-    public getSingleVersion(diagramId: string, versionId: string, options?: any) {
-        return DiagramVersionControllerApiFp(this.configuration).getSingleVersion(diagramId, versionId, options).then((request) => request(this.axios, this.basePath));
+    public updateRepository(body: RepositoryUpdateTO, repositoryId: string, options?: any) {
+        return RepositoryApiFp(this.configuration).updateRepository(body, repositoryId, options).then((request) => request(this.axios, this.basePath));
     }
 }

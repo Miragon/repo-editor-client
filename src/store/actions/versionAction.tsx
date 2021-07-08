@@ -13,7 +13,7 @@ export const createOrUpdateVersion = (
     comment?: string
 ) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const versionController = new api.DiagramVersionControllerApi();
+        const versionController = new api.VersionApi();
         try {
             const diagramVersionUploadTO: DiagramVersionUploadTO = {
                 xml: file,
@@ -42,7 +42,7 @@ export const createOrUpdateVersion = (
 export const getAllVersions = (bpmnDiagramId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         try {
-            const versionController = new api.DiagramVersionControllerApi();
+            const versionController = new api.VersionApi();
             const config = helpers.getClientConfig();
             const response = await versionController.getAllVersions(bpmnDiagramId, config);
             if (Math.floor(response.status / 100) === 2) {
@@ -59,7 +59,7 @@ export const getAllVersions = (bpmnDiagramId: string) => {
 export const getLatestVersion = (bpmnDiagramId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         try {
-            const versionController = new api.DiagramVersionControllerApi();
+            const versionController = new api.VersionApi();
             const config = helpers.getClientConfig();
             const response = await versionController.getLatestVersion(bpmnDiagramId, config);
             if (Math.floor(response.status / 100) === 2) {
@@ -76,7 +76,7 @@ export const getLatestVersion = (bpmnDiagramId: string) => {
 export const downloadVersion = (bpmnDiagramId: string, bpmnDiagramVersionId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         try {
-            const versionController = new api.DiagramVersionControllerApi();
+            const versionController = new api.VersionApi();
             const config = helpers.getClientConfig();
             const response = await versionController.downloadVersion(bpmnDiagramId, bpmnDiagramVersionId, config);
             if (Math.floor(response.status / 100) === 2) {

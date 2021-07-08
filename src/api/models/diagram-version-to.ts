@@ -34,12 +34,6 @@ export interface DiagramVersionTO {
      * @type {number}
      * @memberof DiagramVersionTO
      */
-    release?: any;
-    /**
-     * 
-     * @type {number}
-     * @memberof DiagramVersionTO
-     */
     milestone?: any;
     /**
      * 
@@ -78,7 +72,6 @@ export interface DiagramVersionTO {
     * @enum {string}
     */
 export enum DiagramVersionTOSaveTypeEnum {
-    RELEASE = 'RELEASE',
     MILESTONE = 'MILESTONE',
     AUTOSAVE = 'AUTOSAVE'
 }

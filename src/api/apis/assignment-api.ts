@@ -19,10 +19,10 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 import { AssignmentTO } from '../models';
 import { AssignmentUpdateTO } from '../models';
 /**
- * AssignmentControllerApi - axios parameter creator
+ * AssignmentApi - axios parameter creator
  * @export
  */
-export const AssignmentControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AssignmentApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -157,10 +157,10 @@ export const AssignmentControllerApiAxiosParamCreator = function (configuration?
 };
 
 /**
- * AssignmentControllerApi - functional programming interface
+ * AssignmentApi - functional programming interface
  * @export
  */
-export const AssignmentControllerApiFp = function(configuration?: Configuration) {
+export const AssignmentApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -170,7 +170,7 @@ export const AssignmentControllerApiFp = function(configuration?: Configuration)
          * @throws {RequiredError}
          */
         async createOrUpdateUserAssignment(body: AssignmentUpdateTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await AssignmentControllerApiAxiosParamCreator(configuration).createOrUpdateUserAssignment(body, options);
+            const localVarAxiosArgs = await AssignmentApiAxiosParamCreator(configuration).createOrUpdateUserAssignment(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -185,7 +185,7 @@ export const AssignmentControllerApiFp = function(configuration?: Configuration)
          * @throws {RequiredError}
          */
         async deleteUserAssignment(repositoryId: string, username: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await AssignmentControllerApiAxiosParamCreator(configuration).deleteUserAssignment(repositoryId, username, options);
+            const localVarAxiosArgs = await AssignmentApiAxiosParamCreator(configuration).deleteUserAssignment(repositoryId, username, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -199,7 +199,7 @@ export const AssignmentControllerApiFp = function(configuration?: Configuration)
          * @throws {RequiredError}
          */
         async getAllAssignedUsers(repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AssignmentTO>>> {
-            const localVarAxiosArgs = await AssignmentControllerApiAxiosParamCreator(configuration).getAllAssignedUsers(repositoryId, options);
+            const localVarAxiosArgs = await AssignmentApiAxiosParamCreator(configuration).getAllAssignedUsers(repositoryId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -209,10 +209,10 @@ export const AssignmentControllerApiFp = function(configuration?: Configuration)
 };
 
 /**
- * AssignmentControllerApi - factory interface
+ * AssignmentApi - factory interface
  * @export
  */
-export const AssignmentControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const AssignmentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
          * 
@@ -222,7 +222,7 @@ export const AssignmentControllerApiFactory = function (configuration?: Configur
          * @throws {RequiredError}
          */
         createOrUpdateUserAssignment(body: AssignmentUpdateTO, options?: any): AxiosPromise<void> {
-            return AssignmentControllerApiFp(configuration).createOrUpdateUserAssignment(body, options).then((request) => request(axios, basePath));
+            return AssignmentApiFp(configuration).createOrUpdateUserAssignment(body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -233,7 +233,7 @@ export const AssignmentControllerApiFactory = function (configuration?: Configur
          * @throws {RequiredError}
          */
         deleteUserAssignment(repositoryId: string, username: string, options?: any): AxiosPromise<void> {
-            return AssignmentControllerApiFp(configuration).deleteUserAssignment(repositoryId, username, options).then((request) => request(axios, basePath));
+            return AssignmentApiFp(configuration).deleteUserAssignment(repositoryId, username, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -243,28 +243,28 @@ export const AssignmentControllerApiFactory = function (configuration?: Configur
          * @throws {RequiredError}
          */
         getAllAssignedUsers(repositoryId: string, options?: any): AxiosPromise<Array<AssignmentTO>> {
-            return AssignmentControllerApiFp(configuration).getAllAssignedUsers(repositoryId, options).then((request) => request(axios, basePath));
+            return AssignmentApiFp(configuration).getAllAssignedUsers(repositoryId, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * AssignmentControllerApi - object-oriented interface
+ * AssignmentApi - object-oriented interface
  * @export
- * @class AssignmentControllerApi
+ * @class AssignmentApi
  * @extends {BaseAPI}
  */
-export class AssignmentControllerApi extends BaseAPI {
+export class AssignmentApi extends BaseAPI {
     /**
      * 
      * @summary Create / update user assignment
      * @param {AssignmentUpdateTO} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AssignmentControllerApi
+     * @memberof AssignmentApi
      */
     public createOrUpdateUserAssignment(body: AssignmentUpdateTO, options?: any) {
-        return AssignmentControllerApiFp(this.configuration).createOrUpdateUserAssignment(body, options).then((request) => request(this.axios, this.basePath));
+        return AssignmentApiFp(this.configuration).createOrUpdateUserAssignment(body, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
@@ -273,10 +273,10 @@ export class AssignmentControllerApi extends BaseAPI {
      * @param {string} username 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AssignmentControllerApi
+     * @memberof AssignmentApi
      */
     public deleteUserAssignment(repositoryId: string, username: string, options?: any) {
-        return AssignmentControllerApiFp(this.configuration).deleteUserAssignment(repositoryId, username, options).then((request) => request(this.axios, this.basePath));
+        return AssignmentApiFp(this.configuration).deleteUserAssignment(repositoryId, username, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
@@ -284,9 +284,9 @@ export class AssignmentControllerApi extends BaseAPI {
      * @param {string} repositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AssignmentControllerApi
+     * @memberof AssignmentApi
      */
     public getAllAssignedUsers(repositoryId: string, options?: any) {
-        return AssignmentControllerApiFp(this.configuration).getAllAssignedUsers(repositoryId, options).then((request) => request(this.axios, this.basePath));
+        return AssignmentApiFp(this.configuration).getAllAssignedUsers(repositoryId, options).then((request) => request(this.axios, this.basePath));
     }
 }
