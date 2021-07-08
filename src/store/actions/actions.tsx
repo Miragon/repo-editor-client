@@ -18,6 +18,7 @@ import {
 } from "./repositoryAction";
 import {searchUsers} from "./userAction";
 import {createOrUpdateVersion, getAllVersions, getLatestVersion} from "./versionAction";
+import {deployVersion} from "./deploymentAction";
 
 export enum ActionType {
     FETCH_FAVORITE_DIAGRAMS,
@@ -39,7 +40,8 @@ export enum ActionType {
     DELETE_REPOSITORY,
     SEARCH_DIAGRAM,
     UPDATE_DIAGRAM,
-    LATEST_VERSION
+    LATEST_VERSION,
+    DEPLOY_VERSION
 }
 
 // eslint-disable-next-line
@@ -104,5 +106,8 @@ export const actionMapper = (actionType: ActionType, payload: Array<any>) => {
 
         case ActionType.LATEST_VERSION:
             return getLatestVersion(payload[0]);
+
+        case ActionType.DEPLOY_VERSION:
+            return deployVersion(payload[0], payload[1], payload[2]);
     }
 };

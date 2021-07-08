@@ -87,7 +87,9 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
                         </TableRow>
                     )}
                     {props.diagramVersionTOs?.map(singleVersion => (
-                        <VersionItem key={singleVersion.id} diagramVersion={singleVersion}/>
+                        <VersionItem
+                            key={singleVersion.id}
+                            diagramVersion={singleVersion}/>
                     ))}
                 </TableBody>
             </Table>

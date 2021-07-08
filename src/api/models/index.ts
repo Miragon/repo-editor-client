@@ -1,6 +1,6 @@
 export * from './assignment-to';
 export * from './assignment-update-to';
-export * from './deplyoment-to';
+export * from './deployment-to';
 export * from './diagram-svgupload-to';
 export * from './diagram-to';
 export * from './diagram-update-to';

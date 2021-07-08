@@ -32,6 +32,9 @@
     "RELEASE": "Release",
     "MILESTONE": "Milestone"
   },
+  "deployment": {
+    "dialogHeader": "Deploy Version {{versionNumber}}"
+  },
   "user": {
     "users": "Users",
     "OWNER": "Owner",
@@ -62,6 +65,7 @@
     "description": "Description",
     "comment": "Comment",
     "date": "Date",
-    "type": "Type"
+    "type": "Type",
+    "target": "Target"
   }
 }

@@ -14,13 +14,13 @@
 /**
  * 
  * @export
- * @interface DeplyomentTO
+ * @interface DeploymentTO
  */
-export interface DeplyomentTO {
+export interface DeploymentTO {
     /**
      * 
      * @type {string}
-     * @memberof DeplyomentTO
+     * @memberof DeploymentTO
      */
     target: any;
 }

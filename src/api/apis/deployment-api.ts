@@ -16,7 +16,7 @@ import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
-import { DeplyomentTO } from '../models';
+import { DeploymentTO } from '../models';
 /**
  * DeploymentApi - axios parameter creator
  * @export
@@ -25,13 +25,13 @@ export const DeploymentApiAxiosParamCreator = function (configuration?: Configur
     return {
         /**
          * Deploy diagram version
-         * @param {DeplyomentTO} body 
+         * @param {DeploymentTO} body
          * @param {string} diagramId 
          * @param {string} versionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployVersion: async (body: DeplyomentTO, diagramId: string, versionId: string, options: any = {}): Promise<RequestArgs> => {
+        deployVersion: async (body: DeploymentTO, diagramId: string, versionId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling deployVersion.');
@@ -121,13 +121,13 @@ export const DeploymentApiFp = function(configuration?: Configuration) {
     return {
         /**
          * Deploy diagram version
-         * @param {DeplyomentTO} body 
+         * @param {DeploymentTO} body
          * @param {string} diagramId 
          * @param {string} versionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployVersion(body: DeplyomentTO, diagramId: string, versionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deployVersion(body: DeploymentTO, diagramId: string, versionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await DeploymentApiAxiosParamCreator(configuration).deployVersion(body, diagramId, versionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -157,13 +157,13 @@ export const DeploymentApiFactory = function (configuration?: Configuration, bas
     return {
         /**
          * Deploy diagram version
-         * @param {DeplyomentTO} body 
+         * @param {DeploymentTO} body
          * @param {string} diagramId 
          * @param {string} versionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployVersion(body: DeplyomentTO, diagramId: string, versionId: string, options?: any): AxiosPromise<void> {
+        deployVersion(body: DeploymentTO, diagramId: string, versionId: string, options?: any): AxiosPromise<void> {
             return DeploymentApiFp(configuration).deployVersion(body, diagramId, versionId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -186,14 +186,14 @@ export const DeploymentApiFactory = function (configuration?: Configuration, bas
 export class DeploymentApi extends BaseAPI {
     /**
      * Deploy diagram version
-     * @param {DeplyomentTO} body 
+     * @param {DeploymentTO} body
      * @param {string} diagramId 
      * @param {string} versionId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeploymentApi
      */
-    public deployVersion(body: DeplyomentTO, diagramId: string, versionId: string, options?: any) {
+    public deployVersion(body: DeploymentTO, diagramId: string, versionId: string, options?: any) {
         return DeploymentApiFp(this.configuration).deployVersion(body, diagramId, versionId, options).then((request) => request(this.axios, this.basePath));
     }
     /**

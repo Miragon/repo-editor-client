@@ -8,6 +8,8 @@ import {useTranslation} from "react-i18next";
 import {downloadVersion} from "../../store/actions";
 import theme from "../../theme";
 import {DropdownButtonItem} from "../../components/Form/DropdownButton";
+import {deployVersion} from "../../store/actions/deploymentAction";
+import DeployVersionDialog from "./DeployVersionDialog";
 
 const useStyles = makeStyles(() => ({
     splitCell: {
@@ -46,14 +48,14 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
     const {t, i18n} = useTranslation("common");
 
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
-
+    const [deployVersionOpen, setDeployVersionOpen] = useState<boolean>(false);
     const ref = useRef<HTMLButtonElement>(null);
 
-    const openModeler = (repoId: string, diagramId: string, versionId?: string) => {
+    const openModeler = (diagramId: string, versionId?: string) => {
         if (versionId) {
-            window.open(`/modeler/#/${repoId}/${diagramId}/${versionId}/`, "_blank");
+            window.open(`/modeler/#/${diagramId}/${versionId}/`, "_blank");
         } else {
-            window.open(`/modeler/#/${repoId}/${diagramId}/latest`, "_blank");
+            window.open(`/modeler/#/${diagramId}/latest`, "_blank");
         }
     };
 
@@ -73,14 +75,17 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
         dispatch(downloadVersion(diagramId, versionId))
     }
 
+    //#todo: find out why clicks go through all the top elements
     const options: DropdownButtonItem[] = [
 
         {
-            id: "DeploayVersion",
+            id: "DeployVersion",
             label: "version.deploy",
             type: "button",
             onClick: () => {
-                console.log("deployed Version");
+                console.log("deploy");
+                setDeployVersionOpen(true);
+
             }
         },
         {
@@ -88,7 +93,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
             label: "version.download",
             type: "button",
             onClick: () => {
-                dispatch(downloadVersion(props.diagramVersion.diagramId, props.diagramVersion.id));
+                download(props.diagramVersion.diagramId, props.diagramVersion.id);
             }
 
         },
@@ -98,7 +103,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
             <TableRow
                 key={props.diagramVersion.id}
                 hover
-                onClick={() => openModeler(props.diagramVersion.repositoryId, props.diagramVersion.diagramId, props.diagramVersion.id)}>
+                onClick={() => openModeler(props.diagramVersion.diagramId, props.diagramVersion.id)}>
                 <TableCell
                     component="th"
                     scope="row">
@@ -157,6 +162,13 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
                     </Grow>
                 )}
             </Popper>
+
+            <DeployVersionDialog
+                diagramId={props.diagramVersion.diagramId}
+                versionId={props.diagramVersion.id}
+                open={deployVersionOpen}
+                versionNumber={props.diagramVersion.milestone}
+                onCancelled={() => setDeployVersionOpen(false)} />
         </>
     )
 })
