@@ -1,8 +1,9 @@
-import React, {useEffect} from "react";
-import {IconButton, Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
+import React, {useEffect, useState} from "react";
+import {IconButton, Table, TableBody, TableCell, TableHead, TableRow, Popper} from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {KeyboardArrowUp} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/styles";
+import {MoreVert} from "@material-ui/icons";
 import {DiagramVersionTO} from "../../api/models";
 import {useDispatch} from "react-redux";
 import {GET_VERSIONS} from "../../store/constants";
@@ -26,6 +27,9 @@ const useStyles = makeStyles(() => ({
         display: "flex",
         justifyContent: "space-between"
     },
+    popupContainer: {
+        zIndex: 1000
+    },
 }));
 interface Props {
     diagramId: string;
@@ -37,8 +41,9 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
     const dispatch = useDispatch();
     const {t, i18n} = useTranslation("common");
 
+    const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
 
-
+    const ref = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
         if (props.diagramVersionTOs) {
@@ -71,6 +76,11 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
         return "01.01.2000";
     };
 
+    const openSettings = (event: any) => {
+        event.stopPropagation();
+        setSettingsOpen(true);
+    };
+
     const closeVersions = (event: any): void => {
         event.stopPropagation();
         dispatch({ type: GET_VERSIONS, versions: [] });
@@ -80,6 +90,27 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
     const download = (diagramId: string, versionId: string) => {
         dispatch(downloadVersion(diagramId, versionId))
     }
+
+    const options: DropdownButtonItem[] = [
+
+        {
+            id: "DeploayVersion",
+            label: "version.deploy",
+            type: "button",
+            onClick: () => {
+                console.log("deployed Version");
+            }
+        },
+        {
+            id: "DownloadVersion",
+            label: "version.download",
+            type: "button",
+            onClick: () => {
+                dispatch(downloadVersion(props.diagramId, ));
+            }
+
+        },
+    ];
 
     return (
         <>
@@ -116,19 +147,23 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
                             <TableCell
                                 component="th"
                                 scope="row">
-                                <div className={classes.splitCell} >
-                                    <div>
-                                        {singleVersion.milestone}
-                                    </div>
-                                    <div>
-                                        <IconButton size={"small"} onClick={() => download(singleVersion.diagramId, singleVersion.id)}>
-                                            <GetAppIcon/>
-                                        </IconButton>
-                                    </div>
+                                <div>
+                                    {singleVersion.milestone}
                                 </div>
                             </TableCell>
                             <TableCell>{singleVersion.comment}</TableCell>
-                            <TableCell>{reformatDate(singleVersion.updatedDate)}</TableCell>
+                                <TableCell>
+                                    <div className={classes.splitCell}>
+
+                                        <div>
+                                            {reformatDate(singleVersion.updatedDate)}
+                                        </div>
+                                        <IconButton size="small" ref={ref} onClick={event => openSettings(event)}>
+                                            <MoreVert />
+                                        </IconButton>
+
+                                    </div>
+                                </TableCell>
                         </TableRow>
                     ))}
 
@@ -138,6 +173,46 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
             <div className={classes.versionsButtonClose} onClick={(event => closeVersions(event))}>
                 <KeyboardArrowUp />
             </div>
+
+            <Popper
+                open={settingsOpen}
+                anchorEl={ref.current}
+                role={undefined}
+                transition
+                disablePortal
+                className={classes.popupContainer}>
+                {({ TransitionProps }) => (
+                    <Grow
+                        {...TransitionProps}
+                        style={{ transformOrigin: "top" }}>
+                        <Paper className={classes.popup}>
+                            <ClickAwayListener onClickAway={() => setSettingsOpen(false)}>
+                                <MenuList className={classes.list}>
+                                    {options.map(option => (
+                                        <MenuItem
+                                            key={option.id}
+                                            disabled={option.disabled || option.type !== "button"}
+                                            className={clsx(
+                                                classes.menuItem,
+                                                option.type === "divider" && classes.menuItemDivider
+                                            )}
+                                            onClick={() => {
+                                                if (option.onClick) {
+                                                    option.onClick();
+                                                } else {
+                                                    console.log("Some error when clicking");
+                                                }
+                                                setSettingsOpen(false);
+                                            }}>
+                                            {t(option.label)}
+                                        </MenuItem>
+                                    ))}
+                                </MenuList>
+                            </ClickAwayListener>
+                        </Paper>
+                    </Grow>
+                )}
+            </Popper>
         </>
     );
 });

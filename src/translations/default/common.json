@@ -24,6 +24,7 @@
   "version": {
     "create": "Create new Version",
     "edit": "Edit version",
+    "deploy": "Deploy version",
     "dialogHeader": "Create new Version of {{diagramName}}",
     "download": "Download version",
     "delete": "Delete version",

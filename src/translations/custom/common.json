@@ -25,6 +25,7 @@
   },
   "version": {
     "create": "Version erstellen",
+    "deploy": "Version veröffentlichen",
     "dialogHeader": "Neue Version von {{diagramName}} erstellen",
     "edit": "Version bearbeiten",
     "download": "Version herunterladen",
