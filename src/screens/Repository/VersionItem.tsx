@@ -1,23 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {IconButton, Table, TableBody, TableCell, TableHead, TableRow, Popper} from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import {KeyboardArrowUp} from "@material-ui/icons";
-import {makeStyles} from "@material-ui/styles";
+import React, {useRef, useState} from "react";
+import {ClickAwayListener, Grow, IconButton, MenuItem, MenuList, Paper, Popper, TableCell, TableRow} from "@material-ui/core";
 import {MoreVert} from "@material-ui/icons";
+import {makeStyles} from "@material-ui/styles";
 import {DiagramVersionTO} from "../../api/models";
 import {useDispatch} from "react-redux";
-import {GET_VERSIONS} from "../../store/constants";
 import {useTranslation} from "react-i18next";
-import GetAppIcon from "@material-ui/icons/GetApp";
 import {downloadVersion} from "../../store/actions";
-import { ClickAwayListener } from "@material-ui/core";
-import { Grow } from "@material-ui/core";
-import { Paper } from "@material-ui/core";
-import { MenuList } from "@material-ui/core";
-import { MenuItem } from "@material-ui/core";
 import theme from "../../theme";
-import { useRef } from "react";
-import { DropdownButtonItem } from "../../components/Form/DropdownButton";
+import {DropdownButtonItem} from "../../components/Form/DropdownButton";
 
 const useStyles = makeStyles(() => ({
     splitCell: {
@@ -124,12 +114,11 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
                             {reformatDate(props.diagramVersion.updatedDate)}
                         </div>
                         <IconButton size="small" ref={ref} onClick={event => openSettings(event)}>
-                            <MoreVert />
+                            <MoreVert/>
                         </IconButton>
                     </div>
                 </TableCell>
             </TableRow>
-
 
 
             <Popper
@@ -139,10 +128,10 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
                 transition
                 disablePortal
                 className={classes.popupContainer}>
-                {({ TransitionProps }) => (
+                {({TransitionProps}) => (
                     <Grow
                         {...TransitionProps}
-                        style={{ transformOrigin: "top" }}>
+                        style={{transformOrigin: "top"}}>
                         <Paper className={classes.popup}>
                             <ClickAwayListener onClickAway={() => setSettingsOpen(false)}>
                                 <MenuList className={classes.list}>
