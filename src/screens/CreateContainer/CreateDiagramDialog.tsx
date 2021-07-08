@@ -60,9 +60,9 @@ const CreateDiagramDialog: React.FC<Props> = props => {
             onCloseError={() => setError(undefined)}
             open={props.open}
             title={props.type === "bpmn" ? t("diagram.createBpmn") : t("diagram.createDmn")}
-            secondTitle="Cancel"
+            secondTitle={t("dialog.cancel")}
             onSecond={props.onCancelled}
-            firstTitle="Create"
+            firstTitle={t("dialog.create")}
             onFirst={onCreate}>
 
             <SettingsForm large>
@@ -92,7 +92,7 @@ const CreateDiagramDialog: React.FC<Props> = props => {
                 <SettingsTextField
                     label={t("properties.title")}
                     value={title}
-                    onChanged={setTitle} />
+                    onChanged={setTitle}/>
 
                 <SettingsTextField
                     label={t("properties.description")}
@@ -100,7 +100,7 @@ const CreateDiagramDialog: React.FC<Props> = props => {
                     multiline
                     rows={3}
                     rowsMax={3}
-                    onChanged={setDescription} />
+                    onChanged={setDescription}/>
 
             </SettingsForm>
         </PopupDialog>
