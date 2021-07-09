@@ -23,43 +23,44 @@ export const DEFAULT_DMN_SVG = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
     "<!-- created with dmn-js / http://bpmn.io -->\n" +
     "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n" +
     "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"192\" height=\"92\" viewBox=\"154 94 192 92\" version=\"1.1\"><defs><marker id=\"association-start\" viewBox=\"0 0 20 20\" refX=\"1\" refY=\"10\" markerWidth=\"10\" markerHeight=\"10\" orient=\"auto\"><path d=\"M 11 5 L 1 10 L 11 15\" style=\"stroke-width: 1.5px; stroke-linecap: round; stroke-dasharray: 10000, 1; fill: none; stroke: black;\"></path></marker><marker id=\"association-end\" viewBox=\"0 0 20 20\" refX=\"12\" refY=\"10\" markerWidth=\"10\" markerHeight=\"10\" orient=\"auto\"><path d=\"M 1 5 L 11 10 L 1 15\" style=\"stroke-width: 1.5px; stroke-linecap: round; stroke-dasharray: 10000, 1; fill: none; stroke: black;\"></path></marker><marker id=\"information-requirement-end\" viewBox=\"0 0 20 20\" refX=\"11\" refY=\"10\" markerWidth=\"20\" markerHeight=\"20\" orient=\"auto\"><path d=\"M 1 5 L 11 10 L 1 15 Z\" style=\"stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1;\"></path></marker><marker id=\"knowledge-requirement-end\" viewBox=\"0 0 20 20\" refX=\"11\" refY=\"10\" markerWidth=\"16\" markerHeight=\"16\" orient=\"auto\"><path d=\"M 1 3 L 11 10 L 1 17\" style=\"stroke-width: 2px; stroke-linecap: round; stroke-dasharray: 10000, 1; fill: none; stroke: black;\"></path></marker><marker id=\"authority-requirement-end\" viewBox=\"0 0 20 20\" refX=\"3\" refY=\"3\" markerWidth=\"18\" markerHeight=\"18\" orient=\"auto\"><circle cx=\"3\" cy=\"3\" r=\"3\" style=\"stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1;\"></circle></marker></defs><g class=\"djs-group\"><g class=\"djs-element djs-shape\" data-element-id=\"Decision_1x87kk0\" style=\"display: block;\" transform=\"matrix(1 0 0 1 160 100)\"><g class=\"djs-visual\"><rect x=\"0\" y=\"0\" width=\"180\" height=\"80\" rx=\"0\" ry=\"0\" style=\"stroke: black; stroke-width: 2px; fill: white;\"/><text lineHeight=\"1.2\" class=\"djs-label\" style=\"font-family: Arial, sans-serif; font-size: 12px; font-weight: normal;\"><tspan x=\"61.984375\" y=\"43.599999999999994\">Decision 1</tspan></text></g><rect class=\"djs-hit djs-hit-all\" x=\"0\" y=\"0\" width=\"180\" height=\"80\" style=\"fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;\"/><rect x=\"-6\" y=\"-6\" width=\"192\" height=\"92\" class=\"djs-outline\" style=\"fill: none;\"/></g></g></svg>";
-export const DEFAULT_XML_FILE = "&lt;bpmn:definitions xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:bpmn=&quot;http://www.omg.org/spec/BPMN/20100524/MODEL&quot; xmlns:bpmndi=&quot;http://www.omg.org/spec/BPMN/20100524/DI&quot; xmlns:dc=&quot;http://www.omg.org/spec/DD/20100524/DC&quot; xmlns:di=&quot;http://www.omg.org/spec/DD/20100524/DI&quot; id=&quot;Definitions_1&quot; targetNamespace=&quot;http://bpmn.io/schema/bpmn&quot;&gt;\n" +
-    "  &lt;bpmn:process id=&quot;Process_1&quot; isExecutable=&quot;false&quot;&gt;\n" +
-    "    &lt;bpmn:startEvent id=&quot;StartEvent_1&quot;&gt;\n" +
-    "      &lt;bpmn:outgoing&gt;Flow_1btmw3a&lt;/bpmn:outgoing&gt;\n" +
-    "    &lt;/bpmn:startEvent&gt;\n" +
-    "    &lt;bpmn:task id=&quot;Activity_0lwu3p2&quot;&gt;\n" +
-    "      &lt;bpmn:incoming&gt;Flow_1btmw3a&lt;/bpmn:incoming&gt;\n" +
-    "      &lt;bpmn:outgoing&gt;Flow_0m4j7xp&lt;/bpmn:outgoing&gt;\n" +
-    "    &lt;/bpmn:task&gt;\n" +
-    "    &lt;bpmn:sequenceFlow id=&quot;Flow_1btmw3a&quot; sourceRef=&quot;StartEvent_1&quot; targetRef=&quot;Activity_0lwu3p2&quot; /&gt;\n" +
-    "    &lt;bpmn:endEvent id=&quot;Event_0pf42bb&quot;&gt;\n" +
-    "      &lt;bpmn:incoming&gt;Flow_0m4j7xp&lt;/bpmn:incoming&gt;\n" +
-    "    &lt;/bpmn:endEvent&gt;\n" +
-    "    &lt;bpmn:sequenceFlow id=&quot;Flow_0m4j7xp&quot; sourceRef=&quot;Activity_0lwu3p2&quot; targetRef=&quot;Event_0pf42bb&quot; /&gt;\n" +
-    "  &lt;/bpmn:process&gt;\n" +
-    "  &lt;bpmndi:BPMNDiagram id=&quot;BPMNDiagram_1&quot;&gt;\n" +
-    "    &lt;bpmndi:BPMNPlane id=&quot;BPMNPlane_1&quot; bpmnElement=&quot;Process_1&quot;&gt;\n" +
-    "      &lt;bpmndi:BPMNEdge id=&quot;Flow_1btmw3a_di&quot; bpmnElement=&quot;Flow_1btmw3a&quot;&gt;\n" +
-    "        &lt;di:waypoint x=&quot;209&quot; y=&quot;120&quot; /&gt;\n" +
-    "        &lt;di:waypoint x=&quot;260&quot; y=&quot;120&quot; /&gt;\n" +
-    "      &lt;/bpmndi:BPMNEdge&gt;\n" +
-    "      &lt;bpmndi:BPMNEdge id=&quot;Flow_0m4j7xp_di&quot; bpmnElement=&quot;Flow_0m4j7xp&quot;&gt;\n" +
-    "        &lt;di:waypoint x=&quot;360&quot; y=&quot;120&quot; /&gt;\n" +
-    "        &lt;di:waypoint x=&quot;412&quot; y=&quot;120&quot; /&gt;\n" +
-    "      &lt;/bpmndi:BPMNEdge&gt;\n" +
-    "      &lt;bpmndi:BPMNShape id=&quot;_BPMNShape_StartEvent_2&quot; bpmnElement=&quot;StartEvent_1&quot;&gt;\n" +
-    "        &lt;dc:Bounds x=&quot;173&quot; y=&quot;102&quot; width=&quot;36&quot; height=&quot;36&quot; /&gt;\n" +
-    "      &lt;/bpmndi:BPMNShape&gt;\n" +
-    "      &lt;bpmndi:BPMNShape id=&quot;Activity_0lwu3p2_di&quot; bpmnElement=&quot;Activity_0lwu3p2&quot;&gt;\n" +
-    "        &lt;dc:Bounds x=&quot;260&quot; y=&quot;80&quot; width=&quot;100&quot; height=&quot;80&quot; /&gt;\n" +
-    "      &lt;/bpmndi:BPMNShape&gt;\n" +
-    "      &lt;bpmndi:BPMNShape id=&quot;Event_0pf42bb_di&quot; bpmnElement=&quot;Event_0pf42bb&quot;&gt;\n" +
-    "        &lt;dc:Bounds x=&quot;412&quot; y=&quot;102&quot; width=&quot;36&quot; height=&quot;36&quot; /&gt;\n" +
-    "      &lt;/bpmndi:BPMNShape&gt;\n" +
-    "    &lt;/bpmndi:BPMNPlane&gt;\n" +
-    "  &lt;/bpmndi:BPMNDiagram&gt;\n" +
-    "&lt;/bpmn:definitions&gt;\n"
+export const DEFAULT_XML_FILE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+    "<bpmn:definitions xmlns:bpmn=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:di=\"http://www.omg.org/spec/DD/20100524/DI\" id=\"Definitions_1r2owil\" targetNamespace=\"http://bpmn.io/schema/bpmn\" exporter=\"Camunda Modeler\" exporterVersion=\"4.4.0\">\n" +
+    "  <bpmn:process id=\"Process_0lx73aq\" isExecutable=\"true\">\n" +
+    "    <bpmn:startEvent id=\"StartEvent_1\">\n" +
+    "      <bpmn:outgoing>Flow_0by8zp2</bpmn:outgoing>\n" +
+    "    </bpmn:startEvent>\n" +
+    "    <bpmn:task id=\"Activity_0bawd4n\">\n" +
+    "      <bpmn:incoming>Flow_0by8zp2</bpmn:incoming>\n" +
+    "      <bpmn:outgoing>Flow_0r4po2g</bpmn:outgoing>\n" +
+    "    </bpmn:task>\n" +
+    "    <bpmn:sequenceFlow id=\"Flow_0by8zp2\" sourceRef=\"StartEvent_1\" targetRef=\"Activity_0bawd4n\" />\n" +
+    "    <bpmn:endEvent id=\"Event_0lxmzdr\">\n" +
+    "      <bpmn:incoming>Flow_0r4po2g</bpmn:incoming>\n" +
+    "    </bpmn:endEvent>\n" +
+    "    <bpmn:sequenceFlow id=\"Flow_0r4po2g\" sourceRef=\"Activity_0bawd4n\" targetRef=\"Event_0lxmzdr\" />\n" +
+    "  </bpmn:process>\n" +
+    "  <bpmndi:BPMNDiagram id=\"BPMNDiagram_1\">\n" +
+    "    <bpmndi:BPMNPlane id=\"BPMNPlane_1\" bpmnElement=\"Process_0lx73aq\">\n" +
+    "      <bpmndi:BPMNEdge id=\"Flow_0by8zp2_di\" bpmnElement=\"Flow_0by8zp2\">\n" +
+    "        <di:waypoint x=\"215\" y=\"117\" />\n" +
+    "        <di:waypoint x=\"270\" y=\"117\" />\n" +
+    "      </bpmndi:BPMNEdge>\n" +
+    "      <bpmndi:BPMNEdge id=\"Flow_0r4po2g_di\" bpmnElement=\"Flow_0r4po2g\">\n" +
+    "        <di:waypoint x=\"370\" y=\"117\" />\n" +
+    "        <di:waypoint x=\"432\" y=\"117\" />\n" +
+    "      </bpmndi:BPMNEdge>\n" +
+    "      <bpmndi:BPMNShape id=\"_BPMNShape_StartEvent_2\" bpmnElement=\"StartEvent_1\">\n" +
+    "        <dc:Bounds x=\"179\" y=\"99\" width=\"36\" height=\"36\" />\n" +
+    "      </bpmndi:BPMNShape>\n" +
+    "      <bpmndi:BPMNShape id=\"Activity_0bawd4n_di\" bpmnElement=\"Activity_0bawd4n\">\n" +
+    "        <dc:Bounds x=\"270\" y=\"77\" width=\"100\" height=\"80\" />\n" +
+    "      </bpmndi:BPMNShape>\n" +
+    "      <bpmndi:BPMNShape id=\"Event_0lxmzdr_di\" bpmnElement=\"Event_0lxmzdr\">\n" +
+    "        <dc:Bounds x=\"432\" y=\"99\" width=\"36\" height=\"36\" />\n" +
+    "      </bpmndi:BPMNShape>\n" +
+    "    </bpmndi:BPMNPlane>\n" +
+    "  </bpmndi:BPMNDiagram>\n" +
+    "</bpmn:definitions>\n"
 export const DEFAULT_DMN_FILE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
     + "<definitions xmlns=\"https://www.omg.org/spec/DMN/20191111/MODEL/\" xmlns:dmndi=\"https://www.omg.org/spec/DMN/20191111/DMNDI/\" xmlns:dc=\"http://www.omg.org/spec/DMN/20180521/DC/\" id=\"Definitions_0rtbinw\" name=\"DRD\" namespace=\"http://camunda.org/schema/1.0/dmn\">\n"
     + "  <decision id=\"Decision_07746u8\" name=\"Decision 1\">\n"
