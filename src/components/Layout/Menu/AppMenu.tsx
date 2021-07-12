@@ -30,10 +30,10 @@ const useStyles = makeStyles(theme => ({
         display: "none"
     },
     drawerPaper: {
-        marginTop: "56px",
+        marginTop: "64px",
         width: "350px",
         padding: "0px",
-        height: "calc(100% - 56px)",
+        height: "calc(100% - 64px)",
         background: "white",
         overflow: "hidden"
     },
