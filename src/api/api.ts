@@ -13,6 +13,7 @@
  */export * from './apis/assignment-api';
 export * from './apis/deployment-api';
 export * from './apis/diagram-api';
+export * from './apis/menu-api';
 export * from './apis/repository-api';
 export * from './apis/user-api';
 export * from './apis/version-api';

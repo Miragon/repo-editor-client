@@ -6,6 +6,7 @@ export * from './diagram-to';
 export * from './diagram-update-to';
 export * from './diagram-version-to';
 export * from './diagram-version-upload-to';
+export * from './menu-item-to';
 export * from './new-diagram-to';
 export * from './new-repository-to';
 export * from './repository-to';
