@@ -1,9 +1,16 @@
 import {Drawer} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {FormatShapes, Help, Home, Widgets} from "@material-ui/icons";
-import React from "react";
+import React, {useEffect} from "react";
 import MenuSpacer from "../../Menu/MenuSpacer";
 import DrawerApp from "./AppMenu/DrawerApp";
+import {MenuItemTO} from "../../../api/models";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../store/reducers/rootReducer";
+import {GRID_ROOT_CSS_CLASS_SUFFIX} from "@material-ui/data-grid";
+import {fetchMenuItems} from "../../../store/actions/menuAction";
+import HomeIcon from "@material-ui/icons/Home";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -53,6 +60,30 @@ interface Props {
 
 const AppMenu: React.FC<Props> = props => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
+
+    const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
+    const menuSynced: boolean = useSelector((state: RootState) => state.dataSynced.menuSynced);
+
+    useEffect(() => {
+        if(!menuSynced){
+            dispatch(fetchMenuItems());
+        }
+    }, [menuSynced, dispatch])
+
+    const getIcon = (iconName: string): React.ElementType => {
+        switch(iconName) {
+            case "Home":
+                return Home;
+            case "Formulare":
+                return FormatShapes;
+            case "Integrationsbausteine":
+                return Widgets;
+            default:
+                return Home;
+        }
+    }
 
     return (
         <>
@@ -64,22 +95,14 @@ const AppMenu: React.FC<Props> = props => {
                 open={props.open}>
 
                 <div className={classes.drawerContent}>
-
-                    <DrawerApp
-                        active
-                        title="Modellverwaltung"
-                        onClick={() => window.open("/", "_self")}
-                        icon={Home}/>
-
-                    <DrawerApp
-                        title="Formulare"
-                        onClick={() => window.open("/formulare", "_self")}
-                        icon={FormatShapes}/>
-
-                    <DrawerApp
-                        title="Integrationsbausteine"
-                        onClick={() => window.open("/bausteine", "_self")}
-                        icon={Widgets}/>
+                    {apps?.map(app => (
+                        <DrawerApp
+                            active={app.name === "home"}
+                            key={app.name}
+                            title={t(app.name)}
+                            icon={getIcon(app.name)}
+                            onClick={() => window.open(`/${app.url}`, "_self")}/>
+                    ))}
 
                     <MenuSpacer/>
 

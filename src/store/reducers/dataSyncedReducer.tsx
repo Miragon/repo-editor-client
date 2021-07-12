@@ -1,8 +1,15 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {SYNC_STATUS_ASSIGNMENT, SYNC_STATUS_DIAGRAM, SYNC_STATUS_REPOSITORY, SYNC_STATUS_VERSION} from "../constants";
+import {
+    SYNC_STATUS_ASSIGNMENT,
+    SYNC_STATUS_DIAGRAM,
+    SYNC_STATUS_MENU,
+    SYNC_STATUS_REPOSITORY,
+    SYNC_STATUS_VERSION
+} from "../constants";
 
 const initialState = {
-    dataSynced: true
+    dataSynced: true,
+    menuSynced: false
 };
 
 const reducer: CaseReducer = (state = initialState, action) => {
@@ -29,6 +36,12 @@ const reducer: CaseReducer = (state = initialState, action) => {
             return {
                 ...state,
                 dataSynced: action.dataSynced
+            };
+
+        case SYNC_STATUS_MENU:
+            return {
+                ...state,
+                menuSynced: action.menuSynced
             };
     }
     return state;

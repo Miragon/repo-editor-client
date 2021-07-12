@@ -71,6 +71,7 @@ interface Props {
     title: string;
     description?: string;
     icon: React.ElementType;
+    image?: React.ElementType;
     active?: boolean;
     dense?: boolean;
     onClick?: () => void;
@@ -86,6 +87,9 @@ const DrawerApp: React.FC<Props> = props => {
                 classes.drawerAppContainer,
                 props.active && classes.drawerAppContainerActive
             )}>
+
+            {props.image &&
+                props.image}
 
             {React.createElement(props.icon, {
                 className: clsx(

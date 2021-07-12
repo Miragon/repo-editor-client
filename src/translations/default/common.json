@@ -67,5 +67,10 @@
     "date": "Date",
     "type": "Type",
     "target": "Target"
+  },
+  "menu": {
+    "home": "Home",
+    "forms": "Forms",
+    "integration": "Integration blocks"
   }
 }

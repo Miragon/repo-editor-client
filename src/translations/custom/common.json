@@ -65,5 +65,10 @@
     "date": "Datum",
     "type": "Typ",
     "target": "Ziel"
+  },
+  "menu": {
+    "home": "Modellverwaltung",
+    "forms": "Formulare",
+    "integration": "Integrationsbausteine"
   }
 }
