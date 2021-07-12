@@ -41,7 +41,8 @@ export enum ActionType {
     SEARCH_DIAGRAM,
     UPDATE_DIAGRAM,
     LATEST_VERSION,
-    DEPLOY_VERSION
+    DEPLOY_VERSION,
+    FETCH_MENU_ITEMS
 }
 
 // eslint-disable-next-line

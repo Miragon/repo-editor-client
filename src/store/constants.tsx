@@ -18,6 +18,7 @@ export const SEARCH_USERS = "SEARCH_USERS";
 export const USERQUERY_EXECUTED = "USERQUERY_EXECUTED";
 export const SEARCH_DIAGRAMS = "SEARCH_DIAGRAMS";
 export const CREATED_DIAGRAM = "CREATED_DIAGRAM";
+export const MENU_ITEMS = "MENU_ITEMS";
 export const DEFAULT_BPMN_SVG = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
     "<!-- created with bpmn-js / http://bpmn.io -->\n" +
     "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n" +
