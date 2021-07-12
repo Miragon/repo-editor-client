@@ -72,5 +72,12 @@
     "home": "Home",
     "forms": "Forms",
     "integration": "Integration blocks"
+  },
+  "registration": {
+    "signup": "Sign up for Miragon Cloud Services",
+    "firstTime": "This is the first time you are trying to access Miragon Cloud Services.",
+    "accountRequired": "To use this service you need an account.\n To create a new account, choose a name and accept the Terms and Conditions.",
+    "agree": "I agree to the terms of service",
+    "create": "Create a new User Profile"
   }
 }

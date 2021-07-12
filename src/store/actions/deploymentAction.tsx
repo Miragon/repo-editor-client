@@ -15,7 +15,7 @@ export const deployVersion = (target: string, diagramId: string, versionId: stri
                 target
             };
             const config = helpers.getClientConfig();
-            const response = await deploymentController.deployVersion(deploymentTO, diagramId, versionId);
+            const response = await deploymentController.deployVersion(deploymentTO, diagramId, versionId, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "Deployed Version" });
             } else {

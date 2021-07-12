@@ -76,9 +76,9 @@ const AppMenu: React.FC<Props> = props => {
         switch(iconName) {
             case "Home":
                 return Home;
-            case "Formulare":
+            case "Forms":
                 return FormatShapes;
-            case "Integrationsbausteine":
+            case "Integration":
                 return Widgets;
             default:
                 return Home;
@@ -97,7 +97,7 @@ const AppMenu: React.FC<Props> = props => {
                 <div className={classes.drawerContent}>
                     {apps?.map(app => (
                         <DrawerApp
-                            active={app.name === "home"}
+                            active={app.name === "Home"}
                             key={app.name}
                             title={t(app.name)}
                             icon={getIcon(app.name)}

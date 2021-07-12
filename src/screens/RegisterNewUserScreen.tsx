@@ -14,6 +14,7 @@ import {UserApi} from "../api/api";
 import helpers from "../constants/Functions";
 import {SUCCESS, UNHANDLEDERROR} from "../store/constants";
 import {RootState} from "../store/reducers/rootReducer";
+import {useTranslation} from "react-i18next";
 
 function Copyright() {
     return (
@@ -78,6 +79,8 @@ const RegisterNewUserScreen: React.FC = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
+
 
     const [userController] = useState<UserApi>(new UserApi());
     const [isButtonDisabled, setButtonDisabled] = useState<boolean>(true);
@@ -116,14 +119,13 @@ const RegisterNewUserScreen: React.FC = () => {
                     <LockIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign up for Miragon Cloud Services
+                    {t("registration.signup")}
                 </Typography>
 
                 <p className={classes.infoText}>
-                    This is the first time you are trying to access Miragon Cloud Services.
+                    {t("registration.firstTime")}
                     <br />
-                    To use this service you need an account.
-                    To create a new account, choose a name and accept the Terms and Conditions.
+                    {t("registration.accountRequired")}
                 </p>
 
                 <form className={classes.form} noValidate>
@@ -137,7 +139,7 @@ const RegisterNewUserScreen: React.FC = () => {
                                 value="allowExtraEmails"
                                 color="primary" />
                         )}
-                        label="I agree to the terms of service" />
+                        label= {t("registration.agree")}/>
 
                     <Button
                         type="submit"
@@ -147,7 +149,7 @@ const RegisterNewUserScreen: React.FC = () => {
                         className={classes.createUserProfileButton}
                         onClick={handleCreateUserProfile}
                         disabled={isButtonDisabled}>
-                        Create a new User Profile
+                        {t("registration.create")}
                     </Button>
                 </form>
                 <Copyright />

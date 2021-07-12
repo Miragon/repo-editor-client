@@ -39,6 +39,12 @@ const useStyles = makeStyles(() => ({
     list: {
         outline: "none"
     },
+    more: {
+        alignSelf: "flex-end",
+        height: "25px",
+        width: "25px",
+        color: theme.palette.primary.main,
+    },
     popup: {
         borderTopLeftRadius: "0px",
         borderTopRightRadius: "0px",
@@ -109,6 +115,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
     ];
     return (
         <>
+
             <TableRow
                 key={props.diagramVersion.id}
                 hover
@@ -127,7 +134,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
                         <div>
                             {reformatDate(props.diagramVersion.updatedDate)}
                         </div>
-                        <IconButton size="small" ref={ref} onClick={event => openSettings(event)}>
+                        <IconButton ref={ref} size="small" className={classes.more} onClick={event => openSettings(event)}>
                             <MoreVert/>
                         </IconButton>
                     </div>
@@ -173,11 +180,11 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
             </Popper>
 
             <DeployVersionDialog
+                open={deployVersionOpen}
+                onCancelled={() => setDeployVersionOpen(false)}
                 diagramId={props.diagramVersion.diagramId}
                 versionId={props.diagramVersion.id}
-                open={deployVersionOpen}
-                versionNumber={props.diagramVersion.milestone}
-                onCancelled={() => setDeployVersionOpen(false)} />
+                versionNumber={props.diagramVersion.milestone} />
         </>
     )
 })

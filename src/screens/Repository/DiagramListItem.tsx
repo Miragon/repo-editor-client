@@ -322,8 +322,8 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     return (
         <>
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-            <div className={classes.listItemWithVersions} onClick={() => openModeler(props.repoId, props.diagramId)}>
-                <div className={classes.listItem}>
+            <div className={classes.listItemWithVersions}>
+                <div className={classes.listItem} onClick={() => openModeler(props.repoId, props.diagramId)}>
                     <img
                         alt="Preview"
                         className={classes.image}

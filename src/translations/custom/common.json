@@ -67,8 +67,16 @@
     "target": "Ziel"
   },
   "menu": {
-    "home": "Modellverwaltung",
-    "forms": "Formulare",
-    "integration": "Integrationsbausteine"
+    "Home": "Modellverwaltung",
+    "Forms": "Formulare",
+    "Integration": "Integrationsbausteine"
+  },
+  "registration": {
+    "signup": "Für Miragon Cloud Services anmelden",
+    "firstTime": "Sie versuchen zum ersten Mal, sich bei Miragon Cloud Services anzumelden.",
+    "accountRequired": "Sie benötigen einen Account, um diesen Service zu verwenden.\n Um einen Account zu erstellen, akzeptieren Sie bitte die AGBs.",
+    "agree": "Ich akzeptiere die AGBs",
+    "create": "Neues Benutzerprofil erstellen"
+
   }
 }
