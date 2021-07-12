@@ -7,12 +7,13 @@ import {
     CREATED_DIAGRAM,
     DEFAULT_BPMN_SVG,
     DEFAULT_DMN_SVG,
-    DIAGRAM_UPLOAD, DIAGRAMQUERY_EXECUTED,
+    DIAGRAM_UPLOAD,
+    DIAGRAMQUERY_EXECUTED,
     GET_FAVORITE,
     GET_RECENT,
     SEARCH_DIAGRAMS,
     SUCCESS,
-    SYNC_STATUS,
+    SYNC_STATUS_DIAGRAM,
     UNHANDLEDERROR
 } from "../constants";
 import {ActionType} from "./actions";
@@ -72,7 +73,7 @@ export const createDiagram = (
             const response = await diagramController.createDiagram(newDiagramTO, repoId, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: CREATED_DIAGRAM, createdDiagram: response.data });
-                dispatch({ type: SYNC_STATUS, dataSynced: false });
+                dispatch({ type: SYNC_STATUS_DIAGRAM, dataSynced: false });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -96,6 +97,7 @@ export const updateDiagram = (name: string, description: string | undefined, dia
             }
             const response = await diagramController.updateDiagram(diagramUpdateTO, diagramId, config);
             if (Math.floor(response.status / 100) === 2) {
+                dispatch({type: SYNC_STATUS_DIAGRAM, dataSynced: false})
                 dispatch({ type: SUCCESS, successMessage: "Diagram updated" });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
@@ -114,6 +116,7 @@ export const fetchDiagramsFromRepo = (repoId: string) => {
             const response = await diagramController.getDiagramsFromRepo(repoId, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: ACTIVE_DIAGRAMS, diagrams: response.data });
+                dispatch({ type: SYNC_STATUS_DIAGRAM, dataSynced: true });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -170,7 +173,7 @@ export const deleteDiagram = (diagramId: string) => {
             const config = helpers.getClientConfig();
             const response = await diagramController.deleteDiagram(diagramId, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: SYNC_STATUS, dataSynced: false });
+                dispatch({ type: SYNC_STATUS_DIAGRAM, dataSynced: false });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }

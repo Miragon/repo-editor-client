@@ -1,7 +1,7 @@
 import {combineReducers} from "@reduxjs/toolkit";
-import queryResultsReducer from "./queryResultsReducer";
+import resultsCountReducer from "./queryResultsReducer";
 import usersReducer from "./usersReducer";
-import activeDiagramsReducer from "./DiagramsReducer";
+import diagramsReducer from "./DiagramsReducer";
 import apiResponseReducer from "./apiResponseReducer";
 import dataSyncedReducer from "./dataSyncedReducer";
 import repoReducer from "./repositoriesReducer";
@@ -11,10 +11,10 @@ export const rootReducer = combineReducers({
     repos: repoReducer,
     api: apiResponseReducer,
     dataSynced: dataSyncedReducer,
-    diagrams: activeDiagramsReducer,
+    diagrams: diagramsReducer,
     versions: versionsReducer,
     user: usersReducer,
-    resultsCount: queryResultsReducer,
+    resultsCount: resultsCountReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

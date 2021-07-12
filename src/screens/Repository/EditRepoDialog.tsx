@@ -7,7 +7,6 @@ import {useHistory} from "react-router-dom";
 import PopupDialog from "../../components/Form/PopupDialog";
 import * as repositoryAction from "../../store/actions/repositoryAction";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import {SYNC_STATUS} from "../../store/constants";
 import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
@@ -76,7 +75,6 @@ const EditRepoDialog: React.FC<Props> = props => {
             if (window.confirm(t("repository.confirmDelete", {repoName: title}))) {
                 dispatch(repositoryAction.deleteRepository(props.repoId));
                 history.push("/");
-                dispatch({ type: SYNC_STATUS, dataSynced: false });
             }
         } catch (err) {
             // eslint-disable-next-line no-console

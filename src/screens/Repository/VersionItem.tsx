@@ -1,5 +1,15 @@
 import React, {useRef, useState} from "react";
-import {ClickAwayListener, Grow, IconButton, MenuItem, MenuList, Paper, Popper, TableCell, TableRow} from "@material-ui/core";
+import {
+    ClickAwayListener,
+    Grow,
+    IconButton,
+    MenuItem,
+    MenuList,
+    Paper,
+    Popper,
+    TableCell,
+    TableRow
+} from "@material-ui/core";
 import {MoreVert} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/styles";
 import {DiagramVersionTO} from "../../api/models";
@@ -8,7 +18,6 @@ import {useTranslation} from "react-i18next";
 import {downloadVersion} from "../../store/actions";
 import theme from "../../theme";
 import {DropdownButtonItem} from "../../components/Form/DropdownButton";
-import {deployVersion} from "../../store/actions/deploymentAction";
 import DeployVersionDialog from "./DeployVersionDialog";
 
 const useStyles = makeStyles(() => ({

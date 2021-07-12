@@ -2,7 +2,6 @@ import {makeStyles} from "@material-ui/core/styles";
 import React, {useCallback, useState} from "react";
 import {useDispatch} from "react-redux";
 import {useTranslation} from "react-i18next";
-import * as diagramAction from "../../store/actions/diagramAction";
 import PopupDialog from "../../components/Form/PopupDialog";
 import {Input, InputLabel} from "@material-ui/core";
 import {deployVersion} from "../../store/actions/deploymentAction";

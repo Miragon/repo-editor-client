@@ -9,7 +9,6 @@ import {RootState} from "../../store/reducers/rootReducer";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import "react-toastify/dist/ReactToastify.css";
 import {fetchRepositories} from "../../store/actions/repositoryAction";
-import {ACTIVE_REPO} from "../../store/constants";
 import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
@@ -53,7 +52,6 @@ const RepoContainer: React.FC = observer(() => {
     }, [dispatch, fetchRepos, syncStatus]);
 
     const openRepoScreen = (repo: RepositoryTO) => {
-        dispatch({ type: ACTIVE_REPO, activeRepo: repo });
         history.push(`/repository/${repo.id}`);
     };
 

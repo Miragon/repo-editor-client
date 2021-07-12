@@ -3,7 +3,6 @@ import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {DiagramTO} from "../../api/models";
 import {fetchDiagramsFromRepo} from "../../store/actions";
-import {SYNC_STATUS} from "../../store/constants";
 import {RootState} from "../../store/reducers/rootReducer";
 import DiagramListItem from "./DiagramListItem";
 
@@ -30,19 +29,20 @@ const DiagramDetails: React.FC = (() => {
 
     const fetchActiveDiagrams = useCallback((repoId: string) => {
         try {
-            if (repoId || (repoId && !synced)) {
-                dispatch(fetchDiagramsFromRepo(repoId));
-                dispatch({ type: SYNC_STATUS, dataSynced: true });
-            }
+            dispatch(fetchDiagramsFromRepo(repoId));
+
         } catch (err) {
             // eslint-disable-next-line no-console
             console.log(err);
         }
-    }, [dispatch, synced]);
+    }, [dispatch]);
 
     useEffect(() => {
-        fetchActiveDiagrams(activeRepo?.id);
-    }, [fetchActiveDiagrams, activeRepo]);
+        if (activeRepo || (activeRepo && !synced)) {
+            fetchActiveDiagrams(activeRepo?.id);
+        }
+
+    }, [synced, fetchActiveDiagrams, activeRepo]);
 
     return (
         <>

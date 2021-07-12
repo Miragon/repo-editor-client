@@ -1,12 +1,10 @@
 import React, {useCallback, useState} from "react";
 import {useDispatch} from "react-redux";
-import {MenuItem} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsTextField from "../../components/Form/SettingsTextField";
 import * as versionAction from "../../store/actions/versionAction";
-import SettingsSelect from "../../components/Form/SettingsSelect";
 import {DiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import {useTranslation} from "react-i18next";
 

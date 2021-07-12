@@ -20,7 +20,7 @@ const UserManagementDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const {t, i18n} = useTranslation("common");
 
-    const { open, onCancelled } = props;
+    const { open, onCancelled, repoId } = props;
 
     const assignmentTOs: Array<AssignmentTO> = useSelector(
         (state: RootState) => state.user.assignedUsers
@@ -41,11 +41,13 @@ const UserManagementDialog: React.FC<Props> = props => {
     }, [dispatch]);
 
     useEffect(() => {
-        fetchAssignedUsers(props.repoId);
-        if (!syncStatus) {
-            fetchAssignedUsers(props.repoId);
+        if(open){
+            fetchAssignedUsers(repoId);
+            if (!syncStatus) {
+                fetchAssignedUsers(repoId);
+            }
         }
-    }, [fetchAssignedUsers, syncStatus, props]);
+    }, [fetchAssignedUsers, syncStatus, repoId, open]);
 
     const checkForAdminPermissions = useMemo(() => {
         const currentUserAssignment = assignmentTOs

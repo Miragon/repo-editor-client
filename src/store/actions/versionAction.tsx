@@ -2,7 +2,14 @@ import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import {DiagramVersionUploadTO, DiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import helpers from "../../constants/Functions";
-import {CREATED_DIAGRAM, GET_VERSIONS, LATEST_VERSION, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "../constants";
+import {
+    CREATED_DIAGRAM,
+    GET_VERSIONS,
+    LATEST_VERSION,
+    SUCCESS,
+    SYNC_STATUS_VERSION,
+    UNHANDLEDERROR
+} from "../constants";
 import {ActionType} from "./actions";
 import {handleError} from "./errorAction";
 
@@ -27,7 +34,7 @@ export const createOrUpdateVersion = (
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "Version Created" });
                 dispatch({ type: CREATED_DIAGRAM, createdDiagram: null });
-                dispatch({ type: SYNC_STATUS, dataSynced: false });
+                dispatch({ type: SYNC_STATUS_VERSION, dataSynced: false });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }

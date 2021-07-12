@@ -2,10 +2,9 @@ import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import {DeploymentTO} from "../../api/models";
 import helpers from "../../constants/Functions";
-import {CREATED_DIAGRAM, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "../constants";
+import {SUCCESS, UNHANDLEDERROR} from "../constants";
 import {handleError} from "./errorAction";
 import {ActionType} from "./actions";
-
 
 
 export const deployVersion = (target: string, diagramId: string, versionId: string) => {
