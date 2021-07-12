@@ -3,9 +3,9 @@ import {makeStyles, Theme} from "@material-ui/core/styles";
 import {Menu as MenuIcon} from "@material-ui/icons";
 import clsx from "clsx";
 import React from "react";
-import logo from "../../img/logo.png";
 import MenuBar from "../Menu/MenuBar";
 import AppMenu from "./Menu/AppMenu";
+import Typography from "@material-ui/core/Typography";
 
 interface Props {
     open: boolean;
@@ -20,11 +20,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     menuIcon: {
         color: "white"
     },
+
     menu: {
         transition: theme.transitions.create("padding")
-    },
-    menuOpen: {
-        paddingLeft: "350px"
     }
 }));
 
@@ -33,18 +31,15 @@ const Menu: React.FC<Props> = props => {
 
     return (
         <>
-            <MenuBar className={clsx(classes.menu, props.open && classes.menuOpen)}>
+            <MenuBar className={clsx(classes.menu)}>
                 <IconButton
-                    size="small"
                     disableRipple
                     className={classes.menuIcon}
                     onClick={() => props.setOpen(!props.open)}>
-                    <MenuIcon/>
+                    <MenuIcon style={{margin: "0 1rem 0 0"}}/>
+                    <Typography style={{fontWeight: "bold"}} variant="h6">DigitalWF-</Typography>
+                    <Typography style={{fontWeight: "bold"}} color="secondary" variant="h6">Modellverwaltung</Typography>
                 </IconButton>
-                <img
-                    alt="Logo"
-                    className={classes.icon}
-                    src={logo}/>
             </MenuBar>
 
             <AppMenu open={props.open}/>
