@@ -13,7 +13,8 @@ import {
     GET_RECENT,
     SEARCH_DIAGRAMS,
     SUCCESS,
-    SYNC_STATUS_DIAGRAM, SYNC_STATUS_REPOSITORY,
+    SYNC_STATUS_DIAGRAM,
+    SYNC_STATUS_REPOSITORY,
     UNHANDLEDERROR
 } from "../constants";
 import {ActionType} from "./actions";

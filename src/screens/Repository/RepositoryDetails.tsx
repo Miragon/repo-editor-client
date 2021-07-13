@@ -1,7 +1,7 @@
 import {IconButton} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {Description, People, Settings} from "@material-ui/icons/";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import {RepositoryTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";

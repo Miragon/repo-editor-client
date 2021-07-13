@@ -10,7 +10,6 @@ import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import "react-toastify/dist/ReactToastify.css";
 import {fetchRepositories} from "../../store/actions/repositoryAction";
 import {useTranslation} from "react-i18next";
-import {SYNC_STATUS_REPOSITORY} from "../../store/constants";
 
 const useStyles = makeStyles(() => ({
     header: {

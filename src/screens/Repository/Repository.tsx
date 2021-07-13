@@ -5,7 +5,6 @@ import {getSingleRepository} from "../../store/actions";
 import CreateDiagramContainer from "./CreateDiagramContainer";
 import DiagramDetails from "./DiagramDetails";
 import RepositoryDetails from "./RepositoryDetails";
-import {useHistory} from "react-router-dom";
 import {RepositoryTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
 

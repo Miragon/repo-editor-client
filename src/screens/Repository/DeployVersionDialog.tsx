@@ -3,11 +3,9 @@ import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import PopupDialog from "../../components/Form/PopupDialog";
-import {Input, InputLabel} from "@material-ui/core";
-import {deployVersion, fetchTargets} from "../../store/actions/deploymentAction";
+import {deployVersion} from "../../store/actions/deploymentAction";
 import SettingsSelect from "../../components/Form/SettingsSelect";
 import MenuItem from "@material-ui/core/MenuItem";
-import SettingsForm from "../../components/Form/SettingsForm";
 import {RootState} from "../../store/reducers/rootReducer";
 
 const useStyles = makeStyles(() => ({

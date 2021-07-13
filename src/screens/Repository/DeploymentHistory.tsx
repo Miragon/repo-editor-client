@@ -1,12 +1,8 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
+import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {deployVersion} from "../../store/actions/deploymentAction";
 import PopupDialog from "../../components/Form/PopupDialog";
-import {Input, InputLabel, Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
 import {Deployment} from "../../api/models";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import VersionItem from "./VersionItem";
 import {makeStyles} from "@material-ui/core/styles";
 
 

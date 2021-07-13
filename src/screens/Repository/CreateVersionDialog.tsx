@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {makeStyles} from "@material-ui/styles";
 import PopupDialog from "../../components/Form/PopupDialog";
@@ -7,7 +7,6 @@ import SettingsTextField from "../../components/Form/SettingsTextField";
 import * as versionAction from "../../store/actions/versionAction";
 import {DiagramVersionTO, DiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import {useTranslation} from "react-i18next";
-import {getLatestVersion} from "../../store/actions/versionAction";
 import {RootState} from "../../store/reducers/rootReducer";
 import {UNHANDLEDERROR} from "../../store/constants";
 

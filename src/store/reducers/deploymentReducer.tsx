@@ -1,6 +1,5 @@
-import {DiagramVersionTO} from "../../api/models";
 import {CaseReducer} from "@reduxjs/toolkit";
-import {GET_VERSIONS, LATEST_VERSION, TARGETS} from "../constants";
+import {TARGETS} from "../constants";
 
 const initialState = {
     targets: Array<string>(),
