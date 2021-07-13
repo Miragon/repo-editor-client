@@ -11,23 +11,25 @@ import {RootState} from "../../store/reducers/rootReducer";
 
 const Repository: React.FC = (() => {
     const dispatch = useDispatch();
-    const history = useHistory();
-
 
     const { repoId } = useParams<{ repoId: string }>();
     const activeRepo: RepositoryTO = useSelector((state: RootState) => state.repos.activeRepo);
-    const dataSynced: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced);
+    const dataSynced: boolean = useSelector((state: RootState) => state.dataSynced.repoSynced);
 
-    const getRepo = useCallback(() => {
-        dispatch(getSingleRepository(repoId));
-    }, [dispatch, repoId]);
+    const getRepo = useCallback((repositoryId: string) => {
+        dispatch(getSingleRepository(repositoryId));
+    }, [dispatch]);
 
 
     useEffect(() => {
-        if(!activeRepo || !dataSynced || repoId !== activeRepo.id ){
-            getRepo();
+        getRepo(repoId)
+    }, [repoId, getRepo]);
+
+    useEffect(() => {
+        if(!dataSynced){
+            getRepo(repoId);
         }
-    }, [getRepo, repoId, dataSynced, activeRepo]);
+    }, [dataSynced, getRepo, repoId])
 
 
     return (

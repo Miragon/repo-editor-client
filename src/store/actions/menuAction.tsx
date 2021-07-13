@@ -1,7 +1,7 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import helpers from "../../constants/Functions";
-import {MENU_ITEMS, UNHANDLEDERROR} from "../constants";
+import {MENU_ITEMS, SYNC_STATUS_MENU, UNHANDLEDERROR} from "../constants";
 import {handleError} from "./errorAction";
 import {ActionType} from "./actions";
 
@@ -14,6 +14,7 @@ export const fetchMenuItems = () => {
             const response = await menuController.getAllMenuItems(config);
             if(Math.floor(response.status / 100) === 2) {
                 dispatch({type: MENU_ITEMS, menuItems: response.data})
+                dispatch({type: SYNC_STATUS_MENU, dataSynced: true})
             } else{
                 dispatch({type: UNHANDLEDERROR, errorMessage: "could not process request"});
             }

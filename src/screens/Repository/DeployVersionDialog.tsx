@@ -1,10 +1,14 @@
 import {makeStyles} from "@material-ui/core/styles";
-import React, {useCallback, useState} from "react";
-import {useDispatch} from "react-redux";
+import React, {useCallback, useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import PopupDialog from "../../components/Form/PopupDialog";
 import {Input, InputLabel} from "@material-ui/core";
-import {deployVersion} from "../../store/actions/deploymentAction";
+import {deployVersion, fetchTargets} from "../../store/actions/deploymentAction";
+import SettingsSelect from "../../components/Form/SettingsSelect";
+import MenuItem from "@material-ui/core/MenuItem";
+import SettingsForm from "../../components/Form/SettingsForm";
+import {RootState} from "../../store/reducers/rootReducer";
 
 const useStyles = makeStyles(() => ({
     line: {
@@ -32,9 +36,16 @@ const DeployVersionDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const {t, i18n} = useTranslation("common");
 
+    const targets: Array<string> = useSelector((state: RootState) => state.deployment.targets)
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [target, setTarget] = useState<string>("");
+
+
+    useEffect(() => {
+        targets.sort();
+    }, [targets])
+
 
     const applyChanges = useCallback(async () => {
         try {
@@ -49,18 +60,30 @@ const DeployVersionDialog: React.FC<Props> = props => {
     return (
         <PopupDialog
             open={props.open}
-            title={t("deployment.DialogHeader", {versionNumber: props.versionNumber})}
+            title={t("deployment.dialogHeader", {versionNumber: props.versionNumber})}
             error={error}
             onCloseError={() => setError(undefined)}
             firstTitle={t("dialog.applyChanges")}
             onFirst={applyChanges}
             secondTitle={t("dialog.cancel")}
-            onSecond={props.onCancelled}>
-            <InputLabel style={{ fontSize: "12px" }} htmlFor="target">{t("properties.target")}</InputLabel>
-            <Input
-                id="target"
+            onSecond={props.onCancelled}
+            firstDisabled={target === ""}>
+
+            <SettingsSelect
+                disabled={false}
+                required={true}
                 value={target}
-                onChange={event => setTarget(event.target.value)} />
+                label={t("properties.target")}
+                onChanged={setTarget}>
+                {targets.map(singleTarget => (
+                    <MenuItem
+                        key={singleTarget}
+                        value={singleTarget}>
+                        {singleTarget}
+                    </MenuItem>
+                ))}
+
+            </SettingsSelect>
         </PopupDialog>
     );
 };

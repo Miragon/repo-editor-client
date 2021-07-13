@@ -65,6 +65,12 @@ export interface DiagramVersionTO {
      * @memberof DiagramVersionTO
      */
     repositoryId: any;
+    /**
+     * 
+     * @type {Array&lt;Deployment&gt;}
+     * @memberof DiagramVersionTO
+     */
+    deployments?: any;
 }
 
 /**

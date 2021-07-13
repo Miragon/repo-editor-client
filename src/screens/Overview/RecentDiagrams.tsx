@@ -40,7 +40,7 @@ const RecentDiagrams: React.FC = observer(() => {
         (state: RootState) => state.diagrams.recentDiagrams
     );
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
-    const syncStatus = useSelector((state: RootState) => state.dataSynced.dataSynced);
+    const syncStatus = useSelector((state: RootState) => state.dataSynced.diagramSynced);
 
     const fetchRecent = useCallback(() => {
         try {

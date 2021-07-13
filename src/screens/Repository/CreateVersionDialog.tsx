@@ -32,7 +32,6 @@ const CreateVersionDialog: React.FC<Props> = props => {
 
     const latestVersion: DiagramVersionTO | null = useSelector((state: RootState) => state.versions.latestVersion);
 
-
     const {
         open, onCancelled, diagramId, diagramTitle
     } = props;
@@ -59,15 +58,6 @@ const CreateVersionDialog: React.FC<Props> = props => {
         }
     }, [diagramId, comment, saveType, dispatch, onCancelled, latestVersion]);
 
-
-    const fetchLatestVersion = useCallback(() => {
-        dispatch(getLatestVersion(props.diagramId))
-    }, [dispatch, props.diagramId])
-
-
-    useEffect(() => {
-        fetchLatestVersion()
-    }, [fetchLatestVersion])
 
 
     return (

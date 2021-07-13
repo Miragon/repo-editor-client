@@ -35,6 +35,7 @@ export const getSingleRepository = (id: string) => {
             const response = await repositoryController.getSingleRepository(id, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: ACTIVE_REPO, activeRepo: response.data });
+                dispatch({type: SYNC_STATUS_REPOSITORY, dataSynced: true})
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }

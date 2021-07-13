@@ -18,7 +18,7 @@ import {
 } from "./repositoryAction";
 import {searchUsers} from "./userAction";
 import {createOrUpdateVersion, getAllVersions, getLatestVersion} from "./versionAction";
-import {deployVersion} from "./deploymentAction";
+import {deployVersion, fetchTargets} from "./deploymentAction";
 
 export enum ActionType {
     FETCH_FAVORITE_DIAGRAMS,
@@ -42,7 +42,8 @@ export enum ActionType {
     UPDATE_DIAGRAM,
     LATEST_VERSION,
     DEPLOY_VERSION,
-    FETCH_MENU_ITEMS
+    FETCH_MENU_ITEMS,
+    FETCH_TARGETS
 }
 
 // eslint-disable-next-line
@@ -110,5 +111,8 @@ export const actionMapper = (actionType: ActionType, payload: Array<any>) => {
 
         case ActionType.DEPLOY_VERSION:
             return deployVersion(payload[0], payload[1], payload[2]);
+
+        case ActionType.FETCH_TARGETS:
+            return fetchTargets();
     }
 };

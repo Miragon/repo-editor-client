@@ -5,6 +5,7 @@ import {DiagramTO} from "../../api/models";
 import {fetchDiagramsFromRepo} from "../../store/actions";
 import {RootState} from "../../store/reducers/rootReducer";
 import DiagramListItem from "./DiagramListItem";
+import {useParams} from "react-router";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -21,11 +22,12 @@ const DiagramDetails: React.FC = (() => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    const { repoId } = useParams<{ repoId: string }>();
     const activeDiagrams: Array<DiagramTO> = useSelector(
         (state: RootState) => state.diagrams.diagrams
     );
     const activeRepo = useSelector((state: RootState) => state.repos.activeRepo);
-    const synced = useSelector((state: RootState) => state.dataSynced.dataSynced);
+    const synced = useSelector((state: RootState) => state.dataSynced.diagramSynced);
 
     const fetchActiveDiagrams = useCallback((repoId: string) => {
         try {
@@ -38,11 +40,11 @@ const DiagramDetails: React.FC = (() => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (activeRepo || (activeRepo && !synced)) {
-            fetchActiveDiagrams(activeRepo?.id);
+        if (!synced) {
+            fetchActiveDiagrams(repoId);
         }
 
-    }, [synced, fetchActiveDiagrams, activeRepo]);
+    }, [synced, fetchActiveDiagrams, repoId]);
 
     return (
         <>

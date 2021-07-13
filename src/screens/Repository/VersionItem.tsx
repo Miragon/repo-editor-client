@@ -19,6 +19,8 @@ import {downloadVersion} from "../../store/actions";
 import theme from "../../theme";
 import {DropdownButtonItem} from "../../components/Form/DropdownButton";
 import DeployVersionDialog from "./DeployVersionDialog";
+import DeploymentHistory from "./DeploymentHistory";
+import {fetchTargets} from "../../store/actions/deploymentAction";
 
 const useStyles = makeStyles(() => ({
     splitCell: {
@@ -50,10 +52,15 @@ const useStyles = makeStyles(() => ({
         borderTopRightRadius: "0px",
         backgroundColor: theme.palette.secondary.main,
     },
+    deploymentTarget: {
+        fontStyle: "italic",
+        color: theme.palette.primary.dark
+    }
 }));
 
 interface Props {
     diagramVersion: DiagramVersionTO;
+    diagramTitle: string;
 }
 
 
@@ -63,6 +70,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
     const {t, i18n} = useTranslation("common");
 
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
+    const [historyOpen, setHistoryOpen] = useState<boolean>(false);
     const [deployVersionOpen, setDeployVersionOpen] = useState<boolean>(false);
     const ref = useRef<HTMLButtonElement>(null);
 
@@ -88,6 +96,11 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
 
     const download = (diagramId: string, versionId: string) => {
         dispatch(downloadVersion(diagramId, versionId))
+    };
+
+    const openDeploymentHistory = (event: any) => {
+        event.stopPropagation();
+        setHistoryOpen(true);
     }
 
     //#todo: find out why clicks go through all the top elements
@@ -98,7 +111,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
             label: "version.deploy",
             type: "button",
             onClick: () => {
-                console.log("deploy");
+                dispatch(fetchTargets())
                 setDeployVersionOpen(true);
 
             }
@@ -109,6 +122,15 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
             type: "button",
             onClick: () => {
                 download(props.diagramVersion.diagramId, props.diagramVersion.id);
+            }
+
+        },
+        {
+            id: "DeploymentHistory",
+            label: "version.deploymentHistory",
+            type: "button",
+            onClick: () => {
+                setHistoryOpen(true);
             }
 
         },
@@ -123,8 +145,19 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
                 <TableCell
                     component="th"
                     scope="row">
-                    <div>
-                        {props.diagramVersion.milestone}
+                    <div className={classes.splitCell}>
+                        <div>
+                            {props.diagramVersion.milestone}
+                        </div>
+                        {props.diagramVersion.deployments ?
+                            <div className={classes.deploymentTarget} onClick={event => openDeploymentHistory(event)}>
+                                {props.diagramVersion.deployments[0].target}
+                            </div>
+                            :
+                            <div>
+
+                            </div>}
+
                     </div>
                 </TableCell>
                 <TableCell>{props.diagramVersion.comment}</TableCell>
@@ -185,6 +218,16 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
                 diagramId={props.diagramVersion.diagramId}
                 versionId={props.diagramVersion.id}
                 versionNumber={props.diagramVersion.milestone} />
+
+            <DeploymentHistory
+                versionId={props.diagramVersion.id}
+                diagramTitle={props.diagramTitle}
+                versionComment={props.diagramVersion.comment}
+                milestone={props.diagramVersion.milestone}
+                open={historyOpen}
+                onCancelled={() => setHistoryOpen(false)}
+                deployments={props.diagramVersion.deployments} />
+
         </>
     )
 })

@@ -43,16 +43,10 @@ const RepositoryDetails: React.FC = (() => {
     const classes = useStyles();
 
     const activeRepo: RepositoryTO = useSelector((state: RootState) => state.repos.activeRepo);
-    const dataSynced: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced);
 
     const [userManagementOpen, setUserManagementOpen] = useState<boolean>(false);
     const [repoManagementOpen, setRepoManagementOpen] = useState<boolean>(false);
 
-    useEffect(() => {
-        if(!dataSynced){
-            console.log("Updating information")
-        }
-    }, [activeRepo, dataSynced]);
 
     if (activeRepo) {
         return (

@@ -8,7 +8,10 @@ import {
 } from "../constants";
 
 const initialState = {
-    dataSynced: true,
+    repoSynced: false,
+    diagramSynced: false,
+    versionSynced: undefined,
+    assignmentSynced: false,
     menuSynced: false
 };
 
@@ -17,31 +20,31 @@ const reducer: CaseReducer = (state = initialState, action) => {
         case SYNC_STATUS_REPOSITORY:
             return {
                 ...state,
-                dataSynced: action.dataSynced
+                repoSynced: action.dataSynced
             };
 
         case SYNC_STATUS_DIAGRAM:
             return {
                 ...state,
-                dataSynced: action.dataSynced
+                diagramSynced: action.dataSynced
             };
 
         case SYNC_STATUS_VERSION:
             return {
                 ...state,
-                dataSynced: action.dataSynced
+                versionSynced: action.dataSynced
             };
 
         case SYNC_STATUS_ASSIGNMENT:
             return {
                 ...state,
-                dataSynced: action.dataSynced
+                assignmentSynced: action.dataSynced
             };
 
         case SYNC_STATUS_MENU:
             return {
                 ...state,
-                menuSynced: action.menuSynced
+                menuSynced: action.dataSynced
             };
     }
     return state;

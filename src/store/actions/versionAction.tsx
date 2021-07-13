@@ -54,6 +54,7 @@ export const getAllVersions = (bpmnDiagramId: string) => {
             const response = await versionController.getAllVersions(bpmnDiagramId, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: GET_VERSIONS, versions: response.data });
+                dispatch({type: SYNC_STATUS_VERSION, dataSynced: true});
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }

@@ -10,6 +10,7 @@ import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import "react-toastify/dist/ReactToastify.css";
 import {fetchRepositories} from "../../store/actions/repositoryAction";
 import {useTranslation} from "react-i18next";
+import {SYNC_STATUS_REPOSITORY} from "../../store/constants";
 
 const useStyles = makeStyles(() => ({
     header: {
@@ -34,7 +35,7 @@ const RepoContainer: React.FC = observer(() => {
     const {t, i18n} = useTranslation("common");
 
     const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
-    const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.dataSynced);
+    const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.repoSynced);
     const fetchRepos = useCallback(() => {
         try {
             dispatch(fetchRepositories());

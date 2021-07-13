@@ -172,6 +172,8 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const {t, i18n} = useTranslation("common");
     const diagramVersionTOs: Array<DiagramVersionTO> = useSelector((state: RootState) => state.versions.versions);
     const latestVersion: DiagramVersionTO | null = useSelector((state: RootState) => state.versions.latestVersion);
+    const versionSynced: boolean = useSelector((state: RootState) => state.dataSynced.versionSynced)
+
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
 
     const [open, setOpen] = useState(false);
@@ -222,7 +224,6 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
     }, [downloadReady, latestVersion, props.diagramId, dispatch])
 
-
     const fetchVersions = useCallback(() => {
         try {
             dispatch(getAllVersions(props.diagramId));
@@ -230,6 +231,13 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             console.log(err);
         }
     }, [dispatch, props]);
+
+    useEffect(() => {
+        if(!versionSynced && open){
+            fetchVersions()
+        }
+    }, [versionSynced, fetchVersions, open])
+
 
     const reformatDate = (date: string | undefined) => {
         if (date) {
@@ -259,7 +267,6 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     }, [dispatch, props.diagramId])
 
     const initDownload = () => {
-        //1. Get the latest version
         fetchLatestVersion()
     }
 
@@ -278,6 +285,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
             label: "version.create",
             type: "button",
             onClick: () => {
+                dispatch(getLatestVersion(props.diagramId))
                 setCreateVersionOpen(true);
             }
         },
@@ -363,7 +371,11 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                 </div>
 
                 <Collapse in={open} timeout="auto">
-                    <VersionDetails diagramId={props.diagramId} diagramVersionTOs={diagramVersionTOs} loading={loading}/>
+                    <VersionDetails
+                        diagramId={props.diagramId}
+                        diagramVersionTOs={diagramVersionTOs}
+                        diagramTitle={props.diagramTitle}
+                        loading={loading}/>
                 </Collapse>
 
             </div>

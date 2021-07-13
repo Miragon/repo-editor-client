@@ -28,6 +28,7 @@ const useStyles = makeStyles(() => ({
 interface Props {
     diagramId: string;
     loading: boolean;
+    diagramTitle: string;
     diagramVersionTOs: DiagramVersionTO[];
 }
 
@@ -89,7 +90,8 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
                     {props.diagramVersionTOs?.map(singleVersion => (
                         <VersionItem
                             key={singleVersion.id}
-                            diagramVersion={singleVersion}/>
+                            diagramVersion={singleVersion}
+                            diagramTitle={props.diagramTitle} />
                     ))}
                 </TableBody>
             </Table>

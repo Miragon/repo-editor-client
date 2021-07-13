@@ -30,12 +30,15 @@
     "delete": "Delete version",
     "version": "Version",
     "RELEASE": "Release",
-    "MILESTONE": "Milestone"
+    "MILESTONE": "Milestone",
+    "deploymentHistory": "Deployments"
   },
   "deployment": {
-    "dialogHeader": "Deploy Version {{versionNumber}}"
+    "dialogHeader": "Deploy Version {{versionNumber}}",
+    "history": "All Deployments"
   },
   "user": {
+    "user": "User",
     "users": "Users",
     "OWNER": "Owner",
     "ADMIN": "Admin",
@@ -69,7 +72,7 @@
     "target": "Target"
   },
   "menu": {
-    "home": "Home",
+    "home": "Repository",
     "forms": "Forms",
     "integration": "Integration blocks"
   },

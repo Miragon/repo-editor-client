@@ -29,13 +29,15 @@
     "download": "Version herunterladen",
     "delete": "Version löschen",
     "version": "Version",
-    "RELEASE": "Veröffentlichung",
-    "MILESTONE": "Meilenstein"
+    "MILESTONE": "Meilenstein",
+    "deploymentHistory": "Veröffentlichungen"
   },
   "deployment": {
-    "dialogHeader": "Version {{versionNumber}} veröffentlichen"
+    "dialogHeader": "Version {{versionNumber}} veröffentlichen",
+    "history": "Alle Veröffentlichungen"
   },
   "user": {
+    "user": "Benutzer",
     "users": "Benutzer",
     "OWNER": "Eigentümer",
     "ADMIN": "Administrator",

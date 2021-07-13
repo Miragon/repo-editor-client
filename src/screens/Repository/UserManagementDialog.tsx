@@ -25,7 +25,7 @@ const UserManagementDialog: React.FC<Props> = props => {
     const assignmentTOs: Array<AssignmentTO> = useSelector(
         (state: RootState) => state.user.assignedUsers
     );
-    const syncStatus = useSelector((state: RootState) => state.dataSynced.dataSynced);
+    const syncStatus = useSelector((state: RootState) => state.dataSynced.assignmentSynced);
     const currentUser = useSelector((state: RootState) => state.user.currentUserInfo);
 
     const [error, setError] = useState<string | undefined>(undefined);

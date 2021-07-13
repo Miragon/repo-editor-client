@@ -7,6 +7,7 @@ import dataSyncedReducer from "./dataSyncedReducer";
 import repoReducer from "./repositoriesReducer";
 import versionsReducer from "./versionsReducer";
 import menuReducer from "./menuReducer";
+import deploymentReducer from "./deploymentReducer";
 
 export const rootReducer = combineReducers({
     menuItems: menuReducer,
@@ -17,6 +18,7 @@ export const rootReducer = combineReducers({
     versions: versionsReducer,
     user: usersReducer,
     resultsCount: resultsCountReducer,
+    deployment: deploymentReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
