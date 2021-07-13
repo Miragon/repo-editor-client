@@ -87,11 +87,6 @@ const AppMenu: React.FC<Props> = props => {
                             onClick={() => window.open(`/${app.url}`, "_self")}/>
                     ))}
                     <MenuSpacer/>
-                    <DrawerApp
-                        dense
-                        title="Support kontaktieren"
-                        description="lhm.digitalwf@muenchen.de"
-                        icon="help"/>
                 </div>
             </Drawer>
         </>
