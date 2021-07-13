@@ -1,4 +1,4 @@
-import {Button} from "@material-ui/core";
+import {Button, Icon} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import clsx from "clsx";
 import React from "react";
@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         height: "64px",
         color: "black",
+        alignItems: "center",
         justifyContent: "flex-start",
         margin: "0px 0",
         "&:hover": {
@@ -70,7 +71,7 @@ const useStyles = makeStyles(theme => ({
 interface Props {
     title: string;
     description?: string;
-    icon: React.ElementType;
+    icon: string;
     image?: React.ElementType;
     active?: boolean;
     dense?: boolean;
@@ -89,14 +90,9 @@ const DrawerApp: React.FC<Props> = props => {
             )}>
 
             {props.image &&
-                props.image}
+            props.image}
 
-            {React.createElement(props.icon, {
-                className: clsx(
-                    classes.drawerAppIcon,
-                    props.active && classes.drawerAppIconActive
-                )
-            })}
+            <Icon className={clsx(classes.drawerAppIcon, props.active && classes.drawerAppIconActive)}>{props.icon}</Icon>
             <div className={classes.drawerText}>
                 <div className={clsx(classes.drawerAppTitle,
                     props.active && classes.drawerAppTitleActive)}>
@@ -110,24 +106,5 @@ const DrawerApp: React.FC<Props> = props => {
         </Button>
     );
 };
-//            <div className={classes.drawerAppDescription}>{props.description}</div>
-/*
- Removed - was in front of button close tag
- {props.description && (
- <div className={classes.drawerText}>
- {title}
- <Typography
- className={clsx(
- classes.drawerAppDescription,
- props.active && classes.drawerAppDescriptionActive
- )}
- variant="body2">
- {props.description}
- </Typography>
- </div>
- )}
 
- {!props.description && title}
-
- */
 export default DrawerApp;

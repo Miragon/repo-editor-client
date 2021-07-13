@@ -1,15 +1,12 @@
 import {Drawer} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import {FormatShapes, Help, Home, Widgets} from "@material-ui/icons";
 import React, {useEffect} from "react";
 import MenuSpacer from "../../Menu/MenuSpacer";
 import DrawerApp from "./AppMenu/DrawerApp";
 import {MenuItemTO} from "../../../api/models";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/reducers/rootReducer";
-import {GRID_ROOT_CSS_CLASS_SUFFIX} from "@material-ui/data-grid";
 import {fetchMenuItems} from "../../../store/actions/menuAction";
-import HomeIcon from "@material-ui/icons/Home";
 import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(theme => ({
@@ -30,10 +27,10 @@ const useStyles = makeStyles(theme => ({
         display: "none"
     },
     drawerPaper: {
-        marginTop: "64px",
+        marginTop: "75px",
         width: "350px",
         padding: "0px",
-        height: "calc(100% - 64px)",
+        height: "calc(100% - 75px)",
         background: "white",
         overflow: "hidden"
     },
@@ -67,27 +64,13 @@ const AppMenu: React.FC<Props> = props => {
     const menuSynced: boolean = useSelector((state: RootState) => state.dataSynced.menuSynced);
 
     useEffect(() => {
-        if(!menuSynced){
+        if (!menuSynced) {
             dispatch(fetchMenuItems());
         }
     }, [menuSynced, dispatch])
 
-    const getIcon = (iconName: string): React.ElementType => {
-        switch(iconName) {
-            case "Home":
-                return Home;
-            case "Forms":
-                return FormatShapes;
-            case "Integration":
-                return Widgets;
-            default:
-                return Home;
-        }
-    }
-
     return (
         <>
-
             <Drawer
                 classes={{paper: classes.drawerPaper}}
                 variant="persistent"
@@ -100,20 +83,16 @@ const AppMenu: React.FC<Props> = props => {
                             active={app.name === "Home"}
                             key={app.name}
                             title={t(app.name)}
-                            icon={getIcon(app.name)}
+                            icon={app.icon}
                             onClick={() => window.open(`/${app.url}`, "_self")}/>
                     ))}
-
                     <MenuSpacer/>
-
                     <DrawerApp
                         dense
                         title="Support kontaktieren"
                         description="lhm.digitalwf@muenchen.de"
-                        icon={Help}/>
-
+                        icon="help"/>
                 </div>
-
             </Drawer>
         </>
     );
