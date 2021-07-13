@@ -54,6 +54,7 @@ const useStyles = makeStyles(() => ({
     },
     deploymentTarget: {
         fontStyle: "italic",
+        cursor: "pointer",
         color: theme.palette.primary.dark
     }
 }));
@@ -95,8 +96,17 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
     };
 
     const download = (diagramId: string, versionId: string) => {
-        dispatch(downloadVersion(diagramId, versionId))
+        console.log("file Ready - starting download...")
+        const path = `/api/version/${diagramId}/${versionId}/download`
+        downloadFile(path)
     };
+
+    const downloadFile = (filePath: string) => {
+        const link=document.createElement("a");
+        link.href = filePath;
+        link.download = filePath.substr(filePath.lastIndexOf("/") + 1);
+        link.click();
+    }
 
     const openDeploymentHistory = (event: any) => {
         event.stopPropagation();
@@ -149,7 +159,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
                         <div>
                             {props.diagramVersion.milestone}
                         </div>
-                        {props.diagramVersion.deployments ?
+                        {props.diagramVersion.deployments.length > 0 ?
                             <div className={classes.deploymentTarget} onClick={event => openDeploymentHistory(event)}>
                                 {props.diagramVersion.deployments[0].target}
                             </div>

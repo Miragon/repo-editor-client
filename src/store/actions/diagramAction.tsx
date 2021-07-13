@@ -13,7 +13,7 @@ import {
     GET_RECENT,
     SEARCH_DIAGRAMS,
     SUCCESS,
-    SYNC_STATUS_DIAGRAM,
+    SYNC_STATUS_DIAGRAM, SYNC_STATUS_RECENT,
     SYNC_STATUS_REPOSITORY,
     UNHANDLEDERROR
 } from "../constants";
@@ -75,6 +75,7 @@ export const createDiagram = (
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: CREATED_DIAGRAM, createdDiagram: response.data });
                 dispatch({ type: SYNC_STATUS_DIAGRAM, dataSynced: false });
+                dispatch({type: SYNC_STATUS_RECENT, dataSynced: false})
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -141,6 +142,7 @@ export const uploadDiagram = (repoId: string, name: string, description: string)
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: DIAGRAM_UPLOAD, uploadedDiagram: response.data });
                 dispatch({type: SYNC_STATUS_REPOSITORY, dataSynced: false})
+                dispatch({type: SYNC_STATUS_RECENT, dataSynced: false})
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }

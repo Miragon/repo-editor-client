@@ -45,7 +45,6 @@ const RepoContainer: React.FC = observer(() => {
     }, [dispatch]);
 
     useEffect(() => {
-        fetchRepos();
         if (!syncStatus) {
             fetchRepos();
         }

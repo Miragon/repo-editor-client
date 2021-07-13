@@ -13,16 +13,12 @@ const Repository: React.FC = (() => {
 
     const { repoId } = useParams<{ repoId: string }>();
     const activeRepo: RepositoryTO = useSelector((state: RootState) => state.repos.activeRepo);
-    const dataSynced: boolean = useSelector((state: RootState) => state.dataSynced.repoSynced);
+    const dataSynced: boolean = useSelector((state: RootState) => state.dataSynced.activeRepoSynced);
 
     const getRepo = useCallback((repositoryId: string) => {
         dispatch(getSingleRepository(repositoryId));
     }, [dispatch]);
 
-
-    useEffect(() => {
-        getRepo(repoId)
-    }, [repoId, getRepo]);
 
     useEffect(() => {
         if(!dataSynced){

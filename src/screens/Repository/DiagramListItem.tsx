@@ -213,16 +213,30 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         checkIfVersionsAreOpen();
     }, [diagramVersionTOs, currentId, checkIfVersionsAreOpen]);
 
+
+
+    const downloadFile = (filePath: string) => {
+        const link=document.createElement("a");
+        link.href = filePath;
+        link.download = filePath.substr(filePath.lastIndexOf("/") + 1);
+        link.click();
+    }
+
+
     useEffect(() => {
 
         if(downloadReady && latestVersion !== null){
             console.log("file Ready - starting download...")
-            dispatch(downloadVersion(props.diagramId, latestVersion?.id))
+            const path = `/api/version/${props.diagramId}/${latestVersion?.id}/download`
+            downloadFile(path)
             dispatch({type: LATEST_VERSION, latestVersion: null})
             setDownloadReady(false)
         }
 
     }, [downloadReady, latestVersion, props.diagramId, dispatch])
+
+
+
 
     const fetchVersions = useCallback(() => {
         try {

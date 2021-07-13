@@ -41,11 +41,8 @@ const UserManagementDialog: React.FC<Props> = props => {
     }, [dispatch]);
 
     useEffect(() => {
-        if(open){
+        if(open && !syncStatus){
             fetchAssignedUsers(repoId);
-            if (!syncStatus) {
-                fetchAssignedUsers(repoId);
-            }
         }
     }, [fetchAssignedUsers, syncStatus, repoId, open]);
 
