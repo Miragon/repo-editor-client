@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Suspense} from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import {Provider} from "react-redux";
@@ -8,12 +8,11 @@ import App from "./components/Layout/App";
 import store from "./store/store";
 import {I18nextProvider, initReactI18next} from "react-i18next";
 import i18next from "i18next";
-import common_de from "./translations/custom/common.json";
-import common_en from "./translations/default/common.json";
 
 
-/*
-fetch("../../public/translations/common"
+
+const language = window.localStorage.getItem("language") ? window.localStorage.getItem("language") : "default";
+fetch("/translations/default/common.json"
     ,{
         headers : {
             "Content-Type": "application/json",
@@ -22,48 +21,66 @@ fetch("../../public/translations/common"
     }
 ).then(
     function(res){
-        console.log(res)
-
         return res.json()
     }).then(function(data){
-    console.log(data)
-    // store Data in State Data Variable
+    const defaultPackage = data
+    fetchCustom(defaultPackage)
 }).catch(
     function(err){
         console.log(err)
     }
 )
 
- */
-const language = window.localStorage.getItem("language") ? window.localStorage.getItem("language") : "default";
 
-i18next
-    //.use(Fetch)
-    .use(initReactI18next)
-    .init({
-        interpolation: { escapeValue: false },
-        lng: language ? language : "language" ,
-        /*      backend: {
-            //TODO: Does not load automatically
-            loadPath: "translations/custom/common.json"
-        },*/
-        resources: {
-            default: {
-                common: common_en
-            },
-            custom: {
-                common: common_de
-            },
+const fetchCustom = (defaultPackage: JSON) => {
+    fetch("/translations/custom/common.json"
+        ,{
+            headers : {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
         }
-    });
+    ).then(
+        function(res){
+            return res.json()
+        }).then(function(data){
+        const customPackage = data
+        initI18(defaultPackage, customPackage)
+    }).catch(
+        function(err){
+            console.log(err)
+        }
+    )
+}
+
+
+const initI18 = (defaultPackage: JSON, customPackage: JSON) => {
+    i18next
+        .use(initReactI18next)
+        .init({
+            interpolation: { escapeValue: false },
+            lng: language ? language : "default" ,
+            resources: {
+                default: {
+                    common: defaultPackage
+                },
+                custom: {
+                    common: customPackage
+                }
+            }
+        });
+}
+
 
 
 ReactDOM.render((
     <Provider store={store}>
         <HashRouter>
-            <I18nextProvider i18n={i18next}>
-                <App />
-            </I18nextProvider>
+            <Suspense fallback={"loading"}>
+                <I18nextProvider i18n={i18next}>
+                    <App />
+                </I18nextProvider>
+            </Suspense>
         </HashRouter>
     </Provider>
 ),

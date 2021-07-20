@@ -1,0 +1,101 @@
+{
+  "repository": {
+    "confirmDelete": "Are you sure you want to delete {{repoName}}?",
+    "repository": "Repository",
+    "create": "Create Repository",
+    "delete": "Delete Repository",
+    "edit": "Edit Repository",
+    "notAvailable": "You haven't added any Repositories yet.",
+    "target": "Target Repository"
+  },
+  "diagram": {
+    "confirmDelete": "Are you sure want to delete {{diagramName}}?",
+    "create": "Create Diagram",
+    "createBpmn": "Create BPMN Diagram",
+    "createDmn": "Create DMN Diagram",
+    "delete": "Delete Diagram",
+    "download": "Download Diagram",
+    "edit": "Edit Diagram",
+    "modifiedOn": "Modified on",
+    "upload": "Upload Diagram",
+    "import": "Import from Cawemo",
+    "notAvailable": "You haven't added any diagrams yet"
+  },
+  "version": {
+    "create": "Create new Version",
+    "edit": "Edit version",
+    "deploy": "Deploy version",
+    "dialogHeader": "Create new Version of {{diagramName}}",
+    "download": "Download version",
+    "delete": "Delete version",
+    "version": "Version",
+    "RELEASE": "Release",
+    "MILESTONE": "Milestone",
+    "deploymentHistory": "Deployments"
+  },
+  "deployment": {
+    "deployment": "Deployment",
+    "deployments": "Deployments",
+    "dialogHeader": "Deploy Version {{versionNumber}}",
+    "history": "All Deployments"
+  },
+  "user": {
+    "user": "User",
+    "users": "Users",
+    "OWNER": "Owner",
+    "ADMIN": "Admin",
+    "MEMBER": "Member",
+    "VIEWER": "Viewer",
+    "remove": "Remove from Repository"
+  },
+  "category": {
+    "favorite": "Favorites",
+    "recent": "Recently used",
+
+    "noFavoritesAvailable": "You haven't added any diagrams to your favorites yet."
+
+  },
+  "search": {
+    "search": "Search...",
+    "noResults": "No Results"
+  },
+  "dialog": {
+    "applyChanges": "Apply Changes",
+    "cancel": "Cancel",
+    "close": "Close",
+    "create": "Create"
+  },
+  "properties": {
+    "title": "Title",
+    "description": "Description",
+    "comment": "Comment",
+    "date": "Date",
+    "type": "Type",
+    "target": "Target"
+  },
+  "menu": {
+    "home": "Repository",
+    "forms": "Forms",
+    "integration": "Integration blocks"
+  },
+  "registration": {
+    "signup": "Sign up for Miragon Cloud Services",
+    "firstTime": "This is the first time you are trying to access Miragon Cloud Services.",
+    "accountRequired": "To use this service you need an account.\n To create a new account, choose a name and accept the Terms and Conditions.",
+    "agree": "I agree to the terms of service",
+    "create": "Create a new User Profile"
+  },
+  "language": {
+    "german": "German",
+    "english": "English",
+    "select": "Select Language"
+  },
+  "defaultErrors": {
+    "error": "Error",
+    "400": "Bad Request - Please enter all required information",
+    "401": "Unauthorized",
+    "403": "Your Session has expired - Please refresh",
+    "404": "Not found",
+    "409": "Conflict"
+  }
+}

@@ -46,7 +46,12 @@ const Menu: React.FC<Props> = props => {
 
     const changeLanguage = (language: string) => {
         window.localStorage.setItem("language", language)
-        i18next.changeLanguage(language)
+        activateLanguage(language)
+    }
+
+    const activateLanguage = (language: string) => {
+        i18next.changeLanguage(language);
+
     }
 
     const options: DropdownButtonItem[] = [

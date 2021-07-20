@@ -12,8 +12,9 @@ import {RootState} from "../../store/reducers/rootReducer";
 import Menu from "./Menu";
 import Router from "./Router";
 import Toast from "./Toast";
-import {useTranslation} from "react-i18next";
+import {I18nextProvider, useTranslation} from "react-i18next";
 import theme from "../../theme";
+import i18next from "i18next";
 
 const useStyles = makeStyles((theme: Theme) => ({
     contentWrapper: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexGrow: 1,
         flexDirection: "column",
         maxHeight: "calc(100vh - 60px)",
-        padding: "40px 16px",
+        padding: "20px 16px",
         maxWidth: "1232px",
         margin: "0 auto"
     },
@@ -122,20 +123,27 @@ const Layout = (): any => {
         return <RegisterNewUserScreen/>;
     }
 
+
+
+
+
+
     return (
         <>
-            <Menu
-                open={open}
-                setOpen={setOpen}/>
-            <div className={clsx(
-                open && classes.contentWrapperShift,
-                classes.contentWrapper
-            )}>
-                <div className={classes.content}>
-                    <Router/>
-                    <ToastContainer/>
+            <I18nextProvider i18n={i18next} >
+                <Menu
+                    open={open}
+                    setOpen={setOpen}/>
+                <div className={clsx(
+                    open && classes.contentWrapperShift,
+                    classes.contentWrapper
+                )}>
+                    <div className={classes.content}>
+                        <Router/>
+                        <ToastContainer/>
+                    </div>
                 </div>
-            </div>
+            </I18nextProvider>
         </>
     );
 };
