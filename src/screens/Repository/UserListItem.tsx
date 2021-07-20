@@ -200,7 +200,7 @@ const UserListItem: React.FC<Props> = props => {
                                                 }
                                                 setOpen(false);
                                             }}>
-                                            {t( `user.${option.label}`)}
+                                            {t( `${option.label}`)}
                                         </MenuItem>
                                     ))}
                                 </MenuList>

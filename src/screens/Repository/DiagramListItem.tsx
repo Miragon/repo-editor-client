@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import clsx from "clsx";
 import theme from "../../theme";
 import {DropdownButtonItem} from "../../components/Form/DropdownButton";
-import {downloadVersion, getAllVersions, getLatestVersion} from "../../store/actions/versionAction";
+import {getAllVersions, getLatestVersion} from "../../store/actions/versionAction";
 import {DiagramVersionTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
 import {deleteDiagram} from "../../store/actions";

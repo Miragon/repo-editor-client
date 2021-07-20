@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import {Provider} from "react-redux";
@@ -10,7 +10,6 @@ import {I18nextProvider, initReactI18next} from "react-i18next";
 import i18next from "i18next";
 import common_de from "./translations/custom/common.json";
 import common_en from "./translations/default/common.json";
-import Fetch from "i18next-fetch-backend";
 
 
 /*
@@ -39,15 +38,15 @@ fetch("../../public/translations/common"
 const language = window.localStorage.getItem("language") ? window.localStorage.getItem("language") : "default";
 
 i18next
-    .use(Fetch)
+    //.use(Fetch)
     .use(initReactI18next)
     .init({
         interpolation: { escapeValue: false },
         lng: language ? language : "language" ,
-        backend: {
+        /*      backend: {
             //TODO: Does not load automatically
             loadPath: "translations/custom/common.json"
-        },
+        },*/
         resources: {
             default: {
                 common: common_en
@@ -62,11 +61,9 @@ i18next
 ReactDOM.render((
     <Provider store={store}>
         <HashRouter>
-            <Suspense fallback="loading">
-                <I18nextProvider i18n={i18next}>
-                    <App />
-                </I18nextProvider>
-            </Suspense>
+            <I18nextProvider i18n={i18next}>
+                <App />
+            </I18nextProvider>
         </HashRouter>
     </Provider>
 ),

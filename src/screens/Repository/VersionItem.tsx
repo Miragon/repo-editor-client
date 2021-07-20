@@ -11,12 +11,11 @@ import {
     TableCell,
     TableRow
 } from "@material-ui/core";
-import {ArrowDropDown, MoreVert} from "@material-ui/icons";
+import {MoreVert} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/styles";
 import {DiagramVersionTO} from "../../api/models";
 import {useDispatch} from "react-redux";
 import {useTranslation} from "react-i18next";
-import {downloadVersion} from "../../store/actions";
 import theme from "../../theme";
 import {DropdownButtonItem} from "../../components/Form/DropdownButton";
 import DeployVersionDialog from "./DeployVersionDialog";

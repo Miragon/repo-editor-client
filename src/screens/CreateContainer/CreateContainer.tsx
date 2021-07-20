@@ -11,6 +11,7 @@ import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     container: {
+        paddingTop: "25px",
         display: "flex",
         justifyContent: "space-between"
     },

@@ -86,13 +86,5 @@
     "german": "Deutsch",
     "english": "Englisch",
     "select": "Sprache auswählen"
-  },
-  "defaultErrors": {
-    "error": "Fehler",
-    "400": "Fehlerhafte Anfrage - Bitte geben Sie alle benötigten Informationen an",
-    "401": "Nicht authorisiert",
-    "403": "Die Session ist abgelaufen - bitte neu laden",
-    "404": "Nicht gefunden",
-    "409": "Konflikt"
   }
 }

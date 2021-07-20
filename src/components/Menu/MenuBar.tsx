@@ -1,4 +1,4 @@
-import {IconButton, makeStyles, Theme} from "@material-ui/core";
+import {makeStyles, Theme} from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";
 import {createTestAttributes} from "../../util/TestUtils";

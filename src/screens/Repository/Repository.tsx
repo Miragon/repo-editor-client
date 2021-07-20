@@ -7,6 +7,7 @@ import DiagramDetails from "./DiagramDetails";
 import RepositoryDetails from "./RepositoryDetails";
 import {RepositoryTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
+import PathStructure from "../../components/Layout/PathStructure";
 
 const Repository: React.FC = (() => {
     const dispatch = useDispatch();
@@ -26,11 +27,22 @@ const Repository: React.FC = (() => {
         }
     }, [dataSynced, getRepo, repoId])
 
+    const element = {
+        name: "Overview",
+        link: "/"
+    }
+    const element2 = {
+        name: "Repository",
+        link: "/"
+    }
+    const path = [element, element2]
+
 
     return (
         <>
             {(activeRepo && activeRepo.id === repoId) &&
                 <div className={"content"}>
+                    <PathStructure structure={path} />
                     <RepositoryDetails/>
                     <CreateDiagramContainer/>
                     <DiagramDetails/>

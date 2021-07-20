@@ -1,7 +1,7 @@
 export const defaultErrors = {
-    400: "Bad Request - Please enter all required information",
-    401: "Unauthorized",
-    403: "Your Session has expired - Please refresh",
-    404: "404 -Not found",
-    409: "Conflict"
+    400: "defaultErrors.400",
+    401: "defaultErrors.401",
+    403: "defaultErrors.403",
+    404: "defaultErrors.404",
+    409: "defaultErrors.409"
 };

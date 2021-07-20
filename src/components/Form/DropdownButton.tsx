@@ -1,4 +1,4 @@
-import {Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, SvgIcon} from "@material-ui/core";
+import {Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper} from "@material-ui/core";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import {ArrowDropDown} from "@material-ui/icons";
 import clsx from "clsx";

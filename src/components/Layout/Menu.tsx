@@ -1,4 +1,4 @@
-import {Button, IconButton} from "@material-ui/core";
+import {IconButton} from "@material-ui/core";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import {Menu as MenuIcon} from "@material-ui/icons";
 import clsx from "clsx";
@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import i18next from "i18next";
 import DropdownButton, {DropdownButtonItem} from "../Form/DropdownButton";
 import {useTranslation} from "react-i18next";
-import TableChartIcon from "@material-ui/icons/TableChart";
 import Flag from "react-world-flags";
 
 interface Props {
@@ -84,7 +83,6 @@ const Menu: React.FC<Props> = props => {
                     <Typography style={{fontWeight: "bold"}} variant="h6">DigitalWF-</Typography>
                     <Typography style={{fontWeight: "bold"}} color="secondary" variant="h6">Modellverwaltung</Typography>
                 </IconButton>
-                //TODO: Save selected language
                 <DropdownButton title={t("language.select")} options={options} />
             </MenuBar>
 
