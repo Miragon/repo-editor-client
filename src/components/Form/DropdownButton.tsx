@@ -1,4 +1,4 @@
-import {Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper} from "@material-ui/core";
+import {Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, SvgIcon} from "@material-ui/core";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import {ArrowDropDown} from "@material-ui/icons";
 import clsx from "clsx";
@@ -8,6 +8,7 @@ import {useTranslation} from "react-i18next";
 export interface DropdownButtonItem {
     id: string;
     label: string;
+    icon?: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onClick?: (event?: any) => void;
     disabled?: boolean;
@@ -130,6 +131,7 @@ const DropdownButton: React.FC<Props> = props => {
                                                 }
                                                 setOpen(false);
                                             }}>
+                                            {option.icon? option.icon : null}
                                             {t(option.label)}
                                         </MenuItem>
                                     ))}

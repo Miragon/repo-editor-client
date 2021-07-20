@@ -24,6 +24,9 @@ interface Props {
 
 const DeploymentHistory: React.FC<Props> = props => {
     const classes = useStyles();
+
+
+
     const {t, i18n} = useTranslation("common");
 
 
@@ -46,7 +49,10 @@ const DeploymentHistory: React.FC<Props> = props => {
 
     const reformatDate = (date: string | undefined) => {
         if (date) {
-            return date.split("T")[0];
+            const calendarDate = date.split("T")[0].replace(/-/g, ".");
+            calendarDate.replace("-", ".");
+            const time = date.split("T")[1].substring(0,5);
+            return `${calendarDate}  |  ${time}`;
         }
         return "01.01.2000";
     };

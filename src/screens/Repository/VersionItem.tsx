@@ -1,5 +1,6 @@
 import React, {useRef, useState} from "react";
 import {
+    Button,
     ClickAwayListener,
     Grow,
     IconButton,
@@ -10,7 +11,7 @@ import {
     TableCell,
     TableRow
 } from "@material-ui/core";
-import {MoreVert} from "@material-ui/icons";
+import {ArrowDropDown, MoreVert} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/styles";
 import {DiagramVersionTO} from "../../api/models";
 import {useDispatch} from "react-redux";
@@ -21,6 +22,7 @@ import {DropdownButtonItem} from "../../components/Form/DropdownButton";
 import DeployVersionDialog from "./DeployVersionDialog";
 import DeploymentHistory from "./DeploymentHistory";
 import {fetchTargets} from "../../store/actions/deploymentAction";
+import clsx from "clsx";
 
 const useStyles = makeStyles(() => ({
     splitCell: {
@@ -56,7 +58,14 @@ const useStyles = makeStyles(() => ({
         fontStyle: "italic",
         cursor: "pointer",
         color: theme.palette.primary.dark
-    }
+    },
+    button: {
+        textTransform: "none",
+        transition: theme.transitions.create("border-radius"),
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.main
+        }
+    },
 }));
 
 interface Props {
@@ -85,7 +94,10 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
 
     const reformatDate = (date: string | undefined) => {
         if (date) {
-            return date.split("T")[0];
+            const calendarDate = date.split("T")[0].replace(/-/g, ".");
+            calendarDate.replace("-", ".");
+            const time = date.split("T")[1].substring(0,5);
+            return `${calendarDate}  |  ${time}`;
         }
         return "01.01.2000";
     };
@@ -160,9 +172,22 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
                             {props.diagramVersion.milestone}
                         </div>
                         {props.diagramVersion.deployments.length > 0 ?
-                            <div className={classes.deploymentTarget} onClick={event => openDeploymentHistory(event)}>
-                                {props.diagramVersion.deployments[0].target}
+                            <div>
+                                <Button
+                                    ref={ref}
+                                    color="secondary"
+                                    className={clsx(classes.button)}
+                                    onClick={event => openDeploymentHistory(event)}
+                                    variant="contained"
+                                    size={"small"}>
+                                    {props.diagramVersion.deployments.length > 1 ?
+                                        `${props.diagramVersion.deployments.length} ${t("deployment.deployments")}`
+                                        :
+                                        `${props.diagramVersion.deployments[0].target}`
+                                    }
+                                </Button>
                             </div>
+
                             :
                             <div>
 

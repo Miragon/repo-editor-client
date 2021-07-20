@@ -94,7 +94,7 @@ const EditRepoDialog: React.FC<Props> = props => {
             onSecond={props.onCancelled}>
             <div className={classes.deleteSection}>
                 <Typography variant="h5">
-                    Delete Repository
+                    {t("repository.delete")}
                 </Typography>
                 <IconButton className={classes.deleteButton} onClick={deleteRepo}>
                     <DeleteIcon />

@@ -34,6 +34,8 @@
     "deploymentHistory": "Deployments"
   },
   "deployment": {
+    "deployment": "Deployment",
+    "deployments": "Deployments",
     "dialogHeader": "Deploy Version {{versionNumber}}",
     "history": "All Deployments"
   },
@@ -82,5 +84,11 @@
     "accountRequired": "To use this service you need an account.\n To create a new account, choose a name and accept the Terms and Conditions.",
     "agree": "I agree to the terms of service",
     "create": "Create a new User Profile"
+  },
+  "language": {
+    "german": "German",
+    "english": "English",
+    "select": "Select Language"
+
   }
 }

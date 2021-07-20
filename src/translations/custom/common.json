@@ -33,6 +33,8 @@
     "deploymentHistory": "Veröffentlichungen"
   },
   "deployment": {
+    "deployment": "Veröffentlichung",
+    "deployments": "Veröffentlichungen",
     "dialogHeader": "Version {{versionNumber}} veröffentlichen",
     "history": "Alle Veröffentlichungen"
   },
@@ -79,6 +81,10 @@
     "accountRequired": "Sie benötigen einen Account, um diesen Service zu verwenden.\n Um einen Account zu erstellen, akzeptieren Sie bitte die AGBs.",
     "agree": "Ich akzeptiere die AGBs",
     "create": "Neues Benutzerprofil erstellen"
-
+  },
+  "language": {
+    "german": "Deutsch",
+    "english": "Englisch",
+    "select": "Sprache auswählen"
   }
 }

@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import {IconButton, makeStyles, Theme} from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";
 import {createTestAttributes} from "../../util/TestUtils";
@@ -32,6 +32,7 @@ const MenuBar: React.FC<Props> = props => {
             {...createTestAttributes(props.testId)}
             className={clsx(classes.root, props.className)}>
             {props.children}
+
         </div>
     );
 };

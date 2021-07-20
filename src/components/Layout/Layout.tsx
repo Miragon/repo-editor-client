@@ -12,6 +12,7 @@ import {RootState} from "../../store/reducers/rootReducer";
 import Menu from "./Menu";
 import Router from "./Router";
 import Toast from "./Toast";
+import i18next from "i18next";
 
 const useStyles = makeStyles((theme: Theme) => ({
     contentWrapper: {
