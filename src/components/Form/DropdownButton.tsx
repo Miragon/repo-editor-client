@@ -3,10 +3,12 @@ import {makeStyles, Theme} from "@material-ui/core/styles";
 import {ArrowDropDown} from "@material-ui/icons";
 import clsx from "clsx";
 import React, {useRef, useState} from "react";
+import {useTranslation} from "react-i18next";
 
 export interface DropdownButtonItem {
     id: string;
-    label: React.ReactNode;
+    label: string;
+    icon?: any;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onClick?: (event?: any) => void;
     disabled?: boolean;
@@ -76,6 +78,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const DropdownButton: React.FC<Props> = props => {
     const classes = useStyles();
+    const {t, i18n} = useTranslation("common");
 
     const [open, setOpen] = useState(false);
     const ref = useRef<HTMLButtonElement>(null);
@@ -128,7 +131,8 @@ const DropdownButton: React.FC<Props> = props => {
                                                 }
                                                 setOpen(false);
                                             }}>
-                                            {option.label}
+                                            {option.icon? option.icon : null}
+                                            {t(option.label)}
                                         </MenuItem>
                                     ))}
                                 </MenuList>

@@ -1,12 +1,13 @@
-import { makeStyles } from "@material-ui/styles";
-import { observer } from "mobx-react";
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { DiagramTO, RepositoryTO } from "../../api/models";
-import { ErrorBoundary } from "../../components/Exception/ErrorBoundary";
+import {makeStyles} from "@material-ui/styles";
+import {observer} from "mobx-react";
+import React, {useCallback, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {DiagramTO, RepositoryTO} from "../../api/models";
+import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import * as diagramAction from "../../store/actions/diagramAction";
-import { RootState } from "../../store/reducers/rootReducer";
+import {RootState} from "../../store/reducers/rootReducer";
 import DiagramCard from "./Holder/DiagramCard";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     diagramContainer: {
@@ -32,9 +33,11 @@ const useStyles = makeStyles(() => ({
 const FavoriteDiagrams: React.FC = observer(() => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
+
 
     const favoriteDiagrams: Array<DiagramTO> = useSelector(
-        (state: RootState) => state.favoriteDiagrams.favoriteDiagrams
+        (state: RootState) => state.diagrams.favoriteDiagrams
     );
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
 
@@ -58,7 +61,7 @@ const FavoriteDiagrams: React.FC = observer(() => {
 
     return (
         <div className={classes.diagramContainer}>
-            <h1>Favorites</h1>
+            <h1>{t("category.favorite")}</h1>
             <div className={classes.container}>
                 <ErrorBoundary>
                     {favoriteDiagrams?.map(diagram => (
@@ -76,7 +79,7 @@ const FavoriteDiagrams: React.FC = observer(() => {
                         </a>
                     ))}
                     {favoriteDiagrams?.length === 0 && (
-                        <span>You haven&apos;t added any diagrams to your favorites yet.</span>
+                        <span>{t("category.noFavoritesAvailable")}</span>
                     )}
                 </ErrorBoundary>
             </div>

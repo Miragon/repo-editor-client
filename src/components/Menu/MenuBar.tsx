@@ -32,6 +32,7 @@ const MenuBar: React.FC<Props> = props => {
             {...createTestAttributes(props.testId)}
             className={clsx(classes.root, props.className)}>
             {props.children}
+
         </div>
     );
 };

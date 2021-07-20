@@ -16,171 +16,34 @@ import {Configuration} from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from '../base';
-import {UserInfoTO, UserUpdateTO} from '../models';
+import {NewRepositoryTO, RepositoryTO, RepositoryUpdateTO} from '../models';
 
 /**
- * UserControllerApi - axios parameter creator
+ * RepositoryApi - axios parameter creator
  * @export
  */
-export const UserControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const RepositoryApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         *
+         * 
+         * @summary Create a new Repository
+         * @param {NewRepositoryTO} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUser: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/user/create`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserInfo: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/user/currentUser`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserName: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/user/registeredEmail`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {string} typedName
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        searchUsers: async (typedName: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'typedName' is not null or undefined
-            if (typedName === null || typedName === undefined) {
-                throw new RequiredError('typedName', 'Required parameter typedName was null or undefined when calling searchUsers.');
-            }
-            const localVarPath = `/api/user/searchUsers/{typedName}`
-                .replace(`{${"typedName"}}`, encodeURIComponent(String(typedName)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {UserUpdateTO} body
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateUser: async (body: UserUpdateTO, options: any = {}): Promise<RequestArgs> => {
+        createRepository: async (body: NewRepositoryTO, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body', 'Required parameter body was null or undefined when calling updateUser.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createRepository.');
             }
-            const localVarPath = `/api/user`;
+            const localVarPath = `/api/bpmnrepo`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'PUT', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -197,7 +60,170 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a Repository if you own it
+         * @param {string} repositoryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteRepository: async (repositoryId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'repositoryId' is not null or undefined
+            if (repositoryId === null || repositoryId === undefined) {
+                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling deleteRepository.');
+            }
+            const localVarPath = `/api/bpmnrepo/{repositoryId}`
+                .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all Repositories
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllRepositories: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/bpmnrepo`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a single Repository by providing its ID
+         * @param {string} repositoryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSingleRepository: async (repositoryId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'repositoryId' is not null or undefined
+            if (repositoryId === null || repositoryId === undefined) {
+                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling getSingleRepository.');
+            }
+            const localVarPath = `/api/bpmnrepo/{repositoryId}`
+                .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update a Repository
+         * @param {RepositoryUpdateTO} body 
+         * @param {string} repositoryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRepository: async (body: RepositoryUpdateTO, repositoryId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateRepository.');
+            }
+            // verify required parameter 'repositoryId' is not null or undefined
+            if (repositoryId === null || repositoryId === undefined) {
+                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling updateRepository.');
+            }
+            const localVarPath = `/api/bpmnrepo/{repositoryId}`
+                .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -208,68 +234,76 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
 };
 
 /**
- * UserControllerApi - functional programming interface
+ * RepositoryApi - functional programming interface
  * @export
  */
-export const UserControllerApiFp = function (configuration?: Configuration) {
+export const RepositoryApiFp = function(configuration?: Configuration) {
     return {
         /**
-         *
+         * 
+         * @summary Create a new Repository
+         * @param {NewRepositoryTO} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createUser(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).createUser(options);
+        async createRepository(body: NewRepositoryTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await RepositoryApiAxiosParamCreator(configuration).createRepository(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
+         * 
+         * @summary Delete a Repository if you own it
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserInfo(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserInfoTO>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).getUserInfo(options);
+        async deleteRepository(repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await RepositoryApiAxiosParamCreator(configuration).deleteRepository(repositoryId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
+         * 
+         * @summary Get all Repositories
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserName(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).getUserName(options);
+        async getAllRepositories(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RepositoryTO>>> {
+            const localVarAxiosArgs = await RepositoryApiAxiosParamCreator(configuration).getAllRepositories(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
-         * @param {string} typedName
+         * 
+         * @summary Get a single Repository by providing its ID
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchUsers(typedName: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserInfoTO>>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).searchUsers(typedName, options);
+        async getSingleRepository(repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepositoryTO>> {
+            const localVarAxiosArgs = await RepositoryApiAxiosParamCreator(configuration).getSingleRepository(repositoryId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
-         * @param {UserUpdateTO} body
+         * 
+         * @summary Update a Repository
+         * @param {RepositoryUpdateTO} body 
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUser(body: UserUpdateTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await UserControllerApiAxiosParamCreator(configuration).updateUser(body, options);
+        async updateRepository(body: RepositoryUpdateTO, repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await RepositoryApiAxiosParamCreator(configuration).updateRepository(body, repositoryId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -279,112 +313,124 @@ export const UserControllerApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * UserControllerApi - factory interface
+ * RepositoryApi - factory interface
  * @export
  */
-export const UserControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const RepositoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
-         *
+         * 
+         * @summary Create a new Repository
+         * @param {NewRepositoryTO} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUser(options?: any): AxiosPromise<void> {
-            return UserControllerApiFp(configuration).createUser(options).then((request) => request(axios, basePath));
+        createRepository(body: NewRepositoryTO, options?: any): AxiosPromise<void> {
+            return RepositoryApiFp(configuration).createRepository(body, options).then((request) => request(axios, basePath));
         },
         /**
-         *
+         * 
+         * @summary Delete a Repository if you own it
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserInfo(options?: any): AxiosPromise<UserInfoTO> {
-            return UserControllerApiFp(configuration).getUserInfo(options).then((request) => request(axios, basePath));
+        deleteRepository(repositoryId: string, options?: any): AxiosPromise<void> {
+            return RepositoryApiFp(configuration).deleteRepository(repositoryId, options).then((request) => request(axios, basePath));
         },
         /**
-         *
+         * 
+         * @summary Get all Repositories
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserName(options?: any): AxiosPromise<string> {
-            return UserControllerApiFp(configuration).getUserName(options).then((request) => request(axios, basePath));
+        getAllRepositories(options?: any): AxiosPromise<Array<RepositoryTO>> {
+            return RepositoryApiFp(configuration).getAllRepositories(options).then((request) => request(axios, basePath));
         },
         /**
-         *
-         * @param {string} typedName
+         * 
+         * @summary Get a single Repository by providing its ID
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchUsers(typedName: string, options?: any): AxiosPromise<Array<UserInfoTO>> {
-            return UserControllerApiFp(configuration).searchUsers(typedName, options).then((request) => request(axios, basePath));
+        getSingleRepository(repositoryId: string, options?: any): AxiosPromise<RepositoryTO> {
+            return RepositoryApiFp(configuration).getSingleRepository(repositoryId, options).then((request) => request(axios, basePath));
         },
         /**
-         *
-         * @param {UserUpdateTO} body
+         * 
+         * @summary Update a Repository
+         * @param {RepositoryUpdateTO} body 
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser(body: UserUpdateTO, options?: any): AxiosPromise<void> {
-            return UserControllerApiFp(configuration).updateUser(body, options).then((request) => request(axios, basePath));
+        updateRepository(body: RepositoryUpdateTO, repositoryId: string, options?: any): AxiosPromise<void> {
+            return RepositoryApiFp(configuration).updateRepository(body, repositoryId, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * UserControllerApi - object-oriented interface
+ * RepositoryApi - object-oriented interface
  * @export
- * @class UserControllerApi
+ * @class RepositoryApi
  * @extends {BaseAPI}
  */
-export class UserControllerApi extends BaseAPI {
+export class RepositoryApi extends BaseAPI {
     /**
-     *
+     * 
+     * @summary Create a new Repository
+     * @param {NewRepositoryTO} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof RepositoryApi
      */
-    public createUser(options?: any) {
-        return UserControllerApiFp(this.configuration).createUser(options).then((request) => request(this.axios, this.basePath));
+    public createRepository(body: NewRepositoryTO, options?: any) {
+        return RepositoryApiFp(this.configuration).createRepository(body, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
+     * 
+     * @summary Delete a Repository if you own it
+     * @param {string} repositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof RepositoryApi
      */
-    public getUserInfo(options?: any) {
-        return UserControllerApiFp(this.configuration).getUserInfo(options).then((request) => request(this.axios, this.basePath));
+    public deleteRepository(repositoryId: string, options?: any) {
+        return RepositoryApiFp(this.configuration).deleteRepository(repositoryId, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
+     * 
+     * @summary Get all Repositories
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof RepositoryApi
      */
-    public getUserName(options?: any) {
-        return UserControllerApiFp(this.configuration).getUserName(options).then((request) => request(this.axios, this.basePath));
+    public getAllRepositories(options?: any) {
+        return RepositoryApiFp(this.configuration).getAllRepositories(options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
-     * @param {string} typedName
+     * 
+     * @summary Get a single Repository by providing its ID
+     * @param {string} repositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof RepositoryApi
      */
-    public searchUsers(typedName: string, options?: any) {
-        return UserControllerApiFp(this.configuration).searchUsers(typedName, options).then((request) => request(this.axios, this.basePath));
+    public getSingleRepository(repositoryId: string, options?: any) {
+        return RepositoryApiFp(this.configuration).getSingleRepository(repositoryId, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
-     * @param {UserUpdateTO} body
+     * 
+     * @summary Update a Repository
+     * @param {RepositoryUpdateTO} body 
+     * @param {string} repositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserControllerApi
+     * @memberof RepositoryApi
      */
-    public updateUser(body: UserUpdateTO, options?: any) {
-        return UserControllerApiFp(this.configuration).updateUser(body, options).then((request) => request(this.axios, this.basePath));
+    public updateRepository(body: RepositoryUpdateTO, repositoryId: string, options?: any) {
+        return RepositoryApiFp(this.configuration).updateRepository(body, repositoryId, options).then((request) => request(this.axios, this.basePath));
     }
 }

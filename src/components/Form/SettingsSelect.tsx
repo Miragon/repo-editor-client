@@ -11,6 +11,7 @@ interface Props {
     label: string;
     disabled: boolean;
     className?: string;
+    required?: boolean;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onChanged: (newValue: any) => void;
 }
@@ -32,7 +33,8 @@ const SettingsSelect: React.FC<Props> = props => {
             size="small"
             variant="outlined"
             disabled={props.disabled}
-            className={clsx(classes.root, props.className)}>
+            className={clsx(classes.root, props.className)}
+            required={props?.required} >
 
             <InputLabel id={id}>
                 {props.label}

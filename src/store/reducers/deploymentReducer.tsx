@@ -1,17 +1,18 @@
-import { CaseReducer } from "@reduxjs/toolkit";
-import { ACTIVE_REPO } from "../constants";
+import {CaseReducer} from "@reduxjs/toolkit";
+import {TARGETS} from "../constants";
 
 const initialState = {
-    activeRepo: null
+    targets: Array<string>(),
 };
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ACTIVE_REPO:
+        case TARGETS:
             return {
                 ...state,
-                activeRepo: action.activeRepo
+                targets: action.targets
             };
+
     }
     return state;
 };

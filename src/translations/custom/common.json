@@ -1,0 +1,98 @@
+{
+  "repository": {
+    "confirmDelete": "Wollen Sie {{repoName}} wirklich löschen?",
+    "repository": "Projekt",
+    "create": "Projekt erstellen",
+    "delete": "Projekt löschen",
+    "edit": "Projekt bearbeiten",
+    "notAvailable": "Sie haben noch keine Projekte erstellt",
+    "target": "Projekt"
+  },
+  "diagram": {
+    "confirmDelete": "Wollen Sie {{diagramName}} wirklich löschen?",
+    "create": "Diagramm erstellen",
+    "createBpmn": "BPMN Diagramm erstellen",
+    "createDmn": "DMN Diagramm erstellen",
+    "delete": "Diagramm löschen",
+    "download": "Diagramm herunterladen",
+    "edit": "Diagramm bearbeiten",
+    "modifiedOn": "Bearbeitet am",
+    "upload": "Diagramm hochladen",
+    "import": "Aus Cawemo importieren",
+    "notAvailable": "Sie haben noch keine Diagramme erstellt"
+  },
+  "version": {
+    "create": "Version erstellen",
+    "deploy": "Version veröffentlichen",
+    "dialogHeader": "Neue Version von {{diagramName}} erstellen",
+    "edit": "Version bearbeiten",
+    "download": "Version herunterladen",
+    "delete": "Version löschen",
+    "version": "Version",
+    "MILESTONE": "Meilenstein",
+    "deploymentHistory": "Veröffentlichungen"
+  },
+  "deployment": {
+    "deployment": "Veröffentlichung",
+    "deployments": "Veröffentlichungen",
+    "dialogHeader": "Version {{versionNumber}} veröffentlichen",
+    "history": "Alle Veröffentlichungen"
+  },
+  "user": {
+    "user": "Benutzer",
+    "users": "Benutzer",
+    "OWNER": "Eigentümer",
+    "ADMIN": "Administrator",
+    "MEMBER": "Mitglied",
+    "VIEWER": "Gast",
+    "remove": "Von Projekt entfernen"
+  },
+  "category": {
+    "favorite": "Favoriten",
+    "recent": "Vor Kurzem bearbeitet",
+    "noFavoritesAvailable": "Sie haben noch keine Diagramme zu Ihren Favoriten hinzugefügt."
+  },
+  "search": {
+    "search": "Suchen...",
+    "noResults": "Keine Ergebnisse"
+  },
+  "dialog": {
+    "applyChanges": "Bestätigen",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "create": "Erstellen"
+  },
+  "properties": {
+    "title": "Titel",
+    "description": "Beschreibung",
+    "comment": "Kommentar",
+    "date": "Datum",
+    "type": "Typ",
+    "target": "Ziel"
+  },
+  "menu": {
+    "Home": "Modellverwaltung",
+    "Forms": "Formulare",
+    "Integration": "Integrationsbausteine"
+  },
+  "registration": {
+    "signup": "Für Miragon Cloud Services anmelden",
+    "firstTime": "Sie versuchen zum ersten Mal, sich bei Miragon Cloud Services anzumelden.",
+    "accountRequired": "Sie benötigen einen Account, um diesen Service zu verwenden.\n Um einen Account zu erstellen, akzeptieren Sie bitte die AGBs.",
+    "agree": "Ich akzeptiere die AGBs",
+    "create": "Neues Benutzerprofil erstellen"
+  },
+  "language": {
+    "german": "Deutsch",
+    "english": "Englisch",
+    "select": "Sprache auswählen"
+  },
+  "defaultErrors": {
+    "error": "Fehler",
+    "400": "Fehlerhafte Anfrage - Bitte geben Sie alle benötigten Informationen an",
+    "401": "Nicht authorisiert",
+    "403": "Die Session ist abgelaufen - bitte neu laden",
+    "404": "Nicht gefunden",
+    "409": "Konflikt"
+  }
+}

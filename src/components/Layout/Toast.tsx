@@ -5,6 +5,7 @@ import {useDispatch} from "react-redux";
 import * as actions from "../../store/actions/actions";
 import {ActionType} from "../../store/actions/actions";
 import {UNHANDLEDERROR} from "../../store/constants";
+import theme from "../../theme";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -12,11 +13,12 @@ const useStyles = makeStyles(() => ({
         flexDirection: "row",
         flexWrap: "nowrap",
         width: "100%",
-        justifyContent: "space-between"
     },
     retryButton: {
-        color: "white",
-        selfAlign: "flex-end",
+        color: theme.palette.secondary.contrastText,
+        alignSelf: "flex-end",
+        height: "25px",
+        width: "25px"
     }
 }));
 
@@ -38,9 +40,9 @@ const Toast: React.FC<Props> = props => {
 
     return (
         <div className={classes.container}>
-            <p>
+            <div>
                 {props.errorMessage}
-            </p>
+            </div>
             <IconButton
                 className={classes.retryButton}
                 onClick={() => {

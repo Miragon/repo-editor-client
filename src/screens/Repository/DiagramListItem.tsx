@@ -1,37 +1,23 @@
 /* eslint-disable max-len */
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { makeStyles } from "@material-ui/styles";
-import {
-    ClickAwayListener,
-    Collapse,
-    Grow,
-    IconButton,
-    MenuItem,
-    MenuList,
-    Paper,
-    Popper,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow
-} from "@material-ui/core";
-import { KeyboardArrowDown, KeyboardArrowUp, MoreVert } from "@material-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import React, {useCallback, useEffect, useRef, useState} from "react";
+import {makeStyles} from "@material-ui/styles";
+import {ClickAwayListener, Collapse, Grow, IconButton, MenuItem, MenuList, Paper, Popper} from "@material-ui/core";
+import {KeyboardArrowDown, MoreVert} from "@material-ui/icons";
+import {useDispatch, useSelector} from "react-redux";
 import clsx from "clsx";
 import theme from "../../theme";
-import { DropdownButtonItem } from "../../components/Form/DropdownButton";
-import {downloadVersion, getAllVersions, getLatestVersion} from "../../store/actions/versionAction";
-import { DiagramVersionTO } from "../../api/models";
-import { RootState } from "../../store/reducers/rootReducer";
-import { deleteDiagram } from "../../store/actions";
-import {GET_VERSIONS, LATEST_VERSION} from "../../store/constants";
+import {DropdownButtonItem} from "../../components/Form/DropdownButton";
+import {getAllVersions, getLatestVersion} from "../../store/actions/versionAction";
+import {DiagramVersionTO} from "../../api/models";
+import {RootState} from "../../store/reducers/rootReducer";
+import {deleteDiagram} from "../../store/actions";
+import {LATEST_VERSION} from "../../store/constants";
 import CreateVersionDialog from "./CreateVersionDialog";
 import EditDiagramDialog from "./EditDiagramDialog";
 import TableChartIcon from "@material-ui/icons/TableChart";
 import {ReactComponent as BpmnIcon} from "../../img/bpmnIcon_gears.svg";
 import VersionDetails from "./VersionDetails";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     listItemWithVersions: {
@@ -123,7 +109,6 @@ const useStyles = makeStyles(() => ({
         },
     },
     popupContainer: {
-        width: "150px",
         zIndex: 1000
     },
     popup: {
@@ -184,8 +169,11 @@ interface Props {
 const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
     const diagramVersionTOs: Array<DiagramVersionTO> = useSelector((state: RootState) => state.versions.versions);
     const latestVersion: DiagramVersionTO | null = useSelector((state: RootState) => state.versions.latestVersion);
+    const versionSynced: boolean = useSelector((state: RootState) => state.dataSynced.versionSynced)
+
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
 
     const [open, setOpen] = useState(false);
@@ -225,16 +213,29 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         checkIfVersionsAreOpen();
     }, [diagramVersionTOs, currentId, checkIfVersionsAreOpen]);
 
+
+
+    const downloadFile = (filePath: string) => {
+        const link=document.createElement("a");
+        link.href = filePath;
+        link.download = filePath.substr(filePath.lastIndexOf("/") + 1);
+        link.click();
+    }
+
+
     useEffect(() => {
 
         if(downloadReady && latestVersion !== null){
             console.log("file Ready - starting download...")
-            dispatch(downloadVersion(props.diagramId, latestVersion?.id))
+            const path = `/api/version/${props.diagramId}/${latestVersion?.id}/download`
+            downloadFile(path)
             dispatch({type: LATEST_VERSION, latestVersion: null})
             setDownloadReady(false)
         }
 
     }, [downloadReady, latestVersion, props.diagramId, dispatch])
+
+
 
 
     const fetchVersions = useCallback(() => {
@@ -245,9 +246,19 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         }
     }, [dispatch, props]);
 
+    useEffect(() => {
+        if(!versionSynced && open){
+            fetchVersions()
+        }
+    }, [versionSynced, fetchVersions, open])
+
+
     const reformatDate = (date: string | undefined) => {
         if (date) {
-            return date.split("T")[0];
+            const calendarDate = date.split("T")[0].replace(/-/g, ".");
+            calendarDate.replace("-", ".");
+            const time = date.split("T")[1].substring(0,5);
+            return `${calendarDate}  |  ${time}`;
         }
         return "01.01.2000";
     };
@@ -273,7 +284,6 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     }, [dispatch, props.diagramId])
 
     const initDownload = () => {
-        //1. Get the latest version
         fetchLatestVersion()
     }
 
@@ -289,15 +299,16 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
 
         {
             id: "CreateVersion",
-            label: "Create new Version",
+            label: "version.create",
             type: "button",
             onClick: () => {
+                dispatch(getLatestVersion(props.diagramId))
                 setCreateVersionOpen(true);
             }
         },
         {
             id: "EditDiagram",
-            label: "Edit Diagram",
+            label: "diagram.edit",
             type: "button",
             onClick: () => {
                 setEditDiagramOpen(true);
@@ -306,7 +317,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         },
         {
             id: "DownloadDiagram",
-            label: "Download Diagram",
+            label: "diagram.download",
             type: "button",
             onClick: () => {
                 initDownload();
@@ -322,11 +333,11 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
         },
         {
             id: "DeleteDiagram",
-            label: "Delete Diagram",
+            label: "diagram.delete",
             type: "button",
             onClick: () => {
                 // eslint-disable-next-line no-restricted-globals
-                if (confirm(`Are you sure you want to delete '${props.diagramTitle}'?`)) {
+                if (confirm(t("diagram.confirmDelete", {diagramName: props.diagramTitle}))) {
                     removeDiagram();
                 }
             }
@@ -336,8 +347,8 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     return (
         <>
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-            <div className={classes.listItemWithVersions} onClick={() => openModeler(props.repoId, props.diagramId)}>
-                <div className={classes.listItem}>
+            <div className={classes.listItemWithVersions}>
+                <div className={classes.listItem} onClick={() => openModeler(props.repoId, props.diagramId)}>
                     <img
                         alt="Preview"
                         className={classes.image}
@@ -357,7 +368,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                             </div>
 
                             <div className={classes.updatedDate}>
-                                {`modified on ${reformatDate(props.updatedDate)}`}
+                                {`${t("diagram.modifiedOn")} ${reformatDate(props.updatedDate)}`}
                             </div>
                             <IconButton ref={ref} className={classes.more} onClick={event => openSettings(event)}>
                                 <MoreVert />
@@ -377,7 +388,11 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                 </div>
 
                 <Collapse in={open} timeout="auto">
-                    <VersionDetails diagramId={props.diagramId} diagramVersionTOs={diagramVersionTOs} loading={loading}/>
+                    <VersionDetails
+                        diagramId={props.diagramId}
+                        diagramVersionTOs={diagramVersionTOs}
+                        diagramTitle={props.diagramTitle}
+                        loading={loading}/>
                 </Collapse>
 
             </div>
@@ -412,7 +427,7 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
                                                 }
                                                 setSettingsOpen(false);
                                             }}>
-                                            {option.label}
+                                            {t(option.label)}
                                         </MenuItem>
                                     ))}
                                 </MenuList>
@@ -440,54 +455,3 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     );
 });
 export default DiagramListItem;
-
-
-/*
-                    <Table size="small">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>
-                                    <b>Version</b>
-                                </TableCell>
-                                <TableCell>
-                                    <b>Comment</b>
-                                </TableCell>
-                                <TableCell>
-                                    <b>Date</b>
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {loading
-                            && (
-                                <TableRow key="loading" hover>
-                                    <TableCell colSpan={3} align="center">
-                                        <>
-                                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                        </>
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                            {diagramVersionTOs?.map(singleVersion => (
-                                <TableRow
-                                    key={singleVersion.id}
-                                    hover
-                                    onClick={() => openModeler(singleVersion.repositoryId, singleVersion.diagramId, singleVersion.id)}>
-                                    <TableCell
-                                        component="th"
-                                        scope="row">
-                                        {singleVersion.release}
-                                        .
-                                        {singleVersion.milestone}
-                                    </TableCell>
-                                    <TableCell>{singleVersion.comment}</TableCell>
-                                    <TableCell>{reformatDate(singleVersion.updatedDate)}</TableCell>
-                                </TableRow>
-                            ))}
-
-                        </TableBody>
-                    </Table>
-<div className={classes.versionsButtonClose} onClick={(event => closeVersions(event))}>
-    <KeyboardArrowUp />
-</div>
- */

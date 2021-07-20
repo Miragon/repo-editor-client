@@ -19,22 +19,22 @@ import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from
 import {AssignmentTO, AssignmentUpdateTO} from '../models';
 
 /**
- * AssignmentControllerApi - axios parameter creator
+ * AssignmentApi - axios parameter creator
  * @export
  */
-export const AssignmentControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AssignmentApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         *
+         * 
          * @summary Create / update user assignment
-         * @param {AssignmentUpdateTO} body
+         * @param {AssignmentUpdateTO} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createOrUpdateUserAssignment: async (body: AssignmentUpdateTO, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body', 'Required parameter body was null or undefined when calling createOrUpdateUserAssignment.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createOrUpdateUserAssignment.');
             }
             const localVarPath = `/api/assignment`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -43,7 +43,7 @@ export const AssignmentControllerApiAxiosParamCreator = function (configuration?
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -60,7 +60,7 @@ export const AssignmentControllerApiAxiosParamCreator = function (configuration?
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -68,21 +68,21 @@ export const AssignmentControllerApiAxiosParamCreator = function (configuration?
             };
         },
         /**
-         *
+         * 
          * @summary Delete user assignment
-         * @param {string} repositoryId
-         * @param {string} username
+         * @param {string} repositoryId 
+         * @param {string} username 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         deleteUserAssignment: async (repositoryId: string, username: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'repositoryId' is not null or undefined
             if (repositoryId === null || repositoryId === undefined) {
-                throw new RequiredError('repositoryId', 'Required parameter repositoryId was null or undefined when calling deleteUserAssignment.');
+                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling deleteUserAssignment.');
             }
             // verify required parameter 'username' is not null or undefined
             if (username === null || username === undefined) {
-                throw new RequiredError('username', 'Required parameter username was null or undefined when calling deleteUserAssignment.');
+                throw new RequiredError('username','Required parameter username was null or undefined when calling deleteUserAssignment.');
             }
             const localVarPath = `/api/assignment/{repositoryId}/{username}`
                 .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)))
@@ -93,7 +93,7 @@ export const AssignmentControllerApiAxiosParamCreator = function (configuration?
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'DELETE', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -114,16 +114,16 @@ export const AssignmentControllerApiAxiosParamCreator = function (configuration?
             };
         },
         /**
-         *
+         * 
          * @summary Get all assigned users
-         * @param {string} repositoryId
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getAllAssignedUsers: async (repositoryId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'repositoryId' is not null or undefined
             if (repositoryId === null || repositoryId === undefined) {
-                throw new RequiredError('repositoryId', 'Required parameter repositoryId was null or undefined when calling getAllAssignedUsers.');
+                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling getAllAssignedUsers.');
             }
             const localVarPath = `/api/assignment/{repositoryId}`
                 .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
@@ -133,7 +133,7 @@ export const AssignmentControllerApiAxiosParamCreator = function (configuration?
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -157,49 +157,49 @@ export const AssignmentControllerApiAxiosParamCreator = function (configuration?
 };
 
 /**
- * AssignmentControllerApi - functional programming interface
+ * AssignmentApi - functional programming interface
  * @export
  */
-export const AssignmentControllerApiFp = function (configuration?: Configuration) {
+export const AssignmentApiFp = function(configuration?: Configuration) {
     return {
         /**
-         *
+         * 
          * @summary Create / update user assignment
-         * @param {AssignmentUpdateTO} body
+         * @param {AssignmentUpdateTO} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createOrUpdateUserAssignment(body: AssignmentUpdateTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await AssignmentControllerApiAxiosParamCreator(configuration).createOrUpdateUserAssignment(body, options);
+            const localVarAxiosArgs = await AssignmentApiAxiosParamCreator(configuration).createOrUpdateUserAssignment(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
+         * 
          * @summary Delete user assignment
-         * @param {string} repositoryId
-         * @param {string} username
+         * @param {string} repositoryId 
+         * @param {string} username 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async deleteUserAssignment(repositoryId: string, username: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await AssignmentControllerApiAxiosParamCreator(configuration).deleteUserAssignment(repositoryId, username, options);
+            const localVarAxiosArgs = await AssignmentApiAxiosParamCreator(configuration).deleteUserAssignment(repositoryId, username, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
+         * 
          * @summary Get all assigned users
-         * @param {string} repositoryId
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getAllAssignedUsers(repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AssignmentTO>>> {
-            const localVarAxiosArgs = await AssignmentControllerApiAxiosParamCreator(configuration).getAllAssignedUsers(repositoryId, options);
+            const localVarAxiosArgs = await AssignmentApiAxiosParamCreator(configuration).getAllAssignedUsers(repositoryId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -209,86 +209,84 @@ export const AssignmentControllerApiFp = function (configuration?: Configuration
 };
 
 /**
- * AssignmentControllerApi - factory interface
+ * AssignmentApi - factory interface
  * @export
  */
-export const AssignmentControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const AssignmentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
-         *
+         * 
          * @summary Create / update user assignment
-         * @param {AssignmentUpdateTO} body
+         * @param {AssignmentUpdateTO} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createOrUpdateUserAssignment(body: AssignmentUpdateTO, options?: any): AxiosPromise<void> {
-            return AssignmentControllerApiFp(configuration).createOrUpdateUserAssignment(body, options).then((request) => request(axios, basePath));
+            return AssignmentApiFp(configuration).createOrUpdateUserAssignment(body, options).then((request) => request(axios, basePath));
         },
         /**
-         *
+         * 
          * @summary Delete user assignment
-         * @param {string} repositoryId
-         * @param {string} username
+         * @param {string} repositoryId 
+         * @param {string} username 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         deleteUserAssignment(repositoryId: string, username: string, options?: any): AxiosPromise<void> {
-            return AssignmentControllerApiFp(configuration).deleteUserAssignment(repositoryId, username, options).then((request) => request(axios, basePath));
+            return AssignmentApiFp(configuration).deleteUserAssignment(repositoryId, username, options).then((request) => request(axios, basePath));
         },
         /**
-         *
+         * 
          * @summary Get all assigned users
-         * @param {string} repositoryId
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getAllAssignedUsers(repositoryId: string, options?: any): AxiosPromise<Array<AssignmentTO>> {
-            return AssignmentControllerApiFp(configuration).getAllAssignedUsers(repositoryId, options).then((request) => request(axios, basePath));
+            return AssignmentApiFp(configuration).getAllAssignedUsers(repositoryId, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * AssignmentControllerApi - object-oriented interface
+ * AssignmentApi - object-oriented interface
  * @export
- * @class AssignmentControllerApi
+ * @class AssignmentApi
  * @extends {BaseAPI}
  */
-export class AssignmentControllerApi extends BaseAPI {
+export class AssignmentApi extends BaseAPI {
     /**
-     *
+     * 
      * @summary Create / update user assignment
-     * @param {AssignmentUpdateTO} body
+     * @param {AssignmentUpdateTO} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AssignmentControllerApi
+     * @memberof AssignmentApi
      */
     public createOrUpdateUserAssignment(body: AssignmentUpdateTO, options?: any) {
-        return AssignmentControllerApiFp(this.configuration).createOrUpdateUserAssignment(body, options).then((request) => request(this.axios, this.basePath));
+        return AssignmentApiFp(this.configuration).createOrUpdateUserAssignment(body, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
+     * 
      * @summary Delete user assignment
-     * @param {string} repositoryId
-     * @param {string} username
+     * @param {string} repositoryId 
+     * @param {string} username 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AssignmentControllerApi
+     * @memberof AssignmentApi
      */
     public deleteUserAssignment(repositoryId: string, username: string, options?: any) {
-        return AssignmentControllerApiFp(this.configuration).deleteUserAssignment(repositoryId, username, options).then((request) => request(this.axios, this.basePath));
+        return AssignmentApiFp(this.configuration).deleteUserAssignment(repositoryId, username, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
+     * 
      * @summary Get all assigned users
-     * @param {string} repositoryId
+     * @param {string} repositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AssignmentControllerApi
+     * @memberof AssignmentApi
      */
     public getAllAssignedUsers(repositoryId: string, options?: any) {
-        return AssignmentControllerApiFp(this.configuration).getAllAssignedUsers(repositoryId, options).then((request) => request(this.axios, this.basePath));
+        return AssignmentApiFp(this.configuration).getAllAssignedUsers(repositoryId, options).then((request) => request(this.axios, this.basePath));
     }
 }

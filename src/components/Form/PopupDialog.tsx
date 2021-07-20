@@ -83,8 +83,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         textTransform: "none",
         padding: "8px 24px",
         transition: theme.transitions.create(["border", "color", "background-color"]),
-        minWidth: "144px",
-        border: "none !important"
+        minWidth: "144px"
     },
     titleWrapper: {
         padding: "16px 24px 0px 24px",
@@ -147,8 +146,7 @@ const PopupDialog: React.FC<Props> = props => {
                             }}
                             className={classes.button}
                             onClick={props.onSecond}
-                            variant="contained"
-                            color="secondary"
+                            variant="outlined"
                             disabled={props.disabled || props.secondDisabled}>
                             {props.secondTitle || "Abbrechen"}
                         </Button>

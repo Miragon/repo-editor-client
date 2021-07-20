@@ -19,26 +19,26 @@ import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from
 import {DiagramSVGUploadTO, DiagramTO, DiagramUpdateTO, NewDiagramTO} from '../models';
 
 /**
- * DiagramControllerApi - axios parameter creator
+ * DiagramApi - axios parameter creator
  * @export
  */
-export const DiagramControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const DiagramApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         *
-         * @param {NewDiagramTO} body
-         * @param {string} repositoryId
+         * 
+         * @param {NewDiagramTO} body 
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createDiagram: async (body: NewDiagramTO, repositoryId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body', 'Required parameter body was null or undefined when calling createDiagram.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createDiagram.');
             }
             // verify required parameter 'repositoryId' is not null or undefined
             if (repositoryId === null || repositoryId === undefined) {
-                throw new RequiredError('repositoryId', 'Required parameter repositoryId was null or undefined when calling createDiagram.');
+                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling createDiagram.');
             }
             const localVarPath = `/api/diagram/{repositoryId}`
                 .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
@@ -48,7 +48,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -65,7 +65,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -73,16 +73,16 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
+         * 
          * @summary Delete one Diagram and all of its versions
-         * @param {string} diagramId
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         deleteDiagram: async (diagramId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'diagramId' is not null or undefined
             if (diagramId === null || diagramId === undefined) {
-                throw new RequiredError('diagramId', 'Required parameter diagramId was null or undefined when calling deleteDiagram.');
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling deleteDiagram.');
             }
             const localVarPath = `/api/diagram/{diagramId}`
                 .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
@@ -92,7 +92,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'DELETE', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -113,15 +113,15 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
-         * @param {string} diagramId
+         * 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getDiagram: async (diagramId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'diagramId' is not null or undefined
             if (diagramId === null || diagramId === undefined) {
-                throw new RequiredError('diagramId', 'Required parameter diagramId was null or undefined when calling getDiagram.');
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling getDiagram.');
             }
             const localVarPath = `/api/diagram/{diagramId}`
                 .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
@@ -131,7 +131,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -152,15 +152,15 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
-         * @param {string} repositoryId
+         * 
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getDiagramsFromRepo: async (repositoryId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'repositoryId' is not null or undefined
             if (repositoryId === null || repositoryId === undefined) {
-                throw new RequiredError('repositoryId', 'Required parameter repositoryId was null or undefined when calling getDiagramsFromRepo.');
+                throw new RequiredError('repositoryId','Required parameter repositoryId was null or undefined when calling getDiagramsFromRepo.');
             }
             const localVarPath = `/api/diagram/repository/{repositoryId}`
                 .replace(`{${"repositoryId"}}`, encodeURIComponent(String(repositoryId)));
@@ -170,7 +170,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -191,7 +191,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -203,7 +203,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -224,7 +224,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -236,7 +236,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -257,15 +257,54 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
-         * @param {string} typedTitle
+         * 
+         * @param {string} diagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        lockDiagram: async (diagramId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'diagramId' is not null or undefined
+            if (diagramId === null || diagramId === undefined) {
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling lockDiagram.');
+            }
+            const localVarPath = `/api/diagram/{diagramId}/lock`
+                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} typedTitle 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         searchDiagrams: async (typedTitle: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'typedTitle' is not null or undefined
             if (typedTitle === null || typedTitle === undefined) {
-                throw new RequiredError('typedTitle', 'Required parameter typedTitle was null or undefined when calling searchDiagrams.');
+                throw new RequiredError('typedTitle','Required parameter typedTitle was null or undefined when calling searchDiagrams.');
             }
             const localVarPath = `/api/diagram/search/{typedTitle}`
                 .replace(`{${"typedTitle"}}`, encodeURIComponent(String(typedTitle)));
@@ -275,7 +314,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -296,15 +335,15 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
-         * @param {string} diagramId
+         * 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         setStarred: async (diagramId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'diagramId' is not null or undefined
             if (diagramId === null || diagramId === undefined) {
-                throw new RequiredError('diagramId', 'Required parameter diagramId was null or undefined when calling setStarred.');
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling setStarred.');
             }
             const localVarPath = `/api/diagram/starred/{diagramId}`
                 .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
@@ -314,7 +353,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -335,20 +374,59 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
-         * @param {DiagramUpdateTO} body
-         * @param {string} diagramId
+         * 
+         * @param {string} diagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unlockDiagram: async (diagramId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'diagramId' is not null or undefined
+            if (diagramId === null || diagramId === undefined) {
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling unlockDiagram.');
+            }
+            const localVarPath = `/api/diagram/{diagramId}/unlock`
+                .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            const query = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                query.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                query.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {DiagramUpdateTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         updateDiagram: async (body: DiagramUpdateTO, diagramId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body', 'Required parameter body was null or undefined when calling updateDiagram.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateDiagram.');
             }
             // verify required parameter 'diagramId' is not null or undefined
             if (diagramId === null || diagramId === undefined) {
-                throw new RequiredError('diagramId', 'Required parameter diagramId was null or undefined when calling updateDiagram.');
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling updateDiagram.');
             }
             const localVarPath = `/api/diagram/{diagramId}`
                 .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
@@ -358,7 +436,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'PUT', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -375,7 +453,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -383,22 +461,22 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             };
         },
         /**
-         *
-         * @param {DiagramSVGUploadTO} body
-         * @param {string} diagramId
+         * 
+         * @param {DiagramSVGUploadTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         updatePreviewSVG: async (body: DiagramSVGUploadTO, diagramId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body', 'Required parameter body was null or undefined when calling updatePreviewSVG.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updatePreviewSVG.');
             }
             // verify required parameter 'diagramId' is not null or undefined
             if (diagramId === null || diagramId === undefined) {
-                throw new RequiredError('diagramId', 'Required parameter diagramId was null or undefined when calling updatePreviewSVG.');
+                throw new RequiredError('diagramId','Required parameter diagramId was null or undefined when calling updatePreviewSVG.');
             }
-            const localVarPath = `/api/diagram/{diagramId}`
+            const localVarPath = `/api/diagram/previewSVG/{diagramId}`
                 .replace(`{${"diagramId"}}`, encodeURIComponent(String(diagramId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -406,7 +484,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = {method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -423,7 +501,7 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -434,138 +512,164 @@ export const DiagramControllerApiAxiosParamCreator = function (configuration?: C
 };
 
 /**
- * DiagramControllerApi - functional programming interface
+ * DiagramApi - functional programming interface
  * @export
  */
-export const DiagramControllerApiFp = function (configuration?: Configuration) {
+export const DiagramApiFp = function(configuration?: Configuration) {
     return {
         /**
-         *
-         * @param {NewDiagramTO} body
-         * @param {string} repositoryId
+         * 
+         * @param {NewDiagramTO} body 
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createDiagram(body: NewDiagramTO, repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DiagramTO>> {
-            const localVarAxiosArgs = await DiagramControllerApiAxiosParamCreator(configuration).createDiagram(body, repositoryId, options);
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).createDiagram(body, repositoryId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
+         * 
          * @summary Delete one Diagram and all of its versions
-         * @param {string} diagramId
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async deleteDiagram(diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await DiagramControllerApiAxiosParamCreator(configuration).deleteDiagram(diagramId, options);
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).deleteDiagram(diagramId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
-         * @param {string} diagramId
+         * 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getDiagram(diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DiagramTO>> {
-            const localVarAxiosArgs = await DiagramControllerApiAxiosParamCreator(configuration).getDiagram(diagramId, options);
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).getDiagram(diagramId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
-         * @param {string} repositoryId
+         * 
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getDiagramsFromRepo(repositoryId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DiagramTO>>> {
-            const localVarAxiosArgs = await DiagramControllerApiAxiosParamCreator(configuration).getDiagramsFromRepo(repositoryId, options);
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).getDiagramsFromRepo(repositoryId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getRecent(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DiagramTO>>> {
-            const localVarAxiosArgs = await DiagramControllerApiAxiosParamCreator(configuration).getRecent(options);
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).getRecent(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getStarred(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DiagramTO>>> {
-            const localVarAxiosArgs = await DiagramControllerApiAxiosParamCreator(configuration).getStarred(options);
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).getStarred(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
-         * @param {string} typedTitle
+         * 
+         * @param {string} diagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async lockDiagram(diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).lockDiagram(diagramId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} typedTitle 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async searchDiagrams(typedTitle: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DiagramTO>>> {
-            const localVarAxiosArgs = await DiagramControllerApiAxiosParamCreator(configuration).searchDiagrams(typedTitle, options);
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).searchDiagrams(typedTitle, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
-         * @param {string} diagramId
+         * 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async setStarred(diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await DiagramControllerApiAxiosParamCreator(configuration).setStarred(diagramId, options);
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).setStarred(diagramId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
-         * @param {DiagramUpdateTO} body
-         * @param {string} diagramId
+         * 
+         * @param {string} diagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async unlockDiagram(diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).unlockDiagram(diagramId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {DiagramUpdateTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async updateDiagram(body: DiagramUpdateTO, diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DiagramTO>> {
-            const localVarAxiosArgs = await DiagramControllerApiAxiosParamCreator(configuration).updateDiagram(body, diagramId, options);
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).updateDiagram(body, diagramId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         *
-         * @param {DiagramSVGUploadTO} body
-         * @param {string} diagramId
+         * 
+         * @param {DiagramSVGUploadTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async updatePreviewSVG(body: DiagramSVGUploadTO, diagramId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await DiagramControllerApiAxiosParamCreator(configuration).updatePreviewSVG(body, diagramId, options);
+            const localVarAxiosArgs = await DiagramApiAxiosParamCreator(configuration).updatePreviewSVG(body, diagramId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -575,222 +679,251 @@ export const DiagramControllerApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * DiagramControllerApi - factory interface
+ * DiagramApi - factory interface
  * @export
  */
-export const DiagramControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const DiagramApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
-         *
-         * @param {NewDiagramTO} body
-         * @param {string} repositoryId
+         * 
+         * @param {NewDiagramTO} body 
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createDiagram(body: NewDiagramTO, repositoryId: string, options?: any): AxiosPromise<DiagramTO> {
-            return DiagramControllerApiFp(configuration).createDiagram(body, repositoryId, options).then((request) => request(axios, basePath));
+            return DiagramApiFp(configuration).createDiagram(body, repositoryId, options).then((request) => request(axios, basePath));
         },
         /**
-         *
+         * 
          * @summary Delete one Diagram and all of its versions
-         * @param {string} diagramId
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         deleteDiagram(diagramId: string, options?: any): AxiosPromise<void> {
-            return DiagramControllerApiFp(configuration).deleteDiagram(diagramId, options).then((request) => request(axios, basePath));
+            return DiagramApiFp(configuration).deleteDiagram(diagramId, options).then((request) => request(axios, basePath));
         },
         /**
-         *
-         * @param {string} diagramId
+         * 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getDiagram(diagramId: string, options?: any): AxiosPromise<DiagramTO> {
-            return DiagramControllerApiFp(configuration).getDiagram(diagramId, options).then((request) => request(axios, basePath));
+            return DiagramApiFp(configuration).getDiagram(diagramId, options).then((request) => request(axios, basePath));
         },
         /**
-         *
-         * @param {string} repositoryId
+         * 
+         * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getDiagramsFromRepo(repositoryId: string, options?: any): AxiosPromise<Array<DiagramTO>> {
-            return DiagramControllerApiFp(configuration).getDiagramsFromRepo(repositoryId, options).then((request) => request(axios, basePath));
+            return DiagramApiFp(configuration).getDiagramsFromRepo(repositoryId, options).then((request) => request(axios, basePath));
         },
         /**
-         *
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getRecent(options?: any): AxiosPromise<Array<DiagramTO>> {
-            return DiagramControllerApiFp(configuration).getRecent(options).then((request) => request(axios, basePath));
+            return DiagramApiFp(configuration).getRecent(options).then((request) => request(axios, basePath));
         },
         /**
-         *
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getStarred(options?: any): AxiosPromise<Array<DiagramTO>> {
-            return DiagramControllerApiFp(configuration).getStarred(options).then((request) => request(axios, basePath));
+            return DiagramApiFp(configuration).getStarred(options).then((request) => request(axios, basePath));
         },
         /**
-         *
-         * @param {string} typedTitle
+         * 
+         * @param {string} diagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        lockDiagram(diagramId: string, options?: any): AxiosPromise<void> {
+            return DiagramApiFp(configuration).lockDiagram(diagramId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} typedTitle 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         searchDiagrams(typedTitle: string, options?: any): AxiosPromise<Array<DiagramTO>> {
-            return DiagramControllerApiFp(configuration).searchDiagrams(typedTitle, options).then((request) => request(axios, basePath));
+            return DiagramApiFp(configuration).searchDiagrams(typedTitle, options).then((request) => request(axios, basePath));
         },
         /**
-         *
-         * @param {string} diagramId
+         * 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         setStarred(diagramId: string, options?: any): AxiosPromise<void> {
-            return DiagramControllerApiFp(configuration).setStarred(diagramId, options).then((request) => request(axios, basePath));
+            return DiagramApiFp(configuration).setStarred(diagramId, options).then((request) => request(axios, basePath));
         },
         /**
-         *
-         * @param {DiagramUpdateTO} body
-         * @param {string} diagramId
+         * 
+         * @param {string} diagramId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unlockDiagram(diagramId: string, options?: any): AxiosPromise<void> {
+            return DiagramApiFp(configuration).unlockDiagram(diagramId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {DiagramUpdateTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         updateDiagram(body: DiagramUpdateTO, diagramId: string, options?: any): AxiosPromise<DiagramTO> {
-            return DiagramControllerApiFp(configuration).updateDiagram(body, diagramId, options).then((request) => request(axios, basePath));
+            return DiagramApiFp(configuration).updateDiagram(body, diagramId, options).then((request) => request(axios, basePath));
         },
         /**
-         *
-         * @param {DiagramSVGUploadTO} body
-         * @param {string} diagramId
+         * 
+         * @param {DiagramSVGUploadTO} body 
+         * @param {string} diagramId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         updatePreviewSVG(body: DiagramSVGUploadTO, diagramId: string, options?: any): AxiosPromise<void> {
-            return DiagramControllerApiFp(configuration).updatePreviewSVG(body, diagramId, options).then((request) => request(axios, basePath));
+            return DiagramApiFp(configuration).updatePreviewSVG(body, diagramId, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * DiagramControllerApi - object-oriented interface
+ * DiagramApi - object-oriented interface
  * @export
- * @class DiagramControllerApi
+ * @class DiagramApi
  * @extends {BaseAPI}
  */
-export class DiagramControllerApi extends BaseAPI {
+export class DiagramApi extends BaseAPI {
     /**
-     *
-     * @param {NewDiagramTO} body
-     * @param {string} repositoryId
+     * 
+     * @param {NewDiagramTO} body 
+     * @param {string} repositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramControllerApi
+     * @memberof DiagramApi
      */
     public createDiagram(body: NewDiagramTO, repositoryId: string, options?: any) {
-        return DiagramControllerApiFp(this.configuration).createDiagram(body, repositoryId, options).then((request) => request(this.axios, this.basePath));
+        return DiagramApiFp(this.configuration).createDiagram(body, repositoryId, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
+     * 
      * @summary Delete one Diagram and all of its versions
-     * @param {string} diagramId
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramControllerApi
+     * @memberof DiagramApi
      */
     public deleteDiagram(diagramId: string, options?: any) {
-        return DiagramControllerApiFp(this.configuration).deleteDiagram(diagramId, options).then((request) => request(this.axios, this.basePath));
+        return DiagramApiFp(this.configuration).deleteDiagram(diagramId, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
-     * @param {string} diagramId
+     * 
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramControllerApi
+     * @memberof DiagramApi
      */
     public getDiagram(diagramId: string, options?: any) {
-        return DiagramControllerApiFp(this.configuration).getDiagram(diagramId, options).then((request) => request(this.axios, this.basePath));
+        return DiagramApiFp(this.configuration).getDiagram(diagramId, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
-     * @param {string} repositoryId
+     * 
+     * @param {string} repositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramControllerApi
+     * @memberof DiagramApi
      */
     public getDiagramsFromRepo(repositoryId: string, options?: any) {
-        return DiagramControllerApiFp(this.configuration).getDiagramsFromRepo(repositoryId, options).then((request) => request(this.axios, this.basePath));
+        return DiagramApiFp(this.configuration).getDiagramsFromRepo(repositoryId, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
+     * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramControllerApi
+     * @memberof DiagramApi
      */
     public getRecent(options?: any) {
-        return DiagramControllerApiFp(this.configuration).getRecent(options).then((request) => request(this.axios, this.basePath));
+        return DiagramApiFp(this.configuration).getRecent(options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
+     * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramControllerApi
+     * @memberof DiagramApi
      */
     public getStarred(options?: any) {
-        return DiagramControllerApiFp(this.configuration).getStarred(options).then((request) => request(this.axios, this.basePath));
+        return DiagramApiFp(this.configuration).getStarred(options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
-     * @param {string} typedTitle
+     * 
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramControllerApi
+     * @memberof DiagramApi
+     */
+    public lockDiagram(diagramId: string, options?: any) {
+        return DiagramApiFp(this.configuration).lockDiagram(diagramId, options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
+     * 
+     * @param {string} typedTitle 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DiagramApi
      */
     public searchDiagrams(typedTitle: string, options?: any) {
-        return DiagramControllerApiFp(this.configuration).searchDiagrams(typedTitle, options).then((request) => request(this.axios, this.basePath));
+        return DiagramApiFp(this.configuration).searchDiagrams(typedTitle, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
-     * @param {string} diagramId
+     * 
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramControllerApi
+     * @memberof DiagramApi
      */
     public setStarred(diagramId: string, options?: any) {
-        return DiagramControllerApiFp(this.configuration).setStarred(diagramId, options).then((request) => request(this.axios, this.basePath));
+        return DiagramApiFp(this.configuration).setStarred(diagramId, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
-     * @param {DiagramUpdateTO} body
-     * @param {string} diagramId
+     * 
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramControllerApi
+     * @memberof DiagramApi
+     */
+    public unlockDiagram(diagramId: string, options?: any) {
+        return DiagramApiFp(this.configuration).unlockDiagram(diagramId, options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
+     * 
+     * @param {DiagramUpdateTO} body 
+     * @param {string} diagramId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DiagramApi
      */
     public updateDiagram(body: DiagramUpdateTO, diagramId: string, options?: any) {
-        return DiagramControllerApiFp(this.configuration).updateDiagram(body, diagramId, options).then((request) => request(this.axios, this.basePath));
+        return DiagramApiFp(this.configuration).updateDiagram(body, diagramId, options).then((request) => request(this.axios, this.basePath));
     }
-
     /**
-     *
-     * @param {DiagramSVGUploadTO} body
-     * @param {string} diagramId
+     * 
+     * @param {DiagramSVGUploadTO} body 
+     * @param {string} diagramId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiagramControllerApi
+     * @memberof DiagramApi
      */
     public updatePreviewSVG(body: DiagramSVGUploadTO, diagramId: string, options?: any) {
-        return DiagramControllerApiFp(this.configuration).updatePreviewSVG(body, diagramId, options).then((request) => request(this.axios, this.basePath));
+        return DiagramApiFp(this.configuration).updatePreviewSVG(body, diagramId, options).then((request) => request(this.axios, this.basePath));
     }
 }

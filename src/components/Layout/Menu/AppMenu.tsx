@@ -1,9 +1,13 @@
 import {Drawer} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import {FormatShapes, Help, Home, Widgets} from "@material-ui/icons";
-import React from "react";
+import React, {useEffect} from "react";
 import MenuSpacer from "../../Menu/MenuSpacer";
 import DrawerApp from "./AppMenu/DrawerApp";
+import {MenuItemTO} from "../../../api/models";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../store/reducers/rootReducer";
+import {fetchMenuItems} from "../../../store/actions/menuAction";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -23,10 +27,10 @@ const useStyles = makeStyles(theme => ({
         display: "none"
     },
     drawerPaper: {
-        marginTop: "56px",
+        marginTop: "75px",
         width: "350px",
         padding: "0px",
-        height: "calc(100% - 56px)",
+        height: "calc(100% - 75px)",
         background: "white",
         overflow: "hidden"
     },
@@ -53,10 +57,20 @@ interface Props {
 
 const AppMenu: React.FC<Props> = props => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
+
+    const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
+    const menuSynced: boolean = useSelector((state: RootState) => state.dataSynced.menuSynced);
+
+    useEffect(() => {
+        if (!menuSynced) {
+            dispatch(fetchMenuItems());
+        }
+    }, [menuSynced, dispatch])
 
     return (
         <>
-
             <Drawer
                 classes={{paper: classes.drawerPaper}}
                 variant="persistent"
@@ -64,33 +78,16 @@ const AppMenu: React.FC<Props> = props => {
                 open={props.open}>
 
                 <div className={classes.drawerContent}>
-
-                    <DrawerApp
-                        active
-                        title="Modellverwaltung"
-                        onClick={() => window.open("/", "_self")}
-                        icon={Home}/>
-
-                    <DrawerApp
-                        title="Formulare"
-                        onClick={() => window.open("/formulare", "_self")}
-                        icon={FormatShapes}/>
-
-                    <DrawerApp
-                        title="Integrationsbausteine"
-                        onClick={() => window.open("/bausteine", "_self")}
-                        icon={Widgets}/>
-
+                    {apps?.map(app => (
+                        <DrawerApp
+                            active={app.name === "Home"}
+                            key={app.name}
+                            title={t(app.name)}
+                            icon={app.icon}
+                            onClick={() => window.open(`/${app.url}`, "_self")}/>
+                    ))}
                     <MenuSpacer/>
-
-                    <DrawerApp
-                        dense
-                        title="Support kontaktieren"
-                        description="lhm.digitalwf@muenchen.de"
-                        icon={Help}/>
-
                 </div>
-
             </Drawer>
         </>
     );

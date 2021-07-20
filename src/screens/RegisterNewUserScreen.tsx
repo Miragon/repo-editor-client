@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -6,14 +6,15 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import LockIcon from "@material-ui/icons/Lock";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { UserControllerApi } from "../api/api";
+import {makeStyles} from "@material-ui/core/styles";
+import {useHistory} from "react-router-dom";
+import {toast, ToastContainer} from "react-toastify";
+import {useDispatch, useSelector} from "react-redux";
+import {UserApi} from "../api/api";
 import helpers from "../constants/Functions";
-import { SUCCESS, UNHANDLEDERROR } from "../store/constants";
-import { RootState } from "../store/reducers/rootReducer";
+import {SUCCESS, UNHANDLEDERROR} from "../store/constants";
+import {RootState} from "../store/reducers/rootReducer";
+import {useTranslation} from "react-i18next";
 
 function Copyright() {
     return (
@@ -78,8 +79,10 @@ const RegisterNewUserScreen: React.FC = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
+    const {t, i18n} = useTranslation("common");
 
-    const [userController] = useState<UserControllerApi>(new UserControllerApi());
+
+    const [userController] = useState<UserApi>(new UserApi());
     const [isButtonDisabled, setButtonDisabled] = useState<boolean>(true);
 
     const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage);
@@ -116,14 +119,13 @@ const RegisterNewUserScreen: React.FC = () => {
                     <LockIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign up for Miragon Cloud Services
+                    {t("registration.signup")}
                 </Typography>
 
                 <p className={classes.infoText}>
-                    This is the first time you are trying to access Miragon Cloud Services.
+                    {t("registration.firstTime")}
                     <br />
-                    To use this service you need an account.
-                    To create a new account, choose a name and accept the Terms and Conditions.
+                    {t("registration.accountRequired")}
                 </p>
 
                 <form className={classes.form} noValidate>
@@ -137,7 +139,7 @@ const RegisterNewUserScreen: React.FC = () => {
                                 value="allowExtraEmails"
                                 color="primary" />
                         )}
-                        label="I agree to the terms of service" />
+                        label= {t("registration.agree")}/>
 
                     <Button
                         type="submit"
@@ -147,7 +149,7 @@ const RegisterNewUserScreen: React.FC = () => {
                         className={classes.createUserProfileButton}
                         onClick={handleCreateUserProfile}
                         disabled={isButtonDisabled}>
-                        Create a new User Profile
+                        {t("registration.create")}
                     </Button>
                 </form>
                 <Copyright />

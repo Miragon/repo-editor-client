@@ -1,36 +1,24 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import resultsCount from "./userResultsReducer";
-import searchedUsers from "./usersReducer";
-import activeDiagramsReducer from "./activeDiagramsReducer";
-import activeRepoReducer from "./activeRepoReducer";
+import {combineReducers} from "@reduxjs/toolkit";
+import resultsCountReducer from "./queryResultsReducer";
+import usersReducer from "./usersReducer";
+import diagramsReducer from "./DiagramsReducer";
 import apiResponseReducer from "./apiResponseReducer";
-import assignedUsersReducer from "./assignedUsersReducer";
-import createdDiagramReducer from "./createdDiagramReducer";
-import currentUserReducer from "./currentUserReducer";
 import dataSyncedReducer from "./dataSyncedReducer";
-import favoriteDiagramReducer from "./favoriteDiagramsReducer";
-import diagramReducer from "./recentDiagramsReducer";
 import repoReducer from "./repositoriesReducer";
-import searchDiagramsReducer from "./searchDiagramsReducer";
-import uploadDiagramReducer from "./uploadDiagramReducer";
 import versionsReducer from "./versionsReducer";
+import menuReducer from "./menuReducer";
+import deploymentReducer from "./deploymentReducer";
 
 export const rootReducer = combineReducers({
-    recentDiagrams: diagramReducer,
-    favoriteDiagrams: favoriteDiagramReducer,
+    menuItems: menuReducer,
     repos: repoReducer,
-    uploadedDiagram: uploadDiagramReducer,
     api: apiResponseReducer,
     dataSynced: dataSyncedReducer,
-    activeRepo: activeRepoReducer,
-    activeDiagrams: activeDiagramsReducer,
+    diagrams: diagramsReducer,
     versions: versionsReducer,
-    assignedUsers: assignedUsersReducer,
-    currentUserInfo: currentUserReducer,
-    searchedUsers: searchedUsers,
-    resultsCount: resultsCount,
-    searchedDiagrams: searchDiagramsReducer,
-    createdDiagram: createdDiagramReducer,
+    user: usersReducer,
+    resultsCount: resultsCountReducer,
+    deployment: deploymentReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

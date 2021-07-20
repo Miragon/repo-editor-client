@@ -1,12 +1,13 @@
-import { observer } from "mobx-react";
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { useSelector } from "react-redux";
-import DropdownButton, { DropdownButtonItem } from "../../components/Form/DropdownButton";
+import {observer} from "mobx-react";
+import React, {useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import {useSelector} from "react-redux";
+import DropdownButton, {DropdownButtonItem} from "../../components/Form/DropdownButton";
 import CreateDiagramDialog from "../CreateContainer/CreateDiagramDialog";
 import UploadDiagramDialog from "../CreateContainer/UploadDiagramDialog";
-import { RepositoryTO } from "../../api/models";
-import { RootState } from "../../store/reducers/rootReducer";
+import {RepositoryTO} from "../../api/models";
+import {RootState} from "../../store/reducers/rootReducer";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -21,15 +22,17 @@ const useStyles = makeStyles(() => ({
 
 const CreateDiagramContainer: React.FC = observer(() => {
     const classes = useStyles();
+    const {t, i18n} = useTranslation("common");
+
     const [uploadDiagramOpen, setUploadDiagramOpen] = useState(false);
     const [createDiagramOpen, setCreateDiagramOpen] = useState(false);
     const [createDiagramType, setCreateDiagramType] = useState<"bpmn" | "dmn">("bpmn");
-    const activeRepo: RepositoryTO = useSelector((state: RootState) => state.activeRepo.activeRepo);
+    const activeRepo: RepositoryTO = useSelector((state: RootState) => state.repos.activeRepo);
 
     const diagramOptions: DropdownButtonItem[] = [
         {
             id: "bpmn",
-            label: "Create BPMN Diagram",
+            label: "diagram.createBpmn",
             type: "button",
             onClick: () => {
                 setCreateDiagramOpen(true);
@@ -38,7 +41,7 @@ const CreateDiagramContainer: React.FC = observer(() => {
         },
         {
             id: "dmn",
-            label: "Create DMN Diagram",
+            label: "diagram.createDmn",
             type: "button",
             onClick: () => {
                 setCreateDiagramOpen(true);
@@ -54,13 +57,13 @@ const CreateDiagramContainer: React.FC = observer(() => {
         },
         {
             id: "upload",
-            label: "Upload Diagram",
+            label: "diagram.upload",
             type: "button",
             onClick: () => setUploadDiagramOpen(true)
         },
         {
             id: "import",
-            label: "Import from Cawemo",
+            label: "diagram.import",
             type: "button",
             // eslint-disable-next-line no-console
             onClick: () => console.log("Import")
@@ -72,7 +75,7 @@ const CreateDiagramContainer: React.FC = observer(() => {
             <div className={classes.container}>
                 <DropdownButton
                     className={classes.diagramButton}
-                    title="Add Diagram"
+                    title={t("diagram.create")}
                     options={diagramOptions} />
             </div>
 

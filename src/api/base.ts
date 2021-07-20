@@ -16,7 +16,7 @@ import {Configuration} from "./configuration";
 // @ts-ignore
 import globalAxios, {AxiosInstance, AxiosPromise} from 'axios';
 
-export const BASE_PATH = "".replace(/\/+$/, "");
+export const BASE_PATH = "/".replace(/\/+$/, "");
 
 /**
  *
@@ -53,7 +53,7 @@ export class BaseAPI {
             this.basePath = configuration.basePath || this.basePath;
         }
     }
-}
+};
 
 /**
  *
@@ -63,7 +63,6 @@ export class BaseAPI {
  */
 export class RequiredError extends Error {
     name: "RequiredError" = "RequiredError";
-
     constructor(public field: string, msg?: string) {
         super(msg);
     }

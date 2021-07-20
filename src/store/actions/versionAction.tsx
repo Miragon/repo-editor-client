@@ -1,10 +1,17 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import { DiagramVersionUploadTO, DiagramVersionUploadTOSaveTypeEnum } from "../../api/models";
+import {DiagramVersionUploadTO, DiagramVersionUploadTOSaveTypeEnum} from "../../api/models";
 import helpers from "../../constants/Functions";
-import {CREATED_DIAGRAM, GET_VERSIONS, LATEST_VERSION, SUCCESS, SYNC_STATUS, UNHANDLEDERROR} from "../constants";
-import { ActionType } from "./actions";
-import { handleError } from "./errorAction";
+import {
+    CREATED_DIAGRAM,
+    GET_VERSIONS,
+    LATEST_VERSION,
+    SUCCESS,
+    SYNC_STATUS_VERSION,
+    UNHANDLEDERROR
+} from "../constants";
+import {ActionType} from "./actions";
+import {handleError} from "./errorAction";
 
 export const createOrUpdateVersion = (
     bpmnDiagramId: string,
@@ -13,7 +20,7 @@ export const createOrUpdateVersion = (
     comment?: string
 ) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const versionController = new api.DiagramVersionControllerApi();
+        const versionController = new api.VersionApi();
         try {
             const diagramVersionUploadTO: DiagramVersionUploadTO = {
                 xml: file,
@@ -27,7 +34,7 @@ export const createOrUpdateVersion = (
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "Version Created" });
                 dispatch({ type: CREATED_DIAGRAM, createdDiagram: null });
-                dispatch({ type: SYNC_STATUS, dataSynced: false });
+                dispatch({ type: SYNC_STATUS_VERSION, dataSynced: false });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -42,11 +49,12 @@ export const createOrUpdateVersion = (
 export const getAllVersions = (bpmnDiagramId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         try {
-            const versionController = new api.DiagramVersionControllerApi();
+            const versionController = new api.VersionApi();
             const config = helpers.getClientConfig();
             const response = await versionController.getAllVersions(bpmnDiagramId, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: GET_VERSIONS, versions: response.data });
+                dispatch({type: SYNC_STATUS_VERSION, dataSynced: true});
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -59,7 +67,7 @@ export const getAllVersions = (bpmnDiagramId: string) => {
 export const getLatestVersion = (bpmnDiagramId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         try {
-            const versionController = new api.DiagramVersionControllerApi();
+            const versionController = new api.VersionApi();
             const config = helpers.getClientConfig();
             const response = await versionController.getLatestVersion(bpmnDiagramId, config);
             if (Math.floor(response.status / 100) === 2) {
@@ -76,7 +84,7 @@ export const getLatestVersion = (bpmnDiagramId: string) => {
 export const downloadVersion = (bpmnDiagramId: string, bpmnDiagramVersionId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         try {
-            const versionController = new api.DiagramVersionControllerApi();
+            const versionController = new api.VersionApi();
             const config = helpers.getClientConfig();
             const response = await versionController.downloadVersion(bpmnDiagramId, bpmnDiagramVersionId, config);
             if (Math.floor(response.status / 100) === 2) {

@@ -1,21 +1,21 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import { AssignmentUpdateTO, AssignmentUpdateTORoleEnumEnum } from "../../api/models";
+import {AssignmentUpdateTO, AssignmentUpdateTORoleEnumEnum} from "../../api/models";
 import helpers from "../../constants/Functions";
-import { ASSIGNED_USERS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR } from "../constants";
-import { ActionType } from "./actions";
-import { handleError } from "./errorAction";
+import {ASSIGNED_USERS, SUCCESS, SYNC_STATUS_ASSIGNMENT, UNHANDLEDERROR} from "../constants";
+import {ActionType} from "./actions";
+import {handleError} from "./errorAction";
 
 export const getAllAssignedUsers = (repoId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const assignmentController = new api.AssignmentControllerApi();
+        const assignmentController = new api.AssignmentApi();
 
         try {
             const config = helpers.getClientConfig();
             const response = await assignmentController.getAllAssignedUsers(repoId, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: ASSIGNED_USERS, assignedUsers: response.data });
-                dispatch({ type: SYNC_STATUS, dataSynced: true });
+                dispatch({ type: SYNC_STATUS_ASSIGNMENT, dataSynced: true });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -32,7 +32,7 @@ export const createOrUpdateUserAssignment = (
     roleEnum?: AssignmentUpdateTORoleEnumEnum
 ) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const assignmentController = new api.AssignmentControllerApi();
+        const assignmentController = new api.AssignmentApi();
         let message = "";
         try {
             if (!roleEnum) {
@@ -52,7 +52,7 @@ export const createOrUpdateUserAssignment = (
                 .createOrUpdateUserAssignment(assignmentUpdateTO, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: message });
-                dispatch({ type: SYNC_STATUS, dataSynced: false });
+                dispatch({ type: SYNC_STATUS_ASSIGNMENT, dataSynced: false });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -66,14 +66,14 @@ export const createOrUpdateUserAssignment = (
 
 export const deleteAssignment = (repoId: string, username: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const assignmentController = new api.AssignmentControllerApi();
+        const assignmentController = new api.AssignmentApi();
         try {
             const config = helpers.getClientConfig();
             const response = await assignmentController
                 .deleteUserAssignment(repoId, username, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: `Removed ${username} from Repository` });
-                dispatch({ type: SYNC_STATUS, dataSynced: false });
+                dispatch({ type: SYNC_STATUS_ASSIGNMENT, dataSynced: false });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }

@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { useDispatch, useSelector } from "react-redux";
-import { IconButton, ListItem, ListItemSecondaryAction } from "@material-ui/core";
-import { Add } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/styles";
+import {useDispatch, useSelector} from "react-redux";
+import {IconButton, ListItem, ListItemSecondaryAction} from "@material-ui/core";
+import {Add} from "@material-ui/icons";
+import {makeStyles} from "@material-ui/styles";
 import * as userAction from "../../store/actions/userAction";
-import { UserInfoTO } from "../../api/models";
-import { RootState } from "../../store/reducers/rootReducer";
+import {UserInfoTO} from "../../api/models";
+import {RootState} from "../../store/reducers/rootReducer";
 import * as assignmentAction from "../../store/actions/assignmentAction";
 
 const useStyles = makeStyles(() => ({
@@ -29,9 +29,9 @@ const AddUserSearchBar: React.FC<Props> = props => {
     const dispatch = useDispatch();
 
     const searchedUsers: Array<UserInfoTO> = useSelector(
-        (state: RootState) => state.searchedUsers.searchedUsers
+        (state: RootState) => state.user.searchedUsers
     );
-    const results: number = useSelector((state: RootState) => state.resultsCount.resultsCount);
+    const results: number = useSelector((state: RootState) => state.resultsCount.userResultsCount);
 
     const [userName, setUserName] = useState("");
     const [open, setOpen] = React.useState(false);

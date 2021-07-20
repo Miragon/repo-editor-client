@@ -4,7 +4,7 @@ import clsx from "clsx";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
-import {UserControllerApi} from "../../api";
+import {UserApi} from "../../api";
 import helpers from "../../constants/Functions";
 import RegisterNewUserScreen from "../../screens/RegisterNewUserScreen";
 import {CURRENT_USER_INFO, SUCCESS, UNHANDLEDERROR} from "../../store/constants";
@@ -12,6 +12,8 @@ import {RootState} from "../../store/reducers/rootReducer";
 import Menu from "./Menu";
 import Router from "./Router";
 import Toast from "./Toast";
+import {useTranslation} from "react-i18next";
+import theme from "../../theme";
 
 const useStyles = makeStyles((theme: Theme) => ({
     contentWrapper: {
@@ -57,6 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Layout = (): any => {
     const [open, setOpen] = useState(true);
+    const [t, i18n] = useTranslation();
     const dispatch = useDispatch();
     const apiErrorState = useSelector((state: RootState) => state.api.errorMessage);
     const apiErrorRetryMethod = useSelector((state: RootState) => state.api.retryMethod);
@@ -68,13 +71,21 @@ const Layout = (): any => {
         if (apiErrorState) {
             // toast can contain any component, the Retry Method (and the message: apiErrorState)
             // has to be passed here
-            toast.error(<Toast
-                errorMessage={apiErrorState}
+            toast(<Toast
+                errorMessage={i18n.exists(apiErrorState) ? t(apiErrorState) : apiErrorState}
                 retryMethod={apiErrorRetryMethod}
                 retryPayload={apiErrorRetryPayload}/>, {
                 autoClose: 8000,
                 pauseOnHover: true,
-                role: "alert"
+                progressStyle: {
+                    background: theme.palette.primary.main,
+                },
+                style: {
+                    backgroundColor: theme.palette.secondary.main,
+                    color: theme.palette.secondary.contrastText,
+
+                }
+
             });
             dispatch({type: UNHANDLEDERROR, errorMessage: ""});
         }
@@ -82,10 +93,10 @@ const Layout = (): any => {
             toast.success(apiSuccessState, {autoClose: 4000, pauseOnHover: true});
             dispatch({type: SUCCESS, successMessage: ""});
         }
-    }, [apiErrorState, apiSuccessState, apiErrorRetryMethod, apiErrorRetryPayload, dispatch]);
+    }, [apiErrorState, apiSuccessState, apiErrorRetryMethod, apiErrorRetryPayload, dispatch, t, i18n]);
 
     const classes = useStyles();
-    const [userController] = useState<UserControllerApi>(new UserControllerApi());
+    const [userController] = useState<UserApi>(new UserApi());
 
     const [userDoesExist, setUserDoesExist] = useState<boolean | undefined>(undefined);
 

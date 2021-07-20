@@ -1,22 +1,29 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import { NewRepositoryTO, RepositoryUpdateTO } from "../../api/models";
+import {NewRepositoryTO, RepositoryUpdateTO} from "../../api/models";
 import helpers from "../../constants/Functions";
-import { ACTIVE_REPO, GET_REPOS, SUCCESS, SYNC_STATUS, UNHANDLEDERROR } from "../constants";
-import { ActionType } from "./actions";
-import { handleError } from "./errorAction";
+import {
+    ACTIVE_REPO,
+    GET_REPOS,
+    SUCCESS,
+    SYNC_STATUS_ACTIVE_REPOSITORY,
+    SYNC_STATUS_REPOSITORY,
+    UNHANDLEDERROR
+} from "../constants";
+import {ActionType} from "./actions";
+import {handleError} from "./errorAction";
 
 export const fetchRepositories = () => {
     return async (dispatch: Dispatch): Promise<void> => {
         // config was passed before
-        const repositoryController = new api.BpmRepositoryControllerApi();
+        const repositoryController = new api.RepositoryApi();
         try {
             const config = helpers.getClientConfig();
 
             const response = await repositoryController.getAllRepositories(config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: GET_REPOS, repos: response.data });
-                dispatch({ type: SYNC_STATUS, dataSynced: true });
+                dispatch({ type: SYNC_STATUS_REPOSITORY, dataSynced: true });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -28,14 +35,13 @@ export const fetchRepositories = () => {
 
 export const getSingleRepository = (id: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        // config was passed before
-        const repositoryController = new api.BpmRepositoryControllerApi();
+        const repositoryController = new api.RepositoryApi();
         try {
             const config = helpers.getClientConfig();
-
             const response = await repositoryController.getSingleRepository(id, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: ACTIVE_REPO, activeRepo: response.data });
+                dispatch({type: SYNC_STATUS_ACTIVE_REPOSITORY, dataSynced: true})
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -48,7 +54,7 @@ export const getSingleRepository = (id: string) => {
 export const createRepository = (name: string, description: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         // config was passed before
-        const repositoryController = new api.BpmRepositoryControllerApi();
+        const repositoryController = new api.RepositoryApi();
         try {
             const newRepositoryTO: NewRepositoryTO = {
                 name,
@@ -58,7 +64,7 @@ export const createRepository = (name: string, description: string) => {
             const response = await repositoryController.createRepository(newRepositoryTO, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "Repository created" });
-                dispatch({ type: SYNC_STATUS, dataSynced: false });
+                dispatch({ type: SYNC_STATUS_REPOSITORY, dataSynced: false });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -70,7 +76,7 @@ export const createRepository = (name: string, description: string) => {
 
 export const updateRepository = (id: string, name: string, description: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const repositoryController = new api.BpmRepositoryControllerApi();
+        const repositoryController = new api.RepositoryApi();
         try {
             const repositoryUpdateTO: RepositoryUpdateTO = {
                 name,
@@ -81,7 +87,7 @@ export const updateRepository = (id: string, name: string, description: string) 
                 .updateRepository(repositoryUpdateTO, id, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "Repository updated" });
-                dispatch({ type: SYNC_STATUS, dataSynced: false });
+                dispatch({ type: SYNC_STATUS_ACTIVE_REPOSITORY, dataSynced: false });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }
@@ -94,12 +100,13 @@ export const updateRepository = (id: string, name: string, description: string) 
 export const deleteRepository = (id: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         // config was passed before
-        const repositoryController = new api.BpmRepositoryControllerApi();
+        const repositoryController = new api.RepositoryApi();
         try {
             const config = helpers.getClientConfig();
             const response = await repositoryController.deleteRepository(id, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "Repository deleted" });
+                dispatch({ type: SYNC_STATUS_REPOSITORY, dataSynced: false });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "Could not process request" });
             }

@@ -1,6 +1,6 @@
-import { defaultErrors } from "../../components/Exception/defaultErrors";
-import { UNHANDLEDERROR } from "../constants";
-import { ActionType } from "./actions";
+import {defaultErrors} from "../../components/Exception/defaultErrors";
+import {UNHANDLEDERROR} from "../constants";
+import {ActionType} from "./actions";
 
 // eslint-disable-next-line
 export const handleError = (error: any, retryMethod: ActionType, retryPayload: Array<any>) => {

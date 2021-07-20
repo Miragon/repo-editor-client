@@ -1,5 +1,5 @@
-import { CaseReducer } from "@reduxjs/toolkit";
-import { DiagramVersionTO } from "../../api/models";
+import {CaseReducer} from "@reduxjs/toolkit";
+import {DiagramVersionTO} from "../../api/models";
 import {GET_VERSIONS, LATEST_VERSION} from "../constants";
 
 const initialState = {

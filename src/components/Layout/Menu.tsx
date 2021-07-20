@@ -3,9 +3,13 @@ import {makeStyles, Theme} from "@material-ui/core/styles";
 import {Menu as MenuIcon} from "@material-ui/icons";
 import clsx from "clsx";
 import React from "react";
-import logo from "../../img/logo-free.png";
 import MenuBar from "../Menu/MenuBar";
 import AppMenu from "./Menu/AppMenu";
+import Typography from "@material-ui/core/Typography";
+import i18next from "i18next";
+import DropdownButton, {DropdownButtonItem} from "../Form/DropdownButton";
+import {useTranslation} from "react-i18next";
+import Flag from "react-world-flags";
 
 interface Props {
     open: boolean;
@@ -20,31 +24,66 @@ const useStyles = makeStyles((theme: Theme) => ({
     menuIcon: {
         color: "white"
     },
+
     menu: {
+        display: "flex",
+        justifyContent: "space-between",
         transition: theme.transitions.create("padding")
     },
-    menuOpen: {
-        paddingLeft: "350px"
+    flagIcon: {
+        height: "25px",
+        width: "25px",
+        marginRight: "10px"
     }
 }));
 
 const Menu: React.FC<Props> = props => {
     const classes = useStyles();
+    const {t, i18n} = useTranslation("common");
+
+
+
+
+    const changeLanguage = (language: string) => {
+        window.localStorage.setItem("language", language)
+        i18next.changeLanguage(language)
+    }
+
+    const options: DropdownButtonItem[] = [
+        {
+            id: "English",
+            label: "language.english",
+            icon: <Flag className={classes.flagIcon} code={"us"}/>,
+            type: "button",
+            onClick: () => {
+                changeLanguage("default")
+            }
+        },
+        {
+            id: "German",
+            label: "language.german",
+            icon: <Flag className={classes.flagIcon} code={"de"}/>,
+            type: "button",
+            onClick: () => {
+                changeLanguage("custom");
+            }
+
+        }
+    ];
+
 
     return (
         <>
-            <MenuBar className={clsx(classes.menu, props.open && classes.menuOpen)}>
+            <MenuBar className={clsx(classes.menu)}>
                 <IconButton
-                    size="small"
                     disableRipple
                     className={classes.menuIcon}
                     onClick={() => props.setOpen(!props.open)}>
-                    <MenuIcon/>
+                    <MenuIcon style={{margin: "0 1rem 0 0"}}/>
+                    <Typography style={{fontWeight: "bold"}} variant="h6">DigitalWF-</Typography>
+                    <Typography style={{fontWeight: "bold"}} color="secondary" variant="h6">Modellverwaltung</Typography>
                 </IconButton>
-                <img
-                    alt="Logo"
-                    className={classes.icon}
-                    src={logo}/>
+                <DropdownButton title={t("language.select")} options={options} />
             </MenuBar>
 
             <AppMenu open={props.open}/>

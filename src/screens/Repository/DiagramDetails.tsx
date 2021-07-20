@@ -1,11 +1,11 @@
-import { makeStyles } from "@material-ui/styles";
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { DiagramTO } from "../../api/models";
-import { fetchDiagramsFromRepo } from "../../store/actions";
-import { SYNC_STATUS } from "../../store/constants";
-import { RootState } from "../../store/reducers/rootReducer";
+import {makeStyles} from "@material-ui/styles";
+import React, {useCallback, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {DiagramTO} from "../../api/models";
+import {fetchDiagramsFromRepo} from "../../store/actions";
+import {RootState} from "../../store/reducers/rootReducer";
 import DiagramListItem from "./DiagramListItem";
+import {useParams} from "react-router";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -22,30 +22,29 @@ const DiagramDetails: React.FC = (() => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    const { repoId } = useParams<{ repoId: string }>();
     const activeDiagrams: Array<DiagramTO> = useSelector(
-        (state: RootState) => state.activeDiagrams.activeDiagrams
+        (state: RootState) => state.diagrams.diagrams
     );
-    const activeRepo = useSelector((state: RootState) => state.activeRepo.activeRepo);
-    const synced = useSelector((state: RootState) => state.dataSynced.dataSynced);
+    const activeRepo = useSelector((state: RootState) => state.repos.activeRepo);
+    const synced = useSelector((state: RootState) => state.dataSynced.diagramSynced);
 
     const fetchActiveDiagrams = useCallback((repoId: string) => {
         try {
-            if (repoId) {
-                dispatch(fetchDiagramsFromRepo(repoId));
-            }
+            dispatch(fetchDiagramsFromRepo(repoId));
+
         } catch (err) {
             // eslint-disable-next-line no-console
             console.log(err);
         }
-        if (!synced) {
-            dispatch(fetchDiagramsFromRepo(repoId));
-            dispatch({ type: SYNC_STATUS, dataSynced: true });
-        }
-    }, [dispatch, synced]);
+    }, [dispatch]);
 
     useEffect(() => {
-        fetchActiveDiagrams(activeRepo?.id);
-    }, [fetchActiveDiagrams, activeRepo]);
+        if (!synced) {
+            fetchActiveDiagrams(repoId);
+        }
+
+    }, [synced, fetchActiveDiagrams, repoId]);
 
     return (
         <>
