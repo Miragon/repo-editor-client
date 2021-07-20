@@ -79,7 +79,7 @@ const RegisterNewUserScreen: React.FC = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
 
     const [userController] = useState<UserApi>(new UserApi());

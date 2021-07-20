@@ -58,7 +58,7 @@ interface Props {
 const AppMenu: React.FC<Props> = props => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
     const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
     const menuSynced: boolean = useSelector((state: RootState) => state.dataSynced.menuSynced);

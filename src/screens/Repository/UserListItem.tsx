@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const UserListItem: React.FC<Props> = props => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
 
     const [open, setOpen] = useState<boolean>(false);

@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Menu: React.FC<Props> = props => {
     const classes = useStyles();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
 
 

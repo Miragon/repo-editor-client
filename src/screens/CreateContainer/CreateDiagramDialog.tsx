@@ -22,7 +22,7 @@ interface Props {
 
 const CreateDiagramDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
 
     const [error, setError] = useState<string | undefined>(undefined);

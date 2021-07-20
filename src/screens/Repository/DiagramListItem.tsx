@@ -169,7 +169,7 @@ interface Props {
 const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
     const diagramVersionTOs: Array<DiagramVersionTO> = useSelector((state: RootState) => state.versions.versions);
     const latestVersion: DiagramVersionTO | null = useSelector((state: RootState) => state.versions.latestVersion);
     const versionSynced: boolean = useSelector((state: RootState) => state.dataSynced.versionSynced)
@@ -266,12 +266,12 @@ const DiagramListItem: React.FC<Props> = ((props: Props) => {
     const removeDiagram = () => {
         dispatch(deleteDiagram(props.diagramId));
     };
-    const openSettings = (event: any) => {
+    const openSettings = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
         setSettingsOpen(true);
     };
 
-    const openVersions = (event: any): void => {
+    const openVersions = (event: React.MouseEvent<HTMLElement>): void => {
         event.stopPropagation();
         setLoading(true);
         fetchVersions();

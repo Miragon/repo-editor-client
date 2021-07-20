@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
 
 const RepoContainer: React.FC = observer(() => {
     const classes = useStyles();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
     const [createRepoOpen, setCreateRepoOpen] = useState(false);
     const [uploadDiagramOpen, setUploadDiagramOpen] = useState(false);
     const [createDiagramOpen, setCreateDiagramOpen] = useState(false);

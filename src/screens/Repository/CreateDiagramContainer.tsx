@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
 
 const CreateDiagramContainer: React.FC = observer(() => {
     const classes = useStyles();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
     const [uploadDiagramOpen, setUploadDiagramOpen] = useState(false);
     const [createDiagramOpen, setCreateDiagramOpen] = useState(false);

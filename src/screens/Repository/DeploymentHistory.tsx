@@ -27,7 +27,7 @@ const DeploymentHistory: React.FC<Props> = props => {
 
 
 
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
 
     const [error, setError] = useState<string | undefined>(undefined);

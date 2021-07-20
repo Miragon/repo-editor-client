@@ -53,7 +53,7 @@ const EditRepoDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const history = useHistory();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState<string>(props.repoName);

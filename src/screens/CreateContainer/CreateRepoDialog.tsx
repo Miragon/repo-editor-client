@@ -14,7 +14,7 @@ interface Props {
 
 const CreateRepoDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
 
     const { open, onCancelled, onCreated } = props;

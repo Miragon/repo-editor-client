@@ -35,7 +35,7 @@ interface Props {
 const VersionDetails: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
     useEffect(() => {
         if (props.diagramVersionTOs) {
@@ -54,7 +54,7 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
     };
 
 
-    const closeVersions = (event: any): void => {
+    const closeVersions = (event: React.MouseEvent<HTMLElement>): void => {
         event.stopPropagation();
         dispatch({type: GET_VERSIONS, versions: []});
     };

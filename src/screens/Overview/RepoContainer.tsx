@@ -31,7 +31,7 @@ const RepoContainer: React.FC = observer(() => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
     const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
     const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.repoSynced);
