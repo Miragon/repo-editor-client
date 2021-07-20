@@ -12,9 +12,8 @@ import {RootState} from "../../store/reducers/rootReducer";
 import Menu from "./Menu";
 import Router from "./Router";
 import Toast from "./Toast";
-import {I18nextProvider, useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next";
 import theme from "../../theme";
-import i18next from "i18next";
 
 const useStyles = makeStyles((theme: Theme) => ({
     contentWrapper: {
@@ -130,20 +129,18 @@ const Layout = (): any => {
 
     return (
         <>
-            <I18nextProvider i18n={i18next} >
-                <Menu
-                    open={open}
-                    setOpen={setOpen}/>
-                <div className={clsx(
-                    open && classes.contentWrapperShift,
-                    classes.contentWrapper
-                )}>
-                    <div className={classes.content}>
-                        <Router/>
-                        <ToastContainer/>
-                    </div>
+            <Menu
+                open={open}
+                setOpen={setOpen}/>
+            <div className={clsx(
+                open && classes.contentWrapperShift,
+                classes.contentWrapper
+            )}>
+                <div className={classes.content}>
+                    <Router/>
+                    <ToastContainer/>
                 </div>
-            </I18nextProvider>
+            </div>
         </>
     );
 };
