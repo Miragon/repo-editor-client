@@ -1,4 +1,3 @@
-import {makeStyles} from "@material-ui/core/styles";
 import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
@@ -8,19 +7,6 @@ import SettingsSelect from "../../components/Form/SettingsSelect";
 import MenuItem from "@material-ui/core/MenuItem";
 import {RootState} from "../../store/reducers/rootReducer";
 
-const useStyles = makeStyles(() => ({
-    line: {
-        display: "flex",
-        flexDirection: "column"
-    },
-    property: {
-        flexBasis: "20px"
-    },
-    spacer: {
-        marginTop: "15px"
-    }
-
-}));
 
 interface Props {
     diagramId: string;
@@ -32,7 +18,7 @@ interface Props {
 
 const DeployVersionDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
     const targets: Array<string> = useSelector((state: RootState) => state.deployment.targets)
 

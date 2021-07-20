@@ -26,7 +26,6 @@ const DiagramDetails: React.FC = (() => {
     const activeDiagrams: Array<DiagramTO> = useSelector(
         (state: RootState) => state.diagrams.diagrams
     );
-    const activeRepo = useSelector((state: RootState) => state.repos.activeRepo);
     const synced = useSelector((state: RootState) => state.dataSynced.diagramSynced);
 
     const fetchActiveDiagrams = useCallback((repoId: string) => {

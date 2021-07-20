@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 const FavoriteDiagrams: React.FC = observer(() => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
 
     const favoriteDiagrams: Array<DiagramTO> = useSelector(

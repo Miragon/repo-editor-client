@@ -18,7 +18,7 @@ interface Props {
 
 const UserManagementDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
     const { open, onCancelled, repoId } = props;
 

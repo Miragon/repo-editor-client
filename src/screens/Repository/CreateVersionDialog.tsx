@@ -27,7 +27,7 @@ interface Props {
 const CreateVersionDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
     const latestVersion: DiagramVersionTO | null = useSelector((state: RootState) => state.versions.latestVersion);
 
@@ -37,15 +37,13 @@ const CreateVersionDialog: React.FC<Props> = props => {
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [comment, setComment] = useState("");
-    const [saveType, setSaveType] = useState<DiagramVersionUploadTOSaveTypeEnum>(
-        DiagramVersionUploadTOSaveTypeEnum.MILESTONE
-    );
+
 
     const onCreate = useCallback(async () => {
         try {
             // #TODO: Use the XML String from the last version
             if(latestVersion){
-                await dispatch(versionAction.createOrUpdateVersion(diagramId, latestVersion?.xml, saveType, comment));
+                await dispatch(versionAction.createOrUpdateVersion(diagramId, latestVersion?.xml, DiagramVersionUploadTOSaveTypeEnum.MILESTONE, comment));
                 dispatch(versionAction.getAllVersions(diagramId));
                 onCancelled();
             } else {
@@ -55,7 +53,7 @@ const CreateVersionDialog: React.FC<Props> = props => {
             // eslint-disable-next-line no-console
             console.log(err);
         }
-    }, [diagramId, comment, saveType, dispatch, onCancelled, latestVersion]);
+    }, [diagramId, comment, dispatch, onCancelled, latestVersion]);
 
 
 

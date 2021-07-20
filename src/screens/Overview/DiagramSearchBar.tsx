@@ -50,7 +50,7 @@ let timeout: NodeJS.Timeout | undefined;
 const DiagramSearchBar: React.FC = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
 
     const searchedDiagrams: Array<DiagramTO> = useSelector(

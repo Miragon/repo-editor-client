@@ -76,7 +76,7 @@ interface Props {
 const VersionItem: React.FC<Props> = ((props: Props) => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const {t, i18n} = useTranslation("common");
+    const {t} = useTranslation("common");
 
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
     const [historyOpen, setHistoryOpen] = useState<boolean>(false);
@@ -101,7 +101,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
         return "01.01.2000";
     };
 
-    const openSettings = (event: any) => {
+    const openSettings = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
         setSettingsOpen(true);
     };
@@ -119,7 +119,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
         link.click();
     }
 
-    const openDeploymentHistory = (event: any) => {
+    const openDeploymentHistory = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
         setHistoryOpen(true);
     }
