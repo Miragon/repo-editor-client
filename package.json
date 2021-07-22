@@ -64,7 +64,7 @@
   },
   "scripts": {
     "start": "cross-env BROWSER=none WDS_SOCKET_PORT=3000 PUBLIC_URL=/repository/ react-scripts start",
-    "build": "react-scripts build",
+    "build": "cross-env PUBLIC_URL=/repository/ react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
