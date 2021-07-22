@@ -1,28 +1,35 @@
 export const GET_REPOS = "GET_REPOS";
 export const ACTIVE_REPO = "ACTIVE_REPO";
-export const ACTIVE_DIAGRAMS = "ACTIVE_DIAGRAMS";
+export const ACTIVE_ARTIFACTS = "ACTIVE_ARTIFACTS";
 export const GET_FAVORITE = "GET_FAVORITE";
 export const GET_RECENT = "GET_RECENT";
 export const DIAGRAM_UPLOAD = "DIAGRAM_UPLOAD";
 export const UNHANDLEDERROR = "UNHANDLEDERROR";
 export const UNHANDLEDERRORRETRY = "UNHANDLEDERRORRETRY";
 export const SYNC_STATUS_REPOSITORY = "SYNC_STATUS_REPOSITORY";
-export const SYNC_STATUS_DIAGRAM = "SYNC_STATUS_DIAGRAM";
+export const SYNC_STATUS_ARTIFACT = "SYNC_STATUS_ARTIFACT";
 export const SYNC_STATUS_VERSION = "SYNC_STATUS_VERSION";
 export const SYNC_STATUS_ASSIGNMENT = "SYNC_STATUS_ASSIGNMENT";
 export const SYNC_STATUS_MENU = "SYNC_STATUS_MENU";
 export const SYNC_STATUS_RECENT = "SYNC_STATUS_RECENT";
 export const SYNC_STATUS_ACTIVE_REPOSITORY = "SYNC_STATUS_ACTIVE_REPOSITORY";
+export const FILETYPES = "FILETYPES";
 export const SUCCESS = "SUCCESS";
 export const GET_VERSIONS = "GET_VERSIONS";
 export const ASSIGNED_USERS = "ASSIGNED_USERS";
 export const CURRENT_USER_INFO = "CURRENT_USER_INFO";
 export const SEARCH_USERS = "SEARCH_USERS";
 export const USERQUERY_EXECUTED = "USERQUERY_EXECUTED";
-export const SEARCH_DIAGRAMS = "SEARCH_DIAGRAMS";
-export const CREATED_DIAGRAM = "CREATED_DIAGRAM";
+export const SEARCH_ARTIFACT = "SEARCH_ARTIFACT";
 export const MENU_ITEMS = "MENU_ITEMS";
 export const TARGETS = "TARGETS";
+
+export const LATEST_VERSION = "LATEST_VERSION";
+export const ARTIFACTQUERY_EXECUTED = "ARTIFACTQUERY_EXECUTED";
+
+
+
+//#TODO: Delete, this will be provided by the FileTypesPlugin
 export const DEFAULT_BPMN_SVG = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
     "<!-- created with bpmn-js / http://bpmn.io -->\n" +
     "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n" +
@@ -47,7 +54,7 @@ export const DEFAULT_XML_FILE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
     "    </bpmn:endEvent>\n" +
     "    <bpmn:sequenceFlow id=\"Flow_0r4po2g\" sourceRef=\"Activity_0bawd4n\" targetRef=\"Event_0lxmzdr\" />\n" +
     "  </bpmn:process>\n" +
-    "  <bpmndi:BPMNDiagram id=\"BPMNDiagram_1\">\n" +
+    "  <bpmndi:BPMNArtifact id=\"BPMNArtifact_1\">\n" +
     "    <bpmndi:BPMNPlane id=\"BPMNPlane_1\" bpmnElement=\"Process_0lx73aq\">\n" +
     "      <bpmndi:BPMNEdge id=\"Flow_0by8zp2_di\" bpmnElement=\"Flow_0by8zp2\">\n" +
     "        <di:waypoint x=\"215\" y=\"117\" />\n" +
@@ -67,7 +74,7 @@ export const DEFAULT_XML_FILE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
     "        <dc:Bounds x=\"432\" y=\"99\" width=\"36\" height=\"36\" />\n" +
     "      </bpmndi:BPMNShape>\n" +
     "    </bpmndi:BPMNPlane>\n" +
-    "  </bpmndi:BPMNDiagram>\n" +
+    "  </bpmndi:BPMNArtifact>\n" +
     "</bpmn:definitions>\n"
 export const DEFAULT_DMN_FILE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
     + "<definitions xmlns=\"https://www.omg.org/spec/DMN/20191111/MODEL/\" xmlns:dmndi=\"https://www.omg.org/spec/DMN/20191111/DMNDI/\" xmlns:dc=\"http://www.omg.org/spec/DMN/20180521/DC/\" id=\"Definitions_0rtbinw\" name=\"DRD\" namespace=\"http://camunda.org/schema/1.0/dmn\">\n"
@@ -82,12 +89,10 @@ export const DEFAULT_DMN_FILE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
     + "    </decisionTable>\n"
     + "  </decision>\n"
     + "  <dmndi:DMNDI>\n"
-    + "    <dmndi:DMNDiagram>\n"
+    + "    <dmndi:DMNArtifact>\n"
     + "      <dmndi:DMNShape dmnElementRef=\"Decision_07746u8\">\n"
     + "        <dc:Bounds height=\"80\" width=\"180\" x=\"100\" y=\"100\" />\n"
     + "      </dmndi:DMNShape>\n"
-    + "    </dmndi:DMNDiagram>\n"
+    + "    </dmndi:DMNArtifact>\n"
     + "  </dmndi:DMNDI>\n"
     + "</definitions>\n";
-export const LATEST_VERSION = "LATEST_VERSION";
-export const DIAGRAMQUERY_EXECUTED = "DIAGRAMQUERY_EXECUTED";

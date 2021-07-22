@@ -1,10 +1,12 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {DiagramVersionTO} from "../../api/models";
+import {ArtifactVersionTO} from "../../api/models";
 import {GET_VERSIONS, LATEST_VERSION} from "../constants";
 
 const initialState = {
-    versions: Array<DiagramVersionTO>(),
-    latestVersion: null
+    versions: Array<ArtifactVersionTO>(),
+    latestVersion: null,
+    defaultVersionProps: null,
+    versionProps: null
 };
 
 const reducer: CaseReducer = (state = initialState, action) => {

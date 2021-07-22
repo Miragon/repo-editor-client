@@ -40,7 +40,7 @@ export interface RepositoryTO {
      * @type {number}
      * @memberof RepositoryTO
      */
-    existingDiagrams: any;
+    existingArtifacts: any;
     /**
      * 
      * @type {number}

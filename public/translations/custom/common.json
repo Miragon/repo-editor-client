@@ -3,34 +3,56 @@
     "confirmDelete": "Wollen Sie {{repoName}} wirklich löschen?",
     "repository": "Projekt",
     "create": "Projekt erstellen",
+    "created": "Projekt erstellt",
     "delete": "Projekt löschen",
+    "deleted": "Projekt gelöscht",
     "edit": "Projekt bearbeiten",
+    "updated": "Projekt aktualisiert",
     "notAvailable": "Sie haben noch keine Projekte erstellt",
     "target": "Projekt"
   },
-  "diagram": {
-    "confirmDelete": "Wollen Sie {{diagramName}} wirklich löschen?",
-    "create": "Diagramm erstellen",
-    "createBpmn": "BPMN Diagramm erstellen",
-    "createDmn": "DMN Diagramm erstellen",
-    "delete": "Diagramm löschen",
-    "download": "Diagramm herunterladen",
-    "edit": "Diagramm bearbeiten",
+  "artifact": {
+    "confirmDelete": "Wollen Sie {{artifactName}} wirklich löschen?",
+    "create": "Artifactm erstellen",
+    "createdFromExisting": "Artifactm aus existierender Version erstellt",
+    "createdDefault": "Artifactm erstellt",
+    "createBpmn": "BPMN Artifactm erstellen",
+    "createDmn": "DMN Artifactm erstellen",
+    "delete": "Artifactm löschen",
+    "download": "Artifactm herunterladen",
+    "edit": "Artifactm bearbeiten",
     "modifiedOn": "Bearbeitet am",
-    "upload": "Diagramm hochladen",
+    "upload": "Artifactm hochladen",
+    "updated": "Artifactm aktualisiert",
     "import": "Aus Cawemo importieren",
-    "notAvailable": "Sie haben noch keine Diagramme erstellt"
+    "notAvailable": "Sie haben noch keine Artifactme erstellt"
   },
   "version": {
     "create": "Version erstellen",
+    "created": "Version erstellt",
     "deploy": "Version veröffentlichen",
-    "dialogHeader": "Neue Version von {{diagramName}} erstellen",
+    "downloading": "Version wird heruntergeladen",
+    "deployed": "Version veröffentlicht",
+    "dialogHeader": "Neue Version von {{artifactName}} erstellen",
     "edit": "Version bearbeiten",
     "download": "Version herunterladen",
     "delete": "Version löschen",
     "version": "Version",
     "MILESTONE": "Meilenstein",
-    "deploymentHistory": "Veröffentlichungen"
+    "deploymentHistory": "Veröffentlichungen",
+    "saveAsNewArtifact": "Als neues Artifactm speichern",
+    "saveVersionXAsNewArtifact": "Version {{milestone}} als neues Artifactm speichern"
+  },
+  "form": {
+    "create": "Formular erstellen"
+  },
+  "config": {
+    "create": "Konfiguration erstellen"
+  },
+  "assignment": {
+    "changedAssignment": "Zugriffsrechte von {{username}} zu {{roleEnum}} geändert",
+    "added": "Benutzer zum Projekt hinzugefügt",
+    "removed": "{{username}} vom Projekt entfernt"
   },
   "deployment": {
     "deployment": "Veröffentlichung",
@@ -50,7 +72,7 @@
   "category": {
     "favorite": "Favoriten",
     "recent": "Vor Kurzem bearbeitet",
-    "noFavoritesAvailable": "Sie haben noch keine Diagramme zu Ihren Favoriten hinzugefügt."
+    "noFavoritesAvailable": "Sie haben noch keine Artifactme zu Ihren Favoriten hinzugefügt."
   },
   "search": {
     "search": "Suchen...",
@@ -86,5 +108,28 @@
     "german": "Deutsch",
     "english": "Englisch",
     "select": "Sprache auswählen"
+  },
+  "defaultErrors": {
+    "error": "Fehler",
+    "400": "Fehlerhafte Anfrage - bitte alle Daten beifügen",
+    "401": "Nicht Authorisiert",
+    "403": "Session abgelaufen - Bitte Seite neu laden",
+    "404": "Nicht gefunden",
+    "409": "Konflikt"
+  },
+  "error": {
+    "couldNotProcess": "Anfrage konnte nicht ausgeführt werden",
+    "unknown": "Unbekannter Fehler - Bitte Seite neu laden"
+  },
+  "artifact": {
+    "createBPMN": "BPMN Diagramm erstellen",
+    "createDMN": "DMN Diagramm erstellen",
+    "createFORM": "Formular erstellen",
+    "createCONFIGURATION": "Konfiguration erstellen",
+    "createdDefault": "Datei erstellt",
+    "create": "Datei erstellen",
+    "modifiedOn": "Bearbeitet am",
+    "upload": "Datei hochladen"
+
   }
 }

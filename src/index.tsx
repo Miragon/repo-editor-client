@@ -10,7 +10,6 @@ import {I18nextProvider, initReactI18next} from "react-i18next";
 import i18next from "i18next";
 
 
-
 const language = window.localStorage.getItem("language") ? window.localStorage.getItem("language") : "default";
 fetch("/repository/translations/default/common.json"
     ,{
@@ -70,6 +69,7 @@ const initI18 = (defaultPackage: JSON, customPackage: JSON) => {
             }
         });
 }
+
 
 
 

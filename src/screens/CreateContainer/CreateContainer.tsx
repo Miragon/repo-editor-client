@@ -1,13 +1,16 @@
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import DropdownButton, {DropdownButtonItem} from "../../components/Form/DropdownButton";
 import SimpleButton from "../../components/Form/SimpleButton";
-import DiagramSearchBar from "../Overview/DiagramSearchBar";
-import CreateDiagramDialog from "./CreateDiagramDialog";
+import ArtifactSearchBar from "../Overview/ArtifactSearchBar";
+import CreateArtifactDialog from "./CreateArtifactDialog";
 import CreateRepoDialog from "./CreateRepoDialog";
-import UploadDiagramDialog from "./UploadDiagramDialog";
+import UploadArtifactDialog from "./UploadArtifactDialog";
 import {useTranslation} from "react-i18next";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/reducers/rootReducer";
+import {FileTypesTO} from "../../api/models";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -15,7 +18,7 @@ const useStyles = makeStyles(() => ({
         display: "flex",
         justifyContent: "space-between"
     },
-    diagramButton: {
+    artifactButton: {
         minWidth: "180px"
     },
     repositoryButton: {
@@ -28,64 +31,62 @@ const RepoContainer: React.FC = observer(() => {
     const classes = useStyles();
     const {t} = useTranslation("common");
     const [createRepoOpen, setCreateRepoOpen] = useState(false);
-    const [uploadDiagramOpen, setUploadDiagramOpen] = useState(false);
-    const [createDiagramOpen, setCreateDiagramOpen] = useState(false);
-    const [createDiagramType, setCreateDiagramType] = useState<"bpmn" | "dmn">("bpmn");
+    const [uploadArtifactOpen, setUploadArtifactOpen] = useState(false);
+    const [createArtifactOpen, setCreateArtifactOpen] = useState(false);
+    const [createArtifactType, setCreateArtifactType] = useState<string>("BPMN");
+    const [artifactOptions, setArtifactOptions] = useState<Array<DropdownButtonItem>>([])
 
-    const diagramOptions: DropdownButtonItem[] = [
-        {
-            id: "bpmn",
-            label: "diagram.createBpmn",
-            type: "button",
-            onClick: () => {
-                setCreateDiagramOpen(true);
-                setCreateDiagramType("bpmn");
-            }
-        },
-        {
-            id: "dmn",
-            label: "diagram.createDmn",
-            type: "button",
-            onClick: () => {
-                setCreateDiagramOpen(true);
-                setCreateDiagramType("dmn");
-            }
-        },
-        {
+    const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
+
+
+    useEffect(() => {
+        const opts: Array<DropdownButtonItem> = []
+        fileTypes?.forEach(fileType => {
+            opts.push({id: fileType.name,
+                label: `artifact.create${fileType.name}`,
+                type: "button",
+                onClick: () => {
+                    setCreateArtifactOpen(true);
+                    setCreateArtifactType(fileType.name)
+                }});
+        })
+
+        opts.push({
             id: "divider1",
             type: "divider",
             label: "",
             onClick: () => { /* Do nothing */
             }
-        },
-        {
+        })
+        opts.push({
             id: "upload",
-            label: "diagram.upload",
+            label: "artifact.upload",
             type: "button",
-            onClick: () => setUploadDiagramOpen(true)
-        },
-        {
-            id: "import",
-            label: "diagram.import",
-            type: "button",
-            // eslint-disable-next-line no-console
-            onClick: () => console.log("Import")
-        }
-    ];
+            onClick: () => setUploadArtifactOpen(true)
+        })
+        setOpts(opts)
+
+    }, [fileTypes])
+
+
+    const setOpts = (opts: Array<DropdownButtonItem>) => {
+        setArtifactOptions(opts)
+    }
+
 
     return (
         <>
             <div className={classes.container}>
-                <DiagramSearchBar />
+                <ArtifactSearchBar />
                 <div>
                     <SimpleButton
                         className={classes.repositoryButton}
                         title={t("repository.create")}
                         onClick={() => setCreateRepoOpen(true)} />
                     <DropdownButton
-                        className={classes.diagramButton}
-                        title={t("diagram.create")}
-                        options={diagramOptions} />
+                        className={classes.artifactButton}
+                        title={t("artifact.create")}
+                        options={artifactOptions} />
                 </div>
             </div>
             <CreateRepoDialog
@@ -93,14 +94,14 @@ const RepoContainer: React.FC = observer(() => {
                 onCreated={() => setCreateRepoOpen(false)}
                 onCancelled={() => setCreateRepoOpen(false)} />
 
-            <CreateDiagramDialog
-                open={createDiagramOpen}
-                type={createDiagramType}
-                onCancelled={() => setCreateDiagramOpen(false)} />
+            <CreateArtifactDialog
+                open={createArtifactOpen}
+                type={createArtifactType}
+                onCancelled={() => setCreateArtifactOpen(false)} />
 
-            <UploadDiagramDialog
-                open={uploadDiagramOpen}
-                onCancelled={() => setUploadDiagramOpen(false)} />
+            <UploadArtifactDialog
+                open={uploadArtifactOpen}
+                onCancelled={() => setUploadArtifactOpen(false)} />
         </>
     );
 });

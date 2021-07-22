@@ -2,9 +2,9 @@ import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
 import {getSingleRepository} from "../../store/actions";
-import CreateDiagramContainer from "./CreateDiagramContainer";
-import DiagramDetails from "./DiagramDetails";
-import RepositoryDetails from "./RepositoryDetails";
+import CreateArtifactContainer from "./Artifact/CreateArtifactContainer";
+import ArtifactDetails from "./Artifact/ArtifactDetails";
+import RepositoryDetails from "./Administration/RepositoryDetails";
 import {RepositoryTO} from "../../api/models";
 import {RootState} from "../../store/reducers/rootReducer";
 import PathStructure from "../../components/Layout/PathStructure";
@@ -44,8 +44,8 @@ const Repository: React.FC = (() => {
                 <div className={"content"}>
                     <PathStructure structure={path} />
                     <RepositoryDetails/>
-                    <CreateDiagramContainer/>
-                    <DiagramDetails/>
+                    <CreateArtifactContainer/>
+                    <ArtifactDetails/>
                 </div>
             }
         </>

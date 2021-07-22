@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -9,11 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router-dom";
 import {toast, ToastContainer} from "react-toastify";
-import {useDispatch, useSelector} from "react-redux";
 import {UserApi} from "../api/api";
 import helpers from "../constants/Functions";
-import {SUCCESS, UNHANDLEDERROR} from "../store/constants";
-import {RootState} from "../store/reducers/rootReducer";
 import {useTranslation} from "react-i18next";
 
 function Copyright() {
@@ -78,26 +75,12 @@ const useStyles = makeStyles(theme => ({
 const RegisterNewUserScreen: React.FC = () => {
     const classes = useStyles();
     const history = useHistory();
-    const dispatch = useDispatch();
     const {t} = useTranslation("common");
 
 
     const [userController] = useState<UserApi>(new UserApi());
     const [isButtonDisabled, setButtonDisabled] = useState<boolean>(true);
 
-    const apiErrorState: string = useSelector((state: RootState) => state.api.errorMessage);
-    const apiSuccessState: string = useSelector((state: RootState) => state.api.successMessage);
-
-    useEffect(() => {
-        if (apiErrorState) {
-            toast.error(apiErrorState, { autoClose: 8000, pauseOnHover: true });
-            dispatch({ type: UNHANDLEDERROR, errorMessage: "" });
-        }
-        if (apiSuccessState) {
-            toast.success(apiSuccessState, { autoClose: 4000, pauseOnHover: true });
-            dispatch({ type: SUCCESS, successMessage: "" });
-        }
-    }, [userController, dispatch, apiErrorState, apiSuccessState]);
 
     /**
      * Persist a new User-profile in the FlowRepo-backend
