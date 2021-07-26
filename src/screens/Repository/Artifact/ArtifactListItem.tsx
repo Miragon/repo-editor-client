@@ -9,8 +9,7 @@ import {
     MenuItem,
     MenuList,
     Paper,
-    Popper,
-    SvgIcon
+    Popper
 } from "@material-ui/core";
 import {KeyboardArrowDown, MoreVert} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
@@ -18,15 +17,17 @@ import clsx from "clsx";
 import theme from "../../../theme";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 import {getAllVersions, getLatestVersion} from "../../../store/actions/versionAction";
-import {ArtifactVersionTO, FileTypesTO} from "../../../api/models";
+import {ArtifactVersionTO, FileTypesTO, MenuItemTO} from "../../../api/models";
 import {RootState} from "../../../store/reducers/rootReducer";
 import {deleteArtifact} from "../../../store/actions";
 import {LATEST_VERSION} from "../../../store/constants";
 import CreateVersionDialog from "./CreateVersionDialog";
 import EditArtifactDialog from "./EditArtifactDialog";
-import {ReactComponent as BpmnIcon} from "../../../img/bpmnIcon_gears.svg";
 import VersionDetails from "./VersionDetails";
 import {useTranslation} from "react-i18next";
+import Icon from "@material-ui/core/Icon";
+import New from "../../../img/New.svg";
+import {openFileInTool} from "../../../components/Redirect/Redirections";
 
 const useStyles = makeStyles(() => ({
     listItemWithVersions: {
@@ -58,7 +59,8 @@ const useStyles = makeStyles(() => ({
     image: {
         backgroundColor: "#EEE",
         height: "100%",
-        width: "200px",
+        minWidth: "200px",
+        maxWidth: "200px",
         borderRight: "1px solid #ccc",
         borderBottomLeftRadius: "4px",
         borderTopLeftRadius: "4px",
@@ -157,8 +159,8 @@ const useStyles = makeStyles(() => ({
         },
     },
     fileType: {
-        width: "20px",
-        height: "20px",
+        width: "24px",
+        height: "24px",
         color: "#FFFFFF",
         textDecoration: "none"
     },
@@ -183,6 +185,8 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     const latestVersion: ArtifactVersionTO | null = useSelector((state: RootState) => state.versions.latestVersion);
     const versionSynced: boolean = useSelector((state: RootState) => state.dataSynced.versionSynced)
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
+    const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
+
 
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
 
@@ -193,7 +197,7 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     const [createVersionOpen, setCreateVersionOpen] = useState<boolean>(false);
     const [editArtifactOpen, setEditArtifactOpen] = useState<boolean>(false);
     const [downloadReady, setDownloadReady] = useState<boolean>(false);
-    const [svg, setSvg] = useState<string>("");
+    const [svgKey, setSvgKey] = useState<string>("");
 
 
     const ref = useRef<HTMLButtonElement>(null);
@@ -227,7 +231,7 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
 
     useEffect(() => {
         if(fileTypes && props.fileType){
-            setSvg(fileTypes.find(fileType => fileType.name === props.fileType)?.svgIcon)
+            setSvgKey(fileTypes.find(fileType => fileType.name === props.fileType)?.svgIcon)
         }
     }, [fileTypes, props.fileType])
 
@@ -303,13 +307,10 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
         fetchLatestVersion()
     }
 
-    const openModeler = (repoId: string, artifactId: string, versionId?: string) => {
-        if (versionId) {
-            window.open(`/modeler/#/${repoId}/${artifactId}/${versionId}/`, "_blank");
-        } else {
-            window.open(`/modeler/#/${repoId}/${artifactId}/latest`, "_blank");
-        }
-    };
+    const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
+        const urlNamespace = (apps.find(app => app.fileTypes.some((types: string) => types.toLowerCase() === fileType.toLowerCase()))?.url);
+        openFileInTool(urlNamespace, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
+    }
 
     const options: DropdownButtonItem[] = [
 
@@ -364,24 +365,28 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
         <>
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
             <div className={classes.listItemWithVersions}>
-                <div className={classes.listItem} onClick={() => openModeler(props.repoId, props.artifactId)}>
-                    <img
-                        alt="Preview"
-                        className={classes.image}
-                        src={image} />
+                <div className={classes.listItem} onClick={event => openTool(event, props.fileType, props.repoId, props.artifactId)}>
+
+                    {props.image ?
+                        <img
+                            alt="Preview"
+                            className={classes.image}
+                            src={image} />
+                        :
+                        <img
+                            alt="New"
+                            className={classes.image}
+                            src={New} />
+                    }
+
                     <div className={classes.content}>
 
                         <div className={classes.header}>
                             <div className={classes.fileType}>
-                                {svg === "BpmnIcon" ?
-                                    <BpmnIcon />
-                                    :
-                                    <SvgIcon htmlColor={theme.palette.primary.contrastText}>
-                                        <path d={svg} />
-                                    </SvgIcon>
-
-                                }
+                                <Icon className={classes.fileType}>{svgKey}</Icon>
                             </div>
+
+
                             <div className={classes.title}>
                                 {props.artifactTitle}
                             </div>

@@ -13,8 +13,8 @@ import {
 } from "@material-ui/core";
 import {MoreVert} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/styles";
-import {ArtifactVersionTO} from "../../../api/models";
-import {useDispatch} from "react-redux";
+import {ArtifactVersionTO, MenuItemTO} from "../../../api/models";
+import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import theme from "../../../theme";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
@@ -23,6 +23,8 @@ import DeploymentHistory from "./DeploymentHistory";
 import {fetchTargets} from "../../../store/actions/deploymentAction";
 import clsx from "clsx";
 import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
+import {openFileInTool} from "../../../components/Redirect/Redirections";
+import {RootState} from "../../../store/reducers/rootReducer";
 
 const useStyles = makeStyles(() => ({
     splitCell: {
@@ -85,15 +87,13 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
     const [historyOpen, setHistoryOpen] = useState<boolean>(false);
     const [deployVersionOpen, setDeployVersionOpen] = useState<boolean>(false);
     const [saveDialogOpen, setSaveDialogOpen] = useState<boolean>(false);
+    const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
     const ref = useRef<HTMLButtonElement>(null);
 
-    const openModeler = (artifactId: string, versionId?: string) => {
-        if (versionId) {
-            window.open(`/modeler/#/${artifactId}/${versionId}/`, "_blank");
-        } else {
-            window.open(`/modeler/#/${artifactId}/latest`, "_blank");
-        }
-    };
+    const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
+        const urlNamespace = (apps.find(app => app.fileTypes.some((types: string) => types.toLowerCase() === fileType.toLowerCase()))?.url);
+        openFileInTool(urlNamespace, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
+    }
 
     const reformatDate = (date: string | undefined) => {
         if (date) {
@@ -174,7 +174,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
             <TableRow
                 key={props.artifactVersion.id}
                 hover
-                onClick={() => openModeler(props.artifactVersion.artifactId, props.artifactVersion.id)}>
+                onClick={event => openTool(event, props.fileType, props.artifactVersion.repositoryId, props.artifactVersion.artifactId, props.artifactVersion.id)}>
                 <TableCell
                     component="th"
                     scope="row">
@@ -279,7 +279,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
                 repoId={props.repoId}
                 artifactId={props.artifactVersion.artifactId}
                 onCancelled={() => setSaveDialogOpen(false)}
-                type={props.fileType === "bpmn" ? props.fileType : "dmn"}
+                type={props.fileType}
                 versionNo={props.artifactVersion.milestone}
                 file={props.artifactVersion.xml}/>
 

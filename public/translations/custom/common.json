@@ -13,19 +13,19 @@
   },
   "artifact": {
     "confirmDelete": "Wollen Sie {{artifactName}} wirklich löschen?",
-    "create": "Artifactm erstellen",
-    "createdFromExisting": "Artifactm aus existierender Version erstellt",
-    "createdDefault": "Artifactm erstellt",
-    "createBpmn": "BPMN Artifactm erstellen",
-    "createDmn": "DMN Artifactm erstellen",
-    "delete": "Artifactm löschen",
-    "download": "Artifactm herunterladen",
-    "edit": "Artifactm bearbeiten",
+    "create": "Artifact erstellen",
+    "createdFromExisting": "Artifact aus existierender Version erstellt",
+    "createdDefault": "Artifact erstellt",
+    "createBpmn": "BPMN Artifact erstellen",
+    "createDmn": "DMN Artifact erstellen",
+    "delete": "Artifact löschen",
+    "download": "Artifact herunterladen",
+    "edit": "Artifact bearbeiten",
     "modifiedOn": "Bearbeitet am",
-    "upload": "Artifactm hochladen",
-    "updated": "Artifactm aktualisiert",
+    "upload": "Artifact hochladen",
+    "updated": "Artifact aktualisiert",
     "import": "Aus Cawemo importieren",
-    "notAvailable": "Sie haben noch keine Artifactme erstellt"
+    "notAvailable": "Sie haben noch keine Artifact erstellt"
   },
   "version": {
     "create": "Version erstellen",
@@ -40,8 +40,8 @@
     "version": "Version",
     "MILESTONE": "Meilenstein",
     "deploymentHistory": "Veröffentlichungen",
-    "saveAsNewArtifact": "Als neues Artifactm speichern",
-    "saveVersionXAsNewArtifact": "Version {{milestone}} als neues Artifactm speichern"
+    "saveAsNewArtifact": "Als neue Datei speichern",
+    "saveVersionXAsNewArtifact": "Version {{milestone}} als neue Datei speichern"
   },
   "form": {
     "create": "Formular erstellen"
@@ -72,7 +72,7 @@
   "category": {
     "favorite": "Favoriten",
     "recent": "Vor Kurzem bearbeitet",
-    "noFavoritesAvailable": "Sie haben noch keine Artifactme zu Ihren Favoriten hinzugefügt."
+    "noFavoritesAvailable": "Sie haben noch keine Datei zu Ihren Favoriten hinzugefügt."
   },
   "search": {
     "search": "Suchen...",
@@ -118,6 +118,7 @@
     "409": "Konflikt"
   },
   "error": {
+    "missingTool": "Ihr Paket beinhaltet keine Anwendung zum Bearbeiten von {{fileType}}. Kontaktieren Sie den Service, um die Erweiterung zu aktivieren",
     "couldNotProcess": "Anfrage konnte nicht ausgeführt werden",
     "unknown": "Unbekannter Fehler - Bitte Seite neu laden"
   },
@@ -129,7 +130,9 @@
     "createdDefault": "Datei erstellt",
     "create": "Datei erstellen",
     "modifiedOn": "Bearbeitet am",
-    "upload": "Datei hochladen"
-
+    "upload": "Datei hochladen",
+    "download": "Datei herunterladen",
+    "edit": "Datei bearbeiten",
+    "delete": "Datei löschen"
   }
 }

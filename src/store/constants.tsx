@@ -28,7 +28,6 @@ export const LATEST_VERSION = "LATEST_VERSION";
 export const ARTIFACTQUERY_EXECUTED = "ARTIFACTQUERY_EXECUTED";
 
 
-
 //#TODO: Delete, this will be provided by the FileTypesPlugin
 export const DEFAULT_BPMN_SVG = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
     "<!-- created with bpmn-js / http://bpmn.io -->\n" +

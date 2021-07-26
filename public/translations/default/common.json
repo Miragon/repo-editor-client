@@ -73,8 +73,7 @@
   "category": {
     "favorite": "Favorites",
     "recent": "Recently used",
-
-    "noFavoritesAvailable": "You haven't added any artifacts to your favorites yet."
+    "noFavoritesAvailable": "You haven't added any files to your favorites yet."
 
   },
   "search": {
@@ -121,6 +120,7 @@
     "409": "Conflict"
   },
   "error": {
+    "missingTool": "Your package does not contain any tools for editing '{{fileType}}'. Contact our support to get additional tools",
     "couldNotProcess": "Request could not be processed",
     "unknown": "Unknown Error - Please refresh the page"
   },
@@ -132,6 +132,9 @@
     "createdDefault": "File created",
     "create": "Create File",
     "modifiedOn": "Modified on",
-    "upload": "Upload File"
+    "upload": "Upload File",
+    "download": "Download File",
+    "edit": "Edit File",
+    "delete": "Delete File"
   }
 }

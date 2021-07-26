@@ -41,4 +41,10 @@ export interface MenuItemTO {
      * @memberof MenuItemTO
      */
     position?: any;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof MenuItemTO
+     */
+    fileTypes?: any;
 }

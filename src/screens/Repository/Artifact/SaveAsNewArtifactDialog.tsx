@@ -11,7 +11,7 @@ import {RootState} from "../../../store/reducers/rootReducer";
 interface Props {
     open: boolean;
     onCancelled: () => void;
-    type: "bpmn" | "dmn";
+    type: string;
     repoId: string;
     versionNo: string;
     file: string;
@@ -32,7 +32,10 @@ const SaveAsNewArtifactDialog: React.FC<Props> = props => {
 
     const onCreate = useCallback(async () => {
         try {
+
             const defaultFileProps = fileTypes.find(fileType => fileType.name === props.type)
+            console.log(fileTypes)
+
             if(defaultFileProps){
                 //#TODO: The default Preview SVG will always be passed here => passt aber auch, für einzelne Versionen gibt es keine SVG Previews (immer nur für die aktuellste, gespeichert in ArtifactEntity/ ArtifactEntity)
                 dispatch(artifactAction.createNewArtifactWithVersionFile(props.repoId, title, description, props.file, defaultFileProps.name, defaultFileProps.defaultPreviewSVG));
