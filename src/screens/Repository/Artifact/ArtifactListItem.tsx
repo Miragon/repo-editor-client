@@ -175,6 +175,7 @@ interface Props {
     repoId: string;
     artifactId: string;
     fileType: string;
+    displayed?: boolean;
 }
 
 const ArtifactListItem: React.FC<Props> = ((props: Props) => {
@@ -363,7 +364,6 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
 
     return (
         <>
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
             <div className={classes.listItemWithVersions}>
                 <div className={classes.listItem} onClick={event => openTool(event, props.fileType, props.repoId, props.artifactId)}>
 

@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const CreateArtifactContainer: React.FC = observer(() => {
+const ArtifactManagementContainer: React.FC = observer(() => {
     const classes = useStyles();
     const {t} = useTranslation("common");
 
@@ -92,4 +92,4 @@ const CreateArtifactContainer: React.FC = observer(() => {
     );
 });
 
-export default CreateArtifactContainer;
+export default ArtifactManagementContainer;

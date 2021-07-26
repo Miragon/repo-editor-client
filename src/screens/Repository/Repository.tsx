@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
 import {getSingleRepository} from "../../store/actions";
-import CreateArtifactContainer from "./Artifact/CreateArtifactContainer";
+import ArtifactManagementContainer from "./Administration/ArtifactManagementContainer";
 import ArtifactDetails from "./Artifact/ArtifactDetails";
 import RepositoryDetails from "./Administration/RepositoryDetails";
 import {RepositoryTO} from "../../api/models";
@@ -44,7 +44,7 @@ const Repository: React.FC = (() => {
                 <div className={"content"}>
                     <PathStructure structure={path} />
                     <RepositoryDetails/>
-                    <CreateArtifactContainer/>
+                    <ArtifactManagementContainer/>
                     <ArtifactDetails/>
                 </div>
             }

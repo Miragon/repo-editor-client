@@ -4,12 +4,13 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import {makeStyles} from "@material-ui/styles";
 import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {ArtifactTO, RepositoryTO} from "../../api/models";
+import {ArtifactTO, MenuItemTO, RepositoryTO} from "../../api/models";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import * as artifactAction from "../../store/actions/artifactAction";
 import {RootState} from "../../store/reducers/rootReducer";
 import ArtifactCard from "./Holder/ArtifactCard";
 import {useTranslation} from "react-i18next";
+import {openFileInTool} from "../../components/Redirect/Redirections";
 
 const useStyles = makeStyles(() => ({
     headerText: {
@@ -58,6 +59,8 @@ const ArtifactSearchBar: React.FC = () => {
     );
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
     const results: number = useSelector((state: RootState) => state.resultsCount.artifactResultsCount)
+    const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
+
 
     const [artifact, setArtifact] = useState("");
     const [open, setOpen] = useState(false);
@@ -120,6 +123,11 @@ const ArtifactSearchBar: React.FC = () => {
         setArtifact(event.target.textContent);
     };
 
+    const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
+        const urlNamespace = (apps.find(app => app.fileTypes.some((types: string) => types.toLowerCase() === fileType.toLowerCase()))?.url);
+        openFileInTool(urlNamespace, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
+    }
+
     return (
         <>
             <div className={classes.container}>
@@ -165,18 +173,16 @@ const ArtifactSearchBar: React.FC = () => {
                         )} />
                     <div className={classes.resultsContainer}>
                         {!loading && searchedArtifacts?.map(searchedArtifact => (
-                            <a
+                            <div
                                 className={classes.card}
                                 key={searchedArtifact.id}
-                                rel="noreferrer"
-                                target="_blank"
-                                href={`/modeler/#/${searchedArtifact.repositoryId}/${searchedArtifact.id}/latest/`}>
+                                onClick={event => openTool(event, searchedArtifact.fileType, searchedArtifact.repositoryId, searchedArtifact.id)}>
                                 <ArtifactCard
                                     artifactRepo={getRepoName(searchedArtifact.repositoryId)}
                                     artifactTitle={searchedArtifact.name}
                                     image={searchedArtifact.svgPreview}
                                     fileType={searchedArtifact.fileType} />
-                            </a>
+                            </div>
                         ))}
                         {!loading && searchedArtifacts?.length === 0 && artifact.length > 0 && (
                             <span>{t("search.noResults")}</span>
