@@ -13,7 +13,6 @@ const useStyles = makeStyles(() => ({
     container: {
         display: "flex",
         justifyContent: "flex-end",
-        marginBottom: "1rem"
     },
     artifactButton: {
         minWidth: "180px"

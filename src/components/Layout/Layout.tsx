@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: "column",
         maxHeight: "calc(100vh - 60px)",
         padding: "20px 16px",
-        maxWidth: "1232px",
         margin: "0 auto"
     },
     loadingScreen: {
@@ -200,11 +199,6 @@ const Layout = (): any => {
 
 
 
-
-    
- 
-
-
     if (userDoesExist === undefined) {
         return null;
     }
@@ -212,10 +206,6 @@ const Layout = (): any => {
     if (!userDoesExist) {
         return <RegisterNewUserScreen/>;
     }
-
-
-
-
 
 
     return (

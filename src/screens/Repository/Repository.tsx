@@ -2,7 +2,6 @@ import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
 import {getSingleRepository} from "../../store/actions";
-import ArtifactManagementContainer from "./Administration/ArtifactManagementContainer";
 import ArtifactDetails from "./Artifact/ArtifactDetails";
 import RepositoryDetails from "./Administration/RepositoryDetails";
 import {RepositoryTO} from "../../api/models";
@@ -20,6 +19,11 @@ const Repository: React.FC = (() => {
         dispatch(getSingleRepository(repositoryId));
     }, [dispatch]);
 
+
+    useEffect(() => {
+        getRepo(repoId);
+
+    }, [getRepo, repoId])
 
     useEffect(() => {
         if(!dataSynced){
@@ -44,7 +48,6 @@ const Repository: React.FC = (() => {
                 <div className={"content"}>
                     <PathStructure structure={path} />
                     <RepositoryDetails/>
-                    <ArtifactManagementContainer/>
                     <ArtifactDetails/>
                 </div>
             }

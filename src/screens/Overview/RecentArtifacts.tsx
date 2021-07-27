@@ -12,6 +12,7 @@ import {openFileInTool} from "../../components/Redirect/Redirections";
 
 const useStyles = makeStyles(() => ({
     artifactContainer: {
+
         marginTop: "1rem",
         "&>h1": {
             color: "black",
@@ -21,7 +22,8 @@ const useStyles = makeStyles(() => ({
     },
     container: {
         display: "flex",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        flexDirection: "row",
     },
     card: {
         width: "calc(20%)",

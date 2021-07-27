@@ -125,6 +125,9 @@
     "unknown": "Unknown Error - Please refresh the page"
   },
   "artifact": {
+    "addedToFavorite": "File added to Favorites",
+    "addToFavorites": "Add to Favorites",
+    "confirmDelete": "Do you really want to delete the file?",
     "createBPMN": "Create BPMN Artifact",
     "createDMN": "Create DMN Artifact",
     "createFORM": "Create Form",

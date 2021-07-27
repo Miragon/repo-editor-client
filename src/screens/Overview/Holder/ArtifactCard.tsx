@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../../store/reducers/rootReducer";
 import Icon from "@material-ui/core/Icon";
 import New from "../../../img/New.svg";
+import {Tooltip} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -14,6 +15,7 @@ const useStyles = makeStyles(theme => ({
         transition: "box-shadow .3s",
         minHeight: "300px",
         maxHeight: "300px",
+        maxWidth: "300px",
         cursor: "pointer",
         marginRight: "0.5rem",
         marginBottom: "0.5rem",
@@ -34,6 +36,7 @@ const useStyles = makeStyles(theme => ({
         padding: "8px",
         display: "flex",
         flexDirection: "column",
+        overflow: "hidden"
     },
     title: {
         fontWeight: "bold",
@@ -52,11 +55,12 @@ const useStyles = makeStyles(theme => ({
         overflow: "hidden"
     },
     fileType: {
-        width: "25px",
-        height: "25px",
+        minWidth: "25px",
+        maxWidth: "25px",
+        minHeight: "25px",
+        maxHeight: "25px",
         margin: "5px",
         color: theme.palette.primary.contrastText,
-        textDecoration: "none"
     },
     image: {
         backgroundColor: "#EEE",
@@ -107,13 +111,13 @@ const ArtifactCard: React.FC<ArtifactProps> = (props: ArtifactProps) => {
                     <span className={classes.repository}>
                         {props.artifactRepo}
                     </span>
-                    <span className={classes.title}>
-                        {props.artifactTitle}
-                    </span>
+                    <Tooltip title={props.artifactTitle}>
+                        <span className={classes.title}>
+                            {props.artifactTitle}
+                        </span>
+                    </Tooltip>
                 </div>
-                    
                 <Icon className={classes.fileType}>{svgKey}</Icon>
-
             </div>
 
             {props.image ?

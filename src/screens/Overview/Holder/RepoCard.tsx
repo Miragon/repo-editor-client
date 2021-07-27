@@ -2,6 +2,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import DescriptionIcon from "@material-ui/icons/Description";
 import PeopleIcon from "@material-ui/icons/People";
 import React from "react";
+import {Tooltip} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
     repoBox: {
@@ -9,8 +10,8 @@ const useStyles = makeStyles(theme => ({
         flexDirection: "column",
         marginTop: "10px",
         transition: "box-shadow .3s",
-        width: "calc((100% - 2rem) / 5)",
-        height: "80px",
+        width: "200px",
+        height: "92px",
         marginRight: "0.5rem",
         borderRadius: "4px",
         background: `linear-gradient(to bottom, ${theme.palette.primary.main} 40%, ${theme.palette.primary.light} 90%)`,
@@ -18,9 +19,6 @@ const useStyles = makeStyles(theme => ({
         color: theme.palette.primary.contrastText,
         "&:hover": {
             boxShadow: theme.shadows[4]
-        },
-        "&:nth-child(5n)": {
-            marginRight: 0
         }
     },
     repoHeader: {
@@ -29,7 +27,7 @@ const useStyles = makeStyles(theme => ({
         fontSize: "14px",
         fontWeight: "bold",
         maxHeight: "80%",
-        overflow: ""
+        overflow: "hidden"
     },
     repoDescription: {
         whiteSpace: "normal",
@@ -65,9 +63,11 @@ const RepoCard: React.FC<RepoProps> = props => {
     return (
         // eslint-disable-next-line
         <div className={classes.repoBox} onClick={props.onClick}>
-            <div className={classes.repoHeader}>
-                {props.repoTitle}
-            </div>
+            <Tooltip title={props.repoTitle}>
+                <div className={classes.repoHeader}>
+                    {props.repoTitle}
+                </div>
+            </Tooltip>
 
             <div className={classes.repoInfo}>
                 <DescriptionIcon className={classes.icon} />

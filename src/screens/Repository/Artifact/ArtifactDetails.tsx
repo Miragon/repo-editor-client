@@ -7,7 +7,9 @@ import {RootState} from "../../../store/reducers/rootReducer";
 import ArtifactListItem from "./ArtifactListItem";
 import {useParams} from "react-router";
 import SimpleButton from "../../../components/Form/SimpleButton";
-import {Checkbox, FormControlLabel} from "@material-ui/core";
+import {Checkbox, FormControlLabel, Radio, RadioGroup} from "@material-ui/core";
+import FormControl from "@material-ui/core/FormControl";
+import ArtifactManagementContainer from "../Administration/ArtifactManagementContainer";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -15,11 +17,21 @@ const useStyles = makeStyles(() => ({
         flexDirection: "column",
         flexWrap: "wrap"
     },
+    buttonContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginBottom: "1rem"
+    },
     filterContainer: {
         display: "flex",
         flexDirection: "row",
     },
     types: {
+        display: "flex",
+        flexDirection: "column"
+    },
+    sort: {
         display: "flex",
         flexDirection: "column"
     }
@@ -37,7 +49,9 @@ const ArtifactDetails: React.FC = (() => {
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes)
 
     const [displayedFileTypes, setDisplayedFileTypes] = useState<Array<string>>(fileTypes.map(type => type.name));
+    const [filteredArtifacts, setFilteredArtifacts] = useState<Array<ArtifactTO>>(activeArtifacts);
     const [filterOpen, setFilterOpen] = useState<boolean>(false);
+    const [sortValue, setSortValue] = useState<string>("lastEdited");
 
 
     const fetchActiveArtifacts = useCallback((repoId: string) => {
@@ -49,33 +63,91 @@ const ArtifactDetails: React.FC = (() => {
     }, [dispatch]);
 
     useEffect(() => {
+        setFilteredArtifacts(activeArtifacts)
+    }, [activeArtifacts])
+
+
+
+    useEffect(() => {
         if (!synced) {
             fetchActiveArtifacts(repoId);
         }
     }, [synced, fetchActiveArtifacts, repoId]);
 
 
-    const addOrRemoveFromList = (selectedValue: string) => {
+    const changeFileTypeFilter = (selectedValue: string) => {
         const currentList = displayedFileTypes
         if(displayedFileTypes.find(fileType => fileType === selectedValue)){
-            const index = currentList.indexOf(selectedValue)
-            currentList.splice(index, 1)
+            currentList.splice(currentList.indexOf(selectedValue), 1)
         }
         else{
             currentList.push(selectedValue)
-
         }
-        //#TODO: Why does the rerender method not start after updating state? (if you click the filter button again, filter options are applied
         setDisplayedFileTypes(currentList)
-        
+        applyFilters()
         console.log(displayedFileTypes)
     }
+
+    const applyFilters = () => {
+        setFilteredArtifacts(activeArtifacts.filter(artifact => displayedFileTypes.includes(artifact.fileType)))
+
+    }
+
+    const handleChangeSorting = (event: React.FormEvent<HTMLInputElement>) => {
+        setSortValue((event.target as HTMLInputElement).value)
+        sort((event.target as HTMLInputElement).value);
+    }
+
+    const sort = (value: string) => {
+        switch (value){
+            case "created":
+                setFilteredArtifacts(filteredArtifacts.sort(compareCreated));
+                return;
+            case "lastEdited":
+                setFilteredArtifacts(filteredArtifacts.sort(compareEdited));
+                return;
+            case "name":
+                setFilteredArtifacts(filteredArtifacts.sort(compareName));
+                return;
+        }
+    }
+
+    const compareCreated = (a: ArtifactTO, b: ArtifactTO) => {
+        if(a.createdDate < b.createdDate) {
+            return -1;
+        }
+        if(a.createdDate > b.createdDate) {
+            return 1;
+        }
+        return 0;
+    }
+    const compareEdited = (a: ArtifactTO, b: ArtifactTO) => {
+        if(a.updatedDate < b.updatedDate) {
+            return -1;
+        }
+        if(a.updatedDate > b.updatedDate) {
+            return 1;
+        }
+        return 0;
+    }
+    const compareName = (a: ArtifactTO, b: ArtifactTO) => {
+        if(a.name.toLowerCase() < b.name.toLowerCase()) {
+            return -1;
+        }
+        if(a.name.toLowerCase() > b.name.toLowerCase()) {
+            return 1;
+        }
+        return 0;
+    }
+
     return (
         <>
-
-            <SimpleButton
-                title={"Filter"}
-                onClick={() => setFilterOpen(!filterOpen)} />
+            <div className={classes.buttonContainer}>
+                <SimpleButton
+                    title={"Filter"}
+                    onClick={() => setFilterOpen(!filterOpen)} />
+                <ArtifactManagementContainer/>
+            </div>
 
             {filterOpen &&
                 <div className={classes.filterContainer}>
@@ -85,35 +157,51 @@ const ArtifactDetails: React.FC = (() => {
                                 key={fileType.name}
                                 control={
                                     <Checkbox
-                                        defaultChecked={displayedFileTypes.includes(fileType.name)}
+                                        defaultChecked
                                         onClick={() => {
-                                            addOrRemoveFromList(fileType.name)
+                                            changeFileTypeFilter(fileType.name)
                                         }}/>}
 
                                 label={fileType.name}/>)}
                     </div>
+
+                    <div className={classes.sort}>
+                        <FormControl component="fieldset">
+                            <RadioGroup value={sortValue} onChange={handleChangeSorting} defaultValue={"lastEdited"}>
+                                <FormControlLabel
+                                    value={"lastEdited"}
+                                    control={<Radio/>}
+                                    label={"Last edited"} />
+                                <FormControlLabel
+                                    value={"name"}
+                                    control={<Radio/>}
+                                    label={"Name"} />
+                                <FormControlLabel
+                                    value={"created"}
+                                    control={<Radio/>}
+                                    label={"Created"} />
+                            </RadioGroup>
+                        </FormControl>
+                    </div>
+
+
+
                 </div>
             }
 
 
             <div className={classes.container}>
-                {activeArtifacts?.map(artifact => (
-                    displayedFileTypes.includes(artifact.fileType) ?
-                        <ArtifactListItem
-                            key={artifact.id}
-                            displayed={displayedFileTypes.includes(artifact.fileType)}
-                            artifactTitle={artifact.name}
-                            image={artifact.svgPreview}
-                            updatedDate={artifact.updatedDate}
-                            createdDate={artifact.createdDate}
-                            description={artifact.description}
-                            repoId={artifact.repositoryId}
-                            artifactId={artifact.id}
-                            fileType={artifact.fileType}/>
-                            
-                        :
-
-                        <div>Filtered Out</div>
+                {filteredArtifacts?.map(artifact => (
+                    <ArtifactListItem
+                        key={artifact.id}
+                        artifactTitle={artifact.name}
+                        image={artifact.svgPreview}
+                        updatedDate={artifact.updatedDate}
+                        createdDate={artifact.createdDate}
+                        description={artifact.description}
+                        repoId={artifact.repositoryId}
+                        artifactId={artifact.id}
+                        fileType={artifact.fileType}/>
                     
                 ))}
             </div>

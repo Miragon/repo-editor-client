@@ -96,14 +96,23 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
     }
 
     const reformatDate = (date: string | undefined) => {
-        if (date) {
-            const calendarDate = date.split("T")[0].replace(/-/g, ".");
-            calendarDate.replace("-", ".");
-            const time = date.split("T")[1].substring(0,5);
-            return `${calendarDate}  |  ${time}`;
+        const language = window.localStorage.getItem("language") ? window.localStorage.getItem("language") : "default";
+        if(language === "custom") {
+            if (date) {
+                const standardDate = `${date.substring(8, 10)}.${date.substring(5, 7)}.${date.substring(0, 4)}`
+                const time = date.split("T")[1].substring(0, 5);
+                return `${standardDate}  |  ${time}`;
+            }
+        }
+        if(language === "default") {
+            if(date) {
+                const americanDate = `${date.substring(5, 7)}.${date.substring(8, 10)}.${date.substring(0, 4)}`
+                const time = date.split("T")[1].substring(0, 5);
+                return `${americanDate}  |  ${time}`;
+            }
         }
         return "01.01.2000";
-    };
+    }
 
     const openSettings = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();

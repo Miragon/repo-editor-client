@@ -123,6 +123,9 @@
     "unknown": "Unbekannter Fehler - Bitte Seite neu laden"
   },
   "artifact": {
+    "addedToFavorite": "Datei zu Favoriten hinzugefügt",
+    "addToFavorites": "Zu Favoriten hinzufügen",
+    "confirmDelete": "Wollen Sie die Datei wirklich löschen?",
     "createBPMN": "BPMN Diagramm erstellen",
     "createDMN": "DMN Diagramm erstellen",
     "createFORM": "Formular erstellen",

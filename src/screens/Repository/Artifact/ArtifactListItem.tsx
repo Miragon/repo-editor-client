@@ -9,7 +9,7 @@ import {
     MenuItem,
     MenuList,
     Paper,
-    Popper
+    Popper, Tooltip
 } from "@material-ui/core";
 import {KeyboardArrowDown, MoreVert} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
@@ -19,7 +19,7 @@ import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 import {getAllVersions, getLatestVersion} from "../../../store/actions/versionAction";
 import {ArtifactVersionTO, FileTypesTO, MenuItemTO} from "../../../api/models";
 import {RootState} from "../../../store/reducers/rootReducer";
-import {deleteArtifact} from "../../../store/actions";
+import {addToFavorites, deleteArtifact} from "../../../store/actions";
 import {LATEST_VERSION} from "../../../store/constants";
 import CreateVersionDialog from "./CreateVersionDialog";
 import EditArtifactDialog from "./EditArtifactDialog";
@@ -175,7 +175,6 @@ interface Props {
     repoId: string;
     artifactId: string;
     fileType: string;
-    displayed?: boolean;
 }
 
 const ArtifactListItem: React.FC<Props> = ((props: Props) => {
@@ -275,14 +274,23 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
 
 
     const reformatDate = (date: string | undefined) => {
-        if (date) {
-            const calendarDate = date.split("T")[0].replace(/-/g, ".");
-            calendarDate.replace("-", ".");
-            const time = date.split("T")[1].substring(0,5);
-            return `${calendarDate}  |  ${time}`;
+        const language = window.localStorage.getItem("language") ? window.localStorage.getItem("language") : "default";
+        if(language === "custom") {
+            if (date) {
+                const standardDate = `${date.substring(8, 10)}.${date.substring(5, 7)}.${date.substring(0, 4)}`
+                const time = date.split("T")[1].substring(0, 5);
+                return `${standardDate}  |  ${time}`;
+            }
+        }
+        if(language === "default") {
+            if(date) {
+                const americanDate = `${date.substring(5, 7)}.${date.substring(8, 10)}.${date.substring(0, 4)}`
+                const time = date.split("T")[1].substring(0, 5);
+                return `${americanDate}  |  ${time}`;
+            }
         }
         return "01.01.2000";
-    };
+    }
 
     const removeArtifact = () => {
         dispatch(deleteArtifact(props.artifactId));
@@ -330,6 +338,15 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
             type: "button",
             onClick: () => {
                 setEditArtifactOpen(true);
+            }
+
+        },
+        {
+            id: "AddToFavorites",
+            label: "artifact.addToFavorites",
+            type: "button",
+            onClick: () => {
+                dispatch(addToFavorites(props.artifactId))
             }
 
         },
@@ -386,10 +403,11 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
                                 <Icon className={classes.fileType}>{svgKey}</Icon>
                             </div>
 
-
-                            <div className={classes.title}>
-                                {props.artifactTitle}
-                            </div>
+                            <Tooltip title={props.artifactTitle}>
+                                <div className={classes.title}>
+                                    {props.artifactTitle}
+                                </div>
+                            </Tooltip>
 
                             <div className={classes.updatedDate}>
                                 {`${t("artifact.modifiedOn")} ${reformatDate(props.updatedDate)}`}

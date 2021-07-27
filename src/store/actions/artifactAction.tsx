@@ -282,6 +282,26 @@ export const searchArtifact = (typedTitle: string) => {
     };
 };
 
+
+export const addToFavorites = (artifactId: string) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        const artifactController = new api.ArtifactApi();
+        try {
+            const config = helpers.getClientConfig();
+            const response = await artifactController.setStarred(artifactId, config);
+            if (Math.floor(response.status / 100) === 2) {
+                dispatch({ type: SYNC_STATUS_ARTIFACT, dataSynced: false });
+                dispatch({type: SUCCESS, successMessage: "artifact.addedToFavorite"})
+            } else {
+                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
+            }
+        } catch (error) {
+            dispatch(handleError(error, ActionType.SET_STARRED, [artifactId]));
+        }
+    };
+};
+
+
 export const deleteArtifact = (artifactId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         const artifactController = new api.ArtifactApi();

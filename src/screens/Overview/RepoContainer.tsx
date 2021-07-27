@@ -22,6 +22,7 @@ const useStyles = makeStyles(() => ({
     },
     container: {
         display: "flex",
+        flexDirection: "row",
         flexWrap: "wrap",
         padding: "1rem 0",
     }
