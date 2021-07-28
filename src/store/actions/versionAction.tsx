@@ -1,6 +1,6 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import {ArtifactVersionUploadTO, ArtifactVersionUploadTOSaveTypeEnum} from "../../api/models";
+import {ArtifactVersionUploadTO, ArtifactVersionUploadTOSaveTypeEnum} from "../../api";
 import helpers from "../../constants/Functions";
 import {GET_VERSIONS, LATEST_VERSION, SUCCESS, SYNC_STATUS_VERSION, UNHANDLEDERROR} from "../constants";
 import {ActionType} from "./actions";
@@ -22,7 +22,7 @@ export const createOrUpdateVersion = (
             };
             const config = helpers.getClientConfig();
             const response = await versionController.createOrUpdateVersion(
-                artifactVersionUploadTO, bpmnArtifactId, config
+                bpmnArtifactId, artifactVersionUploadTO, config
             );
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "version.created" });

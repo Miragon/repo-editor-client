@@ -2,7 +2,7 @@ import {makeStyles} from "@material-ui/styles";
 import {observer} from "mobx-react";
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {ArtifactTO, MenuItemTO, RepositoryTO} from "../../api/models";
+import {ArtifactTO, FileTypesTO, MenuItemTO, RepositoryTO} from "../../api";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import * as artifactAction from "../../store/actions/artifactAction";
 import {RootState} from "../../store/reducers/rootReducer";
@@ -41,8 +41,7 @@ const FavoriteArtifacts: React.FC = observer(() => {
         (state: RootState) => state.artifacts.favoriteArtifacts
     );
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
-    const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
-
+    const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
 
     const fetchFavorite = useCallback(() => {
         try {
@@ -55,7 +54,7 @@ const FavoriteArtifacts: React.FC = observer(() => {
 
     const getRepoName = ((repoId: string) => {
         const assignedRepo = repos.find(repo => repo.id === repoId);
-        return assignedRepo?.name;
+        return assignedRepo ? assignedRepo.name : "";
     });
 
     useEffect(() => {
@@ -63,8 +62,8 @@ const FavoriteArtifacts: React.FC = observer(() => {
     }, [fetchFavorite]);
 
     const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
-        const urlNamespace = (apps.find(app => app.fileTypes.some((types: string) => types.toLowerCase() === fileType.toLowerCase()))?.url);
-        openFileInTool(urlNamespace, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
+        const urlNamespace = fileTypes.find((type: FileTypesTO) => type.name.toLowerCase() === fileType.toLowerCase())?.url;
+        openFileInTool(urlNamespace!, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
     }
 
     return (

@@ -1,7 +1,7 @@
 import {makeStyles} from "@material-ui/styles";
 import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {ArtifactTO, FileTypesTO} from "../../../api/models";
+import {ArtifactTO, FileTypesTO} from "../../../api";
 import {fetchArtifactsFromRepo} from "../../../store/actions";
 import {RootState} from "../../../store/reducers/rootReducer";
 import ArtifactListItem from "./ArtifactListItem";
@@ -122,6 +122,7 @@ const ArtifactDetails: React.FC = (() => {
         return 0;
     }
     const compareEdited = (a: ArtifactTO, b: ArtifactTO) => {
+
         if(a.updatedDate < b.updatedDate) {
             return -1;
         }

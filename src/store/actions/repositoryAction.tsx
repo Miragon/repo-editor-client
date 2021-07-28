@@ -1,6 +1,6 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import {NewRepositoryTO, RepositoryUpdateTO} from "../../api/models";
+import {NewRepositoryTO, RepositoryUpdateTO} from "../../api";
 import helpers from "../../constants/Functions";
 import {
     ACTIVE_REPO,
@@ -88,7 +88,7 @@ export const updateRepository = (id: string, name: string, description: string) 
             };
             const config = helpers.getClientConfig();
             const response = await repositoryController
-                .updateRepository(repositoryUpdateTO, id, config);
+                .updateRepository(id, repositoryUpdateTO, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "repository.updated" });
                 dispatch({ type: SYNC_STATUS_ACTIVE_REPOSITORY, dataSynced: false });

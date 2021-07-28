@@ -2,7 +2,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import React, {useCallback, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import {FileTypesTO, RepositoryTO} from "../../api/models";
+import {FileTypesTO, RepositoryTO} from "../../api";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
@@ -33,13 +33,12 @@ const CreateArtifactDialog: React.FC<Props> = props => {
         (state: RootState) => state.repos.repos
     );
 
-
     const onCreate = useCallback(async () => {
-        setRepository(props.repo?.id)
+        setRepository(props.repo ? props.repo.id : "")
         try {
             const defaultFileProps = fileTypes.find(fileType => fileType.name === props.type)
             if(defaultFileProps){
-                dispatch(artifactAction.createArtifactWithDefaultVersion(props.repo?.id ? props.repo.id : repository, title, description, defaultFileProps.defaultFile, defaultFileProps.name, defaultFileProps.defaultPreviewSVG));
+                dispatch(artifactAction.createArtifactWithDefaultVersion(props.repo?.id ? props.repo.id : repository, title, description, "" , defaultFileProps.name!, ""));
                 setTitle("")
                 setDescription("")
                 setRepository("")

@@ -4,7 +4,7 @@ import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import RepoCard from "./Holder/RepoCard";
-import {RepositoryTO} from "../../api/models";
+import {RepositoryTO} from "../../api";
 import {RootState} from "../../store/reducers/rootReducer";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import "react-toastify/dist/ReactToastify.css";

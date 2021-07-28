@@ -1,7 +1,7 @@
 import {makeStyles} from "@material-ui/core/styles";
 import clsx from "clsx";
 import React, {useEffect, useState} from "react";
-import {FileTypesTO} from "../../../api/models";
+import {FileTypesTO} from "../../../api";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../store/reducers/rootReducer";
 import Icon from "@material-ui/core/Icon";
@@ -99,7 +99,8 @@ const ArtifactCard: React.FC<ArtifactProps> = (props: ArtifactProps) => {
 
     useEffect(() => {
         if(fileTypes && props.fileType){
-            setSvgKey(fileTypes.find(fileType => fileType.name === props.fileType)?.svgIcon)
+            const svgIcon = fileTypes.find(fileType => fileType.name === props.fileType)?.svgIcon;
+            setSvgKey(svgIcon!);
         }
     }, [fileTypes, props.fileType])
 

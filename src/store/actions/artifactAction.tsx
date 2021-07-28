@@ -5,7 +5,7 @@ import {
     ArtifactVersionUploadTO,
     ArtifactVersionUploadTOSaveTypeEnum,
     NewArtifactTO
-} from "../../api/models";
+} from "../../api";
 import helpers from "../../constants/Functions";
 import {
     ACTIVE_ARTIFACTS,
@@ -77,7 +77,7 @@ export const createArtifact = (
                 fileType: fileType || "BPMN",
                 svgPreview: svgPreview
             };
-            const response = await artifactController.createArtifact(newArtifactTO, repoId, config);
+            const response = await artifactController.createArtifact(repoId, newArtifactTO, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SYNC_STATUS_ARTIFACT, dataSynced: false });
                 dispatch({type: SYNC_STATUS_RECENT, dataSynced: false})
@@ -106,17 +106,17 @@ export const createArtifactWithDefaultVersion = (repoId: string, name: string, d
                 svgPreview: svgPreview
             };
 
-            await artifactController.createArtifact(newArtifactTO, repoId, config)
+            await artifactController.createArtifact(repoId, newArtifactTO, config)
                 .then(response => {
                     if (Math.floor(response.status / 100) === 2) {
                         const artifactVersionUploadTO: ArtifactVersionUploadTO = {
-                            saveType: ArtifactVersionUploadTOSaveTypeEnum.MILESTONE,
+                            saveType: ArtifactVersionUploadTOSaveTypeEnum.Milestone,
                             xml: file
                         }
                         const versionController = new api.VersionApi();
                         try {
                             const config = helpers.getClientConfig();
-                            versionController.createOrUpdateVersion(artifactVersionUploadTO, response.data.id, config)
+                            versionController.createOrUpdateVersion(response.data.id, artifactVersionUploadTO, config)
                                 .then(response2 => {
                                     if (Math.floor(response2.status / 100) === 2) {
                                         dispatch({type: SUCCESS, successMessage: "artifact.createdDefault"});
@@ -130,7 +130,7 @@ export const createArtifactWithDefaultVersion = (repoId: string, name: string, d
                                 }
                                 );
                         } catch (error) {
-                            dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_VERSION, [response.data.id, file, ArtifactVersionUploadTOSaveTypeEnum.MILESTONE]));
+                            dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_VERSION, [response.data.id, file, ArtifactVersionUploadTOSaveTypeEnum.Milestone]));
                         }
 
                     } else {
@@ -162,17 +162,17 @@ export const createNewArtifactWithVersionFile = (repoId: string, name: string, d
                 fileType: fileType || "BPMN",
                 svgPreview: svgPreview
             };
-            await artifactController.createArtifact(newArtifactTO, repoId, config)
+            await artifactController.createArtifact(repoId, newArtifactTO, config)
                 .then(response => {
                     if (Math.floor(response.status / 100) === 2) {
                         const artifactVersionUploadTO: ArtifactVersionUploadTO = {
-                            saveType: ArtifactVersionUploadTOSaveTypeEnum.MILESTONE,
+                            saveType: ArtifactVersionUploadTOSaveTypeEnum.Milestone,
                             xml: file
                         }
                         const versionController = new api.VersionApi();
                         try {
                             const config = helpers.getClientConfig();
-                            versionController.createOrUpdateVersion(artifactVersionUploadTO, response.data.id, config)
+                            versionController.createOrUpdateVersion(response.data.id, artifactVersionUploadTO, config)
                                 .then(response2 => {
                                     if (Math.floor(response2.status / 100) === 2) {
                                         dispatch({type: SUCCESS, successMessage: "artifact.createdFromExisting"});
@@ -186,7 +186,7 @@ export const createNewArtifactWithVersionFile = (repoId: string, name: string, d
                                 }
                                 );
                         } catch (error) {
-                            dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_VERSION, [response.data.id, file, ArtifactVersionUploadTOSaveTypeEnum.MILESTONE]));
+                            dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_VERSION, [response.data.id, file, ArtifactVersionUploadTOSaveTypeEnum.Milestone]));
                         }
                     } else {
                         dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
@@ -211,9 +211,9 @@ export const updateArtifact = (name: string, description: string | undefined, ar
             // eslint-disable-next-line object-shorthand
             const artifactUpdateTO: ArtifactUpdateTO = {
                 name: name,
-                description: description
+                description: description ? description : ""
             }
-            const response = await artifactController.updateArtifact(artifactUpdateTO, artifactId, config);
+            const response = await artifactController.updateArtifact(artifactId, artifactUpdateTO, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({type: SYNC_STATUS_ARTIFACT, dataSynced: false})
                 dispatch({ type: SUCCESS, successMessage: "artifact.updated" });
@@ -250,7 +250,7 @@ export const uploadArtifact = (repoId: string, name: string, description: string
         try {
             const newArtifact: NewArtifactTO = {name, description, fileType};
             const config = helpers.getClientConfig();
-            const response = await artifactController.createArtifact(newArtifact, repoId, config);
+            const response = await artifactController.createArtifact(repoId, newArtifact, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: DIAGRAM_UPLOAD, uploadedArtifact: response.data });
                 dispatch({type: SYNC_STATUS_REPOSITORY, dataSynced: false})

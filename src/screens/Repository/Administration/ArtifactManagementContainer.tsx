@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import DropdownButton, {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 import CreateArtifactDialog from "../../CreateContainer/CreateArtifactDialog";
 import UploadArtifactDialog from "../../CreateContainer/UploadArtifactDialog";
-import {FileTypesTO, RepositoryTO} from "../../../api/models";
+import {FileTypesTO, RepositoryTO} from "../../../api";
 import {RootState} from "../../../store/reducers/rootReducer";
 import {useTranslation} from "react-i18next";
 

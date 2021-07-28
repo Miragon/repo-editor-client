@@ -1,4 +1,4 @@
-import {MenuItemTO} from "../../api/models";
+import {MenuItemTO} from "../../api";
 import {CaseReducer} from "@reduxjs/toolkit";
 import {MENU_ITEMS} from "../constants";
 

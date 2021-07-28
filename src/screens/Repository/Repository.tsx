@@ -4,7 +4,7 @@ import {useParams} from "react-router";
 import {getSingleRepository} from "../../store/actions";
 import ArtifactDetails from "./Artifact/ArtifactDetails";
 import RepositoryDetails from "./Administration/RepositoryDetails";
-import {RepositoryTO} from "../../api/models";
+import {RepositoryTO} from "../../api";
 import {RootState} from "../../store/reducers/rootReducer";
 import PathStructure from "../../components/Layout/PathStructure";
 

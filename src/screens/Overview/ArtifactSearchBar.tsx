@@ -4,7 +4,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import {makeStyles} from "@material-ui/styles";
 import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {ArtifactTO, MenuItemTO, RepositoryTO} from "../../api/models";
+import {ArtifactTO, FileTypesTO, MenuItemTO, RepositoryTO} from "../../api";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import * as artifactAction from "../../store/actions/artifactAction";
 import {RootState} from "../../store/reducers/rootReducer";
@@ -60,6 +60,7 @@ const ArtifactSearchBar: React.FC = () => {
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
     const results: number = useSelector((state: RootState) => state.resultsCount.artifactResultsCount)
     const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
+    const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
 
 
     const [artifact, setArtifact] = useState("");
@@ -93,9 +94,9 @@ const ArtifactSearchBar: React.FC = () => {
         }
     }, [searchedArtifacts, results]);
 
-    const getRepoName = ((repoId: string) => {
+    const getRepoName = ((repoId: string) : string => {
         const assignedRepo = repos.find(repo => repo.id === repoId);
-        return assignedRepo?.name;
+        return assignedRepo ? assignedRepo.name : "";
     });
 
     const onChangeWithTimer = ((input: string) => {
@@ -124,8 +125,8 @@ const ArtifactSearchBar: React.FC = () => {
     };
 
     const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
-        const urlNamespace = (apps.find(app => app.fileTypes.some((types: string) => types.toLowerCase() === fileType.toLowerCase()))?.url);
-        openFileInTool(urlNamespace, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
+        const urlNamespace = fileTypes.find((type: FileTypesTO) => type.name.toLowerCase() === fileType.toLowerCase())?.url;
+        openFileInTool(urlNamespace!, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
     }
 
     return (
@@ -172,7 +173,7 @@ const ArtifactSearchBar: React.FC = () => {
                                 }} />
                         )} />
                     <div className={classes.resultsContainer}>
-                        {!loading && searchedArtifacts?.map(searchedArtifact => (
+                        {!loading && searchedArtifacts.map(searchedArtifact => (
                             <div
                                 className={classes.card}
                                 key={searchedArtifact.id}

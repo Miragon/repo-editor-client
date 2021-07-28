@@ -5,7 +5,7 @@ import * as artifactAction from "../../../store/actions/artifactAction";
 import PopupDialog from "../../../components/Form/PopupDialog";
 import SettingsForm from "../../../components/Form/SettingsForm";
 import SettingsTextField from "../../../components/Form/SettingsTextField";
-import {FileTypesTO} from "../../../api/models";
+import {FileTypesTO} from "../../../api";
 import {RootState} from "../../../store/reducers/rootReducer";
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
     onCancelled: () => void;
     type: string;
     repoId: string;
-    versionNo: string;
+    versionNo: number;
     file: string;
     artifactId: string;
 }
@@ -38,7 +38,7 @@ const SaveAsNewArtifactDialog: React.FC<Props> = props => {
 
             if(defaultFileProps){
                 //#TODO: The default Preview SVG will always be passed here => passt aber auch, für einzelne Versionen gibt es keine SVG Previews (immer nur für die aktuellste, gespeichert in ArtifactEntity/ ArtifactEntity)
-                dispatch(artifactAction.createNewArtifactWithVersionFile(props.repoId, title, description, props.file, defaultFileProps.name, defaultFileProps.defaultPreviewSVG));
+                dispatch(artifactAction.createNewArtifactWithVersionFile(props.repoId, title, description, props.file, defaultFileProps.name, "defaultFileProps.defaultPreviewSVG"));
                 props.onCancelled();
             }
 

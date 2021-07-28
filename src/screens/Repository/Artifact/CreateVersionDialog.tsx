@@ -5,7 +5,7 @@ import PopupDialog from "../../../components/Form/PopupDialog";
 import SettingsForm from "../../../components/Form/SettingsForm";
 import SettingsTextField from "../../../components/Form/SettingsTextField";
 import * as versionAction from "../../../store/actions/versionAction";
-import {ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../../../api/models";
+import {ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../../../api";
 import {useTranslation} from "react-i18next";
 import {RootState} from "../../../store/reducers/rootReducer";
 import {UNHANDLEDERROR} from "../../../store/constants";
@@ -41,7 +41,7 @@ const CreateVersionDialog: React.FC<Props> = props => {
     const onCreate = useCallback(async () => {
         try {
             if(latestVersion){
-                await dispatch(versionAction.createOrUpdateVersion(artifactId, latestVersion?.xml, ArtifactVersionUploadTOSaveTypeEnum.MILESTONE, comment));
+                await dispatch(versionAction.createOrUpdateVersion(artifactId, latestVersion?.xml, ArtifactVersionUploadTOSaveTypeEnum.Milestone, comment));
                 dispatch(versionAction.getAllVersions(artifactId));
                 onCancelled();
             } else {

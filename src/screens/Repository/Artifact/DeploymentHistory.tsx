@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import PopupDialog from "../../../components/Form/PopupDialog";
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
-import {Deployment} from "../../../api/models";
+import {DeploymentTO} from "../../../api";
 import {makeStyles} from "@material-ui/core/styles";
 
 
@@ -16,10 +16,10 @@ interface Props {
     versionId: string;
     milestone: number;
     artifactTitle: string;
-    versionComment: string;
+    versionComment: string | undefined;
     open: boolean;
     onCancelled: () => void;
-    deployments: Array<Deployment>;
+    deployments: Array<DeploymentTO>;
 }
 
 const DeploymentHistory: React.FC<Props> = props => {
@@ -36,7 +36,7 @@ const DeploymentHistory: React.FC<Props> = props => {
         props.deployments.sort(compare);
     }, [props.deployments])
 
-    const compare = (a: Deployment, b: Deployment) => {
+    const compare = (a: DeploymentTO, b: DeploymentTO) => {
         if(a.timestamp < b.timestamp) {
             return -1;
         }

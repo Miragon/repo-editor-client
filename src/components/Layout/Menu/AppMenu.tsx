@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import React, {useEffect} from "react";
 import MenuSpacer from "../../Menu/MenuSpacer";
 import DrawerApp from "./AppMenu/DrawerApp";
-import {MenuItemTO} from "../../../api/models";
+import {MenuItemTO} from "../../../api";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/reducers/rootReducer";
 import {fetchMenuItems} from "../../../store/actions/menuAction";
@@ -82,8 +82,8 @@ const AppMenu: React.FC<Props> = props => {
                         <DrawerApp
                             active={app.name === "Home"}
                             key={app.name}
-                            title={t(app.name)}
-                            icon={app.icon}
+                            title={t(app.name!)}
+                            icon={app.icon!}
                             onClick={() => window.open(`/${app.url}`, "_self")}/>
                     ))}
                     <MenuSpacer/>

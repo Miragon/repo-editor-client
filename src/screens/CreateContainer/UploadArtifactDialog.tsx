@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import {ArtifactVersionUploadTOSaveTypeEnum, RepositoryTO} from "../../api/models";
+import {ArtifactVersionUploadTOSaveTypeEnum, RepositoryTO} from "../../api";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
@@ -51,13 +51,13 @@ const UploadArtifactDialog: React.FC<Props> = props => {
     useEffect(() => {
         if (uploadedArtifact) {
             dispatch(versionAction.createOrUpdateVersion(
-                uploadedArtifact.id, file, ArtifactVersionUploadTOSaveTypeEnum.MILESTONE
+                uploadedArtifact.id, file, ArtifactVersionUploadTOSaveTypeEnum.Milestone
             ));
         }
     }, [dispatch, uploadedArtifact, file]);
 
     useEffect(() => {
-        setRepository(props.repo?.id);
+        setRepository(props.repo ? props.repo.id : "");
     }, [props.repo]);
 
     const onCreate = useCallback(async () => {

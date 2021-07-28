@@ -17,7 +17,7 @@ import clsx from "clsx";
 import theme from "../../../theme";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 import {getAllVersions, getLatestVersion} from "../../../store/actions/versionAction";
-import {ArtifactVersionTO, FileTypesTO, MenuItemTO} from "../../../api/models";
+import {ArtifactVersionTO, FileTypesTO, MenuItemTO} from "../../../api";
 import {RootState} from "../../../store/reducers/rootReducer";
 import {addToFavorites, deleteArtifact} from "../../../store/actions";
 import {LATEST_VERSION} from "../../../store/constants";
@@ -185,7 +185,7 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     const latestVersion: ArtifactVersionTO | null = useSelector((state: RootState) => state.versions.latestVersion);
     const versionSynced: boolean = useSelector((state: RootState) => state.dataSynced.versionSynced)
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
-    const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
+    //const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
 
 
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
@@ -231,7 +231,8 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
 
     useEffect(() => {
         if(fileTypes && props.fileType){
-            setSvgKey(fileTypes.find(fileType => fileType.name === props.fileType)?.svgIcon)
+            const svgIcon = fileTypes.find(fileType => fileType.name === props.fileType)?.svgIcon;
+            setSvgKey(svgIcon ? svgIcon: "");
         }
     }, [fileTypes, props.fileType])
 
@@ -317,8 +318,8 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     }
 
     const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
-        const urlNamespace = (apps.find(app => app.fileTypes.some((types: string) => types.toLowerCase() === fileType.toLowerCase()))?.url);
-        openFileInTool(urlNamespace, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
+        const url = fileTypes.find((type: FileTypesTO) => type.name?.toLocaleLowerCase() === fileType.toLowerCase())?.url;
+        openFileInTool(url!, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId);
     }
 
     const options: DropdownButtonItem[] = [

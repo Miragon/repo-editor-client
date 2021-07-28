@@ -1,6 +1,6 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import {AssignmentUpdateTO, AssignmentUpdateTORoleEnumEnum} from "../../api/models";
+import {AssignmentUpdateTO, AssignmentUpdateTORoleEnumEnum} from "../../api";
 import helpers from "../../constants/Functions";
 import {ASSIGNED_USERS, SUCCESS, SYNC_STATUS_ASSIGNMENT, UNHANDLEDERROR} from "../constants";
 import {ActionType} from "./actions";
@@ -38,14 +38,14 @@ export const createOrUpdateUserAssignment = (
             if (!roleEnum) {
                 message = "assignment.added";
             } else {
-                message = {content: "assignment.changedAssignment", variables: {username: username, roleEnum: roleEnum ? roleEnum : AssignmentUpdateTORoleEnumEnum.MEMBER}};
+                message = {content: "assignment.changedAssignment", variables: {username: username, roleEnum: roleEnum ? roleEnum : AssignmentUpdateTORoleEnumEnum.Member}};
             }
 
             const assignmentUpdateTO: AssignmentUpdateTO = {
                 repositoryId: repoId,
                 userId: userId,
                 username: username,
-                roleEnum: (roleEnum) || AssignmentUpdateTORoleEnumEnum.MEMBER
+                roleEnum: (roleEnum) || AssignmentUpdateTORoleEnumEnum.Member
             };
             const config = helpers.getClientConfig();
             const response = await assignmentController

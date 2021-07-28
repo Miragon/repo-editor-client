@@ -1,5 +1,5 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {ArtifactVersionTO} from "../../api/models";
+import {ArtifactVersionTO} from "../../api";
 import {GET_VERSIONS, LATEST_VERSION} from "../constants";
 
 const initialState = {

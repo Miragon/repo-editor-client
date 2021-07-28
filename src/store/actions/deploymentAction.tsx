@@ -1,6 +1,6 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import {DeploymentTO} from "../../api/models";
+import {NewDeploymentTO} from "../../api";
 import helpers from "../../constants/Functions";
 import {SUCCESS, SYNC_STATUS_VERSION, TARGETS, UNHANDLEDERROR} from "../constants";
 import {handleError} from "./errorAction";
@@ -11,11 +11,11 @@ export const deployVersion = (target: string, artifactId: string, versionId: str
     return async (dispatch: Dispatch): Promise<void> => {
         const deploymentController = new api.DeploymentApi();
         try {
-            const deploymentTO: DeploymentTO = {
+            const deploymentTO: NewDeploymentTO = {
                 target
             };
             const config = helpers.getClientConfig();
-            const response = await deploymentController.deployVersion(deploymentTO, artifactId, versionId, config);
+            const response = await deploymentController.deployVersion( artifactId, versionId, deploymentTO, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "version.deployed" });
                 dispatch({type: SYNC_STATUS_VERSION, dataSynced: false})

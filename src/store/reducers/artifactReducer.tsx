@@ -1,5 +1,5 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {ArtifactTO, FileTypesTO} from "../../api/models";
+import {ArtifactTO, FileTypesTO} from "../../api";
 import {ACTIVE_ARTIFACTS, DIAGRAM_UPLOAD, FILETYPES, GET_FAVORITE, GET_RECENT, SEARCH_ARTIFACT} from "../constants";
 
 const initialState = {

@@ -1,5 +1,5 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {RepositoryTO} from "../../api/models";
+import {RepositoryTO} from "../../api";
 import {ACTIVE_REPO, GET_REPOS} from "../constants";
 
 const initialState = {

@@ -18,7 +18,7 @@ import {makeStyles} from "@material-ui/styles";
 import {Theme} from "@material-ui/core/styles";
 import {useDispatch} from "react-redux";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
-import {AssignmentTO, AssignmentUpdateTORoleEnumEnum} from "../../../api/models";
+import {AssignmentTO, AssignmentUpdateTORoleEnumEnum} from "../../../api";
 import * as assignmentAction from "../../../store/actions/assignmentAction";
 import {useTranslation} from "react-i18next";
 
@@ -109,7 +109,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "user.OWNER",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentUpdateTORoleEnumEnum.OWNER);
+                changeRole(AssignmentUpdateTORoleEnumEnum.Owner);
             }
         },
         {
@@ -117,7 +117,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "user.ADMIN",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentUpdateTORoleEnumEnum.ADMIN);
+                changeRole(AssignmentUpdateTORoleEnumEnum.Admin);
             }
         },
         {
@@ -125,7 +125,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "user.MEMBER",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentUpdateTORoleEnumEnum.MEMBER);
+                changeRole(AssignmentUpdateTORoleEnumEnum.Member);
             }
         },
         {
@@ -133,7 +133,7 @@ const UserListItem: React.FC<Props> = props => {
             label: "user.VIEWER",
             type: "button",
             onClick: () => {
-                changeRole(AssignmentUpdateTORoleEnumEnum.VIEWER);
+                changeRole(AssignmentUpdateTORoleEnumEnum.Viewer);
             }
         },
         {

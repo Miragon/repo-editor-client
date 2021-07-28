@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-typescript": "^7.13.0",
+    "@openapitools/openapi-generator-cli": "^2.3.7",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -63,6 +64,7 @@
     "typescript": "^4.2.3"
   },
   "scripts": {
+    "api-gen": "openapi-generator-cli generate -i http://localhost:8081/v3/api-docs -g typescript-axios -o src/api",
     "start": "cross-env BROWSER=none WDS_SOCKET_PORT=3000 PUBLIC_URL=/repository/ react-scripts start",
     "build": "cross-env PUBLIC_URL=/repository/ react-scripts build",
     "test": "react-scripts test",

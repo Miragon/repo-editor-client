@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Description, People, Settings} from "@material-ui/icons/";
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
-import {RepositoryTO} from "../../../api/models";
+import {RepositoryTO} from "../../../api";
 import {RootState} from "../../../store/reducers/rootReducer";
 import EditRepoDialog from "./EditRepoDialog";
 

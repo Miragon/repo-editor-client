@@ -1,7 +1,7 @@
 import {List, Paper} from "@material-ui/core";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {AssignmentTO, AssignmentTORoleEnumEnum} from "../../../api/models";
+import {AssignmentTO, AssignmentTORoleEnumEnum} from "../../../api";
 import PopupDialog from "../../../components/Form/PopupDialog";
 import {getAllAssignedUsers} from "../../../store/actions/assignmentAction";
 import {SEARCH_USERS, UNHANDLEDERROR} from "../../../store/constants";
@@ -50,8 +50,8 @@ const UserManagementDialog: React.FC<Props> = props => {
         const currentUserAssignment = assignmentTOs
             .find(assignmentTO => assignmentTO.username === currentUser.username);
         try {
-            if (currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.ADMIN
-                || currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.OWNER) {
+            if (currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.Admin
+                || currentUserAssignment?.roleEnum === AssignmentTORoleEnumEnum.Owner) {
                 setHasAdminPermissions(true);
                 return true;
             }

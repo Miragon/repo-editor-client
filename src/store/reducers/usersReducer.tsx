@@ -1,5 +1,5 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {AssignmentTO, UserInfoTO} from "../../api/models";
+import {AssignmentTO, UserInfoTO} from "../../api";
 import {ASSIGNED_USERS, CURRENT_USER_INFO, SEARCH_USERS} from "../constants";
 
 const initialState = {

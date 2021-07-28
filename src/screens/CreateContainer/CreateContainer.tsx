@@ -10,7 +10,7 @@ import UploadArtifactDialog from "./UploadArtifactDialog";
 import {useTranslation} from "react-i18next";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/reducers/rootReducer";
-import {FileTypesTO} from "../../api/models";
+import {FileTypesTO} from "../../api";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -42,12 +42,12 @@ const RepoContainer: React.FC = observer(() => {
     useEffect(() => {
         const opts: Array<DropdownButtonItem> = []
         fileTypes?.forEach(fileType => {
-            opts.push({id: fileType.name,
+            opts.push({id: fileType.name!,
                 label: `artifact.create${fileType.name}`,
                 type: "button",
                 onClick: () => {
                     setCreateArtifactOpen(true);
-                    setCreateArtifactType(fileType.name)
+                    setCreateArtifactType(fileType.name!)
                 }});
         })
 

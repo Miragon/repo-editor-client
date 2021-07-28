@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import {MoreVert} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/styles";
-import {ArtifactVersionTO, MenuItemTO} from "../../../api/models";
+import {ArtifactVersionTO, FileTypesTO} from "../../../api";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import theme from "../../../theme";
@@ -87,12 +87,12 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
     const [historyOpen, setHistoryOpen] = useState<boolean>(false);
     const [deployVersionOpen, setDeployVersionOpen] = useState<boolean>(false);
     const [saveDialogOpen, setSaveDialogOpen] = useState<boolean>(false);
-    const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
+    const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
     const ref = useRef<HTMLButtonElement>(null);
 
     const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
-        const urlNamespace = (apps.find(app => app.fileTypes.some((types: string) => types.toLowerCase() === fileType.toLowerCase()))?.url);
-        openFileInTool(urlNamespace, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
+        const urlNamespace = fileTypes.find((types: FileTypesTO) => types.name.toLowerCase() === fileType.toLowerCase())?.url;
+        openFileInTool(urlNamespace!, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
     }
 
     const reformatDate = (date: string | undefined) => {

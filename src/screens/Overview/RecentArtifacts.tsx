@@ -2,7 +2,7 @@ import {makeStyles} from "@material-ui/styles";
 import {observer} from "mobx-react";
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {ArtifactTO, MenuItemTO, RepositoryTO} from "../../api/models";
+import {ArtifactTO, FileTypesTO, MenuItemTO, RepositoryTO} from "../../api";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import * as artifactAction from "../../store/actions/artifactAction";
 import {RootState} from "../../store/reducers/rootReducer";
@@ -44,7 +44,7 @@ const RecentArtifacts: React.FC = observer(() => {
     );
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
     const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.recentSynced);
-    const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
+    const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
 
 
     const fetchRecent = useCallback(() => {
@@ -57,7 +57,7 @@ const RecentArtifacts: React.FC = observer(() => {
 
     const getRepoName = ((repoId: string) => {
         const assignedRepo = repos.find(repo => repo.id === repoId);
-        return assignedRepo?.name;
+        return assignedRepo ? assignedRepo.name : "";
     });
 
     useEffect(() => {
@@ -67,8 +67,8 @@ const RecentArtifacts: React.FC = observer(() => {
     }, [dispatch, fetchRecent, syncStatus]);
 
     const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
-        const urlNamespace = (apps.find(app => app.fileTypes.some((types: string) => types.toLowerCase() === fileType.toLowerCase()))?.url);
-        openFileInTool(urlNamespace, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
+        const urlNamespace = fileTypes.find((types: FileTypesTO) => types.name.toLowerCase() === fileType.toLowerCase())?.url;
+        openFileInTool(urlNamespace!, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
     }
 
     return (

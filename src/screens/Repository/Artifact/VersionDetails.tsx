@@ -3,7 +3,7 @@ import {Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/cor
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {KeyboardArrowUp} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/styles";
-import {ArtifactVersionTO} from "../../../api/models";
+import {ArtifactVersionTO} from "../../../api";
 import {useDispatch} from "react-redux";
 import {GET_VERSIONS} from "../../../store/constants";
 import {useTranslation} from "react-i18next";
