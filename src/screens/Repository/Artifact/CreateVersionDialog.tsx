@@ -22,7 +22,6 @@ interface Props {
     artifactTitle: string;
 }
 
-
 const CreateVersionDialog: React.FC<Props> = props => {
     const dispatch = useDispatch();
     const classes = useStyles();

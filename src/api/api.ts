@@ -379,19 +379,19 @@ export interface MenuItemTO {
      * @type {string}
      * @memberof MenuItemTO
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof MenuItemTO
      */
-    url?: string;
+    url: string;
     /**
      * 
      * @type {string}
      * @memberof MenuItemTO
      */
-    icon?: string;
+    icon: string;
     /**
      * 
      * @type {number}
@@ -535,7 +535,7 @@ export interface UserInfoTO {
      * @type {string}
      * @memberof UserInfoTO
      */
-    id?: string;
+    id: string;
 }
 /**
  * 

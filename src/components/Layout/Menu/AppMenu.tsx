@@ -82,8 +82,8 @@ const AppMenu: React.FC<Props> = props => {
                         <DrawerApp
                             active={app.name === "Home"}
                             key={app.name}
-                            title={t(app.name!)}
-                            icon={app.icon!}
+                            title={t(app.name)}
+                            icon={app.icon}
                             onClick={() => window.open(`/${app.url}`, "_self")}/>
                     ))}
                     <MenuSpacer/>

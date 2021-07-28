@@ -2,7 +2,7 @@ import {makeStyles} from "@material-ui/styles";
 import {observer} from "mobx-react";
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {ArtifactTO, FileTypesTO, MenuItemTO, RepositoryTO} from "../../api";
+import {ArtifactTO, FileTypesTO, RepositoryTO} from "../../api";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import * as artifactAction from "../../store/actions/artifactAction";
 import {RootState} from "../../store/reducers/rootReducer";
@@ -68,7 +68,7 @@ const RecentArtifacts: React.FC = observer(() => {
 
     const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
         const urlNamespace = fileTypes.find((types: FileTypesTO) => types.name.toLowerCase() === fileType.toLowerCase())?.url;
-        openFileInTool(urlNamespace!, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
+        openFileInTool(urlNamespace ? urlNamespace : "", repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
     }
 
     return (

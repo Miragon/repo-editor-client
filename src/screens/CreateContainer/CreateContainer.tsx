@@ -42,12 +42,12 @@ const RepoContainer: React.FC = observer(() => {
     useEffect(() => {
         const opts: Array<DropdownButtonItem> = []
         fileTypes?.forEach(fileType => {
-            opts.push({id: fileType.name!,
+            opts.push({id: fileType.name,
                 label: `artifact.create${fileType.name}`,
                 type: "button",
                 onClick: () => {
                     setCreateArtifactOpen(true);
-                    setCreateArtifactType(fileType.name!)
+                    setCreateArtifactType(fileType.name)
                 }});
         })
 

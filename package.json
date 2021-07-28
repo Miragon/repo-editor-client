@@ -64,7 +64,7 @@
     "typescript": "^4.2.3"
   },
   "scripts": {
-    "api-gen": "openapi-generator-cli generate -i http://localhost:8081/v3/api-docs -g typescript-axios -o src/api",
+    "api-gen": "openapi-generator-cli generate -i http://localhost:8089/v3/api-docs -g typescript-axios -o src/api",
     "start": "cross-env BROWSER=none WDS_SOCKET_PORT=3000 PUBLIC_URL=/repository/ react-scripts start",
     "build": "cross-env PUBLIC_URL=/repository/ react-scripts build",
     "test": "react-scripts test",

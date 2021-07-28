@@ -38,7 +38,7 @@ const CreateArtifactDialog: React.FC<Props> = props => {
         try {
             const defaultFileProps = fileTypes.find(fileType => fileType.name === props.type)
             if(defaultFileProps){
-                dispatch(artifactAction.createArtifactWithDefaultVersion(props.repo?.id ? props.repo.id : repository, title, description, "" , defaultFileProps.name!, ""));
+                dispatch(artifactAction.createArtifactWithDefaultVersion(props.repo?.id ? props.repo.id : repository, title, description, "" , defaultFileProps.name, ""));
                 setTitle("")
                 setDescription("")
                 setRepository("")

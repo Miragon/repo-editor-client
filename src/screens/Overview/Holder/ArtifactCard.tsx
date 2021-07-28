@@ -100,7 +100,7 @@ const ArtifactCard: React.FC<ArtifactProps> = (props: ArtifactProps) => {
     useEffect(() => {
         if(fileTypes && props.fileType){
             const svgIcon = fileTypes.find(fileType => fileType.name === props.fileType)?.svgIcon;
-            setSvgKey(svgIcon!);
+            setSvgKey(svgIcon ? svgIcon : "");
         }
     }, [fileTypes, props.fileType])
 

@@ -4,7 +4,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import {makeStyles} from "@material-ui/styles";
 import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {ArtifactTO, FileTypesTO, MenuItemTO, RepositoryTO} from "../../api";
+import {ArtifactTO, FileTypesTO, RepositoryTO} from "../../api";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import * as artifactAction from "../../store/actions/artifactAction";
 import {RootState} from "../../store/reducers/rootReducer";
@@ -59,9 +59,7 @@ const ArtifactSearchBar: React.FC = () => {
     );
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
     const results: number = useSelector((state: RootState) => state.resultsCount.artifactResultsCount)
-    const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
-
 
     const [artifact, setArtifact] = useState("");
     const [open, setOpen] = useState(false);
@@ -126,7 +124,7 @@ const ArtifactSearchBar: React.FC = () => {
 
     const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
         const urlNamespace = fileTypes.find((type: FileTypesTO) => type.name.toLowerCase() === fileType.toLowerCase())?.url;
-        openFileInTool(urlNamespace!, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
+        openFileInTool(urlNamespace ? urlNamespace : "", repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
     }
 
     return (

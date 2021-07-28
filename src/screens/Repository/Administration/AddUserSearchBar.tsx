@@ -103,7 +103,7 @@ const AddUserSearchBar: React.FC<Props> = props => {
             const userId = user ? user.id : "";
             if (user) {
                 dispatch(assignmentAction
-                    .createOrUpdateUserAssignment(props.repoId, userId!, user?.username));
+                    .createOrUpdateUserAssignment(props.repoId, userId, user?.username));
                 setUserName("");
             }
         } catch (err) {

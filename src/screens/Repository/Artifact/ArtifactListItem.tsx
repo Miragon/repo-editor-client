@@ -17,7 +17,7 @@ import clsx from "clsx";
 import theme from "../../../theme";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 import {getAllVersions, getLatestVersion} from "../../../store/actions/versionAction";
-import {ArtifactVersionTO, FileTypesTO, MenuItemTO} from "../../../api";
+import {ArtifactVersionTO, FileTypesTO} from "../../../api";
 import {RootState} from "../../../store/reducers/rootReducer";
 import {addToFavorites, deleteArtifact} from "../../../store/actions";
 import {LATEST_VERSION} from "../../../store/constants";
@@ -319,7 +319,7 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
 
     const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
         const url = fileTypes.find((type: FileTypesTO) => type.name?.toLocaleLowerCase() === fileType.toLowerCase())?.url;
-        openFileInTool(url!, repositoryId, artifactId, t("error.missingTool", {fileType}), versionId);
+        openFileInTool(url ? url: "", repositoryId, artifactId, t("error.missingTool", {fileType}), versionId);
     }
 
     const options: DropdownButtonItem[] = [
