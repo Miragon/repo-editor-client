@@ -113,16 +113,7 @@ const RegisterNewUserScreen: React.FC = () => {
 
                 <form className={classes.form} noValidate>
 
-                    <FormControlLabel
-                        className={classes.confirmationCheckbox}
-                        control={(
-                            <Checkbox
-                                checked={!isButtonDisabled}
-                                onClick={() => setButtonDisabled(!isButtonDisabled)}
-                                value="allowExtraEmails"
-                                color="primary" />
-                        )}
-                        label= {t("registration.agree")}/>
+
 
                     <Button
                         type="submit"
@@ -135,7 +126,6 @@ const RegisterNewUserScreen: React.FC = () => {
                         {t("registration.create")}
                     </Button>
                 </form>
-                <Copyright />
             </div>
             <ToastContainer />
         </div>
@@ -143,3 +133,17 @@ const RegisterNewUserScreen: React.FC = () => {
 };
 
 export default RegisterNewUserScreen;
+
+
+/* Accept AGBs:
+                    <FormControlLabel
+                        className={classes.confirmationCheckbox}
+                        control={(
+                            <Checkbox
+                                checked={!isButtonDisabled}
+                                onClick={() => setButtonDisabled(!isButtonDisabled)}
+                                value="allowExtraEmails"
+                                color="primary" />
+                        )}
+                        label= {t("registration.agree")}/>
+ */

@@ -32,11 +32,11 @@ const Repository: React.FC = (() => {
     }, [dataSynced, getRepo, repoId])
 
     const element = {
-        name: "Overview",
+        name: "path.overview",
         link: "/"
     }
     const element2 = {
-        name: "Repository",
+        name: "path.repository",
         link: `/repository/${repoId}`
     }
     const path = [element, element2]

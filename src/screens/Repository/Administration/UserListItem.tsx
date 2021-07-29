@@ -195,8 +195,7 @@ const UserListItem: React.FC<Props> = props => {
                                                 if (option.onClick) {
                                                     option.onClick();
                                                 } else {
-                                                    // eslint-disable-next-line no-console
-                                                    console.log("Some error when clicking");
+                                                    console.log("No Action provided")
                                                 }
                                                 setOpen(false);
                                             }}>

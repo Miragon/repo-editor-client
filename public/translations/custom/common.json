@@ -137,5 +137,9 @@
     "download": "Datei herunterladen",
     "edit": "Datei bearbeiten",
     "delete": "Datei löschen"
-  }
+  },
+  "path": {
+  "overview": "Übersicht",
+  "repository": "Projekt"
+}
 }

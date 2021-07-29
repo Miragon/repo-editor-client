@@ -70,9 +70,6 @@ export const createRepository = (name: string, description: string) => {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
             }
         } catch (error) {
-            console.log(error.response)
-            console.log(error.response.data)
-            console.log("in catch")
             dispatch(handleError(error, ActionType.CREATE_REPOSITORY, [name, description]));
         }
     };

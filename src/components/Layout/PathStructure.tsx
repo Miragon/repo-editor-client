@@ -3,6 +3,7 @@ import {makeStyles} from "@material-ui/styles";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import {useHistory} from "react-router-dom";
 import theme from "../../theme";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -42,6 +43,7 @@ interface Props {
 const PathStructure: React.FC<Props> = props => {
     const classes = useStyles();
     const history = useHistory();
+    const {t} = useTranslation("common");
 
 
     const openLink = (link: string) => {
@@ -57,7 +59,7 @@ const PathStructure: React.FC<Props> = props => {
                         className={classes.element}
                         key={element.name}>
                         <div onClick={() => openLink(element.link)}>
-                            {element?.name}
+                            {t(element?.name)}
                         </div>
                         <div className={classes.icon}>
                             {(index < props.structure.length - 1) ? <ArrowForwardIosIcon fontSize={"small"} /> : null}

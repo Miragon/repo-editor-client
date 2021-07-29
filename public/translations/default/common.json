@@ -139,5 +139,9 @@
     "download": "Download File",
     "edit": "Edit File",
     "delete": "Delete File"
+  },
+  "path": {
+    "overview": "Overview",
+    "repository": "Repository"
   }
 }

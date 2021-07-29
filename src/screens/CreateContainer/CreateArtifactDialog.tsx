@@ -60,8 +60,7 @@ const CreateArtifactDialog: React.FC<Props> = props => {
             secondTitle={t("dialog.cancel")}
             onSecond={props.onCancelled}
             firstTitle={t("dialog.create")}
-            onFirst={onCreate}
-            firstDisabled={title === "" || repository === ""} >
+            onFirst={onCreate} >
 
             <SettingsForm large>
 

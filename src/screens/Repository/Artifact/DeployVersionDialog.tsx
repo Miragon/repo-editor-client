@@ -50,8 +50,7 @@ const DeployVersionDialog: React.FC<Props> = props => {
             firstTitle={t("dialog.applyChanges")}
             onFirst={applyChanges}
             secondTitle={t("dialog.cancel")}
-            onSecond={props.onCancelled}
-            firstDisabled={target === ""}>
+            onSecond={props.onCancelled} >
 
             <SettingsSelect
                 disabled={false}

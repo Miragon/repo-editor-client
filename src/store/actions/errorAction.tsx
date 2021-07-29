@@ -4,8 +4,6 @@ import {ActionType} from "./actions";
 
 // eslint-disable-next-line
 export const handleError = (error: any, retryMethod: ActionType, retryPayload: Array<any>) => {
-    // eslint-disable-next-line no-console
-    console.log(error);
     try {
         switch (error.response.status?.toString()) {
             case "400":

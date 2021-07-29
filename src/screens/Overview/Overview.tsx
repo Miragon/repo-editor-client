@@ -11,7 +11,7 @@ import PathStructure from "../../components/Layout/PathStructure";
 const Overview: React.FC = observer(() => {
 
     const element = {
-        name: "Overview",
+        name: "path.overview",
         link: "/"
     }
     const path = [element]

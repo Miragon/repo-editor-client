@@ -137,7 +137,6 @@ const Layout = (): any => {
     }, [apiErrorRetryMethod, apiErrorRetryPayload, apiErrorStateWithVariables, dispatch, t])
 
     useEffect(() => {
-        console.log("ok")
         if(apiSuccessStateWithVariables && apiSuccessStateWithVariables.content){
             toast(<Toast
                 isError={false}

@@ -85,7 +85,6 @@ const ArtifactDetails: React.FC = (() => {
         }
         setDisplayedFileTypes(currentList)
         applyFilters()
-        console.log(displayedFileTypes)
     }
 
     const applyFilters = () => {

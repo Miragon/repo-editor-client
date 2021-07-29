@@ -48,7 +48,6 @@ const RepositoryDetails: React.FC = (() => {
     const [repoManagementOpen, setRepoManagementOpen] = useState<boolean>(false);
 
     useEffect(() => {
-        console.log("updating View")
         console.log(activeRepo)
     }, [activeRepo])
 

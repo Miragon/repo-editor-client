@@ -34,7 +34,6 @@ const SaveAsNewArtifactDialog: React.FC<Props> = props => {
         try {
 
             const defaultFileProps = fileTypes.find(fileType => fileType.name === props.type)
-            console.log(fileTypes)
 
             if(defaultFileProps){
                 //#TODO: The default Preview SVG will always be passed here => passt aber auch, für einzelne Versionen gibt es keine SVG Previews (immer nur für die aktuellste, gespeichert in ArtifactEntity/ ArtifactEntity)
@@ -57,8 +56,7 @@ const SaveAsNewArtifactDialog: React.FC<Props> = props => {
             secondTitle={t("dialog.cancel")}
             onSecond={props.onCancelled}
             firstTitle={t("dialog.create")}
-            onFirst={onCreate}
-            firstDisabled={title === ""} >
+            onFirst={onCreate} >
 
             <SettingsForm large>
 

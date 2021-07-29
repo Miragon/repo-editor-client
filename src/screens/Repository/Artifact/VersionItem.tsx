@@ -253,7 +253,7 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
                                                 if (option.onClick) {
                                                     option.onClick();
                                                 } else {
-                                                    console.log("Some error when clicking");
+                                                    console.log("No Action provided")
                                                 }
                                                 setSettingsOpen(false);
                                             }}>
