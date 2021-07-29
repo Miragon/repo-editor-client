@@ -33,11 +33,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     popupContainer: {
         width: "150px",
-        zIndex: 1000
+        zIndex: 10000
     },
     popup: {
         borderTopLeftRadius: "0px",
         borderTopRightRadius: "0px",
+        minWidth: "max-content",
         backgroundColor: theme.palette.secondary.main,
     },
     menuItem: {
@@ -173,7 +174,6 @@ const UserListItem: React.FC<Props> = props => {
                 anchorEl={ref.current}
                 role={undefined}
                 transition
-                disablePortal
                 className={classes.popupContainer}>
                 {({ TransitionProps }) => (
                     <Grow

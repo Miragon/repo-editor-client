@@ -235,7 +235,6 @@ const VersionItem: React.FC<Props> = ((props: Props) => {
                 anchorEl={ref.current}
                 role={undefined}
                 transition
-                disablePortal
                 className={classes.popupContainer}>
                 {({TransitionProps}) => (
                     <Grow

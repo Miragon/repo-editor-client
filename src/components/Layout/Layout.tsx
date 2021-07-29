@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexGrow: 1,
         flexDirection: "column",
         maxHeight: "calc(100vh - 60px)",
-        padding: "20px 16px",
+        padding: "20px 25px",
         margin: "0 auto"
     },
     loadingScreen: {

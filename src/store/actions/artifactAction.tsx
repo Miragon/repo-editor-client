@@ -1,16 +1,11 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import {
-    ArtifactUpdateTO,
-    ArtifactVersionUploadTO,
-    ArtifactVersionUploadTOSaveTypeEnum,
-    NewArtifactTO
-} from "../../api";
+import {ArtifactUpdateTO, ArtifactVersionUploadTO, ArtifactVersionUploadTOSaveTypeEnum, NewArtifactTO} from "../../api";
 import helpers from "../../constants/Functions";
 import {
     ACTIVE_ARTIFACTS,
-    DIAGRAM_UPLOAD,
     ARTIFACTQUERY_EXECUTED,
+    DIAGRAM_UPLOAD,
     GET_FAVORITE,
     GET_RECENT,
     SEARCH_ARTIFACT,

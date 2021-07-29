@@ -1,19 +1,10 @@
-import {Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper} from "@material-ui/core";
+import {Button, Checkbox, ClickAwayListener, FormControlLabel, Grow, MenuList, Paper, Popper} from "@material-ui/core";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import {ArrowDropDown} from "@material-ui/icons";
 import clsx from "clsx";
 import React, {useRef, useState} from "react";
 import {useTranslation} from "react-i18next";
-
-export interface DropdownButtonItem {
-    id: string;
-    label: string;
-    icon?: React.ReactNode;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onClick?: (event?: any) => void;
-    disabled?: boolean;
-    type?: "button" | "divider" | "hint";
-}
+import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 
 interface Props {
     testId?: string;
@@ -44,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderTopLeftRadius: "0px",
         borderTopRightRadius: "0px",
         minWidth: "max-content",
+        paddingLeft: "5px",
         backgroundColor: theme.palette.secondary.main,
     },
     menuItem: {
@@ -56,7 +48,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     list: {
         outline: "none",
-
+        display: "flex",
+        flexDirection: "column",
     },
     menuItemHint: {
         whiteSpace: "break-spaces",
@@ -78,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }));
 
-const DropdownButton: React.FC<Props> = props => {
+const FilterDropdownButton: React.FC<Props> = props => {
     const classes = useStyles();
     const {t} = useTranslation("common");
 
@@ -117,25 +110,22 @@ const DropdownButton: React.FC<Props> = props => {
                             <ClickAwayListener onClickAway={() => setOpen(false)}>
                                 <MenuList className={classes.list}>
                                     {props.options.map(option => (
-                                        <MenuItem
+                                        <FormControlLabel
                                             key={option.id}
-                                            disabled={option.disabled || option.type !== "button"}
-                                            className={clsx(
-                                                classes.menuItem,
-                                                option.type === "hint" && classes.menuItemHint,
-                                                option.type === "divider" && classes.menuItemDivider
-                                            )}
-                                            onClick={() => {
-                                                if (option.onClick) {
-                                                    option.onClick();
-                                                } else if (props.onClick) {
-                                                    props.onClick(option.id);
-                                                }
-                                                setOpen(false);
-                                            }}>
-                                            {option.icon? option.icon : null}
-                                            {t(option.label)}
-                                        </MenuItem>
+                                            control={
+                                                <Checkbox
+                                                    defaultChecked
+                                                    color={"primary"}
+                                                    onChange={() => {
+                                                        if (option.onClick) {
+                                                            option.onClick();
+                                                        } else if (props.onClick) {
+                                                            props.onClick(option.id);
+                                                        }}
+                                                    }
+                                                    value={option.id}/>}
+                                            label={t(option.label)} />
+
                                     ))}
                                 </MenuList>
                             </ClickAwayListener>
@@ -147,4 +137,4 @@ const DropdownButton: React.FC<Props> = props => {
     );
 };
 
-export default DropdownButton;
+export default FilterDropdownButton;
