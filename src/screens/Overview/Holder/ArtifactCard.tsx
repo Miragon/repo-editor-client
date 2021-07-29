@@ -65,6 +65,7 @@ const useStyles = makeStyles(theme => ({
     image: {
         backgroundColor: "#EEE",
         flexGrow: 1,
+        overflow: "hidden",
         border: "1px solid #ccc",
         borderBottomLeftRadius: "4px",
         borderBottomRightRadius: "4px",

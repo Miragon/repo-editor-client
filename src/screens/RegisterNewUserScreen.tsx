@@ -1,9 +1,6 @@
 import React, {useCallback, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import LockIcon from "@material-ui/icons/Lock";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
@@ -12,7 +9,7 @@ import {toast, ToastContainer} from "react-toastify";
 import {UserApi} from "../api/api";
 import helpers from "../constants/Functions";
 import {useTranslation} from "react-i18next";
-
+/*
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -26,7 +23,7 @@ function Copyright() {
         </Typography>
     );
 }
-
+*/
 const useStyles = makeStyles(theme => ({
     createUserProfilePage: {
         display: "flex",
@@ -79,7 +76,7 @@ const RegisterNewUserScreen: React.FC = () => {
 
 
     const [userController] = useState<UserApi>(new UserApi());
-    const [isButtonDisabled, setButtonDisabled] = useState<boolean>(true);
+    //const [isButtonDisabled, setButtonDisabled] = useState<boolean>(true);
 
 
     /**
@@ -120,9 +117,10 @@ const RegisterNewUserScreen: React.FC = () => {
                         fullWidth
                         variant="contained"
                         color="primary"
+                        //disabled={isButtonDisabled}
                         className={classes.createUserProfileButton}
-                        onClick={handleCreateUserProfile}
-                        disabled={isButtonDisabled}>
+                        onClick={handleCreateUserProfile}>
+
                         {t("registration.create")}
                     </Button>
                 </form>

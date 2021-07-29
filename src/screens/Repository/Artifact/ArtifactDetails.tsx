@@ -1,5 +1,5 @@
 import {makeStyles} from "@material-ui/styles";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {ArtifactTO, FileTypesTO} from "../../../api";
 import {fetchArtifactsFromRepo} from "../../../store/actions";
@@ -10,6 +10,7 @@ import SimpleButton from "../../../components/Form/SimpleButton";
 import {Checkbox, FormControlLabel, Radio, RadioGroup} from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import ArtifactManagementContainer from "../Administration/ArtifactManagementContainer";
+
 
 const useStyles = makeStyles(() => ({
     container: {
@@ -54,25 +55,22 @@ const ArtifactDetails: React.FC = (() => {
     const [sortValue, setSortValue] = useState<string>("lastEdited");
 
 
-    const fetchActiveArtifacts = useCallback((repoId: string) => {
-        try {
-            dispatch(fetchArtifactsFromRepo(repoId));
-        } catch (err) {
-            console.log(err);
-        }
-    }, [dispatch]);
+
 
     useEffect(() => {
         setFilteredArtifacts(activeArtifacts)
     }, [activeArtifacts])
 
+    useEffect(() => {
+        dispatch(fetchArtifactsFromRepo(repoId))
+    }, [dispatch, repoId])
 
 
     useEffect(() => {
         if (!synced) {
-            fetchActiveArtifacts(repoId);
+            dispatch(fetchArtifactsFromRepo(repoId))
         }
-    }, [synced, fetchActiveArtifacts, repoId]);
+    }, [dispatch, synced, repoId]);
 
 
     const changeFileTypeFilter = (selectedValue: string) => {
@@ -149,6 +147,10 @@ const ArtifactDetails: React.FC = (() => {
                 <ArtifactManagementContainer/>
             </div>
 
+
+
+
+
             {filterOpen &&
                 <div className={classes.filterContainer}>
                     <div className={classes.types}>
@@ -164,6 +166,9 @@ const ArtifactDetails: React.FC = (() => {
 
                                 label={fileType.name}/>)}
                     </div>
+
+
+
 
                     <div className={classes.sort}>
                         <FormControl component="fieldset">

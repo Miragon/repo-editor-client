@@ -283,7 +283,7 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
                 return `${standardDate}  |  ${time}`;
             }
         }
-        if(language === "default") {
+        else {
             if(date) {
                 const americanDate = `${date.substring(5, 7)}.${date.substring(8, 10)}.${date.substring(0, 4)}`
                 const time = date.split("T")[1].substring(0, 5);

@@ -21,9 +21,12 @@ const Repository: React.FC = (() => {
 
 
     useEffect(() => {
-        getRepo(repoId);
+        console.log(repoId)
+        dispatch(getSingleRepository(repoId));
 
-    }, [getRepo, repoId])
+        //getRepo(repoId);
+
+    }, [dispatch, getRepo, repoId])
 
     useEffect(() => {
         if(!dataSynced){
