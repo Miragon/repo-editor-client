@@ -6,10 +6,12 @@ import {fetchArtifactsFromRepo} from "../../../store/actions";
 import {RootState} from "../../../store/reducers/rootReducer";
 import ArtifactListItem from "./ArtifactListItem";
 import {useParams} from "react-router";
-import SimpleButton from "../../../components/Form/SimpleButton";
-import {Checkbox, FormControlLabel, Radio, RadioGroup} from "@material-ui/core";
-import FormControl from "@material-ui/core/FormControl";
 import ArtifactManagementContainer from "../Administration/ArtifactManagementContainer";
+import theme from "../../../theme";
+import FilterDropdownButton from "./FilterDropdownButton";
+import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
+import SortDropdownButton from "./SortDropdownButton";
+import {useTranslation} from "react-i18next";
 
 
 const useStyles = makeStyles(() => ({
@@ -35,12 +37,40 @@ const useStyles = makeStyles(() => ({
     sort: {
         display: "flex",
         flexDirection: "column"
+    },
+    popup: {
+        borderTopLeftRadius: "0px",
+        borderTopRightRadius: "0px",
+        backgroundColor: theme.palette.secondary.main,
+    },
+    list: {
+        outline: "none"
+    },
+    menuItem: {
+        color: theme.palette.secondary.contrastText,
+        fontSize: theme.typography.button.fontSize,
+        fontWeight: theme.typography.button.fontWeight,
+        "&:hover": {
+            backgroundColor: "rgba(0, 0, 0, 0.1)"
+        }
+    },
+    button: {
+        textTransform: "none",
+        fontWeight: 600,
+        transition: theme.transitions.create("border-radius"),
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.main
+        }
+    },
+    spacer: {
+        marginLeft: "10px"
     }
 }));
 
 const ArtifactDetails: React.FC = (() => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const {t} = useTranslation("common");
 
     const { repoId } = useParams<{ repoId: string }>();
     const activeArtifacts: Array<ArtifactTO> = useSelector(
@@ -51,26 +81,23 @@ const ArtifactDetails: React.FC = (() => {
 
     const [displayedFileTypes, setDisplayedFileTypes] = useState<Array<string>>(fileTypes.map(type => type.name));
     const [filteredArtifacts, setFilteredArtifacts] = useState<Array<ArtifactTO>>(activeArtifacts);
-    const [filterOpen, setFilterOpen] = useState<boolean>(false);
     const [sortValue, setSortValue] = useState<string>("lastEdited");
 
-
-
-
-    useEffect(() => {
-        setFilteredArtifacts(activeArtifacts)
-    }, [activeArtifacts])
 
     useEffect(() => {
         dispatch(fetchArtifactsFromRepo(repoId))
     }, [dispatch, repoId])
-
 
     useEffect(() => {
         if (!synced) {
             dispatch(fetchArtifactsFromRepo(repoId))
         }
     }, [dispatch, synced, repoId]);
+
+    useEffect(() => {
+        setFilteredArtifacts(activeArtifacts)
+    }, [activeArtifacts])
+
 
 
     const changeFileTypeFilter = (selectedValue: string) => {
@@ -87,44 +114,46 @@ const ArtifactDetails: React.FC = (() => {
 
     const applyFilters = () => {
         setFilteredArtifacts(activeArtifacts.filter(artifact => displayedFileTypes.includes(artifact.fileType)))
-
+        sort(sortValue)
     }
 
-    const handleChangeSorting = (event: React.FormEvent<HTMLInputElement>) => {
-        setSortValue((event.target as HTMLInputElement).value)
-        sort((event.target as HTMLInputElement).value);
-    }
 
     const sort = (value: string) => {
         switch (value){
             case "created":
+                setSortValue("created")
                 setFilteredArtifacts(filteredArtifacts.sort(compareCreated));
                 return;
             case "lastEdited":
+                setSortValue("lastEdited")
                 setFilteredArtifacts(filteredArtifacts.sort(compareEdited));
                 return;
             case "name":
+                setSortValue("name")
                 setFilteredArtifacts(filteredArtifacts.sort(compareName));
                 return;
         }
     }
 
     const compareCreated = (a: ArtifactTO, b: ArtifactTO) => {
-        if(a.createdDate < b.createdDate) {
-            return -1;
-        }
-        if(a.createdDate > b.createdDate) {
+        const c = new Date(a.createdDate)
+        const d = new Date(b.createdDate)
+        if(c < d) {
             return 1;
+        }
+        if(c > d) {
+            return -1;
         }
         return 0;
     }
     const compareEdited = (a: ArtifactTO, b: ArtifactTO) => {
-
-        if(a.updatedDate < b.updatedDate) {
-            return -1;
-        }
-        if(a.updatedDate > b.updatedDate) {
+        const c = new Date(a.updatedDate)
+        const d = new Date(b.updatedDate)
+        if(c < d) {
             return 1;
+        }
+        if(c > d) {
+            return -1;
         }
         return 0;
     }
@@ -138,61 +167,63 @@ const ArtifactDetails: React.FC = (() => {
         return 0;
     }
 
+
+    const filterOptions: DropdownButtonItem[] = [];
+    fileTypes.map(fileType => (
+        filterOptions.push(
+            {
+                id: fileType.name,
+                label: fileType.name,
+                type: "button",
+                onClick: () => {
+                    changeFileTypeFilter(fileType.name)
+                }
+            }
+        )
+    ))
+
+    const sortOptions: DropdownButtonItem[] = [
+        {
+            id: "created",
+            label: t("sort.created"),
+            type: "button",
+            onClick: () => {
+                sort("created")
+            }
+        },
+        {
+            id: "lastEdited",
+            label: t("sort.lastEdited"),
+            type: "button",
+            onClick: () => {
+                sort("lastEdited")
+            }
+        },
+        {
+            id: "name",
+            label: t("sort.name"),
+            type: "button",
+            onClick: () => {
+                sort("name")
+
+            }
+        },
+    ]
+
+
+
+
     return (
         <>
             <div className={classes.buttonContainer}>
-                <SimpleButton
-                    title={"Filter"}
-                    onClick={() => setFilterOpen(!filterOpen)} />
+                <div>
+                    <FilterDropdownButton title={t("filter.filter")} options={filterOptions} />
+                    <SortDropdownButton title={t("sort.sort")} options={sortOptions} defaultValue={"lastEdited"} className={classes.spacer}/>
+                </div>
                 <ArtifactManagementContainer/>
             </div>
 
 
-
-
-
-            {filterOpen &&
-                <div className={classes.filterContainer}>
-                    <div className={classes.types}>
-                        {fileTypes?.map(fileType =>
-                            <FormControlLabel
-                                key={fileType.name}
-                                control={
-                                    <Checkbox
-                                        defaultChecked
-                                        onClick={() => {
-                                            changeFileTypeFilter(fileType.name)
-                                        }}/>}
-
-                                label={fileType.name}/>)}
-                    </div>
-
-
-
-
-                    <div className={classes.sort}>
-                        <FormControl component="fieldset">
-                            <RadioGroup value={sortValue} onChange={handleChangeSorting} defaultValue={"lastEdited"}>
-                                <FormControlLabel
-                                    value={"lastEdited"}
-                                    control={<Radio/>}
-                                    label={"Last edited"} />
-                                <FormControlLabel
-                                    value={"name"}
-                                    control={<Radio/>}
-                                    label={"Name"} />
-                                <FormControlLabel
-                                    value={"created"}
-                                    control={<Radio/>}
-                                    label={"Created"} />
-                            </RadioGroup>
-                        </FormControl>
-                    </div>
-
-
-
-                </div>
-            }
 
 
             <div className={classes.container}>

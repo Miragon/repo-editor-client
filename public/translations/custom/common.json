@@ -141,5 +141,14 @@
   "path": {
   "overview": "Übersicht",
   "repository": "Projekt"
-}
+  },
+  "filter": {
+    "filter": "Filter"
+  },
+  "sort": {
+    "sort": "Sortieren",
+    "lastEdited": "Zuletzt bearbeitet",
+    "created": "Erstellungsdatum",
+    "name": "Name"
+  }
 }
