@@ -21,11 +21,7 @@ const Repository: React.FC = (() => {
 
 
     useEffect(() => {
-        console.log(repoId)
         dispatch(getSingleRepository(repoId));
-
-        //getRepo(repoId);
-
     }, [dispatch, getRepo, repoId])
 
     useEffect(() => {

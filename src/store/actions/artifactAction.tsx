@@ -11,6 +11,7 @@ import {
     SEARCH_ARTIFACT,
     SUCCESS,
     SYNC_STATUS_ARTIFACT,
+    SYNC_STATUS_FAVORITE,
     SYNC_STATUS_RECENT,
     SYNC_STATUS_REPOSITORY,
     SYNC_STATUS_VERSION,
@@ -286,7 +287,7 @@ export const addToFavorites = (artifactId: string) => {
             const response = await artifactController.setStarred(artifactId, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SYNC_STATUS_ARTIFACT, dataSynced: false });
-                dispatch({type: SUCCESS, successMessage: "artifact.addedToFavorite"})
+                dispatch({type: SYNC_STATUS_FAVORITE, dataSynced: false})
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
             }

@@ -9,6 +9,7 @@ import {RootState} from "../../store/reducers/rootReducer";
 import ArtifactCard from "./Holder/ArtifactCard";
 import {useTranslation} from "react-i18next";
 import {openFileInTool} from "../../components/Redirect/Redirections";
+import {SYNC_STATUS_FAVORITE} from "../../store/constants";
 
 const useStyles = makeStyles(() => ({
     artifactContainer: {
@@ -37,20 +38,25 @@ const FavoriteArtifacts: React.FC = observer(() => {
     const {t} = useTranslation("common");
 
 
-    const favoriteArtifacts: Array<ArtifactTO> = useSelector(
-        (state: RootState) => state.artifacts.favoriteArtifacts
-    );
+    const favoriteArtifacts: Array<ArtifactTO> = useSelector((state: RootState) => state.artifacts.favoriteArtifacts);
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
+    const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.favoriteSynced);
 
     const fetchFavorite = useCallback(() => {
         try {
             dispatch(artifactAction.fetchFavoriteArtifacts());
         } catch (err) {
-            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [dispatch]);
+
+    useEffect(() => {
+        if(!syncStatus){
+            fetchFavorite();
+            dispatch({type: SYNC_STATUS_FAVORITE, dataSynced: true})
+        }
+    }, [dispatch, syncStatus, fetchFavorite])
 
     const getRepoName = ((repoId: string) => {
         const assignedRepo = repos.find(repo => repo.id === repoId);
@@ -80,6 +86,8 @@ const FavoriteArtifacts: React.FC = observer(() => {
                                 artifactRepo={getRepoName(artifact.repositoryId)}
                                 artifactTitle={artifact.name}
                                 image={artifact.svgPreview}
+                                favorite={true}
+                                id={artifact.id}
                                 fileType={artifact.fileType} />
                         </div>
                     ))}

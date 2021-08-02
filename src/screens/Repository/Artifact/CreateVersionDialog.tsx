@@ -37,6 +37,8 @@ const CreateVersionDialog: React.FC<Props> = props => {
     const [comment, setComment] = useState("");
 
 
+
+    //#TODO: Versionen Updaten über SyncState ausführen,  nicht direkt callen
     const onCreate = useCallback(async () => {
         try {
             if(latestVersion){

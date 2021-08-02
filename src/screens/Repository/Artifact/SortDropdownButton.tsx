@@ -45,12 +45,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         borderTopLeftRadius: "0px",
         borderTopRightRadius: "0px",
         minWidth: "max-content",
-        paddingLeft: "5px",
         backgroundColor: theme.palette.secondary.main,
     },
     menuItem: {
         color: theme.palette.secondary.contrastText,
         fontSize: theme.typography.button.fontSize,
+        margin: "0px",
         fontWeight: theme.typography.button.fontWeight,
         "&:hover": {
             backgroundColor: "rgba(0, 0, 0, 0.1)"
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: "rgba(0, 0, 0, 0.5)",
         opacity: "1 !important",
         marginTop: "0.25rem",
-        marginBottom: "0.5rem",
+        marginBottom: "0.25rem",
         padding: 0
     }
 }));
@@ -123,6 +123,7 @@ const SortDropdownButton: React.FC<Props> = props => {
                                         {props.options.map(option => (
                                             <FormControlLabel
                                                 key={option.id}
+                                                className={classes.menuItem}
                                                 value={option.id}
                                                 label={option.label}
                                                 control={

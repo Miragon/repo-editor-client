@@ -58,22 +58,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         outline: "none",
 
     },
-    menuItemHint: {
-        whiteSpace: "break-spaces",
-        fontSize: "0.85rem",
-        color: "white",
-        fontWeight: "normal",
-        opacity: "1 !important",
-        backgroundColor: "rgba(0, 0, 0, 0.15)",
-        marginTop: "0.5rem",
-        marginBottom: "1rem"
-    },
     menuItemDivider: {
         height: "1px",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
         opacity: "1 !important",
         marginTop: "0.25rem",
-        marginBottom: "0.5rem",
+        marginBottom: "0.25rem",
         padding: 0
     }
 }));
@@ -122,7 +112,6 @@ const DropdownButton: React.FC<Props> = props => {
                                             disabled={option.disabled || option.type !== "button"}
                                             className={clsx(
                                                 classes.menuItem,
-                                                option.type === "hint" && classes.menuItemHint,
                                                 option.type === "divider" && classes.menuItemDivider
                                             )}
                                             onClick={() => {

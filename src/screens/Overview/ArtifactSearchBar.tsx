@@ -11,6 +11,7 @@ import {RootState} from "../../store/reducers/rootReducer";
 import ArtifactCard from "./Holder/ArtifactCard";
 import {useTranslation} from "react-i18next";
 import {openFileInTool} from "../../components/Redirect/Redirections";
+import helpers from "../../constants/Functions";
 
 const useStyles = makeStyles(() => ({
     headerText: {
@@ -58,8 +59,10 @@ const ArtifactSearchBar: React.FC = () => {
         (state: RootState) => state.artifacts.searchedArtifacts
     );
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
-    const results: number = useSelector((state: RootState) => state.resultsCount.artifactResultsCount)
+    const results: number = useSelector((state: RootState) => state.resultsCount.artifactResultsCount);
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
+    const favoriteArtifacts: Array<ArtifactTO> = useSelector((state: RootState) => state.artifacts.favoriteArtifacts);
+
 
     const [artifact, setArtifact] = useState("");
     const [open, setOpen] = useState(false);
@@ -180,6 +183,8 @@ const ArtifactSearchBar: React.FC = () => {
                                     artifactRepo={getRepoName(searchedArtifact.repositoryId)}
                                     artifactTitle={searchedArtifact.name}
                                     image={searchedArtifact.svgPreview}
+                                    id={searchedArtifact.id}
+                                    favorite={helpers.isFavorite(searchedArtifact.id, favoriteArtifacts?.map(artifact => artifact.id))}
                                     fileType={searchedArtifact.fileType} />
                             </div>
                         ))}

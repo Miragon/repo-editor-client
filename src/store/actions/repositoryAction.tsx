@@ -7,6 +7,7 @@ import {
     GET_REPOS,
     SUCCESS,
     SYNC_STATUS_ACTIVE_REPOSITORY,
+    SYNC_STATUS_FAVORITE,
     SYNC_STATUS_RECENT,
     SYNC_STATUS_REPOSITORY,
     UNHANDLEDERROR
@@ -108,7 +109,9 @@ export const deleteRepository = (id: string) => {
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "repository.deleted" });
                 dispatch({ type: SYNC_STATUS_REPOSITORY, dataSynced: false });
-                dispatch({type: SYNC_STATUS_RECENT, dataSynced: false})
+                dispatch({type: SYNC_STATUS_RECENT, dataSynced: false});
+                dispatch({type: SYNC_STATUS_FAVORITE, dataSynced: false});
+
 
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });

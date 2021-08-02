@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: "rgba(0, 0, 0, 0.5)",
         opacity: "1 !important",
         marginTop: "0.25rem",
-        marginBottom: "0.5rem",
+        marginBottom: "0.25rem",
         padding: 0
     }
 }));

@@ -2,16 +2,17 @@ import {makeStyles} from "@material-ui/styles";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {ArtifactTO, FileTypesTO} from "../../../api";
-import {fetchArtifactsFromRepo} from "../../../store/actions";
+import {fetchArtifactsFromRepo, fetchFavoriteArtifacts} from "../../../store/actions";
 import {RootState} from "../../../store/reducers/rootReducer";
-import ArtifactListItem from "./ArtifactListItem";
 import {useParams} from "react-router";
 import ArtifactManagementContainer from "../Administration/ArtifactManagementContainer";
-import theme from "../../../theme";
 import FilterDropdownButton from "./FilterDropdownButton";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 import SortDropdownButton from "./SortDropdownButton";
 import {useTranslation} from "react-i18next";
+import {SYNC_STATUS_FAVORITE} from "../../../store/constants";
+import ArtifactListItem from "./ArtifactListItem";
+import {List} from "@material-ui/core";
 
 
 const useStyles = makeStyles(() => ({
@@ -24,46 +25,14 @@ const useStyles = makeStyles(() => ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: "1rem"
-    },
-    filterContainer: {
-        display: "flex",
-        flexDirection: "row",
+        margin: "0px"
     },
     types: {
         display: "flex",
         flexDirection: "column"
     },
-    sort: {
-        display: "flex",
-        flexDirection: "column"
-    },
-    popup: {
-        borderTopLeftRadius: "0px",
-        borderTopRightRadius: "0px",
-        backgroundColor: theme.palette.secondary.main,
-    },
-    list: {
-        outline: "none"
-    },
-    menuItem: {
-        color: theme.palette.secondary.contrastText,
-        fontSize: theme.typography.button.fontSize,
-        fontWeight: theme.typography.button.fontWeight,
-        "&:hover": {
-            backgroundColor: "rgba(0, 0, 0, 0.1)"
-        }
-    },
-    button: {
-        textTransform: "none",
-        fontWeight: 600,
-        transition: theme.transitions.create("border-radius"),
-        "&:hover": {
-            backgroundColor: theme.palette.secondary.main
-        }
-    },
-    spacer: {
-        marginLeft: "10px"
+    filter: {
+        marginRight: "25px"
     }
 }));
 
@@ -77,28 +46,39 @@ const ArtifactDetails: React.FC = (() => {
         (state: RootState) => state.artifacts.artifacts
     );
     const synced = useSelector((state: RootState) => state.dataSynced.artifactSynced);
-    const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes)
+    const favoriteSynced = useSelector((state: RootState) => state.dataSynced.favoriteSynced);
+    const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
+    const favoriteArtifacts: Array<ArtifactTO> = useSelector((state: RootState) => state.artifacts.favoriteArtifacts);
+
 
     const [displayedFileTypes, setDisplayedFileTypes] = useState<Array<string>>(fileTypes.map(type => type.name));
     const [filteredArtifacts, setFilteredArtifacts] = useState<Array<ArtifactTO>>(activeArtifacts);
     const [sortValue, setSortValue] = useState<string>("lastEdited");
 
-
     useEffect(() => {
-        dispatch(fetchArtifactsFromRepo(repoId))
-    }, [dispatch, repoId])
+        dispatch(fetchArtifactsFromRepo(repoId));
+    }, [dispatch, repoId]);
 
     useEffect(() => {
         if (!synced) {
-            dispatch(fetchArtifactsFromRepo(repoId))
+            dispatch(fetchArtifactsFromRepo(repoId));
         }
     }, [dispatch, synced, repoId]);
 
     useEffect(() => {
         setFilteredArtifacts(activeArtifacts)
-    }, [activeArtifacts])
+    }, [activeArtifacts, fileTypes])
 
+    useEffect(() => {
+        if(!favoriteSynced){
+            dispatch(fetchFavoriteArtifacts());
+            dispatch({type: SYNC_STATUS_FAVORITE, dataSynced: true})
+        }
+    }, [favoriteSynced, dispatch, ]);
 
+    useEffect(() => {
+        console.log(filteredArtifacts)
+    }, [filteredArtifacts])
 
     const changeFileTypeFilter = (selectedValue: string) => {
         const currentList = displayedFileTypes
@@ -109,11 +89,16 @@ const ArtifactDetails: React.FC = (() => {
             currentList.push(selectedValue)
         }
         setDisplayedFileTypes(currentList)
+        console.log(displayedFileTypes)
         applyFilters()
     }
 
     const applyFilters = () => {
-        setFilteredArtifacts(activeArtifacts.filter(artifact => displayedFileTypes.includes(artifact.fileType)))
+        const filtered = activeArtifacts.filter(artifact => displayedFileTypes.includes(artifact.fileType))
+        //#TODO: the setFilteredArtifacts call does not load the filtered List into the state
+        console.log(activeArtifacts.filter(artifact => displayedFileTypes.includes(artifact.fileType)))
+        setFilteredArtifacts(filtered)
+        console.log(filteredArtifacts)
         sort(sortValue)
     }
 
@@ -211,35 +196,30 @@ const ArtifactDetails: React.FC = (() => {
     ]
 
 
-
-
     return (
         <>
             <div className={classes.buttonContainer}>
-                <div>
-                    <FilterDropdownButton title={t("filter.filter")} options={filterOptions} />
-                    <SortDropdownButton title={t("sort.sort")} options={sortOptions} defaultValue={"lastEdited"} className={classes.spacer}/>
+                <div >
+                    <FilterDropdownButton className={classes.filter} title={t("filter.filter")} options={filterOptions} />
+                    <SortDropdownButton title={t("sort.sort")} options={sortOptions} defaultValue={"lastEdited"}/>
                 </div>
                 <ArtifactManagementContainer/>
             </div>
 
-
-
-
             <div className={classes.container}>
-                {filteredArtifacts?.map(artifact => (
-                    <ArtifactListItem
-                        key={artifact.id}
-                        artifactTitle={artifact.name}
-                        image={artifact.svgPreview}
-                        updatedDate={artifact.updatedDate}
-                        createdDate={artifact.createdDate}
-                        description={artifact.description}
-                        repoId={artifact.repositoryId}
-                        artifactId={artifact.id}
-                        fileType={artifact.fileType}/>
-                    
-                ))}
+                <List>
+                    {filteredArtifacts.map(artifact => (
+                        <ArtifactListItem
+                            key={artifact.id}
+                            artifactTitle={artifact.name}
+                            createdDate={artifact.createdDate}
+                            updatedDate={artifact.updatedDate}
+                            description={artifact.description}
+                            repoId={artifact.repositoryId}
+                            artifactId={artifact.id}
+                            fileType={artifact.fileType} />
+                    ))}
+                </List>
             </div>
         </>
     );

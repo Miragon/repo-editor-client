@@ -2,11 +2,13 @@ import {makeStyles} from "@material-ui/core/styles";
 import clsx from "clsx";
 import React, {useEffect, useState} from "react";
 import {FileTypesTO} from "../../../api";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/reducers/rootReducer";
 import Icon from "@material-ui/core/Icon";
+import {Star, StarOutline} from "@material-ui/icons";
 import New from "../../../img/New.svg";
 import {Tooltip} from "@material-ui/core";
+import * as artifactAction from "../../../store/actions";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -54,13 +56,31 @@ const useStyles = makeStyles(theme => ({
         textOverflow: "ellipsis",
         overflow: "hidden"
     },
-    fileType: {
+    icons: {
+        display: "flex",
+        flexDirection: "column",
         minWidth: "25px",
         maxWidth: "25px",
-        minHeight: "25px",
-        maxHeight: "25px",
+        minHeight: "50px",
+        maxHeight: "50px",
         margin: "5px",
+    },
+    fileType: {
         color: theme.palette.primary.contrastText,
+    },
+    starPositive: {
+        color: "#F5E73D",
+        transition: "background-image .3s",
+        "&:hover": {
+            backgroundImage: "radial-gradient(white, transparent 70%)"
+        }
+    },    
+    starNegative: {
+        color: theme.palette.primary.contrastText,
+        transition: "background-image .3s",
+        "&:hover": {
+            backgroundImage: "radial-gradient(#F5E73D, transparent 70%)"
+        }
     },
     image: {
         backgroundColor: "#EEE",
@@ -71,6 +91,7 @@ const useStyles = makeStyles(theme => ({
         borderBottomRightRadius: "4px",
         borderTop: "none"
     },
+
     emptyImage: {
         backgroundColor: "#EEE",
         border: "1px solid #ccc",
@@ -88,11 +109,14 @@ interface ArtifactProps {
     image: string | undefined;
     artifactRepo: string;
     fileType: string;
+    id: string
+    favorite?: boolean;
     className?: string;
 }
 
 const ArtifactCard: React.FC<ArtifactProps> = (props: ArtifactProps) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
@@ -105,6 +129,11 @@ const ArtifactCard: React.FC<ArtifactProps> = (props: ArtifactProps) => {
         }
     }, [fileTypes, props.fileType])
 
+
+    const setStarred = (event: React.MouseEvent<SVGSVGElement>) => {
+        event.stopPropagation();
+        dispatch(artifactAction.addToFavorites(props.id));
+    }
 
     return (
         <div className={clsx(classes.container, props.className)}>
@@ -119,8 +148,19 @@ const ArtifactCard: React.FC<ArtifactProps> = (props: ArtifactProps) => {
                         </span>
                     </Tooltip>
                 </div>
-                <Icon className={classes.fileType}>{svgKey}</Icon>
+                <div className={classes.icons}>
+                    <Tooltip title={props.fileType} >
+                        <Icon className={classes.fileType}>{svgKey}</Icon>
+                    </Tooltip>
+                    {props.favorite ?
+                        <Star className={classes.starPositive} onClick={event => setStarred(event)}/>
+                        :
+                        <StarOutline className={classes.starNegative} onClick={event => setStarred(event)}/>
+
+                    }
+                </div>
             </div>
+
 
             {props.image ?
                 <img
@@ -133,6 +173,7 @@ const ArtifactCard: React.FC<ArtifactProps> = (props: ArtifactProps) => {
                     alt="New"
                     className={classes.image}
                     src={New} />
+
             }
 
 

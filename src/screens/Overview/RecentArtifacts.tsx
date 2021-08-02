@@ -9,6 +9,7 @@ import {RootState} from "../../store/reducers/rootReducer";
 import ArtifactCard from "./Holder/ArtifactCard";
 import {useTranslation} from "react-i18next";
 import {openFileInTool} from "../../components/Redirect/Redirections";
+import helpers from "../../constants/Functions";
 
 const useStyles = makeStyles(() => ({
     artifactContainer: {
@@ -45,6 +46,7 @@ const RecentArtifacts: React.FC = observer(() => {
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
     const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.recentSynced);
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
+    const favoriteArtifacts: Array<ArtifactTO> = useSelector((state: RootState) => state.artifacts.favoriteArtifacts);
 
 
     const fetchRecent = useCallback(() => {
@@ -85,6 +87,8 @@ const RecentArtifacts: React.FC = observer(() => {
                                 artifactRepo={getRepoName(artifact.repositoryId)}
                                 artifactTitle={artifact.name}
                                 image={artifact.svgPreview}
+                                id={artifact.id}
+                                favorite={helpers.isFavorite(artifact.id, favoriteArtifacts?.map(artifact => artifact.id))}
                                 fileType={artifact.fileType}/>
                         </div>
                     ))}

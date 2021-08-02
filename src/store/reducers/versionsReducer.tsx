@@ -1,6 +1,6 @@
 import {CaseReducer} from "@reduxjs/toolkit";
 import {ArtifactVersionTO} from "../../api";
-import {GET_VERSIONS, LATEST_VERSION} from "../constants";
+import {ACTIVE_VERSIONS, LATEST_VERSION} from "../constants";
 
 const initialState = {
     versions: Array<ArtifactVersionTO>(),
@@ -11,7 +11,7 @@ const initialState = {
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_VERSIONS:
+        case ACTIVE_VERSIONS:
             return {
                 ...state,
                 versions: action.versions

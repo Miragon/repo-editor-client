@@ -1,28 +1,14 @@
 import React, {useEffect} from "react";
-import {Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import {KeyboardArrowUp} from "@material-ui/icons";
-import {makeStyles} from "@material-ui/styles";
 import {ArtifactVersionTO} from "../../../api";
-import {useDispatch} from "react-redux";
-import {GET_VERSIONS} from "../../../store/constants";
-import {useTranslation} from "react-i18next";
-import VersionItem from "./VersionItem";
+import {CircularProgress, List, ListItem} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
+import VersionListItem from "./VersionListItem";
 
 const useStyles = makeStyles(() => ({
-    versionsButtonClose: {
-        bottom: "0px",
-        width: "100%",
-        alignItems: "center",
-        transition: "background-color .3s",
-        textAlign: "center",
-        backgroundColor: "transparent",
-        "&:hover": {
-            backgroundColor: "lightgrey"
-        },
+
+    list: {
+        padding: "0px"
     },
-
-
 }));
 
 interface Props {
@@ -34,10 +20,9 @@ interface Props {
     artifactVersionTOs: ArtifactVersionTO[];
 }
 
+
 const VersionDetails: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const {t} = useTranslation("common");
 
     useEffect(() => {
         if (props.artifactVersionTOs) {
@@ -56,57 +41,35 @@ const VersionDetails: React.FC<Props> = ((props: Props) => {
     };
 
 
-    const closeVersions = (event: React.MouseEvent<HTMLElement>): void => {
-        event.stopPropagation();
-        dispatch({type: GET_VERSIONS, versions: []});
-    };
-
-
     return (
         <>
-            <Table size="small">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>
-                            <b>{t("version.version")}</b>
-                        </TableCell>
-                        <TableCell>
-                            <b>{t("properties.comment")}</b>
-                        </TableCell>
-                        <TableCell>
-                            <b>{t("properties.date")}</b>
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {props.loading
-                    && (
-                        <TableRow key="loading" hover>
-                            <TableCell colSpan={3} align="center">
-                                <>
-                                    {props.loading ? <CircularProgress color="inherit" size={20}/> : null}
-                                </>
-                            </TableCell>
-                        </TableRow>
-                    )}
-                    {props.artifactVersionTOs?.map(singleVersion => (
-                        <VersionItem
-                            key={singleVersion.id}
-                            artifactVersion={singleVersion}
-                            repoId={props.repoId}
-                            fileType={props.fileType}
-                            artifactTitle={props.artifactTitle} />
-                    ))}
-                </TableBody>
-            </Table>
+            <List className={classes.list}>
+                {props.loading &&
+                    <ListItem>
+                        <CircularProgress size={20} />
+                    </ListItem>
+                }
+                {props.artifactVersionTOs?.map(version => (
+                    <VersionListItem
+                        key={version.id}
+                        artifactTitle={props.artifactTitle}
+                        milestone={version.milestone}
+                        comment={version.comment}
+                        updatedDate={version.updatedDate}
+                        id={version.id}
+                        artifactId={version.artifactId}
+                        file={version.xml}
+                        type={props.fileType}
+                        repoId={version.repositoryId}
+                        deployments={version.deployments} />
+                ))}
 
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-            <div className={classes.versionsButtonClose} onClick={(event => closeVersions(event))}>
-                <KeyboardArrowUp/>
-            </div>
+            </List>
+
 
 
         </>
     );
 });
-export default VersionDetails
+
+export default VersionDetails;

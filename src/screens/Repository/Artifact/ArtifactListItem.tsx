@@ -1,234 +1,99 @@
-/* eslint-disable max-len */
 import React, {useCallback, useEffect, useRef, useState} from "react";
-import {makeStyles} from "@material-ui/styles";
-import {
-    ClickAwayListener,
-    Collapse,
-    Grow,
-    IconButton,
-    MenuItem,
-    MenuList,
-    Paper,
-    Popper,
-    Tooltip
-} from "@material-ui/core";
-import {KeyboardArrowDown, MoreVert} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
-import clsx from "clsx";
-import theme from "../../../theme";
-import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
-import {getAllVersions, getLatestVersion} from "../../../store/actions/versionAction";
+import {useTranslation} from "react-i18next";
 import {ArtifactVersionTO, FileTypesTO} from "../../../api";
 import {RootState} from "../../../store/reducers/rootReducer";
-import {addToFavorites, deleteArtifact} from "../../../store/actions";
-import {LATEST_VERSION} from "../../../store/constants";
+import {Collapse, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import {ExpandLess, ExpandMore, MoreVert} from "@material-ui/icons";
+import {makeStyles} from "@material-ui/core/styles";
+import theme from "../../../theme";
+import PopupSettings from "../../../components/Form/PopupSettings";
+import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
+import {deleteArtifact, getAllVersions, getLatestVersion} from "../../../store/actions";
+import IconButton from "@material-ui/core/IconButton";
 import CreateVersionDialog from "./CreateVersionDialog";
 import EditArtifactDialog from "./EditArtifactDialog";
-import VersionDetails from "./VersionDetails";
-import {useTranslation} from "react-i18next";
+import {ACTIVE_VERSIONS, LATEST_VERSION} from "../../../store/constants";
 import Icon from "@material-ui/core/Icon";
-import New from "../../../img/New.svg";
-import {openFileInTool} from "../../../components/Redirect/Redirections";
+import helpers from "../../../constants/Functions";
+import VersionDetails from "./VersionDetails";
 
 const useStyles = makeStyles(() => ({
-    listItemWithVersions: {
-        display: "flex",
-        flexDirection: "column",
-        position: "relative",
-        transition: "box-shadow .3s",
-        borderRadius: "4px",
-        marginTop: "10px",
-        border: "1px solid lightgrey",
-        width: "100%",
-        "&:hover": {
-            boxShadow: theme.shadows[4]
-        },
-    },
     listItem: {
-        display: "flex",
-        flexDirection: "row",
-        transition: "box-shadow .3s",
-        cursor: "pointer",
-        borderRadius: "4px",
-        border: "1px solid lightgrey",
-        width: "100%",
-        height: "200px",
-        "&:hover": {
-            boxShadow: theme.shadows[4]
-        },
-    },
-    image: {
-        backgroundColor: "#EEE",
-        height: "100%",
-        minWidth: "200px",
-        maxWidth: "200px",
-        borderRight: "1px solid #ccc",
-        borderBottomLeftRadius: "4px",
-        borderTopLeftRadius: "4px",
-    },
-    content: {
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        height: "200px"
-    },
-    header: {
-        display: "flex",
-        justifyContent: "space-between",
-        flexDirection: "row",
-        flexWrap: "nowrap",
-        padding: "8px",
-        color: theme.palette.primary.contrastText,
         backgroundColor: theme.palette.primary.main,
-    },
-    title: {
-        fontWeight: "bold",
-        fontSize: "14px",
-        marginLeft: "15px",
-        flexGrow: 1,
-        whiteSpace: "nowrap",
-    },
-    updatedDate: {
-        marginRight: "10px",
-        whiteSpace: "nowrap",
-        fontWeight: "lighter",
-        fontStyle: "italic",
-        overflow: "hidden"
-    },
-    more: {
-        alignSelf: "flex-end",
-        height: "25px",
-        width: "25px",
         color: theme.palette.primary.contrastText,
-    },
-    description: {
-        flexGrow: 1,
-        padding: "16px",
-        color: "black"
-    },
-    versionsButton: {
-        width: "100%",
-        alignSelf: "flex-end",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "none",
-        borderBottomRightRadius: "4px",
+        marginTop: "10px",
+        borderBottom: "1px solid white",
         transition: "background-color .3s",
-        backgroundColor: "transparent",
         "&:hover": {
-            backgroundColor: "lightgrey"
-        },
-    },
-    popupContainer: {
-        zIndex: 1000
-    },
-    popup: {
-        borderTopLeftRadius: "0px",
-        borderTopRightRadius: "0px",
-        backgroundColor: theme.palette.secondary.main,
-    },
-    list: {
-        outline: "none"
-    },
-    menuItem: {
-        color: theme.palette.secondary.contrastText,
-        fontSize: theme.typography.button.fontSize,
-        fontWeight: theme.typography.button.fontWeight,
-        "&:hover": {
-            backgroundColor: "rgba(0, 0, 0, 0.1)"
+            backgroundColor: theme.palette.primary.dark,
         }
     },
-
-    menuItemDivider: {
-        height: "1px",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        opacity: "1 !important",
-        marginTop: "0.25rem",
-        marginBottom: "0.5rem",
-        padding: 0
+    icons: {
+        color: theme.palette.primary.contrastText,
     },
-    versionsButtonClose: {
-        bottom: "0px",
+    contentContainer: {
         width: "100%",
-        alignItems: "center",
-        transition: "background-color .3s",
-        textAlign: "center",
-        backgroundColor: "transparent",
-        "&:hover": {
-            backgroundColor: "lightgrey"
-        },
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
-    fileType: {
-        width: "24px",
-        height: "24px",
-        color: "#FFFFFF",
-        textDecoration: "none"
+    rightPanel: {
+        minWidth: "60px",
+        maxWidth: "60px",
+        display: "flex",
+        flexDirection: "column",
+        alignSelf: "center"
+
     },
+    middlePanel: {
+        flexGrow: 10,
+        display: "flex",
+        flexDirection: "column"
+    },
+    expandIcon: {
+        alignSelf: "center"
+    },
+    collapsible: {
+        margin: "0px",
+        padding: "0px"
+    }
+
 }));
 
 interface Props {
     artifactTitle: string;
-    image: string | undefined;
     createdDate: string | undefined;
     updatedDate: string | undefined;
     description: string;
     repoId: string;
     artifactId: string;
     fileType: string;
+    favorite?: boolean;
 }
+
 
 const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const ref = useRef<HTMLButtonElement>(null);
     const {t} = useTranslation("common");
+
+
     const artifactVersionTOs: Array<ArtifactVersionTO> = useSelector((state: RootState) => state.versions.versions);
     const latestVersion: ArtifactVersionTO | null = useSelector((state: RootState) => state.versions.latestVersion);
     const versionSynced: boolean = useSelector((state: RootState) => state.dataSynced.versionSynced)
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
-    //const apps: Array<MenuItemTO> = useSelector((state: RootState) => state.menuItems.menuItems);
 
 
-    const image = `data:image/svg+xml;utf-8,${encodeURIComponent(props.image || "")}`;
-
-    const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
-    const [currentId, setCurrentId] = useState<string>("");
+    const [open, setOpen] = useState<boolean>(false);
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
     const [createVersionOpen, setCreateVersionOpen] = useState<boolean>(false);
     const [editArtifactOpen, setEditArtifactOpen] = useState<boolean>(false);
     const [downloadReady, setDownloadReady] = useState<boolean>(false);
     const [svgKey, setSvgKey] = useState<string>("");
 
-
-    const ref = useRef<HTMLButtonElement>(null);
-
-    const checkIfVersionsAreOpen = useCallback(() => {
-        if (artifactVersionTOs) {
-            const openedArtifact = artifactVersionTOs[0];
-            if (openedArtifact?.artifactId === props.artifactId) {
-                setOpen(true);
-            } else {
-                setOpen(false);
-            }
-        }
-    }, [artifactVersionTOs, props]);
-
-    useEffect(() => {
-        // This block checks if th versions of another artifact are being fetched at the moment and if the loading animation has to be displayed
-        if (artifactVersionTOs) {
-            setCurrentId(artifactVersionTOs[0] ? artifactVersionTOs[0].artifactId : "");
-            if (currentId === artifactVersionTOs[0]?.artifactId) {
-                setLoading(false);
-            }
-        }
-        /* Runs a check for every ArtifactListItem, as soon as the state changes.
-        If the ArtifactId of the version that is currently saved in the state matches the ArtifactId of this ArtifactListItem,
-        The Item is expanded and available versions are displayed.
-        If the IDs don't match, the list is collapsed
-        */
-        checkIfVersionsAreOpen();
-    }, [artifactVersionTOs, currentId, checkIfVersionsAreOpen]);
 
     useEffect(() => {
         if(fileTypes && props.fileType){
@@ -237,90 +102,26 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
         }
     }, [fileTypes, props.fileType])
 
-    const downloadFile = (filePath: string) => {
-        const link=document.createElement("a");
-        link.href = filePath;
-        link.download = filePath.substr(filePath.lastIndexOf("/") + 1);
-        link.click();
-    }
-
-
     useEffect(() => {
-
-        if(downloadReady && latestVersion !== null){
-            console.log("file Ready - starting download...")
-            const path = `/api/version/${props.artifactId}/${latestVersion?.id}/download`
-            downloadFile(path)
-            dispatch({type: LATEST_VERSION, latestVersion: null})
-            setDownloadReady(false)
+        if(artifactVersionTOs){
+            setOpen(artifactVersionTOs[0]?.artifactId === props.artifactId)
         }
+    }, [artifactVersionTOs, props.artifactId])
 
-    }, [downloadReady, latestVersion, props.artifactId, dispatch])
-
-
-
-
-    const fetchVersions = useCallback(() => {
-        try {
-            dispatch(getAllVersions(props.artifactId));
-        } catch (err) {
-            console.log(err);
-        }
-    }, [dispatch, props]);
-
-    useEffect(() => {
-        if(!versionSynced && open){
-            fetchVersions()
-        }
-    }, [versionSynced, fetchVersions, open])
-
-
-    const reformatDate = (date: string | undefined) => {
-        const language = window.localStorage.getItem("language") ? window.localStorage.getItem("language") : "default";
-        if(language === "custom") {
-            if (date) {
-                const standardDate = `${date.substring(8, 10)}.${date.substring(5, 7)}.${date.substring(0, 4)}`
-                const time = date.split("T")[1].substring(0, 5);
-                return `${standardDate}  |  ${time}`;
-            }
+    const handleOpenVersions = () => {
+        if(!open){
+            setOpen(!open);
+            dispatch(getAllVersions(props.artifactId))
         }
         else {
-            if(date) {
-                const americanDate = `${date.substring(5, 7)}.${date.substring(8, 10)}.${date.substring(0, 4)}`
-                const time = date.split("T")[1].substring(0, 5);
-                return `${americanDate}  |  ${time}`;
-            }
+            setOpen(!open);
+            dispatch({type: ACTIVE_VERSIONS, artifacts: []})
         }
-        return "01.01.2000";
     }
 
-    const removeArtifact = () => {
-        dispatch(deleteArtifact(props.artifactId));
-    };
-    const openSettings = (event: React.MouseEvent<HTMLElement>) => {
+    const handleOpenSettings = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         setSettingsOpen(true);
-    };
-
-    const openVersions = (event: React.MouseEvent<HTMLElement>): void => {
-        event.stopPropagation();
-        setLoading(true);
-        fetchVersions();
-        setOpen(true);
-    };
-
-    const fetchLatestVersion = useCallback(() => {
-        dispatch(getLatestVersion(props.artifactId))
-        setDownloadReady(true)
-    }, [dispatch, props.artifactId])
-
-    const initDownload = () => {
-        fetchLatestVersion()
-    }
-
-    const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
-        const url = fileTypes.find((type: FileTypesTO) => type.name?.toLocaleLowerCase() === fileType.toLowerCase())?.url;
-        openFileInTool(url ? url: "", repositoryId, artifactId, t("error.missingTool", {fileType}), versionId);
     }
 
     const options: DropdownButtonItem[] = [
@@ -341,25 +142,15 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
             onClick: () => {
                 setEditArtifactOpen(true);
             }
-
-        },
-        {
-            id: "AddToFavorites",
-            label: "artifact.addToFavorites",
-            type: "button",
-            onClick: () => {
-                dispatch(addToFavorites(props.artifactId))
-            }
-
         },
         {
             id: "DownloadArtifact",
             label: "artifact.download",
             type: "button",
             onClick: () => {
-                initDownload();
+                dispatch(getLatestVersion(props.artifactId))
+                setDownloadReady(true)
             }
-
         },
         {
             id: "divider1",
@@ -375,113 +166,77 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
             onClick: () => {
                 // eslint-disable-next-line no-restricted-globals
                 if (confirm(t("artifact.confirmDelete", {artifactName: props.artifactTitle}))) {
-                    removeArtifact();
+                    dispatch(deleteArtifact(props.artifactId));
                 }
             }
         }
     ];
 
+    const download = (useCallback((latestVersion: ArtifactVersionTO) => {
+        if(downloadReady) {
+            console.log("file Ready - starting download...")
+            const filePath = `/api/version/${latestVersion.artifactId}/${latestVersion.id}/download`
+            const link = document.createElement("a");
+            link.href = filePath;
+            link.download = filePath.substr(filePath.lastIndexOf("/") + 1);
+            link.click();
+            dispatch({type: LATEST_VERSION, latestVersion: null})
+            setDownloadReady(false)
+        }
+    }, [downloadReady, dispatch]))
+
+    useEffect(() => {
+        if(latestVersion){
+            download(latestVersion);
+        }
+    }, [download, latestVersion])
+
+
+
+
     return (
         <>
-            <div className={classes.listItemWithVersions}>
-                <div className={classes.listItem} onClick={event => openTool(event, props.fileType, props.repoId, props.artifactId)}>
+            <ListItem className={classes.listItem} button onClick={() => handleOpenVersions()}>
+                <ListItemIcon>
+                    <Icon className={classes.icons}>{svgKey}</Icon>
+                </ListItemIcon>
 
-                    {props.image ?
-                        <img
-                            alt="Preview"
-                            className={classes.image}
-                            src={image} />
-                        :
-                        <img
-                            alt="New"
-                            className={classes.image}
-                            src={New} />
-                    }
+                <div className={classes.contentContainer}>
 
-                    <div className={classes.content}>
+                    <div className={classes.middlePanel}>
+                        <ListItemText primary={props.artifactTitle} secondaryTypographyProps={{color: "secondary"}} secondary={props.description}/>
 
-                        <div className={classes.header}>
-                            <div className={classes.fileType}>
-                                <Icon className={classes.fileType}>{svgKey}</Icon>
-                            </div>
+                        {open ? <ExpandLess className={classes.expandIcon}/> : <ExpandMore className={classes.expandIcon}/>}
+                    </div>
 
-                            <Tooltip title={props.artifactTitle}>
-                                <div className={classes.title}>
-                                    {props.artifactTitle}
-                                </div>
-                            </Tooltip>
+                    <div className={classes.rightPanel}>
+                        {helpers.reformatDate(props.updatedDate)}
+                        <IconButton ref={ref} onClick={event => handleOpenSettings(event)} >
+                            <MoreVert className={classes.icons}/>
+                        </IconButton>
 
-                            <div className={classes.updatedDate}>
-                                {`${t("artifact.modifiedOn")} ${reformatDate(props.updatedDate)}`}
-                            </div>
-                            <IconButton ref={ref} className={classes.more} onClick={event => openSettings(event)}>
-                                <MoreVert />
-                            </IconButton>
-                        </div>
-                        <div className={classes.description}>
-                            {props.description}
-                        </div>
-                        {!open
-                        && (
-                            // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-                            <div className={classes.versionsButton} onClick={event => openVersions(event)}>
-                                <KeyboardArrowDown />
-                            </div>
-                        )}
                     </div>
                 </div>
 
-                <Collapse in={open} timeout="auto">
-                    <VersionDetails
-                        artifactId={props.artifactId}
-                        repoId={props.repoId}
-                        fileType={props.fileType}
-                        artifactVersionTOs={artifactVersionTOs}
-                        artifactTitle={props.artifactTitle}
-                        loading={loading}/>
-                </Collapse>
+            </ListItem>
 
-            </div>
+            <Collapse in={open} timeout="auto" unmountOnExit className={classes.collapsible}>
+                <VersionDetails
+                    key={props.artifactId}
+                    artifactId={props.artifactId}
+                    repoId={props.repoId}
+                    fileType={props.fileType}
+                    artifactVersionTOs={artifactVersionTOs}
+                    artifactTitle={props.artifactTitle}
+                    loading={loading}/>
+            </Collapse>
 
-            <Popper
+
+            <PopupSettings
                 open={settingsOpen}
-                anchorEl={ref.current}
-                role={undefined}
-                transition
-                disablePortal
-                className={classes.popupContainer}>
-                {({ TransitionProps }) => (
-                    <Grow
-                        {...TransitionProps}
-                        style={{ transformOrigin: "top" }}>
-                        <Paper className={classes.popup}>
-                            <ClickAwayListener onClickAway={() => setSettingsOpen(false)}>
-                                <MenuList className={classes.list}>
-                                    {options.map(option => (
-                                        <MenuItem
-                                            key={option.id}
-                                            disabled={option.disabled || option.type !== "button"}
-                                            className={clsx(
-                                                classes.menuItem,
-                                                option.type === "divider" && classes.menuItemDivider
-                                            )}
-                                            onClick={() => {
-                                                if (option.onClick) {
-                                                    option.onClick();
-                                                } else {
-                                                    console.log("No Action provided")
-                                                }
-                                                setSettingsOpen(false);
-                                            }}>
-                                            {t(option.label)}
-                                        </MenuItem>
-                                    ))}
-                                </MenuList>
-                            </ClickAwayListener>
-                        </Paper>
-                    </Grow>
-                )}
-            </Popper>
+                reference={ref.current}
+                onCancel={() => setSettingsOpen(false)}
+                options={options} />
 
             <CreateVersionDialog
                 open={createVersionOpen}
@@ -499,5 +254,6 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
                 artifactDescription={props.description} />
         </>
     );
-});
+})
+
 export default ArtifactListItem;
