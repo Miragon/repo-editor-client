@@ -3,20 +3,21 @@ import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {ArtifactVersionTO, FileTypesTO} from "../../../api";
 import {RootState} from "../../../store/reducers/rootReducer";
-import {Collapse, ListItem, ListItemIcon, Tooltip} from "@material-ui/core";
-import {ExpandLess, ExpandMore, MoreVert, Star, StarOutline} from "@material-ui/icons";
+import {ListItem, ListItemIcon} from "@material-ui/core";
+import {MoreVert, Star, StarOutline} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
 import PopupSettings from "../../../components/Form/PopupSettings";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 import * as artifactAction from "../../../store/actions";
 import {deleteArtifact, getAllVersions, getLatestVersion} from "../../../store/actions";
 import IconButton from "@material-ui/core/IconButton";
-import CreateVersionDialog from "./CreateVersionDialog";
-import EditArtifactDialog from "./EditArtifactDialog";
-import {ACTIVE_VERSIONS, LATEST_VERSION} from "../../../store/constants";
+import CreateVersionDialog from "../../Repository/Artifact/CreateVersionDialog";
+import EditArtifactDialog from "../../Repository/Artifact/EditArtifactDialog";
+import {LATEST_VERSION} from "../../../store/constants";
 import Icon from "@material-ui/core/Icon";
 import helpers from "../../../constants/Functions";
-import VersionDetails from "./VersionDetails";
+import {useHistory} from "react-router-dom";
+import {openFileInTool} from "../../../components/Redirect/Redirections";
 
 const useStyles = makeStyles(() => ({
     listItem: {
@@ -28,8 +29,6 @@ const useStyles = makeStyles(() => ({
         minHeight: "60px",
         maxHeight: "60px",
         fontSize: "1rem",
-        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 4px;",
-
         "&:hover": {
             boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px;"
         }
@@ -61,24 +60,16 @@ const useStyles = makeStyles(() => ({
         justifyContent: "space-between",
         alignSelf: "center"
     },
-    text: {
-        display: "flex",
-        flexDirection: "row",
 
-    },
     title: {
-        flexGrow: 1,
         overflow: "hidden",
         textOverflow: "ellipsis",
         maxBlockSize: "1.2rem",
         fontWeight: "bold",
         marginBottom: "0.3rem",
     },
-    description: {
-        flexGrow: 2,
+    repository: {
         overflow: "hidden",
-        maxWidth: "60%",
-        minWidth: "60%",
         fontSize: ".9rem",
         textOverflow: "ellipsis",
         maxBlockSize: "1.2rem",
@@ -125,12 +116,14 @@ interface Props {
     artifactId: string;
     fileType: string;
     favorite: boolean;
+    repository: string;
 }
 
 
-const ArtifactListItem: React.FC<Props> = ((props: Props) => {
+const ArtifactListItemRough: React.FC<Props> = ((props: Props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
     const ref = useRef<HTMLButtonElement>(null);
     const {t} = useTranslation("common");
 
@@ -141,7 +134,6 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
 
 
-    const [loading, setLoading] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
     const [createVersionOpen, setCreateVersionOpen] = useState<boolean>(false);
@@ -160,7 +152,6 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     useEffect(() => {
         if(artifactVersionTOs){
             setOpen(artifactVersionTOs[0]?.artifactId === props.artifactId)
-            setLoading(false)
         }
     }, [artifactVersionTOs, props.artifactId])
 
@@ -170,17 +161,6 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
         }
     }, [versionSynced, open, dispatch, props.artifactId])
 
-    const handleOpenVersions = () => {
-        if(!open){
-            setOpen(!open);
-            setLoading(true)
-            dispatch(getAllVersions(props.artifactId))
-        }
-        else {
-            setOpen(!open);
-            dispatch({type: ACTIVE_VERSIONS, artifacts: []})
-        }
-    }
 
     const handleOpenSettings = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
@@ -211,15 +191,20 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
         dispatch(artifactAction.addToFavorites(props.artifactId));
     }
 
+    const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
+        const urlNamespace = fileTypes.find((types: FileTypesTO) => types.name.toLowerCase() === fileType.toLowerCase())?.url;
+        openFileInTool(urlNamespace ? urlNamespace : "", repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
+    }
+
     const options: DropdownButtonItem[] = [
 
         {
-            id: "CreateVersion",
-            label: t("version.create"),
+            id: "ShowInRepo",
+            label: t("artifact.showInRepo"),
             type: "button",
             onClick: () => {
-                dispatch(getLatestVersion(props.artifactId))
-                setCreateVersionOpen(true);
+                history.push(`/repository/${props.repoId}`);
+                dispatch(getAllVersions(props.artifactId));
             }
         },
         {
@@ -262,7 +247,7 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     //                    {open ? <ExpandLess className={classes.expandIcon}/> : <ExpandMore className={classes.expandIcon}/>}
     return (
         <>
-            <ListItem className={classes.listItem} button onClick={() => handleOpenVersions()}>
+            <ListItem className={classes.listItem} button onClick={event => openTool(event, props.fileType, props.repoId, props.artifactId)}>
                 <ListItemIcon>
                     <Icon className={classes.icons}>{svgKey}</Icon>
                 </ListItemIcon>
@@ -270,17 +255,11 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
                 <div className={classes.contentContainer}>
 
                     <div className={classes.middlePanel}>
-                        <div className={classes.text}>
-                            <div className={classes.title}>
-                                {props.artifactTitle}
-                            </div>
-                            <div className={classes.description}>
-                                <Tooltip title={props.description}>
-                                    <div>
-                                        {props.description}
-                                    </div>
-                                </Tooltip>
-                            </div>
+                        <div className={classes.repository}>
+                            {props.repository}
+                        </div>
+                        <div className={classes.title}>
+                            {props.artifactTitle}
                         </div>
                     </div>
 
@@ -296,23 +275,9 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
                             <MoreVert className={classes.icons}/>
                         </IconButton>
                     </div>
-                    {open ? <ExpandLess className={classes.expandIcon}/> : <ExpandMore className={classes.expandIcon}/>}
-
                 </div>
 
             </ListItem>
-
-            <Collapse in={open} timeout={1} unmountOnExit className={classes.collapsible}>
-                <VersionDetails
-                    key={props.artifactId}
-                    artifactId={props.artifactId}
-                    repoId={props.repoId}
-                    fileType={props.fileType}
-                    artifactVersionTOs={artifactVersionTOs}
-                    artifactTitle={props.artifactTitle}
-                    loading={loading}/>
-            </Collapse>
-
 
             <PopupSettings
                 open={settingsOpen}
@@ -338,4 +303,4 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     );
 })
 
-export default ArtifactListItem;
+export default ArtifactListItemRough;

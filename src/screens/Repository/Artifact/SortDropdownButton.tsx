@@ -19,6 +19,7 @@ interface Props {
     testId?: string;
     title: string;
     options: DropdownButtonItem[];
+    sortValue: string;
     onClick?: (id: string) => void;
     className?: string;
     disabled?: boolean;
@@ -51,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: theme.palette.secondary.contrastText,
         fontSize: theme.typography.button.fontSize,
         margin: "0px",
+        paddingRight: "10px",
         fontWeight: theme.typography.button.fontWeight,
         "&:hover": {
             backgroundColor: "rgba(0, 0, 0, 0.1)"
@@ -118,7 +120,7 @@ const SortDropdownButton: React.FC<Props> = props => {
                         <Paper className={classes.popup}>
                             <ClickAwayListener onClickAway={() => setOpen(false)}>
                                 <MenuList className={classes.list}>
-                                    <RadioGroup 
+                                    <RadioGroup
                                         defaultValue={props.defaultValue} >
                                         {props.options.map(option => (
                                             <FormControlLabel
@@ -137,7 +139,7 @@ const SortDropdownButton: React.FC<Props> = props => {
                                                             }}
                                                         }
                                                         value={option.id}/>} />
-        
+
                                         ))}
                                     </RadioGroup>
                                 </MenuList>

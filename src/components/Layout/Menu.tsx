@@ -66,7 +66,7 @@ const Menu: React.FC<Props> = props => {
         },
         {
             id: "German",
-            label: "language.german",
+            label: t("language.german"),
             icon: <Flag className={classes.flagIcon} code={"de"}/>,
             type: "button",
             onClick: () => {

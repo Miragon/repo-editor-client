@@ -20,7 +20,8 @@ const useStyles = makeStyles(() => ({
         color: theme.palette.primary.main,
         cursor: "pointer",
         "&:hover": {
-            color: theme.palette.primary.light
+            color: theme.palette.primary.light,
+            textDecoration: "underline"
         }
     },
     icon: {

@@ -13,6 +13,7 @@ import {useTranslation} from "react-i18next";
 import {SYNC_STATUS_FAVORITE} from "../../../store/constants";
 import ArtifactListItem from "./ArtifactListItem";
 import {List} from "@material-ui/core";
+import helpers from "../../../constants/Functions";
 
 
 const useStyles = makeStyles(() => ({
@@ -65,6 +66,8 @@ const ArtifactDetails: React.FC = (() => {
         }
     }, [dispatch, synced, repoId]);
 
+
+
     useEffect(() => {
         setFilteredArtifacts(activeArtifacts)
     }, [activeArtifacts, fileTypes])
@@ -76,9 +79,7 @@ const ArtifactDetails: React.FC = (() => {
         }
     }, [favoriteSynced, dispatch, ]);
 
-    useEffect(() => {
-        console.log(filteredArtifacts)
-    }, [filteredArtifacts])
+
 
     const changeFileTypeFilter = (selectedValue: string) => {
         const currentList = displayedFileTypes
@@ -96,26 +97,24 @@ const ArtifactDetails: React.FC = (() => {
     const applyFilters = () => {
         const filtered = activeArtifacts.filter(artifact => displayedFileTypes.includes(artifact.fileType))
         //#TODO: the setFilteredArtifacts call does not load the filtered List into the state
-        console.log(activeArtifacts.filter(artifact => displayedFileTypes.includes(artifact.fileType)))
-        setFilteredArtifacts(filtered)
-        console.log(filteredArtifacts)
-        sort(sortValue)
+        console.log(filtered)
+        sort(sortValue, filtered)
     }
 
 
-    const sort = (value: string) => {
+    const sort = (value: string, artifacts: Array<ArtifactTO>) => {
         switch (value){
             case "created":
                 setSortValue("created")
-                setFilteredArtifacts(filteredArtifacts.sort(compareCreated));
+                setFilteredArtifacts(artifacts.sort(compareCreated));
                 return;
             case "lastEdited":
                 setSortValue("lastEdited")
-                setFilteredArtifacts(filteredArtifacts.sort(compareEdited));
+                setFilteredArtifacts(artifacts.sort(compareEdited));
                 return;
             case "name":
                 setSortValue("name")
-                setFilteredArtifacts(filteredArtifacts.sort(compareName));
+                setFilteredArtifacts(artifacts.sort(compareName));
                 return;
         }
     }
@@ -173,7 +172,7 @@ const ArtifactDetails: React.FC = (() => {
             label: t("sort.created"),
             type: "button",
             onClick: () => {
-                sort("created")
+                sort("created", filteredArtifacts)
             }
         },
         {
@@ -181,7 +180,7 @@ const ArtifactDetails: React.FC = (() => {
             label: t("sort.lastEdited"),
             type: "button",
             onClick: () => {
-                sort("lastEdited")
+                sort("lastEdited", filteredArtifacts)
             }
         },
         {
@@ -189,7 +188,7 @@ const ArtifactDetails: React.FC = (() => {
             label: t("sort.name"),
             type: "button",
             onClick: () => {
-                sort("name")
+                sort("name", filteredArtifacts)
 
             }
         },
@@ -200,8 +199,8 @@ const ArtifactDetails: React.FC = (() => {
         <>
             <div className={classes.buttonContainer}>
                 <div >
-                    <FilterDropdownButton className={classes.filter} title={t("filter.filter")} options={filterOptions} />
-                    <SortDropdownButton title={t("sort.sort")} options={sortOptions} defaultValue={"lastEdited"}/>
+                    <FilterDropdownButton className={classes.filter} title={t("filter.filter")} options={filterOptions} selectedOptions={displayedFileTypes} />
+                    <SortDropdownButton title={t("sort.sort")} options={sortOptions} defaultValue={"lastEdited"} sortValue={sortValue}/>
                 </div>
                 <ArtifactManagementContainer/>
             </div>
@@ -216,6 +215,7 @@ const ArtifactDetails: React.FC = (() => {
                             updatedDate={artifact.updatedDate}
                             description={artifact.description}
                             repoId={artifact.repositoryId}
+                            favorite={helpers.isFavorite(artifact.id, favoriteArtifacts?.map(artifact => artifact.id))}
                             artifactId={artifact.id}
                             fileType={artifact.fileType} />
                     ))}

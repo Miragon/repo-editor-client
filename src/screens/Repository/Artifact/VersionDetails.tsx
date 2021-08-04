@@ -7,7 +7,8 @@ import VersionListItem from "./VersionListItem";
 const useStyles = makeStyles(() => ({
 
     list: {
-        padding: "0px"
+        padding: "0px",
+        marginBottom: "40px"
     },
 }));
 

@@ -1,11 +1,10 @@
 import {DeploymentTO} from "../../../api";
-import {ListItem, ListItemText} from "@material-ui/core";
+import {Button, ListItem, Tooltip} from "@material-ui/core";
 import helpers from "../../../constants/Functions";
 import IconButton from "@material-ui/core/IconButton";
 import {MoreVert} from "@material-ui/icons";
 import React, {useRef, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import theme from "../../../theme";
 import PopupSettings from "../../../components/Form/PopupSettings";
 import DeployVersionDialog from "./DeployVersionDialog";
 import DeploymentHistory from "./DeploymentHistory";
@@ -18,14 +17,18 @@ import {useTranslation} from "react-i18next";
 const useStyles = makeStyles(() => ({
 
     nested: {
-        backgroundColor: theme.palette.primary.light,
-        paddingLeft: "10%",
-        color: theme.palette.primary.contrastText,
-        minHeight: "70px",
-        maxHeight: "70px",
-        transition: "background-color .3s",
+        backgroundColor: "white",
+        paddingLeft: "5%",
+        fontSize: "1rem",
+        color: "black",
+        minHeight: "50px",
+        maxHeight: "50px",
+        borderBottom: ".5px solid lightgrey",
+        transition: "background-color .3s ",
+        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px;",
         "&:hover": {
-            backgroundColor: theme.palette.primary.dark
+            backgroundColor: "#ededed",
+            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 14px;"
         }
     },
     versionNumber: {
@@ -33,8 +36,39 @@ const useStyles = makeStyles(() => ({
         minWidth: "10%",
         fontSize: "1.25rem"
     },
+    content: {
+        display: "flex",
+        width: "90%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    middlePanel: {
+        display: "flex",
+        flexGrow: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    comment: {
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        maxBlockSize: "1.5rem"
+    },
+    deployment: {
+        whiteSpace: "nowrap",
+        textTransform: "none"
+
+    },
+    rightPanel: {
+        display: "flex",
+        whiteSpace: "nowrap",
+        flexDirection: "row",
+        alignItems: "center",
+        marginLeft: "15px"
+    },
     icons: {
-        color: theme.palette.primary.contrastText,
+        color: "black",
     },
 }),
 );
@@ -65,6 +99,11 @@ const VersionListItem: React.FC<Props> = ((props: Props) => {
     const [deployVersionOpen, setDeployVersionOpen] = useState<boolean>(false);
     const [saveDialogOpen, setSaveDialogOpen] = useState<boolean>(false);
 
+
+    const openDeploymentHistory = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+        setHistoryOpen(true);
+    }
 
     const options: DropdownButtonItem[] = [
         {
@@ -109,19 +148,53 @@ const VersionListItem: React.FC<Props> = ((props: Props) => {
         },
     ];
 
+    //                <ListItemText primary={props.comment ? props.comment : <i>No comment available</i>} />
     return (
         <>
             <ListItem className={classes.nested}>
                 <div className={classes.versionNumber}>
                     {props.milestone}
                 </div>
-                <ListItemText primary={props.comment ? props.comment : <i>No comment available</i>} />
-                <div>
-                    {helpers.reformatDate(props.updatedDate)}
+                <div className={classes.content}>
+                    <div className={classes.middlePanel}>
+                        <Tooltip title={props.comment ? props.comment : "No comment available"}>
+                            <div className={classes.comment}>
+                                {props.comment}
+                            </div>
+                        </Tooltip>
+                        {props.deployments.length > 0 ?
+                            <div>
+                                <Button
+                                    ref={ref}
+                                    color="secondary"
+                                    className={classes.deployment}
+                                    onClick={event => openDeploymentHistory(event)}
+                                    variant="contained"
+                                    aria-multiline={false}
+                                    size={"small"}>
+                                    {props.deployments.length > 1 ?
+                                        `${props.deployments.length} ${t("deployment.deployments")}`
+                                        :
+                                        `${props.deployments[0].target}`
+                                    }
+                                </Button>
+                            </div>
+
+                            :
+                            <div>
+
+                            </div>}
+                    </div>
+
+                    <div className={classes.rightPanel}>
+                        <div>
+                            {helpers.reformatDate(props.updatedDate)}
+                        </div>
+                        <IconButton ref={ref} onClick={() => setSettingsOpen(true)} >
+                            <MoreVert className={classes.icons}/>
+                        </IconButton>
+                    </div>
                 </div>
-                <IconButton ref={ref} onClick={() => setSettingsOpen(true)} >
-                    <MoreVert className={classes.icons}/>
-                </IconButton>
             </ListItem>
 
             <PopupSettings

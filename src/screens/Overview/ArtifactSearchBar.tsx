@@ -4,14 +4,13 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import {makeStyles} from "@material-ui/styles";
 import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {ArtifactTO, FileTypesTO, RepositoryTO} from "../../api";
+import {ArtifactTO, RepositoryTO} from "../../api";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 import * as artifactAction from "../../store/actions/artifactAction";
 import {RootState} from "../../store/reducers/rootReducer";
-import ArtifactCard from "./Holder/ArtifactCard";
 import {useTranslation} from "react-i18next";
-import {openFileInTool} from "../../components/Redirect/Redirections";
 import helpers from "../../constants/Functions";
+import ArtifactListItemRough from "./Holder/ArtifactListItemRough";
 
 const useStyles = makeStyles(() => ({
     headerText: {
@@ -19,19 +18,12 @@ const useStyles = makeStyles(() => ({
         fontSize: "20px"
     },
     container: {
-        flexGrow: 1,
-        marginRight: "6rem"
+        width: "800px"
     },
     resultsContainer: {
         marginTop: "15px",
         display: "flex",
         flexWrap: "wrap"
-    },
-    card: {
-        width: "calc(20%)",
-        "&:nth-child(5n)>div": {
-            marginRight: 0
-        }
     },
     listItem: {
         display: "flex",
@@ -59,23 +51,22 @@ const ArtifactSearchBar: React.FC = () => {
         (state: RootState) => state.artifacts.searchedArtifacts
     );
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
-    const results: number = useSelector((state: RootState) => state.resultsCount.artifactResultsCount);
-    const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
+    const foundDiagrams: number = useSelector((state: RootState) => state.resultsCount.artifactResultsCount);
     const favoriteArtifacts: Array<ArtifactTO> = useSelector((state: RootState) => state.artifacts.favoriteArtifacts);
 
 
     const [artifact, setArtifact] = useState("");
     const [open, setOpen] = useState(false);
-    const [options, setOptions] = useState<ArtifactTO[]>([]);
+    const [results, setResults] = useState<ArtifactTO[]>([]);
     const [displayResult, setDisplayResult] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (!open) {
-            setOptions([]);
+            setResults([]);
         }
         if (open) {
-            setOptions(searchedArtifacts);
+            setResults(searchedArtifacts);
         }
     }, [open, searchedArtifacts, artifact, displayResult]);
 
@@ -90,19 +81,15 @@ const ArtifactSearchBar: React.FC = () => {
         if (searchedArtifacts.length > 0) {
             setLoading(false);
         }
-        if (results === 0) {
+        if (foundDiagrams === 0) {
             setLoading(false);
         }
-    }, [searchedArtifacts, results]);
+    }, [searchedArtifacts, foundDiagrams]);
 
-    const getRepoName = ((repoId: string) : string => {
-        const assignedRepo = repos.find(repo => repo.id === repoId);
-        return assignedRepo ? assignedRepo.name : "";
-    });
 
     const onChangeWithTimer = ((input: string) => {
         setArtifact(input);
-        if (artifact === "") {
+        if (input === "") {
             setDisplayResult(false);
         } else {
             setDisplayResult(true);
@@ -122,13 +109,11 @@ const ArtifactSearchBar: React.FC = () => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updateState = (event: any) => {
+        onChangeWithTimer(event.target.textContent)
         setArtifact(event.target.textContent);
+        setDisplayResult(true);
     };
 
-    const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
-        const urlNamespace = fileTypes.find((type: FileTypesTO) => type.name.toLowerCase() === fileType.toLowerCase())?.url;
-        openFileInTool(urlNamespace ? urlNamespace : "", repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
-    }
 
     return (
         <>
@@ -147,9 +132,9 @@ const ArtifactSearchBar: React.FC = () => {
                             setOpen(false);
                         }}
                         getOptionSelected={(option, value) => option.name === value.name}
-                        getOptionLabel={option => `${option.name}  (${getRepoName(option.repositoryId)})`}
+                        getOptionLabel={option => `${option.name}`}
                         onChange={updateState}
-                        options={options}
+                        options={results}
                         loading={loading}
                         renderInput={params => (
                             <TextField
@@ -173,25 +158,29 @@ const ArtifactSearchBar: React.FC = () => {
                                     ),
                                 }} />
                         )} />
-                    <div className={classes.resultsContainer}>
-                        {!loading && searchedArtifacts.map(searchedArtifact => (
-                            <div
-                                className={classes.card}
-                                key={searchedArtifact.id}
-                                onClick={event => openTool(event, searchedArtifact.fileType, searchedArtifact.repositoryId, searchedArtifact.id)}>
-                                <ArtifactCard
-                                    artifactRepo={getRepoName(searchedArtifact.repositoryId)}
-                                    artifactTitle={searchedArtifact.name}
-                                    image={searchedArtifact.svgPreview}
-                                    id={searchedArtifact.id}
-                                    favorite={helpers.isFavorite(searchedArtifact.id, favoriteArtifacts?.map(artifact => artifact.id))}
-                                    fileType={searchedArtifact.fileType} />
-                            </div>
-                        ))}
-                        {!loading && searchedArtifacts?.length === 0 && artifact.length > 0 && (
-                            <span>{t("search.noResults")}</span>
-                        )}
-                    </div>
+                    {displayResult &&
+                        <div className={classes.resultsContainer}>
+                            {!loading && searchedArtifacts.map(searchedArtifact => (
+                                <div
+                                    key={searchedArtifact.id}
+                                    className={classes.container}>
+                                    <ArtifactListItemRough
+                                        artifactTitle={searchedArtifact.name}
+                                        createdDate={searchedArtifact.createdDate}
+                                        updatedDate={searchedArtifact.updatedDate}
+                                        description={searchedArtifact.description}
+                                        repoId={searchedArtifact.repositoryId}
+                                        artifactId={searchedArtifact.id}
+                                        fileType={searchedArtifact.fileType}
+                                        favorite={helpers.isFavorite(searchedArtifact.id, favoriteArtifacts?.map(artifact => artifact.id))}
+                                        repository={helpers.getRepoName(searchedArtifact.repositoryId, repos)}/>
+                                </div>
+                            ))}
+                            {!loading && searchedArtifacts?.length === 0 && artifact.length > 0 && (
+                                <span>{t("search.noResults")}</span>
+                            )}
+                        </div>
+                    }
                 </ErrorBoundary>
             </div>
         </>

@@ -86,6 +86,8 @@
   },
   "properties": {
     "title": "Titel",
+    "filename": "Name",
+    "version": "Version",
     "description": "Beschreibung",
     "comment": "Kommentar",
     "date": "Datum",
@@ -134,7 +136,9 @@
     "create": "Datei erstellen",
     "modifiedOn": "Bearbeitet am",
     "upload": "Datei hochladen",
+    "updated": "Datei geändert",
     "download": "Datei herunterladen",
+    "showInRepo": "In Projekt anzeigen",
     "edit": "Datei bearbeiten",
     "delete": "Datei löschen"
   },

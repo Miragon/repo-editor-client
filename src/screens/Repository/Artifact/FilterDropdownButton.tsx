@@ -9,6 +9,7 @@ import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 interface Props {
     testId?: string;
     title: string;
+    selectedOptions: Array<string>;
     options: DropdownButtonItem[];
     onClick?: (id: string) => void;
     className?: string;
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: theme.palette.secondary.contrastText,
         fontSize: theme.typography.button.fontSize,
         margin: "0px",
+        paddingRight: "10px",
         fontWeight: theme.typography.button.fontWeight,
         "&:hover": {
             backgroundColor: "rgba(0, 0, 0, 0.1)"
@@ -115,7 +117,7 @@ const FilterDropdownButton: React.FC<Props> = props => {
                                             className={classes.menuItem}
                                             control={
                                                 <Checkbox
-                                                    defaultChecked
+                                                    checked={props.selectedOptions.includes(option.label)}
                                                     color={"primary"}
                                                     onChange={() => {
                                                         if (option.onClick) {

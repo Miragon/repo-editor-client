@@ -1,3 +1,4 @@
+import {RepositoryTO} from "../api";
 
 const helpers = {
     isNumber: (value: string): boolean => {
@@ -33,17 +34,22 @@ const helpers = {
             if (date) {
                 const standardDate = `${date.substring(8, 10)}.${date.substring(5, 7)}.${date.substring(0, 4)}`
                 const time = date.split("T")[1].substring(0, 5);
-                return `${standardDate} (${time})`;
+                return `${standardDate} - ${time}`;
             }
         }
         else {
             if(date) {
                 const americanDate = `${date.substring(5, 7)}.${date.substring(8, 10)}.${date.substring(0, 4)}`
                 const time = date.split("T")[1].substring(0, 5);
-                return `${americanDate} (${time})`;
+                return `${americanDate} - ${time}`;
             }
         }
         return "01.01.2000";
+    },
+
+    getRepoName: (repoId: string, repos: Array<RepositoryTO>): string => {
+        const assignedRepo = repos.find(repo => repo.id === repoId);
+        return assignedRepo ? assignedRepo.name : "";
     }
 
 };
