@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {ArtifactVersionTO, FileTypesTO} from "../../../api";
 import {RootState} from "../../../store/reducers/rootReducer";
-import {Collapse, ListItem, ListItemIcon, Tooltip} from "@material-ui/core";
+import {Collapse, ListItem, Tooltip} from "@material-ui/core";
 import {ExpandLess, ExpandMore, MoreVert, Star, StarOutline} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
 import PopupSettings from "../../../components/Form/PopupSettings";
@@ -17,35 +17,34 @@ import {ACTIVE_VERSIONS, LATEST_VERSION} from "../../../store/constants";
 import Icon from "@material-ui/core/Icon";
 import helpers from "../../../constants/Functions";
 import VersionDetails from "./VersionDetails";
+import {openFileInTool} from "../../../components/Redirect/Redirections";
 
 const useStyles = makeStyles(() => ({
     listItem: {
         backgroundColor: "white",
         color: "black",
+        paddingLeft: "0px",
+        paddingRight: "5px",
         borderRadius: "2px",
         border: "1px solid lightgrey",
-        transition: "boxShadow .3s",
         minHeight: "60px",
         maxHeight: "60px",
         fontSize: "1rem",
-        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 4px;",
-
-        "&:hover": {
-            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px;"
-        }
     },
-    icons: {
-        color: "black",
-    },
-
-    contentContainer: {
-        width: "100%",
-        minHeight: "60px",
-        maxHeight: "60px",
+    leftPanel: {
+        minWidth: "50px",
+        maxWidth: "50px",
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "center",
         alignItems: "center"
+    },
+    middlePanel: {
+        flexGrow: 1,
+        paddingLeft: "16px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignSelf: "center"
     },
     rightPanel: {
         marginLeft: "15px",
@@ -54,12 +53,17 @@ const useStyles = makeStyles(() => ({
         flexDirection: "row",
         alignItems: "center"
     },
-    middlePanel: {
-        flexGrow: 1,
+    icons: {
+        color: "black",
+    },
+    contentContainer: {
+        width: "100%",
+        minHeight: "60px",
+        maxHeight: "60px",
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "row",
         justifyContent: "space-between",
-        alignSelf: "center"
+        alignItems: "center"
     },
     text: {
         display: "flex",
@@ -85,12 +89,6 @@ const useStyles = makeStyles(() => ({
         fontStyle: "italic",
         color: "grey"
     },
-    expandIcon: {
-        position: "absolute",
-        left: "50%",
-        bottom: "0px",
-        color: "lightgrey"
-    },
     collapsible: {
         margin: "0px",
         padding: "0px"
@@ -99,6 +97,7 @@ const useStyles = makeStyles(() => ({
         color: "#F5E73D",
         zIndex: 50,
         marginLeft: "10px",
+        marginRight: "4px",
         transition: "color .3s",
         "&:hover": {
             color: "white"
@@ -107,6 +106,7 @@ const useStyles = makeStyles(() => ({
     starNegative: {
         color: "lightgrey",
         marginLeft: "10px",
+        marginRight: "4px",
         transition: "background-image .3s",
         zIndex: 50,
         "&:hover": {
@@ -214,6 +214,14 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     const options: DropdownButtonItem[] = [
 
         {
+            id: "OpenLatest",
+            label: t("version.openLatest"),
+            type: "button",
+            onClick: () => {
+                openFileInTool(fileTypes, props.fileType, props.repoId, props.artifactId, t("error.missingTool", props.fileType))
+            }
+        },
+        {
             id: "CreateVersion",
             label: t("version.create"),
             type: "button",
@@ -259,14 +267,12 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
         }
     ];
     
-    //                    {open ? <ExpandLess className={classes.expandIcon}/> : <ExpandMore className={classes.expandIcon}/>}
     return (
         <>
             <ListItem className={classes.listItem} button onClick={() => handleOpenVersions()}>
-                <ListItemIcon>
+                <div className={classes.leftPanel}>
                     <Icon className={classes.icons}>{svgKey}</Icon>
-                </ListItemIcon>
-
+                </div>
                 <div className={classes.contentContainer}>
 
                     <div className={classes.middlePanel}>
@@ -292,11 +298,19 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
                             <StarOutline className={classes.starNegative} onClick={event => setStarred(event)}/>
 
                         }
-                        <IconButton ref={ref} onClick={event => handleOpenSettings(event)} >
+                        <IconButton size={"small"} ref={ref} onClick={event => handleOpenSettings(event)} >
                             <MoreVert className={classes.icons}/>
                         </IconButton>
+                        {open ?
+                            <IconButton size={"small"}>
+                                <ExpandLess className={classes.icons}/>
+                            </IconButton>
+                            :
+                            <IconButton size={"small"}>
+                                <ExpandMore className={classes.icons}/>
+                            </IconButton>
+                        }
                     </div>
-                    {open ? <ExpandLess className={classes.expandIcon}/> : <ExpandMore className={classes.expandIcon}/>}
 
                 </div>
 

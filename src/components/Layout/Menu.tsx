@@ -88,7 +88,7 @@ const Menu: React.FC<Props> = props => {
                     <Typography style={{fontWeight: "bold"}} variant="h6">DigitalWF-</Typography>
                     <Typography style={{fontWeight: "bold"}} color="secondary" variant="h6">Modellverwaltung</Typography>
                 </IconButton>
-                <DropdownButton title={t("language.select")} options={options} />
+                <DropdownButton type={"default"} title={t("language.select")} options={options} />
             </MenuBar>
 
             <AppMenu open={props.open}/>

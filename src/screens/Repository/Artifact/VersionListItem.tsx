@@ -1,5 +1,5 @@
-import {DeploymentTO} from "../../../api";
-import {Button, ListItem, Tooltip} from "@material-ui/core";
+import {DeploymentTO, FileTypesTO} from "../../../api";
+import {Button, Chip, ListItem, Tooltip} from "@material-ui/core";
 import helpers from "../../../constants/Functions";
 import IconButton from "@material-ui/core/IconButton";
 import {MoreVert} from "@material-ui/icons";
@@ -11,24 +11,26 @@ import DeploymentHistory from "./DeploymentHistory";
 import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 import {fetchTargets} from "../../../store/actions/deploymentAction";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
+import {openFileInTool} from "../../../components/Redirect/Redirections";
+import {RootState} from "../../../store/reducers/rootReducer";
 
 const useStyles = makeStyles(() => ({
 
-    nested: {
+    listItem: {
+        cursor: "pointer",
         backgroundColor: "white",
-        paddingLeft: "5%",
+        paddingLeft: "0px",
+        paddingRight: "35px",
         fontSize: "1rem",
         color: "black",
         minHeight: "50px",
         maxHeight: "50px",
-        borderBottom: ".5px solid lightgrey",
+        border: "1px solid lightgrey",
         transition: "background-color .3s ",
-        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px;",
         "&:hover": {
             backgroundColor: "#ededed",
-            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 14px;"
         }
     },
     versionNumber: {
@@ -38,17 +40,32 @@ const useStyles = makeStyles(() => ({
     },
     content: {
         display: "flex",
-        width: "90%",
+        width: "100%",
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center"
+    },
+    leftPanel: {
+        minWidth: "50px",
+        maxWidth: "50px",
+        display: "flex",
+        justifyContent: "center",
         alignItems: "center"
     },
     middlePanel: {
         display: "flex",
         flexGrow: 1,
+        paddingLeft: "16px",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center"
+    },
+    rightPanel: {
+        display: "flex",
+        whiteSpace: "nowrap",
+        flexDirection: "row",
+        alignItems: "center",
+        marginLeft: "15px"
     },
     comment: {
         overflow: "hidden",
@@ -60,16 +77,13 @@ const useStyles = makeStyles(() => ({
         textTransform: "none"
 
     },
-    rightPanel: {
-        display: "flex",
-        whiteSpace: "nowrap",
-        flexDirection: "row",
-        alignItems: "center",
-        marginLeft: "15px"
-    },
+
     icons: {
         color: "black",
     },
+    date: {
+        marginRight: "38px",
+    }
 }),
 );
 
@@ -99,6 +113,7 @@ const VersionListItem: React.FC<Props> = ((props: Props) => {
     const [deployVersionOpen, setDeployVersionOpen] = useState<boolean>(false);
     const [saveDialogOpen, setSaveDialogOpen] = useState<boolean>(false);
 
+    const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
 
     const openDeploymentHistory = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
@@ -151,9 +166,9 @@ const VersionListItem: React.FC<Props> = ((props: Props) => {
     //                <ListItemText primary={props.comment ? props.comment : <i>No comment available</i>} />
     return (
         <>
-            <ListItem className={classes.nested}>
-                <div className={classes.versionNumber}>
-                    {props.milestone}
+            <ListItem className={classes.listItem} onClick={() => openFileInTool(fileTypes, props.type, props.repoId, props.artifactId, t("error.missingTool", props.type))}>
+                <div className={classes.leftPanel}>
+                    <Chip label={props.milestone} clickable color={"secondary"}/>
                 </div>
                 <div className={classes.content}>
                     <div className={classes.middlePanel}>
@@ -187,10 +202,14 @@ const VersionListItem: React.FC<Props> = ((props: Props) => {
                     </div>
 
                     <div className={classes.rightPanel}>
-                        <div>
+                        <div className={classes.date}>
                             {helpers.reformatDate(props.updatedDate)}
                         </div>
-                        <IconButton ref={ref} onClick={() => setSettingsOpen(true)} >
+                        <IconButton size={"small"} ref={ref} onClick={event =>
+                        {
+                            event.stopPropagation()
+                            setSettingsOpen(true)
+                        }} >
                             <MoreVert className={classes.icons}/>
                         </IconButton>
                     </div>

@@ -6,9 +6,7 @@ import {fetchArtifactsFromRepo, fetchFavoriteArtifacts} from "../../../store/act
 import {RootState} from "../../../store/reducers/rootReducer";
 import {useParams} from "react-router";
 import ArtifactManagementContainer from "../Administration/ArtifactManagementContainer";
-import FilterDropdownButton from "./FilterDropdownButton";
-import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
-import SortDropdownButton from "./SortDropdownButton";
+import DropdownButton, {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 import {useTranslation} from "react-i18next";
 import {SYNC_STATUS_FAVORITE} from "../../../store/constants";
 import ArtifactListItem from "./ArtifactListItem";
@@ -20,7 +18,8 @@ const useStyles = makeStyles(() => ({
     container: {
         display: "flex",
         flexDirection: "column",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        marginTop: "15px"
     },
     buttonContainer: {
         display: "flex",
@@ -199,8 +198,8 @@ const ArtifactDetails: React.FC = (() => {
         <>
             <div className={classes.buttonContainer}>
                 <div >
-                    <FilterDropdownButton className={classes.filter} title={t("filter.filter")} options={filterOptions} selectedOptions={displayedFileTypes} />
-                    <SortDropdownButton title={t("sort.sort")} options={sortOptions} defaultValue={"lastEdited"} sortValue={sortValue}/>
+                    <DropdownButton className={classes.filter} title={t("filter.filter")} options={filterOptions} type={"checkbox"} selectedFilterOptions={displayedFileTypes} />
+                    <DropdownButton title={t("sort.sort")} options={sortOptions} type={"radio"} defaultSortValue={"lastEdited"}/>
                 </div>
                 <ArtifactManagementContainer/>
             </div>

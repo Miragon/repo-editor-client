@@ -84,6 +84,7 @@ const RepoContainer: React.FC = observer(() => {
                         title={t("repository.create")}
                         onClick={() => setCreateRepoOpen(true)} />
                     <DropdownButton
+                        type={"default"}
                         className={classes.artifactButton}
                         title={t("artifact.create")}
                         options={artifactOptions} />

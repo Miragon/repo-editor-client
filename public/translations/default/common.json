@@ -37,6 +37,7 @@
     "dialogHeader": "Create new Version of {{artifactName}}",
     "download": "Download version",
     "delete": "Delete version",
+    "openLatest": "Open latest Version",
     "version": "Version",
     "RELEASE": "Release",
     "MILESTONE": "Milestone",

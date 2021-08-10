@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {ArtifactVersionTO, FileTypesTO} from "../../../api";
 import {RootState} from "../../../store/reducers/rootReducer";
-import {ListItem, ListItemIcon} from "@material-ui/core";
+import {ListItem} from "@material-ui/core";
 import {MoreVert, Star, StarOutline} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
 import PopupSettings from "../../../components/Form/PopupSettings";
@@ -29,9 +29,7 @@ const useStyles = makeStyles(() => ({
         minHeight: "60px",
         maxHeight: "60px",
         fontSize: "1rem",
-        "&:hover": {
-            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px;"
-        }
+
     },
     icons: {
         color: "black",
@@ -46,6 +44,21 @@ const useStyles = makeStyles(() => ({
         justifyContent: "space-between",
         alignItems: "center"
     },
+    leftPanel: {
+        minWidth: "50px",
+        maxWidth: "50px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    middlePanel: {
+        flexGrow: 1,
+        display: "flex",
+        paddingLeft: "16px",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignSelf: "center"
+    },
     rightPanel: {
         marginLeft: "15px",
         whiteSpace: "nowrap",
@@ -53,14 +66,6 @@ const useStyles = makeStyles(() => ({
         flexDirection: "row",
         alignItems: "center"
     },
-    middlePanel: {
-        flexGrow: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignSelf: "center"
-    },
-
     title: {
         overflow: "hidden",
         textOverflow: "ellipsis",
@@ -90,6 +95,7 @@ const useStyles = makeStyles(() => ({
         color: "#F5E73D",
         zIndex: 50,
         marginLeft: "10px",
+        marginRight: "4px",
         transition: "color .3s",
         "&:hover": {
             color: "white"
@@ -98,6 +104,7 @@ const useStyles = makeStyles(() => ({
     starNegative: {
         color: "lightgrey",
         marginLeft: "10px",
+        marginRight: "4px",
         transition: "background-image .3s",
         zIndex: 50,
         "&:hover": {
@@ -127,14 +134,9 @@ const ArtifactListItemRough: React.FC<Props> = ((props: Props) => {
     const ref = useRef<HTMLButtonElement>(null);
     const {t} = useTranslation("common");
 
-
-    const artifactVersionTOs: Array<ArtifactVersionTO> = useSelector((state: RootState) => state.versions.versions);
     const latestVersion: ArtifactVersionTO | null = useSelector((state: RootState) => state.versions.latestVersion);
-    const versionSynced: boolean = useSelector((state: RootState) => state.dataSynced.versionSynced)
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
 
-
-    const [open, setOpen] = useState<boolean>(false);
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
     const [createVersionOpen, setCreateVersionOpen] = useState<boolean>(false);
     const [editArtifactOpen, setEditArtifactOpen] = useState<boolean>(false);
@@ -148,18 +150,6 @@ const ArtifactListItemRough: React.FC<Props> = ((props: Props) => {
             setSvgKey(svgIcon ? svgIcon: "");
         }
     }, [fileTypes, props.fileType])
-
-    useEffect(() => {
-        if(artifactVersionTOs){
-            setOpen(artifactVersionTOs[0]?.artifactId === props.artifactId)
-        }
-    }, [artifactVersionTOs, props.artifactId])
-
-    useEffect(() => {
-        if(!versionSynced && open){
-            dispatch(getAllVersions(props.artifactId))
-        }
-    }, [versionSynced, open, dispatch, props.artifactId])
 
 
     const handleOpenSettings = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -191,10 +181,6 @@ const ArtifactListItemRough: React.FC<Props> = ((props: Props) => {
         dispatch(artifactAction.addToFavorites(props.artifactId));
     }
 
-    const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
-        const urlNamespace = fileTypes.find((types: FileTypesTO) => types.name.toLowerCase() === fileType.toLowerCase())?.url;
-        openFileInTool(urlNamespace ? urlNamespace : "", repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
-    }
 
     const options: DropdownButtonItem[] = [
 
@@ -244,13 +230,12 @@ const ArtifactListItemRough: React.FC<Props> = ((props: Props) => {
         }
     ];
     
-    //                    {open ? <ExpandLess className={classes.expandIcon}/> : <ExpandMore className={classes.expandIcon}/>}
     return (
         <>
-            <ListItem className={classes.listItem} button onClick={event => openTool(event, props.fileType, props.repoId, props.artifactId)}>
-                <ListItemIcon>
+            <ListItem className={classes.listItem} button onClick={() => openFileInTool(fileTypes, props.fileType, props.repoId, props.artifactId, t("error.missingTool", props.fileType))}>
+                <div className={classes.leftPanel}>
                     <Icon className={classes.icons}>{svgKey}</Icon>
-                </ListItemIcon>
+                </div>
 
                 <div className={classes.contentContainer}>
 
@@ -271,7 +256,7 @@ const ArtifactListItemRough: React.FC<Props> = ((props: Props) => {
                             <StarOutline className={classes.starNegative} onClick={event => setStarred(event)}/>
 
                         }
-                        <IconButton ref={ref} onClick={event => handleOpenSettings(event)} >
+                        <IconButton size={"small"} ref={ref} onClick={event => handleOpenSettings(event)} >
                             <MoreVert className={classes.icons}/>
                         </IconButton>
                     </div>

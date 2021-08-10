@@ -367,6 +367,12 @@ export interface FileTypesTO {
      */
     name: string;
     /**
+     *
+     * @type {string}
+     * @memberof FileTypesTO
+     */
+    fileExtension: string;
+    /**
      * 
      * @type {string}
      * @memberof FileTypesTO

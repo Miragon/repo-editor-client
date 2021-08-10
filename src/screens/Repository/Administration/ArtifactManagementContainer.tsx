@@ -71,6 +71,7 @@ const ArtifactManagementContainer: React.FC = observer(() => {
         <>
             <div className={classes.container}>
                 <DropdownButton
+                    type={"default"}
                     className={classes.artifactButton}
                     title={t("artifact.create")}
                     options={artifactOptions} />

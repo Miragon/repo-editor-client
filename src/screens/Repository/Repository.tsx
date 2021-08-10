@@ -36,7 +36,7 @@ const Repository: React.FC = (() => {
     }
     const element2 = {
         name: "path.repository",
-        link: `/repository/${repoId}`
+        link: `#/repository/${repoId}`
     }
     const path = [element, element2]
 

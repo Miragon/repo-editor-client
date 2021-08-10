@@ -8,7 +8,8 @@ const useStyles = makeStyles(() => ({
 
     list: {
         padding: "0px",
-        marginBottom: "40px"
+        marginBottom: "20px",
+        borderRadius: "2px",
     },
 }));
 
