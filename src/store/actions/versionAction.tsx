@@ -45,7 +45,7 @@ export const getAllVersions = (bpmnArtifactId: string) => {
             const config = helpers.getClientConfig();
             const response = await versionController.getAllVersions(bpmnArtifactId, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: ACTIVE_VERSIONS, versions: response.data });
+                dispatch({ type: ACTIVE_VERSIONS, activeVersions: response.data });
                 dispatch({type: SYNC_STATUS_VERSION, dataSynced: true});
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });

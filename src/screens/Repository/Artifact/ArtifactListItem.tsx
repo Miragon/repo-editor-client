@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {ArtifactVersionTO, FileTypesTO} from "../../../api";
 import {RootState} from "../../../store/reducers/rootReducer";
-import {Collapse, ListItem, Tooltip} from "@material-ui/core";
+import {CircularProgress, Collapse, ListItem, Tooltip} from "@material-ui/core";
 import {ExpandLess, ExpandMore, MoreVert, Star, StarOutline} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
 import PopupSettings from "../../../components/Form/PopupSettings";
@@ -141,7 +141,7 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     const {t} = useTranslation("common");
 
 
-    const artifactVersionTOs: Array<ArtifactVersionTO> = useSelector((state: RootState) => state.versions.versions);
+    const activeArtifactVersionTOs: Array<ArtifactVersionTO> = useSelector((state: RootState) => state.versions.activeVersions);
     const latestVersion: ArtifactVersionTO | null = useSelector((state: RootState) => state.versions.latestVersion);
     const versionSynced: boolean = useSelector((state: RootState) => state.dataSynced.versionSynced)
     const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
@@ -160,16 +160,24 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     useEffect(() => {
         if(fileTypes && props.fileType){
             const svgIcon = fileTypes.find(fileType => fileType.name === props.fileType)?.svgIcon;
+            console.log("loaded")
             setSvgKey(svgIcon ? svgIcon: "");
         }
     }, [fileTypes, props.fileType])
 
     useEffect(() => {
-        if(artifactVersionTOs){
-            setOpen(artifactVersionTOs[0]?.artifactId === props.artifactId)
-            setLoading(false)
+
+        if(activeArtifactVersionTOs){
+            if(activeArtifactVersionTOs[0]?.artifactId === props.artifactId){
+                setOpen(true)
+                setLoading(false)
+            }
+            else{
+                setOpen(false)
+            }
         }
-    }, [artifactVersionTOs, props.artifactId])
+
+    }, [activeArtifactVersionTOs, props.artifactId])
 
     useEffect(() => {
         if(!versionSynced && open){
@@ -180,7 +188,7 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
     const handleOpenVersions = () => {
         if(!open){
             setOpen(!open);
-            setLoading(true)
+            console.log("Displaying Loading")
             dispatch(getAllVersions(props.artifactId))
         }
         else {
@@ -331,17 +339,22 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
                 </div>
 
             </ListItem>
+            {loading ?
+                <CircularProgress/>
+                :
+                <Collapse in={open} timeout={"auto"} unmountOnExit className={classes.collapsible}>
+                    <VersionDetails
+                        key={props.artifactId}
+                        artifactId={props.artifactId}
+                        repoId={props.repoId}
+                        fileType={props.fileType}
+                        artifactVersionTOs={activeArtifactVersionTOs}
+                        artifactTitle={props.artifactTitle}
+                        loading={loading}/>
+                </Collapse>
+            }
 
-            <Collapse in={open} timeout={1} unmountOnExit className={classes.collapsible}>
-                <VersionDetails
-                    key={props.artifactId}
-                    artifactId={props.artifactId}
-                    repoId={props.repoId}
-                    fileType={props.fileType}
-                    artifactVersionTOs={artifactVersionTOs}
-                    artifactTitle={props.artifactTitle}
-                    loading={loading}/>
-            </Collapse>
+
 
 
             <PopupSettings

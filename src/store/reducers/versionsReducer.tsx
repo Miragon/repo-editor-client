@@ -3,7 +3,7 @@ import {ArtifactVersionTO} from "../../api";
 import {ACTIVE_VERSIONS, LATEST_VERSION} from "../constants";
 
 const initialState = {
-    versions: Array<ArtifactVersionTO>(),
+    activeVersions: Array<ArtifactVersionTO>(),
     latestVersion: null,
     defaultVersionProps: null,
     versionProps: null
@@ -14,7 +14,7 @@ const reducer: CaseReducer = (state = initialState, action) => {
         case ACTIVE_VERSIONS:
             return {
                 ...state,
-                versions: action.versions
+                activeVersions: action.activeVersions
             };
         case LATEST_VERSION:
             return {

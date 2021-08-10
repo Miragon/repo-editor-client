@@ -53,7 +53,6 @@ const UploadArtifactDialog: React.FC<Props> = props => {
 
     useEffect(() => {
         fileTypes.map(type => fileTypeList.push(type.fileExtension))
-        console.log(fileTypeList.join(",."))
     })
 
     useEffect(() => {

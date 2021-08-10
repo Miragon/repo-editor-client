@@ -89,14 +89,11 @@ const ArtifactDetails: React.FC = (() => {
             currentList.push(selectedValue)
         }
         setDisplayedFileTypes(currentList)
-        console.log(displayedFileTypes)
         applyFilters()
     }
 
     const applyFilters = () => {
         const filtered = activeArtifacts.filter(artifact => displayedFileTypes.includes(artifact.fileType))
-        //#TODO: the setFilteredArtifacts call does not load the filtered List into the state
-        console.log(filtered)
         sort(sortValue, filtered)
     }
 
