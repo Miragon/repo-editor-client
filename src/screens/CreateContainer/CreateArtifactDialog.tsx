@@ -7,9 +7,9 @@ import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import * as artifactAction from "../../store/actions/artifactAction";
 import {RootState} from "../../store/reducers/rootReducer";
 import {useTranslation} from "react-i18next";
+import {createArtifactWithDefaultVersion} from "../../store/actions";
 
 interface Props {
     open: boolean;
@@ -38,7 +38,7 @@ const CreateArtifactDialog: React.FC<Props> = props => {
         try {
             const defaultFileProps = fileTypes.find(fileType => fileType.name === props.type)
             if(defaultFileProps){
-                dispatch(artifactAction.createArtifactWithDefaultVersion(props.repo?.id ? props.repo.id : repository, title, description, "" , defaultFileProps.name, ""));
+                dispatch(createArtifactWithDefaultVersion(props.repo?.id ? props.repo.id : repository, title, description, "" , defaultFileProps.name, ""));
                 setTitle("")
                 setDescription("")
                 setRepository("")

@@ -1,7 +1,6 @@
 import {createOrUpdateUserAssignment, deleteAssignment, getAllAssignedUsers} from "./assignmentAction";
-import * as artifactAction from "./artifactAction";
 import {
-    addToFavorites,
+    addToFavorites, copyToRepo, createArtifact,
     deleteArtifact,
     fetchArtifactsFromRepo,
     fetchFavoriteArtifacts,
@@ -45,14 +44,18 @@ export enum ActionType {
     DEPLOY_VERSION,
     FETCH_MENU_ITEMS,
     FETCH_TARGETS,
-    SET_STARRED
+    SET_STARRED,
+    COPY_TO_REPO
 }
 
 // eslint-disable-next-line
 export const actionMapper = (actionType: ActionType, payload: Array<any>) => {
     switch (actionType) {
         case ActionType.CREATE_ARTIFACT:
-            return artifactAction.createArtifact(payload[0], payload[1], payload[2], payload[3], payload[4]);
+            return createArtifact(payload[0], payload[1], payload[2], payload[3], payload[4]);
+
+        case ActionType.COPY_TO_REPO:
+            return copyToRepo(payload[0], payload[1]);
 
         case ActionType.FETCH_FAVORITE_ARTIFACTS:
             return fetchFavoriteArtifacts();

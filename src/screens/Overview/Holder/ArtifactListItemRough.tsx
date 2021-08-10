@@ -8,8 +8,7 @@ import {MoreVert, Star, StarOutline} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
 import PopupSettings from "../../../components/Form/PopupSettings";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
-import * as artifactAction from "../../../store/actions";
-import {deleteArtifact, getAllVersions, getLatestVersion} from "../../../store/actions";
+import {addToFavorites, deleteArtifact, getAllVersions, getLatestVersion} from "../../../store/actions";
 import IconButton from "@material-ui/core/IconButton";
 import CreateVersionDialog from "../../Repository/Artifact/CreateVersionDialog";
 import EditArtifactDialog from "../../Repository/Artifact/EditArtifactDialog";
@@ -178,7 +177,7 @@ const ArtifactListItemRough: React.FC<Props> = ((props: Props) => {
 
     const setStarred = (event: React.MouseEvent<SVGSVGElement>) => {
         event.stopPropagation();
-        dispatch(artifactAction.addToFavorites(props.artifactId));
+        dispatch(addToFavorites(props.artifactId));
     }
 
 

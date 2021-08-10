@@ -6,11 +6,11 @@ import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {ArtifactTO, RepositoryTO} from "../../api";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
-import * as artifactAction from "../../store/actions/artifactAction";
 import {RootState} from "../../store/reducers/rootReducer";
 import {useTranslation} from "react-i18next";
 import helpers from "../../constants/Functions";
 import ArtifactListItemRough from "./Holder/ArtifactListItemRough";
+import {searchArtifact} from "../../store/actions";
 
 const useStyles = makeStyles(() => ({
     headerText: {
@@ -104,7 +104,7 @@ const ArtifactSearchBar: React.FC = () => {
     });
 
     const fetchArtifactSuggestion = useCallback((input: string) => {
-        dispatch(artifactAction.searchArtifact(input));
+        dispatch(searchArtifact(input));
     }, [dispatch]);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

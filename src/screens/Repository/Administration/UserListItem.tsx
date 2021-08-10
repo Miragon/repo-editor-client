@@ -4,9 +4,9 @@ import {Settings} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 import {AssignmentTO, AssignmentUpdateTORoleEnumEnum} from "../../../api";
-import * as assignmentAction from "../../../store/actions/assignmentAction";
 import {useTranslation} from "react-i18next";
 import PopupSettings from "../../../components/Form/PopupSettings";
+import {createOrUpdateUserAssignment, deleteAssignment} from "../../../store/actions";
 
 interface Props {
     assignmentTO: AssignmentTO;
@@ -24,7 +24,7 @@ const UserListItem: React.FC<Props> = props => {
 
     const changeRole = useCallback((role: AssignmentUpdateTORoleEnumEnum) => {
         try {
-            dispatch(assignmentAction.createOrUpdateUserAssignment(
+            dispatch(createOrUpdateUserAssignment(
                 props.assignmentTO.repositoryId,
                 props.assignmentTO.userId,
                 props.assignmentTO.username,
@@ -38,7 +38,7 @@ const UserListItem: React.FC<Props> = props => {
 
     const removeUser = useCallback(() => {
         try {
-            dispatch(assignmentAction.deleteAssignment(
+            dispatch(deleteAssignment(
                 props.assignmentTO.repositoryId,
                 props.assignmentTO.username
             ));

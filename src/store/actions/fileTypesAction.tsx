@@ -1,13 +1,13 @@
 import {Dispatch} from "@reduxjs/toolkit";
-import * as api from "../../api/api";
 import helpers from "../../constants/Functions";
 import {FILETYPES, UNHANDLEDERROR} from "../constants";
 import {handleError} from "./errorAction";
 import {ActionType} from "./actions";
+import {ArtifactApi} from "../../api";
 
 export const fetchFileTypes = () => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const menuController = new api.ArtifactApi();
+        const menuController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
             const response = await menuController.getAllFileTypes(config);

@@ -7,6 +7,7 @@ import RepositoryDetails from "./Administration/RepositoryDetails";
 import {RepositoryTO} from "../../api";
 import {RootState} from "../../store/reducers/rootReducer";
 import PathStructure from "../../components/Layout/PathStructure";
+import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
 
 const Repository: React.FC = (() => {
     const dispatch = useDispatch();
@@ -45,9 +46,15 @@ const Repository: React.FC = (() => {
         <>
             {(activeRepo && activeRepo.id === repoId) &&
                 <div className={"content"}>
-                    <PathStructure structure={path} />
-                    <RepositoryDetails/>
-                    <ArtifactDetails/>
+                    <ErrorBoundary>
+                        <PathStructure structure={path} />
+                    </ErrorBoundary>
+                    <ErrorBoundary>
+                        <RepositoryDetails/>
+                    </ErrorBoundary>
+                    <ErrorBoundary>
+                        <ArtifactDetails/>
+                    </ErrorBoundary>
                 </div>
             }
         </>

@@ -1,6 +1,5 @@
 import {Dispatch} from "@reduxjs/toolkit";
-import * as api from "../../api/api";
-import {NewRepositoryTO, RepositoryUpdateTO} from "../../api";
+import {NewRepositoryTO, RepositoryApi, RepositoryUpdateTO} from "../../api";
 import helpers from "../../constants/Functions";
 import {
     ACTIVE_REPO,
@@ -18,7 +17,7 @@ import {handleError} from "./errorAction";
 export const fetchRepositories = () => {
     return async (dispatch: Dispatch): Promise<void> => {
         // config was passed before
-        const repositoryController = new api.RepositoryApi();
+        const repositoryController = new RepositoryApi();
         try {
             const config = helpers.getClientConfig();
 
@@ -37,7 +36,7 @@ export const fetchRepositories = () => {
 
 export const getSingleRepository = (id: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const repositoryController = new api.RepositoryApi();
+        const repositoryController = new RepositoryApi();
         try {
             const config = helpers.getClientConfig();
             const response = await repositoryController.getSingleRepository(id, config);
@@ -56,7 +55,7 @@ export const getSingleRepository = (id: string) => {
 export const createRepository = (name: string, description: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         // config was passed before
-        const repositoryController = new api.RepositoryApi();
+        const repositoryController = new RepositoryApi();
         try {
             const newRepositoryTO: NewRepositoryTO = {
                 name,
@@ -78,7 +77,7 @@ export const createRepository = (name: string, description: string) => {
 
 export const updateRepository = (id: string, name: string, description: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const repositoryController = new api.RepositoryApi();
+        const repositoryController = new RepositoryApi();
         try {
             const repositoryUpdateTO: RepositoryUpdateTO = {
                 name,
@@ -102,7 +101,7 @@ export const updateRepository = (id: string, name: string, description: string) 
 export const deleteRepository = (id: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         // config was passed before
-        const repositoryController = new api.RepositoryApi();
+        const repositoryController = new RepositoryApi();
         try {
             const config = helpers.getClientConfig();
             const response = await repositoryController.deleteRepository(id, config);

@@ -16,7 +16,8 @@ const useStyles = makeStyles(() => ({
     container: {
         paddingTop: "25px",
         display: "flex",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        whiteSpace: "nowrap"
     },
     artifactButton: {
         minWidth: "180px"

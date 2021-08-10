@@ -6,11 +6,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {IconButton, ListItem, ListItemSecondaryAction} from "@material-ui/core";
 import {Add} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/styles";
-import * as userAction from "../../../store/actions/userAction";
 import {UserInfoTO} from "../../../api";
 import {RootState} from "../../../store/reducers/rootReducer";
-import * as assignmentAction from "../../../store/actions/assignmentAction";
 import theme from "../../../theme";
+import {createOrUpdateUserAssignment, searchUsers} from "../../../store/actions";
 
 const useStyles = makeStyles(() => ({
     listItem: {
@@ -88,7 +87,7 @@ const AddUserSearchBar: React.FC<Props> = props => {
     });
 
     const fetchUserSuggestions = useCallback((input: string) => {
-        dispatch(userAction.searchUsers(input));
+        dispatch(searchUsers(input));
     }, [dispatch]);
 
     // #TODO: Add the UserId prop to AssignmentUpdate in Backend
@@ -102,8 +101,7 @@ const AddUserSearchBar: React.FC<Props> = props => {
             const user = getUserByName(userName);
             const userId = user ? user.id : "";
             if (user) {
-                dispatch(assignmentAction
-                    .createOrUpdateUserAssignment(props.repoId, userId, user?.username));
+                dispatch(createOrUpdateUserAssignment(props.repoId, userId, user?.username));
                 setUserName("");
             }
         } catch (err) {

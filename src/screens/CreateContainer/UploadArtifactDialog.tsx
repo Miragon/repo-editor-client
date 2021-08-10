@@ -8,11 +8,10 @@ import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsSelect from "../../components/Form/SettingsSelect";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import * as artifactAction from "../../store/actions/artifactAction";
-import * as versionAction from "../../store/actions/versionAction";
 import {UNHANDLEDERROR} from "../../store/constants";
 import {RootState} from "../../store/reducers/rootReducer";
 import {useTranslation} from "react-i18next";
+import {createOrUpdateVersion, uploadArtifact} from "../../store/actions";
 
 const useStyles = makeStyles(() => ({
     input: {
@@ -59,7 +58,7 @@ const UploadArtifactDialog: React.FC<Props> = props => {
 
     useEffect(() => {
         if (uploadedArtifact) {
-            dispatch(versionAction.createOrUpdateVersion(
+            dispatch(createOrUpdateVersion(
                 uploadedArtifact.id, file, ArtifactVersionUploadTOSaveTypeEnum.Milestone
             ));
         }
@@ -72,7 +71,7 @@ const UploadArtifactDialog: React.FC<Props> = props => {
 
     const onCreate = useCallback(async () => {
         try {
-            dispatch(artifactAction.uploadArtifact(repository, title, description, uploadedFileType));
+            dispatch(uploadArtifact(repository, title, description, uploadedFileType));
             props.onCancelled();
         } catch (err) {
             dispatch({ type: UNHANDLEDERROR, errorMessage: err });

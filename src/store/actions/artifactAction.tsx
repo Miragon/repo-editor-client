@@ -1,6 +1,11 @@
 import {Dispatch} from "@reduxjs/toolkit";
-import * as api from "../../api/api";
-import {ArtifactUpdateTO, ArtifactVersionUploadTO, ArtifactVersionUploadTOSaveTypeEnum, NewArtifactTO} from "../../api";
+import {
+    ArtifactApi,
+    ArtifactUpdateTO,
+    ArtifactVersionUploadTO,
+    ArtifactVersionUploadTOSaveTypeEnum,
+    NewArtifactTO, VersionApi
+} from "../../api";
 import helpers from "../../constants/Functions";
 import {
     ACTIVE_ARTIFACTS,
@@ -22,7 +27,7 @@ import {handleError} from "./errorAction";
 
 export const fetchFavoriteArtifacts = () => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new api.ArtifactApi();
+        const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
             const response = await artifactController.getStarred(config);
@@ -39,7 +44,7 @@ export const fetchFavoriteArtifacts = () => {
 
 export const fetchRecentArtifacts = () => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new api.ArtifactApi();
+        const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
             const response = await artifactController.getRecent(config);
@@ -64,7 +69,7 @@ export const createArtifact = (
     svgPreview: string
 ) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new api.ArtifactApi();
+        const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
             const newArtifactTO: NewArtifactTO = {
@@ -91,7 +96,7 @@ export const createArtifact = (
 
 export const createArtifactWithDefaultVersion = (repoId: string, name: string, description: string, file: string, fileType: string, svgPreview: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new api.ArtifactApi();
+        const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
             const newArtifactTO: NewArtifactTO = {
@@ -109,7 +114,7 @@ export const createArtifactWithDefaultVersion = (repoId: string, name: string, d
                             saveType: ArtifactVersionUploadTOSaveTypeEnum.Milestone,
                             xml: file
                         }
-                        const versionController = new api.VersionApi();
+                        const versionController = new VersionApi();
                         try {
                             const config = helpers.getClientConfig();
                             versionController.createOrUpdateVersion(response.data.id, artifactVersionUploadTO, config)
@@ -149,7 +154,7 @@ export const createArtifactWithDefaultVersion = (repoId: string, name: string, d
 
 export const createNewArtifactWithVersionFile = (repoId: string, name: string, description: string, file: string, fileType: string, svgPreview: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new api.ArtifactApi();
+        const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
             const newArtifactTO: NewArtifactTO = {
@@ -165,7 +170,7 @@ export const createNewArtifactWithVersionFile = (repoId: string, name: string, d
                             saveType: ArtifactVersionUploadTOSaveTypeEnum.Milestone,
                             xml: file
                         }
-                        const versionController = new api.VersionApi();
+                        const versionController = new VersionApi();
                         try {
                             const config = helpers.getClientConfig();
                             versionController.createOrUpdateVersion(response.data.id, artifactVersionUploadTO, config)
@@ -201,7 +206,7 @@ export const createNewArtifactWithVersionFile = (repoId: string, name: string, d
 
 export const updateArtifact = (name: string, description: string | undefined, artifactId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new api.ArtifactApi();
+        const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
             // eslint-disable-next-line object-shorthand
@@ -224,7 +229,7 @@ export const updateArtifact = (name: string, description: string | undefined, ar
 
 export const fetchArtifactsFromRepo = (repoId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new api.ArtifactApi();
+        const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
             const response = await artifactController.getArtifactsFromRepo(repoId, config);
@@ -242,7 +247,7 @@ export const fetchArtifactsFromRepo = (repoId: string) => {
 
 export const uploadArtifact = (repoId: string, name: string, description: string, fileType: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new api.ArtifactApi();
+        const artifactController = new ArtifactApi();
         try {
             const newArtifact: NewArtifactTO = {name, description, fileType};
             const config = helpers.getClientConfig();
@@ -262,7 +267,7 @@ export const uploadArtifact = (repoId: string, name: string, description: string
 
 export const searchArtifact = (typedTitle: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new api.ArtifactApi();
+        const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
             const response = await artifactController.searchArtifacts(typedTitle, config);
@@ -281,7 +286,7 @@ export const searchArtifact = (typedTitle: string) => {
 
 export const addToFavorites = (artifactId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new api.ArtifactApi();
+        const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
             const response = await artifactController.setStarred(artifactId, config);
@@ -297,10 +302,27 @@ export const addToFavorites = (artifactId: string) => {
     };
 };
 
+export const copyToRepo = (repositoryId: string, artifactId: string) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        const artifactController = new ArtifactApi();
+        try {
+            const config = helpers.getClientConfig();
+            const response = await artifactController.copyToRepository(repositoryId, artifactId, config);
+            if(Math.floor(response.status / 100) === 2) {
+                dispatch({type: SUCCESS, successMessage: "artifact.copied"})
+            } else {
+                dispatch({type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess"})
+            }
+        } catch (error) {
+            dispatch(handleError(error, ActionType.COPY_TO_REPO, [repositoryId, artifactId]))
+        }
+    }
+}
+
 
 export const deleteArtifact = (artifactId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new api.ArtifactApi();
+        const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
             const response = await artifactController.deleteArtifact(artifactId, config);

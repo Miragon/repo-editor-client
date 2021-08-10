@@ -4,12 +4,12 @@ import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {ArtifactTO, RepositoryTO} from "../../api";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
-import * as artifactAction from "../../store/actions/artifactAction";
 import {RootState} from "../../store/reducers/rootReducer";
 import {useTranslation} from "react-i18next";
 import {SYNC_STATUS_FAVORITE} from "../../store/constants";
 import ArtifactListItemRough from "./Holder/ArtifactListItemRough";
 import helpers from "../../constants/Functions";
+import {fetchFavoriteArtifacts} from "../../store/actions";
 
 const useStyles = makeStyles(() => ({
     artifactContainer: {
@@ -42,7 +42,7 @@ const FavoriteArtifacts: React.FC = observer(() => {
 
     const fetchFavorite = useCallback(() => {
         try {
-            dispatch(artifactAction.fetchFavoriteArtifacts());
+            dispatch(fetchFavoriteArtifacts());
         } catch (err) {
             console.log(err);
         }

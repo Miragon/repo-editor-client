@@ -8,8 +8,14 @@ import {ExpandLess, ExpandMore, MoreVert, Star, StarOutline} from "@material-ui/
 import {makeStyles} from "@material-ui/core/styles";
 import PopupSettings from "../../../components/Form/PopupSettings";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
-import * as artifactAction from "../../../store/actions";
-import {deleteArtifact, getAllVersions, getLatestVersion} from "../../../store/actions";
+import {
+    addToFavorites,
+    copyToRepo,
+    deleteArtifact,
+    fetchRepositories,
+    getAllVersions,
+    getLatestVersion
+} from "../../../store/actions";
 import IconButton from "@material-ui/core/IconButton";
 import CreateVersionDialog from "./CreateVersionDialog";
 import EditArtifactDialog from "./EditArtifactDialog";
@@ -18,6 +24,7 @@ import Icon from "@material-ui/core/Icon";
 import helpers from "../../../constants/Functions";
 import VersionDetails from "./VersionDetails";
 import {openFileInTool} from "../../../components/Redirect/Redirections";
+import CopyToRepoDialog from "../../CreateContainer/CopyToRepoDialog";
 
 const useStyles = makeStyles(() => ({
     listItem: {
@@ -143,6 +150,7 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
+    const [copyToRepoOpen, setCopyToRepoOpen] = useState<boolean>(false);
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
     const [createVersionOpen, setCreateVersionOpen] = useState<boolean>(false);
     const [editArtifactOpen, setEditArtifactOpen] = useState<boolean>(false);
@@ -208,7 +216,7 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
 
     const setStarred = (event: React.MouseEvent<SVGSVGElement>) => {
         event.stopPropagation();
-        dispatch(artifactAction.addToFavorites(props.artifactId));
+        dispatch(addToFavorites(props.artifactId));
     }
 
     const options: DropdownButtonItem[] = [
@@ -245,6 +253,15 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
             onClick: () => {
                 dispatch(getLatestVersion(props.artifactId))
                 setDownloadReady(true)
+            }
+        },
+        {
+            id: "CopyToRepository",
+            label: t("artifact.copyTo"),
+            type: "button",
+            onClick: () => {
+                dispatch(fetchRepositories())
+                setCopyToRepoOpen(true)
             }
         },
         {
@@ -348,6 +365,12 @@ const ArtifactListItem: React.FC<Props> = ((props: Props) => {
                 artifactId={props.artifactId}
                 artifactName={props.artifactTitle}
                 artifactDescription={props.description} />
+
+            <CopyToRepoDialog
+                open={copyToRepoOpen}
+                onCancelled={() => setCopyToRepoOpen(false)}
+                name={props.artifactTitle}
+                artifactId={props.artifactId} />
         </>
     );
 })

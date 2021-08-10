@@ -1,6 +1,5 @@
 import {Dispatch} from "@reduxjs/toolkit";
-import * as api from "../../api/api";
-import {AssignmentUpdateTO, AssignmentUpdateTORoleEnumEnum} from "../../api";
+import {AssignmentApi, AssignmentUpdateTO, AssignmentUpdateTORoleEnumEnum} from "../../api";
 import helpers from "../../constants/Functions";
 import {ASSIGNED_USERS, SUCCESS, SYNC_STATUS_ASSIGNMENT, UNHANDLEDERROR} from "../constants";
 import {ActionType} from "./actions";
@@ -8,7 +7,7 @@ import {handleError} from "./errorAction";
 
 export const getAllAssignedUsers = (repoId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const assignmentController = new api.AssignmentApi();
+        const assignmentController = new AssignmentApi();
 
         try {
             const config = helpers.getClientConfig();
@@ -32,7 +31,7 @@ export const createOrUpdateUserAssignment = (
     roleEnum?: AssignmentUpdateTORoleEnumEnum
 ) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const assignmentController = new api.AssignmentApi();
+        const assignmentController = new AssignmentApi();
         let message;
         try {
             if (!roleEnum) {
@@ -66,7 +65,7 @@ export const createOrUpdateUserAssignment = (
 
 export const deleteAssignment = (repoId: string, username: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const assignmentController = new api.AssignmentApi();
+        const assignmentController = new AssignmentApi();
         try {
             const config = helpers.getClientConfig();
             const response = await assignmentController

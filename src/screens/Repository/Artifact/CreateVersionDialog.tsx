@@ -4,11 +4,11 @@ import {makeStyles} from "@material-ui/styles";
 import PopupDialog from "../../../components/Form/PopupDialog";
 import SettingsForm from "../../../components/Form/SettingsForm";
 import SettingsTextField from "../../../components/Form/SettingsTextField";
-import * as versionAction from "../../../store/actions/versionAction";
-import {ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../../../api";
 import {useTranslation} from "react-i18next";
 import {RootState} from "../../../store/reducers/rootReducer";
 import {UNHANDLEDERROR} from "../../../store/constants";
+import {createOrUpdateVersion, getAllVersions} from "../../../store/actions";
+import {ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../../../api";
 
 const useStyles = makeStyles(() => ({
     container: {}
@@ -42,8 +42,8 @@ const CreateVersionDialog: React.FC<Props> = props => {
     const onCreate = useCallback(async () => {
         try {
             if(latestVersion){
-                await dispatch(versionAction.createOrUpdateVersion(artifactId, latestVersion?.xml, ArtifactVersionUploadTOSaveTypeEnum.Milestone, comment));
-                dispatch(versionAction.getAllVersions(artifactId));
+                await dispatch(createOrUpdateVersion(artifactId, latestVersion?.xml, ArtifactVersionUploadTOSaveTypeEnum.Milestone, comment));
+                dispatch(getAllVersions(artifactId));
                 onCancelled();
             } else {
                 dispatch({type: UNHANDLEDERROR, errorMessage: "Can't load XML of the latest version"})

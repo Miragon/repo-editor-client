@@ -8,7 +8,7 @@ import Icon from "@material-ui/core/Icon";
 import {Star, StarOutline} from "@material-ui/icons";
 import New from "../../../img/New.svg";
 import {Tooltip} from "@material-ui/core";
-import * as artifactAction from "../../../store/actions";
+import {addToFavorites} from "../../../store/actions";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -132,7 +132,7 @@ const ArtifactCard: React.FC<ArtifactProps> = (props: ArtifactProps) => {
 
     const setStarred = (event: React.MouseEvent<SVGSVGElement>) => {
         event.stopPropagation();
-        dispatch(artifactAction.addToFavorites(props.id));
+        dispatch(addToFavorites(props.id));
     }
 
     return (
