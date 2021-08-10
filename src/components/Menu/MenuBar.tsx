@@ -2,7 +2,6 @@ import {makeStyles, Theme} from "@material-ui/core";
 import clsx from "clsx";
 import React from "react";
 import {createTestAttributes} from "../../util/TestUtils";
-import {COLORS} from "../../design";
 
 interface Props {
     className?: string;
@@ -13,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     root: {
         boxShadow: theme.shadows[4],
         zIndex: theme.zIndex.modal,
-        backgroundColor: COLORS.primary,
+        backgroundColor: theme.palette.primary.main,
         padding: "0.5rem 25px 0.5rem 0.5rem",
         flexDirection: "row",
         alignItems: "center",

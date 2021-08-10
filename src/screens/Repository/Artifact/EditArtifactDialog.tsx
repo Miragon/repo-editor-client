@@ -2,9 +2,9 @@ import React, {useCallback, useState} from "react";
 import {useDispatch} from "react-redux";
 import {makeStyles} from "@material-ui/core/styles";
 import {Input, InputLabel} from "@material-ui/core";
-import * as artifactAction from "../../../store/actions/artifactAction";
 import PopupDialog from "../../../components/Form/PopupDialog";
 import {useTranslation} from "react-i18next";
+import {updateArtifact} from "../../../store/actions";
 
 const useStyles = makeStyles(() => ({
     line: {
@@ -41,7 +41,7 @@ const EditArtifactDialog: React.FC<Props> = props => {
 
     const applyChanges = useCallback(async () => {
         try {
-            dispatch(artifactAction.updateArtifact(title, description, props.artifactId));
+            dispatch(updateArtifact(title, description, props.artifactId));
             props.onCancelled();
         } catch (err) {
             // eslint-disable-next-line no-console

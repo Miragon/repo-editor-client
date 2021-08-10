@@ -2,13 +2,14 @@ import {makeStyles} from "@material-ui/styles";
 import {observer} from "mobx-react";
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {ArtifactTO, FileTypesTO, RepositoryTO} from "../../api";
+import {ArtifactTO, RepositoryTO} from "../../api";
 import {ErrorBoundary} from "../../components/Exception/ErrorBoundary";
-import * as artifactAction from "../../store/actions/artifactAction";
 import {RootState} from "../../store/reducers/rootReducer";
-import ArtifactCard from "./Holder/ArtifactCard";
 import {useTranslation} from "react-i18next";
-import {openFileInTool} from "../../components/Redirect/Redirections";
+import {SYNC_STATUS_FAVORITE} from "../../store/constants";
+import ArtifactListItemRough from "./Holder/ArtifactListItemRough";
+import helpers from "../../constants/Functions";
+import {fetchFavoriteArtifacts} from "../../store/actions";
 
 const useStyles = makeStyles(() => ({
     artifactContainer: {
@@ -20,8 +21,6 @@ const useStyles = makeStyles(() => ({
         }
     },
     container: {
-        display: "flex",
-        flexWrap: "wrap"
     },
     card: {
         width: "calc(20%)",
@@ -37,34 +36,31 @@ const FavoriteArtifacts: React.FC = observer(() => {
     const {t} = useTranslation("common");
 
 
-    const favoriteArtifacts: Array<ArtifactTO> = useSelector(
-        (state: RootState) => state.artifacts.favoriteArtifacts
-    );
+    const favoriteArtifacts: Array<ArtifactTO> = useSelector((state: RootState) => state.artifacts.favoriteArtifacts);
     const repos: Array<RepositoryTO> = useSelector((state: RootState) => state.repos.repos);
-    const fileTypes: Array<FileTypesTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
+    const syncStatus: boolean = useSelector((state: RootState) => state.dataSynced.favoriteSynced);
 
     const fetchFavorite = useCallback(() => {
         try {
-            dispatch(artifactAction.fetchFavoriteArtifacts());
+            dispatch(fetchFavoriteArtifacts());
         } catch (err) {
-            // eslint-disable-next-line no-console
             console.log(err);
         }
     }, [dispatch]);
 
-    const getRepoName = ((repoId: string) => {
-        const assignedRepo = repos.find(repo => repo.id === repoId);
-        return assignedRepo ? assignedRepo.name : "";
-    });
+    useEffect(() => {
+        if(!syncStatus){
+            fetchFavorite();
+            dispatch({type: SYNC_STATUS_FAVORITE, dataSynced: true})
+        }
+    }, [dispatch, syncStatus, fetchFavorite])
+
 
     useEffect(() => {
         fetchFavorite();
     }, [fetchFavorite]);
 
-    const openTool = (event: React.MouseEvent<HTMLElement>, fileType: string, repositoryId: string, artifactId: string, versionId?: string) => {
-        const urlNamespace = fileTypes.find((type: FileTypesTO) => type.name.toLowerCase() === fileType.toLowerCase())?.url;
-        openFileInTool(urlNamespace ? urlNamespace : "", repositoryId, artifactId, t("error.missingTool", {fileType}), versionId)
-    }
+
 
     return (
         <div className={classes.artifactContainer}>
@@ -73,14 +69,17 @@ const FavoriteArtifacts: React.FC = observer(() => {
                 <ErrorBoundary>
                     {favoriteArtifacts?.map(artifact => (
                         <div
-                            className={classes.card}
-                            key={artifact.id}
-                            onClick={event => openTool(event, artifact.fileType, artifact.repositoryId, artifact.id)}>
-                            <ArtifactCard
-                                artifactRepo={getRepoName(artifact.repositoryId)}
+                            key={artifact.id} >
+                            <ArtifactListItemRough
                                 artifactTitle={artifact.name}
-                                image={artifact.svgPreview}
-                                fileType={artifact.fileType} />
+                                createdDate={artifact.createdDate}
+                                updatedDate={artifact.updatedDate}
+                                description={artifact.description}
+                                repoId={artifact.repositoryId}
+                                artifactId={artifact.id}
+                                fileType={artifact.fileType}
+                                favorite={helpers.isFavorite(artifact.id, favoriteArtifacts?.map(artifact => artifact.id))}
+                                repository={helpers.getRepoName(artifact.repositoryId, repos)}/>
                         </div>
                     ))}
                     {favoriteArtifacts?.length === 0 && (

@@ -2,7 +2,7 @@ import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
 import {ArtifactVersionUploadTO, ArtifactVersionUploadTOSaveTypeEnum} from "../../api";
 import helpers from "../../constants/Functions";
-import {GET_VERSIONS, LATEST_VERSION, SUCCESS, SYNC_STATUS_VERSION, UNHANDLEDERROR} from "../constants";
+import {ACTIVE_VERSIONS, LATEST_VERSION, SUCCESS, SYNC_STATUS_VERSION, UNHANDLEDERROR} from "../constants";
 import {ActionType} from "./actions";
 import {handleError} from "./errorAction";
 
@@ -45,7 +45,7 @@ export const getAllVersions = (bpmnArtifactId: string) => {
             const config = helpers.getClientConfig();
             const response = await versionController.getAllVersions(bpmnArtifactId, config);
             if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: GET_VERSIONS, versions: response.data });
+                dispatch({ type: ACTIVE_VERSIONS, activeVersions: response.data });
                 dispatch({type: SYNC_STATUS_VERSION, dataSynced: true});
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });

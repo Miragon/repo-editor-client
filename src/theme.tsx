@@ -2,6 +2,15 @@ import {createMuiTheme, responsiveFontSizes} from "@material-ui/core/styles";
 
 const theme = responsiveFontSizes(
     createMuiTheme({
+        overrides: {
+            MuiTooltip: {
+                tooltip: {
+                    fontSize: ".9rem",
+                    color: "white",
+                    backgroundColor: "grey"
+                }
+            }
+        },
         palette: {
             primary: {
                 dark: "#000000",

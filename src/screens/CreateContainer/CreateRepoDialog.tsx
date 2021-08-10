@@ -3,8 +3,8 @@ import {useDispatch} from "react-redux";
 import PopupDialog from "../../components/Form/PopupDialog";
 import SettingsForm from "../../components/Form/SettingsForm";
 import SettingsTextField from "../../components/Form/SettingsTextField";
-import * as repositoryAction from "../../store/actions/repositoryAction";
 import {useTranslation} from "react-i18next";
+import {createRepository} from "../../store/actions";
 
 interface Props {
     open: boolean;
@@ -25,7 +25,7 @@ const CreateRepoDialog: React.FC<Props> = props => {
 
     const onCreate = useCallback(() => {
         try {
-            dispatch(repositoryAction.createRepository(title, description));
+            dispatch(createRepository(title, description));
             setTitle("");
             setDescription("");
             onCancelled();

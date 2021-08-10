@@ -5,9 +5,9 @@ import {IconButton, Typography} from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {useHistory} from "react-router-dom";
 import PopupDialog from "../../../components/Form/PopupDialog";
-import * as repositoryAction from "../../../store/actions/repositoryAction";
 import SettingsTextField from "../../../components/Form/SettingsTextField";
 import {useTranslation} from "react-i18next";
+import {deleteRepository, updateRepository} from "../../../store/actions";
 
 const useStyles = makeStyles(() => ({
     line: {
@@ -61,7 +61,7 @@ const EditRepoDialog: React.FC<Props> = props => {
 
     const applyChanges = useCallback(async () => {
         try {
-            dispatch(repositoryAction.updateRepository(props.repoId, title, description));
+            dispatch(updateRepository(props.repoId, title, description));
             props.onCancelled();
         } catch (err) {
             // eslint-disable-next-line no-console
@@ -73,7 +73,7 @@ const EditRepoDialog: React.FC<Props> = props => {
         try {
             // eslint-disable-next-line no-alert
             if (window.confirm(t("repository.confirmDelete", {repoName: title}))) {
-                dispatch(repositoryAction.deleteRepository(props.repoId));
+                dispatch(deleteRepository(props.repoId));
                 history.push("/");
             }
         } catch (err) {

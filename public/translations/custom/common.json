@@ -14,6 +14,8 @@
   "artifact": {
     "confirmDelete": "Wollen Sie {{artifactName}} wirklich löschen?",
     "create": "Artifact erstellen",
+    "copy": "{{artifactName}} in anderes Projekt kopieren",
+    "copyTo": "In Projekt kopieren",
     "createdFromExisting": "Artifact aus existierender Version erstellt",
     "createdDefault": "Artifact erstellt",
     "createBpmn": "BPMN Artifact erstellen",
@@ -37,6 +39,7 @@
     "edit": "Version bearbeiten",
     "download": "Version herunterladen",
     "delete": "Version löschen",
+    "openLatest": "Aktuelle Version öffnen",
     "version": "Version",
     "MILESTONE": "Meilenstein",
     "deploymentHistory": "Veröffentlichungen",
@@ -82,10 +85,13 @@
     "applyChanges": "Bestätigen",
     "cancel": "Abbrechen",
     "close": "Schließen",
-    "create": "Erstellen"
+    "create": "Erstellen",
+    "copy": "Kopieren"
   },
   "properties": {
     "title": "Titel",
+    "filename": "Name",
+    "version": "Version",
     "description": "Beschreibung",
     "comment": "Kommentar",
     "date": "Datum",
@@ -134,7 +140,9 @@
     "create": "Datei erstellen",
     "modifiedOn": "Bearbeitet am",
     "upload": "Datei hochladen",
+    "updated": "Datei geändert",
     "download": "Datei herunterladen",
+    "showInRepo": "In Projekt anzeigen",
     "edit": "Datei bearbeiten",
     "delete": "Datei löschen"
   },
@@ -146,7 +154,7 @@
     "filter": "Filter"
   },
   "sort": {
-    "sort": "Sortieren",
+    "sort": "Sortieren nach",
     "lastEdited": "Zuletzt bearbeitet",
     "created": "Erstellungsdatum",
     "name": "Name"

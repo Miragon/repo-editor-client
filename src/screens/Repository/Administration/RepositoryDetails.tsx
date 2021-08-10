@@ -16,14 +16,18 @@ const useStyles = makeStyles(() => ({
     header: {
         display: "flex",
         width: "100%",
+        alignItems: "center",
         justifyContent: "space-between"
     },
     headerText: {
         color: "black",
-        fontSize: "20px"
+        fontSize: "20px",
     },
     repoInfo: {
+        minWidth: "150px",
+        maxWidth: "150px",
         display: "flex",
+        justifyContent: "space-between",
         color: "black",
         fontSize: "15px"
     },
@@ -32,10 +36,6 @@ const useStyles = makeStyles(() => ({
         fontSize: "14px",
         fontWeight: "lighter",
         fontStyle: "italic"
-    },
-    icon: {
-        marginRight: "0.1rem",
-        marginLeft: "0.5rem"
     }
 
 }));
@@ -56,26 +56,20 @@ const RepositoryDetails: React.FC = (() => {
                         {activeRepo.name}
                     </div>
                     <div className={classes.repoInfo}>
-                        <IconButton size="small">
-                            <Description
-                                className={classes.icon}
-                                fontSize="small" />
+                        <IconButton size="medium">
+                            <Description fontSize="small" />
                             {activeRepo.existingArtifacts}
                         </IconButton>
                         <IconButton
-                            size="small"
+                            size="medium"
                             onClick={() => setUserManagementOpen(true)}>
-                            <People
-                                className={classes.icon}
-                                fontSize="small" />
+                            <People fontSize="small" />
                             {activeRepo.assignedUsers}
                         </IconButton>
                         <IconButton
-                            size="small"
+                            size="medium"
                             onClick={() => setRepoManagementOpen(true)}>
-                            <Settings
-                                className={classes.icon}
-                                fontSize="small" />
+                            <Settings />
                         </IconButton>
 
                     </div>

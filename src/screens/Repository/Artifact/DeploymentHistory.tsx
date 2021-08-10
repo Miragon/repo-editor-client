@@ -4,6 +4,7 @@ import PopupDialog from "../../../components/Form/PopupDialog";
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
 import {DeploymentTO} from "../../../api";
 import {makeStyles} from "@material-ui/core/styles";
+import helpers from "../../../constants/Functions";
 
 
 const useStyles = makeStyles(() => ({
@@ -47,24 +48,6 @@ const DeploymentHistory: React.FC<Props> = props => {
     }
 
 
-    const reformatDate = (date: string | undefined) => {
-        const language = window.localStorage.getItem("language") ? window.localStorage.getItem("language") : "default";
-        if(language === "custom") {
-            if (date) {
-                const standardDate = `${date.substring(8, 10)}.${date.substring(5, 7)}.${date.substring(0, 4)}`
-                const time = date.split("T")[1].substring(0, 5);
-                return `${standardDate}  |  ${time}`;
-            }
-        }
-        if(language === "default") {
-            if(date) {
-                const americanDate = `${date.substring(5, 7)}.${date.substring(8, 10)}.${date.substring(0, 4)}`
-                const time = date.split("T")[1].substring(0, 5);
-                return `${americanDate}  |  ${time}`;
-            }
-        }
-        return "01.01.2000";
-    }
 
     return (
         <PopupDialog
@@ -75,7 +58,10 @@ const DeploymentHistory: React.FC<Props> = props => {
             firstTitle={t("dialog.close")}
             onFirst={props.onCancelled}>
             <p>
-                {t("properties.title")}: <b> {props.artifactTitle} </b>
+                {t("properties.filename")}: <b> {props.artifactTitle} </b>
+            </p>
+            <p>
+                {t("properties.version")}: <b> {props.milestone} </b>
             </p>
             <p>
                 {t("properties.comment")}: <b> {props.versionComment} </b>
@@ -110,7 +96,7 @@ const DeploymentHistory: React.FC<Props> = props => {
                                 {deployment.user}
                             </TableCell>
                             <TableCell>
-                                {reformatDate(deployment.timestamp)}
+                                {helpers.reformatDate(deployment.timestamp)}
                             </TableCell>
                         </TableRow>
                     ))}

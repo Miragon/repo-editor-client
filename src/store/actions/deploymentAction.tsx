@@ -1,6 +1,5 @@
 import {Dispatch} from "@reduxjs/toolkit";
-import * as api from "../../api/api";
-import {NewDeploymentTO} from "../../api";
+import {DeploymentApi, NewDeploymentTO} from "../../api";
 import helpers from "../../constants/Functions";
 import {SUCCESS, SYNC_STATUS_VERSION, TARGETS, UNHANDLEDERROR} from "../constants";
 import {handleError} from "./errorAction";
@@ -9,7 +8,7 @@ import {ActionType} from "./actions";
 
 export const deployVersion = (target: string, artifactId: string, versionId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const deploymentController = new api.DeploymentApi();
+        const deploymentController = new DeploymentApi();
         try {
             const deploymentTO: NewDeploymentTO = {
                 target
@@ -33,7 +32,7 @@ export const deployVersion = (target: string, artifactId: string, versionId: str
 
 export const fetchTargets = () => {
     return async (dispatch: Dispatch): Promise<void> => {
-        const deploymentController = new api.DeploymentApi();
+        const deploymentController = new DeploymentApi();
         try {
             const config = helpers.getClientConfig();
             const response = await deploymentController.getAllDeploymentTargets(config);

@@ -16,7 +16,8 @@ const useStyles = makeStyles(() => ({
     container: {
         paddingTop: "25px",
         display: "flex",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        whiteSpace: "nowrap"
     },
     artifactButton: {
         minWidth: "180px"
@@ -84,6 +85,7 @@ const RepoContainer: React.FC = observer(() => {
                         title={t("repository.create")}
                         onClick={() => setCreateRepoOpen(true)} />
                     <DropdownButton
+                        type={"default"}
                         className={classes.artifactButton}
                         title={t("artifact.create")}
                         options={artifactOptions} />
