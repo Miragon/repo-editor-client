@@ -10,7 +10,6 @@ import PopupSettings from "../../../components/Form/PopupSettings";
 import {DropdownButtonItem} from "../../../components/Form/DropdownButton";
 import {
     addToFavorites,
-    copyToRepo,
     deleteArtifact,
     fetchRepositories,
     getAllVersions,
