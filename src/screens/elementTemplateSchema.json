@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "versionNr": {
+      "type": "number"
+    },
+    "appliesTo": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scopes": {
+      "type": "object"
+    },
+    "properties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "constraint": {
+            "type": "object",
+            "properties": {
+              "notEmpty": {
+                "type": "boolean"
+              }
+            }
+          },
+          "binding": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "scriptFormat": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "appliesTo",
+    "properties"
+  ],
+  "additionalProperties": false
+}

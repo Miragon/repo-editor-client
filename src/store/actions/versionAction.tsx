@@ -56,19 +56,19 @@ export const getAllVersions = (bpmnArtifactId: string) => {
     };
 };
 
-export const getLatestVersion = (bpmnArtifactId: string) => {
+export const getLatestVersion = (artifactId: string) => {
     return async (dispatch: Dispatch): Promise<void> => {
         try {
             const versionController = new api.VersionApi();
             const config = helpers.getClientConfig();
-            const response = await versionController.getLatestVersion(bpmnArtifactId, config);
+            const response = await versionController.getLatestVersion(artifactId, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: LATEST_VERSION, latestVersion: response.data });
             } else {
                 dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.LATEST_VERSION, [bpmnArtifactId]));
+            dispatch(handleError(error, ActionType.LATEST_VERSION, [artifactId]));
         }
     };
 };

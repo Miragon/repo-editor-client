@@ -11,7 +11,7 @@ import i18next from "i18next";
 
 
 const language = window.localStorage.getItem("language") ? window.localStorage.getItem("language") : "default";
-fetch("/repository/translations/default/common.json"
+fetch("/translations/default/common.json"
     ,{
         headers : {
             "Content-Type": "application/json",
@@ -32,7 +32,7 @@ fetch("/repository/translations/default/common.json"
 
 
 const fetchCustom = (defaultPackage: JSON) => {
-    fetch("/repository/translations/custom/common.json"
+    fetch("/translations/custom/common.json"
         ,{
             headers : {
                 "Content-Type": "application/json",
