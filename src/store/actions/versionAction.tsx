@@ -7,7 +7,7 @@ import {ActionType} from "./actions";
 import {handleError} from "./errorAction";
 
 export const createOrUpdateVersion = (
-    bpmnArtifactId: string,
+    artifactId: string,
     file: string,
     saveType: ArtifactVersionUploadTOSaveTypeEnum,
     comment?: string
@@ -22,7 +22,7 @@ export const createOrUpdateVersion = (
             };
             const config = helpers.getClientConfig();
             const response = await versionController.createOrUpdateVersion(
-                bpmnArtifactId, artifactVersionUploadTO, config
+                artifactId, artifactVersionUploadTO, config
             );
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "version.created" });
@@ -32,7 +32,7 @@ export const createOrUpdateVersion = (
             }
         } catch (error) {
             dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_VERSION, [
-                bpmnArtifactId, file, saveType, comment
+                artifactId, file, saveType, comment
             ]));
         }
     };

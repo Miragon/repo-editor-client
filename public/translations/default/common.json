@@ -44,6 +44,7 @@
     "RELEASE": "Release",
     "MILESTONE": "Milestone",
     "deploymentHistory": "Deployments",
+    "save": "Save",
     "saveAsNewArtifact": "Save as new Artifact",
     "saveVersionXAsNewArtifact": "Save Version {{milestone}} as new Artifact"
   },
@@ -151,6 +152,7 @@
   },
   "path": {
     "overview": "Overview",
+    "editor": "Editor",
     "repository": "Repository"
   },
   "filter": {

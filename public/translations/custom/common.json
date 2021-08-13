@@ -43,6 +43,7 @@
     "version": "Version",
     "MILESTONE": "Meilenstein",
     "deploymentHistory": "Veröffentlichungen",
+    "save": "Speichern",
     "saveAsNewArtifact": "Als neue Datei speichern",
     "saveVersionXAsNewArtifact": "Version {{milestone}} als neue Datei speichern"
   },
@@ -148,8 +149,9 @@
     "delete": "Datei löschen"
   },
   "path": {
-  "overview": "Übersicht",
-  "repository": "Projekt"
+    "overview": "Übersicht",
+    "editor": "Editor",
+    "repository": "Projekt"
   },
   "filter": {
     "filter": "Filter"

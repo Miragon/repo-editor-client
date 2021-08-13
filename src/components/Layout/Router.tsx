@@ -1,6 +1,6 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
-import Container from "../../screens/Container";
+import EditorContainer from "../../screens/EditorContainer";
 import RegisterNewUserScreen from "../../screens/RegisterNewUserScreen";
 
 const Router: React.FC = () => {
@@ -9,7 +9,7 @@ const Router: React.FC = () => {
             <Route
                 exact
                 path="/"
-                component={Container} />
+                component={EditorContainer} />
         </Switch>
     );
 };

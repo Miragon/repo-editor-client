@@ -8,7 +8,7 @@ import {getLatestVersion} from "../store/actions";
 import Editor from "./Editor";
 
 
-const Container: React.FC = observer(() => {
+const EditorContainer: React.FC = observer(() => {
     const dispatch = useDispatch();
 
     const { artifactId } = useParams<{ artifactId: string }>();
@@ -22,9 +22,13 @@ const Container: React.FC = observer(() => {
 
     const element = {
         name: "path.overview",
-        link: "/"
+        link: "/",
     }
-    const path = [element]
+    const element2 = {
+        name: "path.editor",
+        link: `#/editor/${artifactId}`
+    }
+    const path = [element, element2]
 
 
     return (
@@ -36,4 +40,4 @@ const Container: React.FC = observer(() => {
     );
 });
 
-export default Container;
+export default EditorContainer;
