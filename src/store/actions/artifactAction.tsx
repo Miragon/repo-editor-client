@@ -4,62 +4,23 @@ import {
     ArtifactUpdateTO,
     ArtifactVersionUploadTO,
     ArtifactVersionUploadTOSaveTypeEnum,
-    NewArtifactTO, VersionApi
+    NewArtifactTO,
+    VersionApi
 } from "../../api";
-import helpers from "../../constants/Functions";
+import helpers from "../../util/helperFunctions";
 import {
-    ACTIVE_ARTIFACTS,
-    ARTIFACTQUERY_EXECUTED, ARTIFACTS_REPO_AND_TYPE,
-    DIAGRAM_UPLOAD,
-    GET_FAVORITE,
-    GET_RECENT,
-    SEARCH_ARTIFACT, SHARED_ARTIFACTS,
+    ARTIFACTS_BY_REPO_AND_TYPE,
+    CREATED_ARTIFACT,
+    GET_ARTIFACT,
+    HANDLEDERROR,
     SUCCESS,
     SYNC_STATUS_ARTIFACT,
-    SYNC_STATUS_FAVORITE,
     SYNC_STATUS_RECENT,
-    SYNC_STATUS_REPOSITORY,
-    SYNC_STATUS_VERSION,
-    UNHANDLEDERROR
-} from "../constants";
+    SYNC_STATUS_VERSION
+} from "../../constants/Constants";
 import {ActionType} from "./actions";
 import {handleError} from "./errorAction";
 
-export const fetchFavoriteArtifacts = () => {
-    return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new ArtifactApi();
-        try {
-            const config = helpers.getClientConfig();
-            const response = await artifactController.getStarred(config);
-            if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: GET_FAVORITE, favoriteArtifacts: response.data });
-            } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
-            }
-        } catch (error) {
-            dispatch(handleError(error, ActionType.FETCH_FAVORITE_ARTIFACTS, []));
-        }
-    };
-};
-
-export const fetchRecentArtifacts = () => {
-    return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new ArtifactApi();
-        try {
-            const config = helpers.getClientConfig();
-            const response = await artifactController.getRecent(config);
-            if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: GET_RECENT, recentArtifacts: response.data });
-                dispatch({type: SYNC_STATUS_RECENT, dataSynced: true})
-
-            } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
-            }
-        } catch (error) {
-            dispatch(handleError(error, ActionType.FETCH_RECENT_ARTIFACTS, []));
-        }
-    };
-};
 
 export const createArtifact = (
     repoId: string,
@@ -83,7 +44,7 @@ export const createArtifact = (
                 dispatch({ type: SYNC_STATUS_ARTIFACT, dataSynced: false });
                 dispatch({type: SYNC_STATUS_RECENT, dataSynced: false})
             } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
+                dispatch({ type: HANDLEDERROR, errorMessage: "error.couldNotProcess" });
             }
         } catch (error) {
             dispatch(handleError(error, ActionType.CREATE_ARTIFACT, [
@@ -99,34 +60,27 @@ export const createArtifactWithDefaultVersion = (repoId: string, name: string, d
         const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
-            const newArtifactTO: NewArtifactTO = {
-                name: name,
-                description: description,
-                //#TODO remove "BPMN"
-                fileType: fileType || "BPMN",
-                svgPreview: svgPreview
-            };
+            const newArtifactTO: NewArtifactTO = { name, description, fileType, svgPreview };
 
             await artifactController.createArtifact(repoId, newArtifactTO, config)
                 .then(response => {
                     if (Math.floor(response.status / 100) === 2) {
+                        dispatch({type: CREATED_ARTIFACT, createdArtifact: response.data})
                         const artifactVersionUploadTO: ArtifactVersionUploadTO = {
                             saveType: ArtifactVersionUploadTOSaveTypeEnum.Milestone,
-                            xml: file
+                            file: file
                         }
                         const versionController = new VersionApi();
                         try {
                             const config = helpers.getClientConfig();
-                            versionController.createOrUpdateVersion(response.data.id, artifactVersionUploadTO, config)
+                            versionController.createVersion(response.data.id, artifactVersionUploadTO, config)
                                 .then(response2 => {
                                     if (Math.floor(response2.status / 100) === 2) {
                                         dispatch({type: SUCCESS, successMessage: "artifact.createdDefault"});
                                         dispatch({type: SYNC_STATUS_ARTIFACT, dataSynced: false });
-                                        dispatch({type: SYNC_STATUS_REPOSITORY, dataSynced: false});
-                                        dispatch({type: SYNC_STATUS_RECENT, dataSynced: false})
                                         dispatch({type: SYNC_STATUS_VERSION, dataSynced: false});
                                     } else {
-                                        dispatch({type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess"});
+                                        dispatch({type: HANDLEDERROR, errorMessage: "error.couldNotProcess"});
                                     }
                                 }
                                 );
@@ -135,7 +89,7 @@ export const createArtifactWithDefaultVersion = (repoId: string, name: string, d
                         }
 
                     } else {
-                        dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
+                        dispatch({ type: HANDLEDERROR, errorMessage: "error.couldNotProcess" });
                     }
                 });
 
@@ -157,32 +111,27 @@ export const createNewArtifactWithVersionFile = (repoId: string, name: string, d
         const artifactController = new ArtifactApi();
         try {
             const config = helpers.getClientConfig();
-            const newArtifactTO: NewArtifactTO = {
-                name: name,
-                description: description,
-                fileType: fileType || "BPMN",
-                svgPreview: svgPreview
-            };
+            const newArtifactTO: NewArtifactTO = {name, description, fileType, svgPreview};
             await artifactController.createArtifact(repoId, newArtifactTO, config)
                 .then(response => {
                     if (Math.floor(response.status / 100) === 2) {
                         const artifactVersionUploadTO: ArtifactVersionUploadTO = {
                             saveType: ArtifactVersionUploadTOSaveTypeEnum.Milestone,
-                            xml: file
+                            file: file
                         }
                         const versionController = new VersionApi();
                         try {
                             const config = helpers.getClientConfig();
-                            versionController.createOrUpdateVersion(response.data.id, artifactVersionUploadTO, config)
+                            versionController.createVersion(response.data.id, artifactVersionUploadTO, config)
                                 .then(response2 => {
                                     if (Math.floor(response2.status / 100) === 2) {
                                         dispatch({type: SUCCESS, successMessage: "artifact.createdFromExisting"});
                                         dispatch({type: SYNC_STATUS_ARTIFACT, dataSynced: false });
-                                        dispatch({type: SYNC_STATUS_REPOSITORY, dataSynced: false})
-                                        dispatch({type: SYNC_STATUS_RECENT, dataSynced: false})
                                         dispatch({type: SYNC_STATUS_VERSION, dataSynced: false});
+                                        dispatch({type: CREATED_ARTIFACT, createdArtifact: response.data});
+                                        console.log("Created with file")
                                     } else {
-                                        dispatch({type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess"});
+                                        dispatch({type: HANDLEDERROR, errorMessage: "error.couldNotProcess"});
                                     }
                                 }
                                 );
@@ -190,7 +139,7 @@ export const createNewArtifactWithVersionFile = (repoId: string, name: string, d
                             dispatch(handleError(error, ActionType.CREATE_OR_UPDATE_VERSION, [response.data.id, file, ArtifactVersionUploadTOSaveTypeEnum.Milestone]));
                         }
                     } else {
-                        dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
+                        dispatch({ type: HANDLEDERROR, errorMessage: "error.couldNotProcess" });
                     }
                 });
 
@@ -219,7 +168,7 @@ export const updateArtifact = (name: string, description: string | undefined, ar
                 dispatch({type: SYNC_STATUS_ARTIFACT, dataSynced: false})
                 dispatch({ type: SUCCESS, successMessage: "artifact.updated" });
             } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
+                dispatch({ type: HANDLEDERROR, errorMessage: "error.couldNotProcess" });
             }
         } catch (error) {
             dispatch(handleError(error, ActionType.FETCH_ARTIFACTS_FROM_REPO, [name, description]));
@@ -227,61 +176,6 @@ export const updateArtifact = (name: string, description: string | undefined, ar
     };
 };
 
-export const fetchArtifactsFromRepo = (repoId: string) => {
-    return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new ArtifactApi();
-        try {
-            const config = helpers.getClientConfig();
-            const response = await artifactController.getArtifactsFromRepo(repoId, config);
-            if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: ACTIVE_ARTIFACTS, artifacts: response.data });
-                dispatch({ type: SYNC_STATUS_ARTIFACT, dataSynced: true });
-            } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
-            }
-        } catch (error) {
-            dispatch(handleError(error, ActionType.FETCH_ARTIFACTS_FROM_REPO, [repoId]));
-        }
-    };
-};
-
-export const uploadArtifact = (repoId: string, name: string, description: string, fileType: string) => {
-    return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new ArtifactApi();
-        try {
-            const newArtifact: NewArtifactTO = {name, description, fileType};
-            const config = helpers.getClientConfig();
-            const response = await artifactController.createArtifact(repoId, newArtifact, config);
-            if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: DIAGRAM_UPLOAD, uploadedArtifact: response.data });
-                dispatch({type: SYNC_STATUS_REPOSITORY, dataSynced: false})
-                dispatch({type: SYNC_STATUS_RECENT, dataSynced: false})
-            } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
-            }
-        } catch (error) {
-            dispatch(handleError(error, ActionType.UPLOAD_DIAGRAM, [repoId, name, description, fileType]));
-        }
-    };
-};
-
-export const searchArtifact = (typedTitle: string) => {
-    return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new ArtifactApi();
-        try {
-            const config = helpers.getClientConfig();
-            const response = await artifactController.searchArtifacts(typedTitle, config);
-            if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: SEARCH_ARTIFACT, searchedArtifacts: response.data });
-                dispatch({type: ARTIFACTQUERY_EXECUTED, artifactResultsCount: response.data.length})
-            } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
-            }
-        } catch (error) {
-            dispatch(handleError(error, ActionType.SEARCH_ARTIFACT, [typedTitle]));
-        }
-    };
-};
 
 
 export const addToFavorites = (artifactId: string) => {
@@ -292,9 +186,8 @@ export const addToFavorites = (artifactId: string) => {
             const response = await artifactController.setStarred(artifactId, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SYNC_STATUS_ARTIFACT, dataSynced: false });
-                dispatch({type: SYNC_STATUS_FAVORITE, dataSynced: false})
             } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
+                dispatch({ type: HANDLEDERROR, errorMessage: "error.couldNotProcess" });
             }
         } catch (error) {
             dispatch(handleError(error, ActionType.SET_STARRED, [artifactId]));
@@ -311,7 +204,7 @@ export const copyToRepo = (repositoryId: string, artifactId: string) => {
             if(Math.floor(response.status / 100) === 2) {
                 dispatch({type: SUCCESS, successMessage: "artifact.copied"})
             } else {
-                dispatch({type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess"})
+                dispatch({type: HANDLEDERROR, errorMessage: "error.couldNotProcess"})
             }
         } catch (error) {
             dispatch(handleError(error, ActionType.COPY_TO_REPO, [repositoryId, artifactId]))
@@ -329,52 +222,13 @@ export const deleteArtifact = (artifactId: string) => {
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SYNC_STATUS_ARTIFACT, dataSynced: false });
             } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
+                dispatch({ type: HANDLEDERROR, errorMessage: "error.couldNotProcess" });
             }
         } catch (error) {
             dispatch(handleError(error, ActionType.DELETE_ARTIFACTS, [artifactId]));
         }
     };
 };
-
-
-export const shareWithRepo = (artifactId: string, repositoryIds: Array<string>) => {
-    return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new ArtifactApi();
-        try {
-            const config = helpers.getClientConfig();
-            const response = await artifactController.shareWithRepository(artifactId, repositoryIds, config);
-            if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: SUCCESS, successMessage: "Sharing successful" });
-
-            } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
-            }
-        } catch (error) {
-            dispatch(handleError(error, ActionType.SHARE_WITH_REPO, [artifactId, repositoryIds]));
-        }
-    };
-};
-
-
-export const getAllSharedArtifacts = () => {
-    return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new ArtifactApi();
-        try {
-            const config = helpers.getClientConfig();
-            const response = await artifactController.getAllSharedArtifacts(config);
-            if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: SUCCESS, successMessage: "Fetched Shared" });
-                dispatch({type: SHARED_ARTIFACTS, sharedArtifacts: response.data})
-            } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
-            }
-        } catch (error) {
-            dispatch(handleError(error, ActionType.GET_SHARED_ARTIFACTS, []));
-        }
-    };
-};
-
 
 
 export const getByRepositoryIdAndType = (repositoryId: string, type: string) => {
@@ -385,12 +239,29 @@ export const getByRepositoryIdAndType = (repositoryId: string, type: string) => 
             const response = await artifactController.getByRepoIdAndType(repositoryId, type, config);
             if (Math.floor(response.status / 100) === 2) {
                 dispatch({ type: SUCCESS, successMessage: "Fetched ReponType" });
-                dispatch({type: ARTIFACTS_REPO_AND_TYPE, artifactsByRepoAndType: response.data})
+                dispatch({type: ARTIFACTS_BY_REPO_AND_TYPE, artifactsByRepoAndType: response.data})
             } else {
-                dispatch({ type: UNHANDLEDERROR, errorMessage: "error.couldNotProcess" });
+                dispatch({ type: HANDLEDERROR, errorMessage: "error.couldNotProcess" });
             }
         } catch (error) {
-            dispatch(handleError(error, ActionType.GET_SHARED_ARTIFACTS, []));
+            dispatch(handleError(error, ActionType.GET_ALL_SHARED_ARTIFACTS, []));
+        }
+    };
+};
+
+export const getArtifact = (artifactId: string) => {
+    return async (dispatch: Dispatch): Promise<void> => {
+        const artifactController = new ArtifactApi();
+        try {
+            const config = helpers.getClientConfig();
+            const response = await artifactController.getArtifact(artifactId, config);
+            if (Math.floor(response.status / 100) === 2) {
+                dispatch({type: GET_ARTIFACT, artifact: response.data})
+            } else {
+                dispatch({ type: HANDLEDERROR, errorMessage: "error.couldNotProcess" });
+            }
+        } catch (error) {
+            dispatch(handleError(error, ActionType.GET_ARTIFACT, [artifactId]));
         }
     };
 };

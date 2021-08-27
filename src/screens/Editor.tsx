@@ -3,26 +3,35 @@ import {observer} from "mobx-react";
 import {useDispatch, useSelector} from "react-redux";
 import elementTemplateSchema from "./elementTemplateSchema.json";
 import emptyTemplate from "./empty_template.json";
-import {ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../api";
+import {ArtifactTO, ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../api";
 import {RootState} from "../store/reducers/rootReducer";
 import MonacoEditor from "react-monaco-editor";
 import {makeStyles} from "@material-ui/styles";
 import * as monacoEditor from "monaco-editor";
-import SimpleButton from "../components/Form/SimpleButton";
 import {useTranslation} from "react-i18next";
-import {createOrUpdateVersion} from "../store/actions";
+import {createVersion, updateVersion} from "../store/actions";
+import {useHistory} from "react-router-dom";
+import {HANDLEDERROR} from "../constants/Constants";
+import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
+import DropdownButton, {DropdownButtonItem} from "../components/Form/DropdownButton";
 
 
 const useStyles = makeStyles({
     jsonEditor: {
         width: "100% !important",
-        maxWidth: "1000px !important",
+        maxWidth: "100% !important",
         position: "inherit",
         border: "1px solid #c8e1ff",
         overflow: "none",
     },
-    button: {
+    saveOptions: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
         marginTop: "20px",
+
+    },
+    button: {
         minWidth: "180px",
         maxWidth: "180px",
         marginRight: "1rem"
@@ -32,19 +41,32 @@ const useStyles = makeStyles({
 const Editor: React.FC = observer(() => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const version: ArtifactVersionTO = useSelector((state: RootState) => state.versions.latestVersion)
+    const history = useHistory();
     const {t} = useTranslation("common");
 
+    const version: ArtifactVersionTO = useSelector((state: RootState) => state.versions.version)
+    const artifact: ArtifactTO = useSelector((state: RootState) => state.artifacts.artifact)
 
     const [editorContent, setEditorContent] = useState<string>(JSON.stringify(emptyTemplate, null, 4));
-
+    const [saveAsNewArtifactOpen, setSaveAsNewArtifactOpen] = useState<boolean>(false);
     /**
      * Options for the jsonEditor
      */
 
     useEffect(() => {
-        version?.xml && setEditorContent(JSON.stringify(JSON.parse(version.xml), null, 4))
-    }, [version])
+        //TODO: Auch anzeigen, wenn JSON Format nicht eingehalten werden
+        if(version){
+            try{
+                console.log("Changing Version")
+                version?.file && setEditorContent(JSON.stringify(JSON.parse(version.file), null, 4))
+            }
+            catch (err) {
+                console.log(err)
+                version?.file && setEditorContent(version.file)
+                dispatch({type: HANDLEDERROR, errorMessage: t("error.formatting")})
+            }
+        }
+    }, [version, dispatch, t])
 
     const jsonEditorOptions : monacoEditor.editor.IStandaloneEditorConstructionOptions = {
         selectOnLineNumbers: true,
@@ -93,8 +115,45 @@ const Editor: React.FC = observer(() => {
     }
 
     const saveVersion = () => {
-        dispatch(createOrUpdateVersion(version.artifactId, editorContent, ArtifactVersionUploadTOSaveTypeEnum.Milestone))
+        dispatch(createVersion(version.artifactId, editorContent, ArtifactVersionUploadTOSaveTypeEnum.Milestone))
+        history.push(`/${version.artifactId}/latest`)
     }
+
+    const update = () => {
+        dispatch(updateVersion(version.id, version.file, version.comment));
+        history.push(`/${version.artifactId}/latest`)
+    }
+
+
+    const options: Array<DropdownButtonItem> = [
+        {
+            id: "UpdateVersion",
+            label: t("version.save"),
+            type: "button",
+            onClick: () => {
+                update()
+            }
+        },
+        {
+            id: "SaveAsNewMilestone",
+            label: t("version.saveAsNewMilestone"),
+            type: "button",
+            onClick: () => {
+                saveVersion()
+            }
+        },
+        {
+            id: "SaveNewVersion",
+            label: t("version.saveAsNewArtifact"),
+            type: "button",
+            onClick: () => {
+                setSaveAsNewArtifactOpen(true)
+
+            }
+        }
+    ]
+
+
 
     return (
         <>
@@ -103,7 +162,7 @@ const Editor: React.FC = observer(() => {
                     <MonacoEditor
                         height={getHeight(editorContent)}
                         language="json"
-                        width="960px"
+                        width="100%"
                         value={editorContent}
                         options={jsonEditorOptions}
                         onChange={setEditorContent}
@@ -111,10 +170,20 @@ const Editor: React.FC = observer(() => {
                 }
 
             </div>
-            <SimpleButton
-                className={classes.button}
-                title={t("version.save")}
-                onClick={() => saveVersion()} />
+            <div className={classes.saveOptions}>
+
+                <DropdownButton
+                    type="default"
+                    title={t("version.save")}
+                    options={options} />
+            </div>
+
+
+            <SaveAsNewArtifactDialog
+                open={saveAsNewArtifactOpen}
+                onCancelled={() => setSaveAsNewArtifactOpen(false)}
+                type={artifact?.fileType}
+                file={editorContent} />
         </>
     );
 });

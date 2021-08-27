@@ -5,9 +5,8 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {toast, ToastContainer} from "react-toastify";
 import {ArtifactApi, UserApi} from "../../api";
-import helpers from "../../constants/Functions";
+import helpers from "../../util/helperFunctions";
 import RegisterNewUserScreen from "../../screens/RegisterNewUserScreen";
-import {CURRENT_USER_INFO, FILETYPES, SUCCESS, UNHANDLEDERROR} from "../../store/constants";
 import {RootState} from "../../store/reducers/rootReducer";
 import Menu from "./Menu";
 import Router from "./Router";
@@ -15,6 +14,7 @@ import Toast from "./Toast";
 import {useTranslation} from "react-i18next";
 import theme from "../../theme";
 import {ActionType} from "../../store/actions/actions";
+import {CURRENT_USER_INFO, FILETYPES, HANDLEDERROR, SUCCESS} from "../../constants/Constants";
 
 const useStyles = makeStyles((theme: Theme) => ({
     contentWrapper: {
@@ -87,7 +87,7 @@ const Layout = (): any => {
                     color: theme.palette.secondary.contrastText,
                 }
             });
-            dispatch({type: UNHANDLEDERROR, errorMessage: "", retryMethod: ActionType, retryPayload: []});
+            dispatch({type: HANDLEDERROR, errorMessage: "", retryMethod: ActionType, retryPayload: []});
         }
     }, [apiErrorState, apiErrorRetryMethod, apiErrorRetryPayload, dispatch, t, i18n]);
 
@@ -132,7 +132,7 @@ const Layout = (): any => {
                     color: theme.palette.secondary.contrastText,
                 }
             });
-            dispatch({type: UNHANDLEDERROR, errorMessageWithVariables: {}, retryMethod: ActionType, retryPayload: []});
+            dispatch({type: HANDLEDERROR, errorMessageWithVariables: {}, retryMethod: ActionType, retryPayload: []});
         }
     }, [apiErrorRetryMethod, apiErrorRetryPayload, apiErrorStateWithVariables, dispatch, t])
 

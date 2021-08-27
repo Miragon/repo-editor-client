@@ -16,7 +16,7 @@
     "create": "Artifact erstellen",
     "copy": "{{artifactName}} in anderes Projekt kopieren",
     "copyTo": "In Projekt kopieren",
-    "createdFromExisting": "Artifact aus existierender Version erstellt",
+    "createdFromExisting": "Als neue Datei gespeichert",
     "createdDefault": "Artifact erstellt",
     "createBpmn": "BPMN Artifact erstellen",
     "createDmn": "DMN Artifact erstellen",
@@ -44,6 +44,8 @@
     "MILESTONE": "Meilenstein",
     "deploymentHistory": "Veröffentlichungen",
     "save": "Speichern",
+    "saveAs": "Speichern unter",
+    "saveAsNewMilestone": "Als neuen Meilenstein speichern",
     "saveAsNewArtifact": "Als neue Datei speichern",
     "saveVersionXAsNewArtifact": "Version {{milestone}} als neue Datei speichern"
   },
@@ -128,7 +130,9 @@
   "error": {
     "missingTool": "Ihr Paket beinhaltet keine Anwendung zum Bearbeiten von {{fileType}}. Kontaktieren Sie den Service, um die Erweiterung zu aktivieren",
     "couldNotProcess": "Anfrage konnte nicht ausgeführt werden",
-    "unknown": "Unbekannter Fehler - Bitte Seite neu laden"
+    "unknown": "Unbekannter Fehler - Bitte Seite neu laden",
+    "formatting": "Fehlerhafte JSON Syntax - konnte nicht formatiert werden"
+
   },
   "artifact": {
     "addedToFavorite": "Datei zu Favoriten hinzugefügt",
@@ -141,6 +145,7 @@
     "createdDefault": "Datei erstellt",
     "create": "Datei erstellen",
     "modifiedOn": "Bearbeitet am",
+    "openFromRepo": "Öffnen",
     "upload": "Datei hochladen",
     "updated": "Datei geändert",
     "download": "Datei herunterladen",

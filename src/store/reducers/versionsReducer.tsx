@@ -1,9 +1,10 @@
 import {CaseReducer} from "@reduxjs/toolkit";
 import {ArtifactVersionTO} from "../../api";
-import {ACTIVE_VERSIONS, LATEST_VERSION} from "../constants";
+import {GET_VERSION, LATEST_VERSION} from "../../constants/Constants";
 
 const initialState = {
     activeVersions: Array<ArtifactVersionTO>(),
+    version: null,
     latestVersion: null,
     defaultVersionProps: null,
     versionProps: null
@@ -11,15 +12,15 @@ const initialState = {
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ACTIVE_VERSIONS:
-            return {
-                ...state,
-                activeVersions: action.activeVersions
-            };
         case LATEST_VERSION:
             return {
                 ...state,
                 latestVersion: action.latestVersion
+            }
+        case GET_VERSION:
+            return {
+                ...state,
+                version: action.version
             }
     }
     return state;
