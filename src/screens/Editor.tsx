@@ -93,6 +93,7 @@ const Editor: React.FC = observer(() => {
      * Initialize the JSON-Schema
      */
     const editorWillMount = (monaco : typeof monacoEditor) : void => {
+        monaco.editor.createModel("", "json");
         monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
             validate: true,
             schemas: [{
