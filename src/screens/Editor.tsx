@@ -14,6 +14,7 @@ import {useHistory} from "react-router-dom";
 import {HANDLEDERROR} from "../constants/Constants";
 import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
 import DropdownButton, {DropdownButtonItem} from "../components/Form/DropdownButton";
+import templateSchema from "./elementTemplateSchema.json";
 
 
 const useStyles = makeStyles({
@@ -92,16 +93,73 @@ const Editor: React.FC = observer(() => {
     /**
      * Initialize the JSON-Schema
      */
+    const mySchema = {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "Is this a Bug?",
+        "type": "object",
+        "properties": {
+            "fruits": {
+                "description": "Start with apple",
+                "type": "array",
+                "items": [
+                    { "$ref": "#/definitions/apple" }
+                ],
+                "additionalItems": {
+                    "$ref": "#/definitions/others"
+                },
+                "minItems": 1
+            }
+        },
+        "required": [ "fruits" ],
+
+
+        "definitions": {
+            "apple": {
+                "type": "object",
+                "properties": {
+                    "name": { "enum": [ "apple" ] },
+                    "price": { "type": "string" },
+                },
+            },
+            "others": {
+                "type": "object",
+                "oneOf": [
+                    { "$ref": "#/definitions/banana" },
+                    { "$ref": "#/definitions/orange" },
+                ]
+            },
+
+            "banana": {
+                "type": "object",
+                "properties": {
+                    "name": { "enum": [ "banana" ] },
+                    "price": { "type": "string" },
+                },
+            },
+            "orange": {
+                "type": "object",
+                "properties": {
+                    "name": { "enum": [ "orange" ] },
+                    "price": { "type": "string" },
+                },
+            }
+        }
+    };
+
+    /**
+     * Initialize the JSON-Schema
+     */
     const editorWillMount = (monaco : typeof monacoEditor) : void => {
-        monaco.editor.createModel("", "json");
+        /*
         monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
             validate: true,
             schemas: [{
                 uri: "http://myserver/foo-schema.json",
                 fileMatch: ["*"],
-                schema: elementTemplateSchema,
+                schema: templateSchema,
             }]
         });
+*/
     }
 
     /**
@@ -121,7 +179,7 @@ const Editor: React.FC = observer(() => {
     }
 
     const update = () => {
-        dispatch(updateVersion(version.id, version.file, version.comment));
+        dispatch(updateVersion(version.id, editorContent, version.comment));
         history.push(`/${version.artifactId}/latest`)
     }
 
@@ -167,7 +225,7 @@ const Editor: React.FC = observer(() => {
                         value={editorContent}
                         options={jsonEditorOptions}
                         onChange={setEditorContent}
-                        editorWillMount={editorWillMount}/>
+                        editorWillMount={editorWillMount} />
                 }
 
             </div>

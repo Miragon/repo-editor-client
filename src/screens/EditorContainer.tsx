@@ -150,16 +150,22 @@ const EditorContainer: React.FC = observer(() => {
     }, [fileTypes])
 
 
+    //TODO: Add the Create File dropdown again (within CreateContainer, under PathStructure
+    /*
+                    <DropdownButton
+                    type={"default"}
+                    title={t("artifact.create")}
+                    onClick={() => setCreateArtifactOpen(true)}
+                    options={artifactOptions}/>
+     */
+
     return (
         <>
             <div className={classes.createContainer}>
 
                 <PathStructure structure={path} />
-                <DropdownButton
-                    type={"default"}
-                    title={t("artifact.create")}
-                    onClick={() => setCreateArtifactOpen(true)}
-                    options={artifactOptions}/>
+
+
             </div>
 
             {repository &&

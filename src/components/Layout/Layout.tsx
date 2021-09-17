@@ -20,31 +20,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     contentWrapper: {
         flexGrow: 1,
         display: "flex",
-        paddingLeft: "32px",
-        transition: theme.transitions.create("margin")
-    },
-    contentWrapperShift: {
-        marginLeft: "350px"
+        maxHeight: "calc(100vh - 60px)",
+        overflowY: "auto"
     },
     content: {
         display: "flex",
         flexGrow: 1,
+        padding: "2rem 0",
         flexDirection: "column",
-        maxHeight: "calc(100vh - 60px)",
-        padding: "20px 25px",
+        maxWidth: "960px",
         margin: "0 auto"
     },
-    loadingScreen: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        height: "100%",
-        width: "100%",
-        paddingTop: "40vh",
-    },
-    loadingCircle: {
-        color: "green",
-    }
+
 }));
 
 /**
@@ -209,13 +196,8 @@ const Layout = (): any => {
 
     return (
         <>
-            <Menu
-                open={open}
-                setOpen={setOpen}/>
-            <div className={clsx(
-                open && classes.contentWrapperShift,
-                classes.contentWrapper
-            )}>
+            <Menu/>
+            <div className={classes.contentWrapper}>
                 <div className={classes.content}>
                     <Router/>
                     <ToastContainer/>
