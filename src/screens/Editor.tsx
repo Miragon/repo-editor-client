@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useDispatch, useSelector} from "react-redux";
-import elementTemplateSchema from "./elementTemplateSchema.json";
 import emptyTemplate from "./empty_template.json";
 import {ArtifactTO, ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../api";
 import {RootState} from "../store/reducers/rootReducer";
@@ -13,8 +12,9 @@ import {createVersion, updateVersion} from "../store/actions";
 import {useHistory} from "react-router-dom";
 import {HANDLEDERROR} from "../constants/Constants";
 import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
-import DropdownButton, {DropdownButtonItem} from "../components/Form/DropdownButton";
-import templateSchema from "./elementTemplateSchema.json";
+import {DropdownButtonItem} from "../components/Form/DropdownButton";
+import SimpleButton from "../components/Form/SimpleButton";
+import helpers from "../util/helperFunctions";
 
 
 const useStyles = makeStyles({
@@ -90,61 +90,6 @@ const Editor: React.FC = observer(() => {
         }
     }
 
-    /**
-     * Initialize the JSON-Schema
-     */
-    const mySchema = {
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "title": "Is this a Bug?",
-        "type": "object",
-        "properties": {
-            "fruits": {
-                "description": "Start with apple",
-                "type": "array",
-                "items": [
-                    { "$ref": "#/definitions/apple" }
-                ],
-                "additionalItems": {
-                    "$ref": "#/definitions/others"
-                },
-                "minItems": 1
-            }
-        },
-        "required": [ "fruits" ],
-
-
-        "definitions": {
-            "apple": {
-                "type": "object",
-                "properties": {
-                    "name": { "enum": [ "apple" ] },
-                    "price": { "type": "string" },
-                },
-            },
-            "others": {
-                "type": "object",
-                "oneOf": [
-                    { "$ref": "#/definitions/banana" },
-                    { "$ref": "#/definitions/orange" },
-                ]
-            },
-
-            "banana": {
-                "type": "object",
-                "properties": {
-                    "name": { "enum": [ "banana" ] },
-                    "price": { "type": "string" },
-                },
-            },
-            "orange": {
-                "type": "object",
-                "properties": {
-                    "name": { "enum": [ "orange" ] },
-                    "price": { "type": "string" },
-                },
-            }
-        }
-    };
 
     /**
      * Initialize the JSON-Schema
@@ -173,21 +118,31 @@ const Editor: React.FC = observer(() => {
         return nrOfLines*23;
     }
 
-    const saveVersion = () => {
+    const saveAsNewVersion = () => {
         dispatch(createVersion(version.artifactId, editorContent, ArtifactVersionUploadTOSaveTypeEnum.Milestone))
         history.push(`/${version.artifactId}/latest`)
     }
 
     const update = () => {
-        dispatch(updateVersion(version.id, editorContent, version.comment));
+        updateVersion(version.id, editorContent, "").then(response => {
+            if (Math.floor(response.status / 100) === 2) {
+                helpers.makeSuccessToast(t("save.success"))
+
+            } else {
+                helpers.makeErrorToast(t(response.data.toString()), () => update())
+            }
+        }, error => {
+            helpers.makeErrorToast(t(error.response.data), () => update())
+        })
         history.push(`/${version.artifactId}/latest`)
+
     }
 
 
     const options: Array<DropdownButtonItem> = [
         {
             id: "UpdateVersion",
-            label: t("version.save"),
+            label: t("save.save"),
             type: "button",
             onClick: () => {
                 update()
@@ -195,15 +150,15 @@ const Editor: React.FC = observer(() => {
         },
         {
             id: "SaveAsNewMilestone",
-            label: t("version.saveAsNewMilestone"),
+            label: t("save.asNewMilestone"),
             type: "button",
             onClick: () => {
-                saveVersion()
+                saveAsNewVersion()
             }
         },
         {
             id: "SaveNewVersion",
-            label: t("version.saveAsNewArtifact"),
+            label: t("save.newArtifact"),
             type: "button",
             onClick: () => {
                 setSaveAsNewArtifactOpen(true)
@@ -217,24 +172,26 @@ const Editor: React.FC = observer(() => {
     return (
         <>
             <div className={classes.jsonEditor}>
-                {version &&
-                    <MonacoEditor
-                        height={getHeight(editorContent)}
-                        language="json"
-                        width="100%"
-                        value={editorContent}
-                        options={jsonEditorOptions}
-                        onChange={setEditorContent}
-                        editorWillMount={editorWillMount} />
-                }
+                <MonacoEditor
+                    height={getHeight(editorContent)}
+                    language="json"
+                    width="100%"
+                    value={editorContent}
+                    options={jsonEditorOptions}
+                    onChange={setEditorContent}
+                    editorWillMount={editorWillMount} />
 
             </div>
             <div className={classes.saveOptions}>
 
-                <DropdownButton
-                    type="default"
-                    title={t("version.save")}
-                    options={options} />
+                {artifact && version ?
+                    <SimpleButton onClick={() => update()} title={t("save.save")} />
+                    :
+                    <SimpleButton onClick={() => setSaveAsNewArtifactOpen(true)} title={t("save.save")} />
+
+                }
+
+
             </div>
 
 
@@ -246,5 +203,19 @@ const Editor: React.FC = observer(() => {
         </>
     );
 });
+
+/*
+Conditional Save
+
+                {artifact && version ?
+                    <DropdownButton
+                        type="default"
+                        title={t("save.save")}
+                        options={options} />
+                    :
+                    <SimpleButton onClick={() => setSaveAsNewArtifactOpen(true)} title={t("save.newArtifact")} />
+                }
+ */
+
 
 export default Editor;

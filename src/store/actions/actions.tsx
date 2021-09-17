@@ -10,21 +10,14 @@ import {fetchRepositories, getManageableRepos, getSingleRepository, updateReposi
 import {createVersion, getAllVersions, getLatestVersion, getSingleVersion} from "./versionAction";
 
 export enum ActionType {
-    FETCH_FAVORITE_ARTIFACTS,
-    FETCH_RECENT_ARTIFACTS,
     CREATE_ARTIFACT,
     FETCH_ARTIFACTS_FROM_REPO,
-    UPLOAD_DIAGRAM,
     DELETE_ARTIFACTS,
     FETCH_REPOSITORIES,
     GET_SINGLE_REPOSITORY,
-    CREATE_REPOSITORY,
-    SEARCH_USERS,
     CREATE_OR_UPDATE_VERSION,
     GET_ALL_VERSIONS,
     UPDATE_REPOSITORY,
-    DELETE_REPOSITORY,
-    SEARCH_ARTIFACT,
     UPDATE_ARTIFACT,
     LATEST_VERSION,
     FETCH_MENU_ITEMS,
@@ -32,7 +25,6 @@ export enum ActionType {
     COPY_TO_REPO,
     GET_ALL_SHARED_ARTIFACTS,
     GET_MANAGEABLE_REPOS,
-    GET_SEARCHED_REPOS,
     GET_ARTIFACT,
     GET_SINGLE_VERSION
 }
@@ -41,7 +33,7 @@ export enum ActionType {
 export const actionMapper = (actionType: ActionType, payload: Array<any>) => {
     switch (actionType) {
         case ActionType.CREATE_ARTIFACT:
-            return createArtifact(payload[0], payload[1], payload[2], payload[3], payload[4]);
+            return createArtifact(payload[0], payload[1], payload[2], payload[3]);
 
         case ActionType.GET_SINGLE_VERSION:
             return getSingleVersion(payload[0], payload[1]);

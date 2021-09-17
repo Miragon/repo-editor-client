@@ -1,6 +1,5 @@
 import {responsiveFontSizes} from "@material-ui/core/styles";
 import {blue} from "@material-ui/core/colors";
-import {createTheme} from "@material-ui/data-grid";
 import {createMuiTheme} from "@material-ui/core";
 
 const theme = responsiveFontSizes(

@@ -9,7 +9,7 @@ import SettingsSelect from "../components/Form/SettingsSelect";
 import SettingsTextField from "../components/Form/SettingsTextField";
 import {RootState} from "../store/reducers/rootReducer";
 import {useTranslation} from "react-i18next";
-import {createArtifactWithDefaultVersion} from "../store/actions";
+import {createArtifact} from "../store/actions";
 
 interface Props {
     open: boolean;
@@ -40,7 +40,7 @@ const CreateArtifactDialog: React.FC<Props> = props => {
         try {
             const defaultFileProps = fileTypes.find(fileType => fileType.name === props.type)
             if(defaultFileProps){
-                dispatch(createArtifactWithDefaultVersion(props.repo?.id ? props.repo.id : repository, title, description, "" , defaultFileProps.name, ""));
+                dispatch(createArtifact(props.repo?.id ? props.repo.id : repository, title, description, "FORM"));
                 setTitle("")
                 setDescription("")
                 setRepository("")

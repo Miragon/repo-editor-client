@@ -33,7 +33,7 @@ import {
 import {BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError} from './base';
 
 /**
- * 
+ * Transports an svg image as preview for an artifact
  * @export
  * @interface ArtifactSVGUploadTO
  */
@@ -46,7 +46,7 @@ export interface ArtifactSVGUploadTO {
     svgPreview: string;
 }
 /**
- * 
+ * Containing metadata for an artifact
  * @export
  * @interface ArtifactTO
  */
@@ -101,7 +101,7 @@ export interface ArtifactTO {
     fileType: string;
 }
 /**
- * 
+ * Specifies properties for supported file types
  * @export
  * @interface ArtifactTypeTO
  */
@@ -132,7 +132,7 @@ export interface ArtifactTypeTO {
     url: string;
 }
 /**
- * 
+ * Client created object for updating accessible properties of an artifact
  * @export
  * @interface ArtifactUpdateTO
  */
@@ -163,7 +163,7 @@ export interface ArtifactUpdateTO {
     svgPreview?: string;
 }
 /**
- * 
+ * version of an artifact, contains the file and information about deployments
  * @export
  * @interface ArtifactVersionTO
  */
@@ -240,7 +240,7 @@ export enum ArtifactVersionTOSaveTypeEnum {
 }
 
 /**
- * 
+ * Client created Object for updating accessible properties of a version
  * @export
  * @interface ArtifactVersionUpdateTO
  */
@@ -262,10 +262,10 @@ export interface ArtifactVersionUpdateTO {
      * @type {string}
      * @memberof ArtifactVersionUpdateTO
      */
-    versionComment?: string;
+    comment?: string;
 }
 /**
- * 
+ * Client created object for uploading a version from the client
  * @export
  * @interface ArtifactVersionUploadTO
  */
@@ -275,7 +275,7 @@ export interface ArtifactVersionUploadTO {
      * @type {string}
      * @memberof ArtifactVersionUploadTO
      */
-    versionComment?: string;
+    comment?: string;
     /**
      * 
      * @type {string}
@@ -300,7 +300,7 @@ export enum ArtifactVersionUploadTOSaveTypeEnum {
 }
 
 /**
- * 
+ * Containing information about a user-repository relation
  * @export
  * @interface AssignmentTO
  */
@@ -343,7 +343,7 @@ export enum AssignmentTORoleEnum {
 }
 
 /**
- * 
+ * Client created object for changing the role of an user in a repository
  * @export
  * @interface AssignmentUpdateTO
  */
@@ -386,7 +386,7 @@ export enum AssignmentUpdateTORoleEnum {
 }
 
 /**
- * 
+ * Containing information about the deployment of an artifact
  * @export
  * @interface DeploymentTO
  */
@@ -417,7 +417,7 @@ export interface DeploymentTO {
     timestamp: string;
 }
 /**
- * 
+ * Containing the specifications for connected apps
  * @export
  * @interface MenuItemTO
  */
@@ -448,7 +448,7 @@ export interface MenuItemTO {
     position?: number;
 }
 /**
- * 
+ * Client created object for creating a new artifact
  * @export
  * @interface NewArtifactTO
  */
@@ -479,7 +479,7 @@ export interface NewArtifactTO {
     svgPreview?: string;
 }
 /**
- * 
+ * Client created object containing the deployment target and artifact(-version) id(-s) for creating a new deployment
  * @export
  * @interface NewDeploymentTO
  */
@@ -489,10 +489,22 @@ export interface NewDeploymentTO {
      * @type {string}
      * @memberof NewDeploymentTO
      */
+    artifactId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewDeploymentTO
+     */
+    versionId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewDeploymentTO
+     */
     target: string;
 }
 /**
- * 
+ * Client created object for creating a new repository
  * @export
  * @interface NewRepositoryTO
  */
@@ -511,7 +523,7 @@ export interface NewRepositoryTO {
     description: string;
 }
 /**
- * 
+ * Containing information about a repository
  * @export
  * @interface RepositoryTO
  */
@@ -610,7 +622,7 @@ export enum ShareWithRepositoryTORoleEnum {
 }
 
 /**
- * 
+ * Share-relation between an artifact an a team or a repository
  * @export
  * @interface ShareWithTeamTO
  */
@@ -633,6 +645,18 @@ export interface ShareWithTeamTO {
      * @memberof ShareWithTeamTO
      */
     role: ShareWithTeamTORoleEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShareWithTeamTO
+     */
+    artifactName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShareWithTeamTO
+     */
+    teamName?: string;
 }
 
 /**
@@ -640,6 +664,55 @@ export interface ShareWithTeamTO {
     * @enum {string}
     */
 export enum ShareWithTeamTORoleEnum {
+    Owner = 'OWNER',
+    Admin = 'ADMIN',
+    Member = 'MEMBER',
+    Viewer = 'VIEWER'
+}
+
+/**
+ * 
+ * @export
+ * @interface SharedRepositoryTO
+ */
+export interface SharedRepositoryTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof SharedRepositoryTO
+     */
+    artifactId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SharedRepositoryTO
+     */
+    repositoryId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SharedRepositoryTO
+     */
+    role: SharedRepositoryTORoleEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof SharedRepositoryTO
+     */
+    artifactName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SharedRepositoryTO
+     */
+    repositoryName?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SharedRepositoryTORoleEnum {
     Owner = 'OWNER',
     Admin = 'ADMIN',
     Member = 'MEMBER',
@@ -666,7 +739,7 @@ export interface User {
     username?: string;
 }
 /**
- * 
+ * Containing all information about an user
  * @export
  * @interface UserInfoTO
  */
@@ -685,7 +758,7 @@ export interface UserInfoTO {
     id: string;
 }
 /**
- * 
+ * Simplified user object only containing username
  * @export
  * @interface UserTO
  */
@@ -725,6 +798,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
     return {
         /**
          * 
+         * @summary Copy file to other repository
          * @param {string} repositoryId 
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
@@ -762,6 +836,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Create an artifact
          * @param {string} repositoryId 
          * @param {NewArtifactTO} newArtifactTO 
          * @param {*} [options] Override http request option.
@@ -835,6 +910,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Get all available file types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -864,6 +940,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Get single artifact
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -897,6 +974,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Get all artifacts of the given repository
          * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -930,7 +1008,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Get artifacts by providing repositoryId and fileType
+         * @summary Get all artifacts of a specific type from a repository
          * @param {string} repositoryId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
@@ -968,6 +1046,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Get recent artifacts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -997,6 +1076,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Returns all starred artifacts.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1026,6 +1106,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Lock a Artifact for editing. After calling, the artifact is locked for 10 minutes for the active user. Call the endpoint again, to reset the 10-minutes timer. Has to be called before \"getSingleVersion\" and \"createOrUpdateVersion\"
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1059,6 +1140,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Search artifacts by title.
          * @param {string} typedTitle 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1092,6 +1174,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Inverts the star-status (favorite-status) of an artifact
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1125,6 +1208,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Unlock a artifact after editing is finished
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1158,6 +1242,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Update an artifact
          * @param {string} artifactId 
          * @param {ArtifactUpdateTO} artifactUpdateTO 
          * @param {*} [options] Override http request option.
@@ -1197,6 +1282,7 @@ export const ArtifactApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Update the preview svg of an artifact
          * @param {string} artifactId 
          * @param {ArtifactSVGUploadTO} artifactSVGUploadTO 
          * @param {*} [options] Override http request option.
@@ -1246,6 +1332,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Copy file to other repository
          * @param {string} repositoryId 
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
@@ -1257,6 +1344,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Create an artifact
          * @param {string} repositoryId 
          * @param {NewArtifactTO} newArtifactTO 
          * @param {*} [options] Override http request option.
@@ -1279,6 +1367,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get all available file types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1288,6 +1377,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get single artifact
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1298,6 +1388,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get all artifacts of the given repository
          * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1308,7 +1399,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get artifacts by providing repositoryId and fileType
+         * @summary Get all artifacts of a specific type from a repository
          * @param {string} repositoryId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
@@ -1320,6 +1411,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get recent artifacts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1329,6 +1421,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Returns all starred artifacts.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1338,6 +1431,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Lock a Artifact for editing. After calling, the artifact is locked for 10 minutes for the active user. Call the endpoint again, to reset the 10-minutes timer. Has to be called before \"getSingleVersion\" and \"createOrUpdateVersion\"
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1348,6 +1442,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Search artifacts by title.
          * @param {string} typedTitle 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1358,6 +1453,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Inverts the star-status (favorite-status) of an artifact
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1368,6 +1464,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Unlock a artifact after editing is finished
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1378,6 +1475,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update an artifact
          * @param {string} artifactId 
          * @param {ArtifactUpdateTO} artifactUpdateTO 
          * @param {*} [options] Override http request option.
@@ -1389,6 +1487,7 @@ export const ArtifactApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update the preview svg of an artifact
          * @param {string} artifactId 
          * @param {ArtifactSVGUploadTO} artifactSVGUploadTO 
          * @param {*} [options] Override http request option.
@@ -1410,6 +1509,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
     return {
         /**
          * 
+         * @summary Copy file to other repository
          * @param {string} repositoryId 
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
@@ -1420,6 +1520,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Create an artifact
          * @param {string} repositoryId 
          * @param {NewArtifactTO} newArtifactTO 
          * @param {*} [options] Override http request option.
@@ -1440,6 +1541,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Get all available file types
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1448,6 +1550,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Get single artifact
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1457,6 +1560,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Get all artifacts of the given repository
          * @param {string} repositoryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1466,7 +1570,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Get artifacts by providing repositoryId and fileType
+         * @summary Get all artifacts of a specific type from a repository
          * @param {string} repositoryId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
@@ -1477,6 +1581,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Get recent artifacts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1485,6 +1590,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Returns all starred artifacts.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1493,6 +1599,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Lock a Artifact for editing. After calling, the artifact is locked for 10 minutes for the active user. Call the endpoint again, to reset the 10-minutes timer. Has to be called before \"getSingleVersion\" and \"createOrUpdateVersion\"
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1502,6 +1609,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Search artifacts by title.
          * @param {string} typedTitle 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1511,6 +1619,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Inverts the star-status (favorite-status) of an artifact
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1520,6 +1629,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Unlock a artifact after editing is finished
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1529,6 +1639,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Update an artifact
          * @param {string} artifactId 
          * @param {ArtifactUpdateTO} artifactUpdateTO 
          * @param {*} [options] Override http request option.
@@ -1539,6 +1650,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Update the preview svg of an artifact
          * @param {string} artifactId 
          * @param {ArtifactSVGUploadTO} artifactSVGUploadTO 
          * @param {*} [options] Override http request option.
@@ -1559,6 +1671,7 @@ export const ArtifactApiFactory = function (configuration?: Configuration, baseP
 export class ArtifactApi extends BaseAPI {
     /**
      * 
+     * @summary Copy file to other repository
      * @param {string} repositoryId 
      * @param {string} artifactId 
      * @param {*} [options] Override http request option.
@@ -1571,6 +1684,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Create an artifact
      * @param {string} repositoryId 
      * @param {NewArtifactTO} newArtifactTO 
      * @param {*} [options] Override http request option.
@@ -1595,6 +1709,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get all available file types
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ArtifactApi
@@ -1605,6 +1720,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get single artifact
      * @param {string} artifactId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1616,6 +1732,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get all artifacts of the given repository
      * @param {string} repositoryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1627,7 +1744,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get artifacts by providing repositoryId and fileType
+     * @summary Get all artifacts of a specific type from a repository
      * @param {string} repositoryId 
      * @param {string} type 
      * @param {*} [options] Override http request option.
@@ -1640,6 +1757,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get recent artifacts
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ArtifactApi
@@ -1650,6 +1768,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Returns all starred artifacts.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ArtifactApi
@@ -1660,6 +1779,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Lock a Artifact for editing. After calling, the artifact is locked for 10 minutes for the active user. Call the endpoint again, to reset the 10-minutes timer. Has to be called before \"getSingleVersion\" and \"createOrUpdateVersion\"
      * @param {string} artifactId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1671,6 +1791,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Search artifacts by title.
      * @param {string} typedTitle 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1682,6 +1803,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Inverts the star-status (favorite-status) of an artifact
      * @param {string} artifactId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1693,6 +1815,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Unlock a artifact after editing is finished
      * @param {string} artifactId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1704,6 +1827,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Update an artifact
      * @param {string} artifactId 
      * @param {ArtifactUpdateTO} artifactUpdateTO 
      * @param {*} [options] Override http request option.
@@ -1716,6 +1840,7 @@ export class ArtifactApi extends BaseAPI {
 
     /**
      * 
+     * @summary Update the preview svg of an artifact
      * @param {string} artifactId 
      * @param {ArtifactSVGUploadTO} artifactSVGUploadTO 
      * @param {*} [options] Override http request option.
@@ -2052,23 +2177,16 @@ export class AssignmentApi extends BaseAPI {
 export const DeploymentApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Deploy artifact version
-         * @param {string} artifactId 
-         * @param {string} versionId 
-         * @param {NewDeploymentTO} newDeploymentTO 
+         * 
+         * @summary Deploy multiple versions
+         * @param {Array<NewDeploymentTO>} newDeploymentTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployVersion: async (artifactId: string, versionId: string, newDeploymentTO: NewDeploymentTO, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'artifactId' is not null or undefined
-            assertParamExists('deployVersion', 'artifactId', artifactId)
-            // verify required parameter 'versionId' is not null or undefined
-            assertParamExists('deployVersion', 'versionId', versionId)
+        deployMultipleVersions: async (newDeploymentTO: Array<NewDeploymentTO>, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'newDeploymentTO' is not null or undefined
-            assertParamExists('deployVersion', 'newDeploymentTO', newDeploymentTO)
-            const localVarPath = `/api/deploy/{artifactId}/{versionId}`
-                .replace(`{${"artifactId"}}`, encodeURIComponent(String(artifactId)))
-                .replace(`{${"versionId"}}`, encodeURIComponent(String(versionId)));
+            assertParamExists('deployMultipleVersions', 'newDeploymentTO', newDeploymentTO)
+            const localVarPath = `/api/deploy/list`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2095,7 +2213,44 @@ export const DeploymentApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * Get all available deployment targets
+         * 
+         * @summary Deploy artifact version
+         * @param {NewDeploymentTO} newDeploymentTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployVersion: async (newDeploymentTO: NewDeploymentTO, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'newDeploymentTO' is not null or undefined
+            assertParamExists('deployVersion', 'newDeploymentTO', newDeploymentTO)
+            const localVarPath = `/api/deploy`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(newDeploymentTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all available deployment targets
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2134,19 +2289,30 @@ export const DeploymentApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DeploymentApiAxiosParamCreator(configuration)
     return {
         /**
-         * Deploy artifact version
-         * @param {string} artifactId 
-         * @param {string} versionId 
+         * 
+         * @summary Deploy multiple versions
+         * @param {Array<NewDeploymentTO>} newDeploymentTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deployMultipleVersions(newDeploymentTO: Array<NewDeploymentTO>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ArtifactVersionTO>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployMultipleVersions(newDeploymentTO, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Deploy artifact version
          * @param {NewDeploymentTO} newDeploymentTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deployVersion(artifactId: string, versionId: string, newDeploymentTO: NewDeploymentTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactVersionTO>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deployVersion(artifactId, versionId, newDeploymentTO, options);
+        async deployVersion(newDeploymentTO: NewDeploymentTO, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ArtifactVersionTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deployVersion(newDeploymentTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get all available deployment targets
+         * 
+         * @summary Get all available deployment targets
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2165,18 +2331,28 @@ export const DeploymentApiFactory = function (configuration?: Configuration, bas
     const localVarFp = DeploymentApiFp(configuration)
     return {
         /**
-         * Deploy artifact version
-         * @param {string} artifactId 
-         * @param {string} versionId 
+         * 
+         * @summary Deploy multiple versions
+         * @param {Array<NewDeploymentTO>} newDeploymentTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deployMultipleVersions(newDeploymentTO: Array<NewDeploymentTO>, options?: any): AxiosPromise<Array<ArtifactVersionTO>> {
+            return localVarFp.deployMultipleVersions(newDeploymentTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Deploy artifact version
          * @param {NewDeploymentTO} newDeploymentTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deployVersion(artifactId: string, versionId: string, newDeploymentTO: NewDeploymentTO, options?: any): AxiosPromise<ArtifactVersionTO> {
-            return localVarFp.deployVersion(artifactId, versionId, newDeploymentTO, options).then((request) => request(axios, basePath));
+        deployVersion(newDeploymentTO: NewDeploymentTO, options?: any): AxiosPromise<ArtifactVersionTO> {
+            return localVarFp.deployVersion(newDeploymentTO, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get all available deployment targets
+         * 
+         * @summary Get all available deployment targets
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2194,20 +2370,32 @@ export const DeploymentApiFactory = function (configuration?: Configuration, bas
  */
 export class DeploymentApi extends BaseAPI {
     /**
-     * Deploy artifact version
-     * @param {string} artifactId 
-     * @param {string} versionId 
+     * 
+     * @summary Deploy multiple versions
+     * @param {Array<NewDeploymentTO>} newDeploymentTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DeploymentApi
+     */
+    public deployMultipleVersions(newDeploymentTO: Array<NewDeploymentTO>, options?: any) {
+        return DeploymentApiFp(this.configuration).deployMultipleVersions(newDeploymentTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Deploy artifact version
      * @param {NewDeploymentTO} newDeploymentTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeploymentApi
      */
-    public deployVersion(artifactId: string, versionId: string, newDeploymentTO: NewDeploymentTO, options?: any) {
-        return DeploymentApiFp(this.configuration).deployVersion(artifactId, versionId, newDeploymentTO, options).then((request) => request(this.axios, this.basePath));
+    public deployVersion(newDeploymentTO: NewDeploymentTO, options?: any) {
+        return DeploymentApiFp(this.configuration).deployVersion(newDeploymentTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Get all available deployment targets
+     * 
+     * @summary Get all available deployment targets
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeploymentApi
@@ -2226,6 +2414,7 @@ export const MenuApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
+         * @summary Get all menu items
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2265,6 +2454,7 @@ export const MenuApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Get all menu items
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2284,6 +2474,7 @@ export const MenuApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
+         * @summary Get all menu items
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2302,6 +2493,7 @@ export const MenuApiFactory = function (configuration?: Configuration, basePath?
 export class MenuApi extends BaseAPI {
     /**
      * 
+     * @summary Get all menu items
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MenuApi
@@ -3178,7 +3370,7 @@ export const ShareApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSharedRepositories(artifactId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RepositoryTO>>> {
+        async getSharedRepositories(artifactId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SharedRepositoryTO>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSharedRepositories(artifactId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -3286,7 +3478,7 @@ export const ShareApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSharedRepositories(artifactId: string, options?: any): AxiosPromise<Array<RepositoryTO>> {
+        getSharedRepositories(artifactId: string, options?: any): AxiosPromise<Array<SharedRepositoryTO>> {
             return localVarFp.getSharedRepositories(artifactId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -3480,6 +3672,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
+         * @summary Create a new User
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3509,6 +3702,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @summary Returns the User that is currently sending requests
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3538,6 +3732,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @summary Returns the namae of the user that is currently sending requests (name equals email address)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3567,6 +3762,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @summary Returns a list of users that matches the typed letters of a search
          * @param {string} typedName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3600,6 +3796,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @summary Update the user
          * @param {UserUpdateTO} userUpdateTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3645,6 +3842,7 @@ export const UserApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Create a new User
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3654,6 +3852,7 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Returns the User that is currently sending requests
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3663,6 +3862,7 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Returns the namae of the user that is currently sending requests (name equals email address)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3672,6 +3872,7 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Returns a list of users that matches the typed letters of a search
          * @param {string} typedName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3682,6 +3883,7 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update the user
          * @param {UserUpdateTO} userUpdateTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3702,6 +3904,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
+         * @summary Create a new User
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3710,6 +3913,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @summary Returns the User that is currently sending requests
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3718,6 +3922,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @summary Returns the namae of the user that is currently sending requests (name equals email address)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3726,6 +3931,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @summary Returns a list of users that matches the typed letters of a search
          * @param {string} typedName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3735,6 +3941,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @summary Update the user
          * @param {UserUpdateTO} userUpdateTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3754,6 +3961,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
 export class UserApi extends BaseAPI {
     /**
      * 
+     * @summary Create a new User
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
@@ -3764,6 +3972,7 @@ export class UserApi extends BaseAPI {
 
     /**
      * 
+     * @summary Returns the User that is currently sending requests
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
@@ -3774,6 +3983,7 @@ export class UserApi extends BaseAPI {
 
     /**
      * 
+     * @summary Returns the namae of the user that is currently sending requests (name equals email address)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
@@ -3784,6 +3994,7 @@ export class UserApi extends BaseAPI {
 
     /**
      * 
+     * @summary Returns a list of users that matches the typed letters of a search
      * @param {string} typedName 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3795,6 +4006,7 @@ export class UserApi extends BaseAPI {
 
     /**
      * 
+     * @summary Update the user
      * @param {UserUpdateTO} userUpdateTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3814,6 +4026,7 @@ export const VersionApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary Create a new version of the artifact. (The artifact has to be locked by the user to use this endpoint)
          * @param {string} artifactId 
          * @param {ArtifactVersionUploadTO} artifactVersionUploadTO 
          * @param {*} [options] Override http request option.
@@ -3853,6 +4066,7 @@ export const VersionApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Download a specific version
          * @param {string} artifactId 
          * @param {string} versionId 
          * @param {*} [options] Override http request option.
@@ -3863,7 +4077,7 @@ export const VersionApiAxiosParamCreator = function (configuration?: Configurati
             assertParamExists('downloadVersion', 'artifactId', artifactId)
             // verify required parameter 'versionId' is not null or undefined
             assertParamExists('downloadVersion', 'versionId', versionId)
-            const localVarPath = `/api/version/{artifactId}/version/{versionId}/download`
+            const localVarPath = `/api/version/{artifactId}/{versionId}/download`
                 .replace(`{${"artifactId"}}`, encodeURIComponent(String(artifactId)))
                 .replace(`{${"versionId"}}`, encodeURIComponent(String(versionId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3890,6 +4104,7 @@ export const VersionApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Get all versions of the artifact
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3957,6 +4172,7 @@ export const VersionApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Get a specific version, read-permission granted even if Artifact is locked
          * @param {string} artifactId 
          * @param {string} versionId 
          * @param {*} [options] Override http request option.
@@ -3994,6 +4210,7 @@ export const VersionApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Update version of the artifact. (The artifact has to be locked by the user to use this endpoint)
          * @param {ArtifactVersionUpdateTO} artifactVersionUpdateTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4039,6 +4256,7 @@ export const VersionApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Create a new version of the artifact. (The artifact has to be locked by the user to use this endpoint)
          * @param {string} artifactId 
          * @param {ArtifactVersionUploadTO} artifactVersionUploadTO 
          * @param {*} [options] Override http request option.
@@ -4050,6 +4268,7 @@ export const VersionApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Download a specific version
          * @param {string} artifactId 
          * @param {string} versionId 
          * @param {*} [options] Override http request option.
@@ -4061,6 +4280,7 @@ export const VersionApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get all versions of the artifact
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4082,6 +4302,7 @@ export const VersionApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get a specific version, read-permission granted even if Artifact is locked
          * @param {string} artifactId 
          * @param {string} versionId 
          * @param {*} [options] Override http request option.
@@ -4093,6 +4314,7 @@ export const VersionApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update version of the artifact. (The artifact has to be locked by the user to use this endpoint)
          * @param {ArtifactVersionUpdateTO} artifactVersionUpdateTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4113,6 +4335,7 @@ export const VersionApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @summary Create a new version of the artifact. (The artifact has to be locked by the user to use this endpoint)
          * @param {string} artifactId 
          * @param {ArtifactVersionUploadTO} artifactVersionUploadTO 
          * @param {*} [options] Override http request option.
@@ -4123,6 +4346,7 @@ export const VersionApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Download a specific version
          * @param {string} artifactId 
          * @param {string} versionId 
          * @param {*} [options] Override http request option.
@@ -4133,6 +4357,7 @@ export const VersionApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Get all versions of the artifact
          * @param {string} artifactId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4152,6 +4377,7 @@ export const VersionApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Get a specific version, read-permission granted even if Artifact is locked
          * @param {string} artifactId 
          * @param {string} versionId 
          * @param {*} [options] Override http request option.
@@ -4162,6 +4388,7 @@ export const VersionApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Update version of the artifact. (The artifact has to be locked by the user to use this endpoint)
          * @param {ArtifactVersionUpdateTO} artifactVersionUpdateTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4181,6 +4408,7 @@ export const VersionApiFactory = function (configuration?: Configuration, basePa
 export class VersionApi extends BaseAPI {
     /**
      * 
+     * @summary Create a new version of the artifact. (The artifact has to be locked by the user to use this endpoint)
      * @param {string} artifactId 
      * @param {ArtifactVersionUploadTO} artifactVersionUploadTO 
      * @param {*} [options] Override http request option.
@@ -4193,6 +4421,7 @@ export class VersionApi extends BaseAPI {
 
     /**
      * 
+     * @summary Download a specific version
      * @param {string} artifactId 
      * @param {string} versionId 
      * @param {*} [options] Override http request option.
@@ -4205,6 +4434,7 @@ export class VersionApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get all versions of the artifact
      * @param {string} artifactId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4228,6 +4458,7 @@ export class VersionApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get a specific version, read-permission granted even if Artifact is locked
      * @param {string} artifactId 
      * @param {string} versionId 
      * @param {*} [options] Override http request option.
@@ -4240,6 +4471,7 @@ export class VersionApi extends BaseAPI {
 
     /**
      * 
+     * @summary Update version of the artifact. (The artifact has to be locked by the user to use this endpoint)
      * @param {ArtifactVersionUpdateTO} artifactVersionUpdateTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

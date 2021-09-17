@@ -6,6 +6,10 @@ const Router: React.FC = () => {
     return (
         <Switch>
             <Route
+                exact
+                path="/"
+                component={EditorContainer}/>
+            <Route
                 path="/:artifactId/:versionId"
                 component={EditorContainer} />
         </Switch>

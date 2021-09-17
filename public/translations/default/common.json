@@ -2,10 +2,13 @@
   "repository": {
     "confirmDelete": "Are you sure you want to delete {{repoName}}?",
     "repository": "Repository",
+    "repositories": "Repositories",
     "create": "Create Repository",
     "created": "Repository created",
     "delete": "Delete Repository",
     "deleted": "Repository deleted",
+    "editUsers": "Edit users",
+    "nameTaken": "Name not available",
     "edit": "Edit Repository",
     "updated": "Repository updated",
     "notAvailable": "You haven't added any Repositories yet.",
@@ -14,9 +17,10 @@
   "artifact": {
     "confirmDelete": "Are you sure want to delete {{artifactName}}?",
     "create": "Create Artifact",
+    "created": "Artifact created",
     "copy": "Copy {{artifactName}} to another Repository",
     "copyTo": "Copy to other Repository",
-    "createdFromExisting": "Saved as new Artifact",
+    "createdFromExisting": "Created Artifact os existing Version",
     "createdDefault": "Created Artifact",
     "createBpmn": "Create BPMN Artifact",
     "createDmn": "Create DMN Artifact",
@@ -25,6 +29,7 @@
     "edit": "Edit Artifact",
     "modifiedOn": "Modified on",
     "upload": "Upload Artifact",
+    "share": "Share Artifact",
     "updated": "Artifact updated",
     "import": "Import from Cawemo",
     "notAvailable": "You haven't added any artifacts yet"
@@ -44,16 +49,14 @@
     "RELEASE": "Release",
     "MILESTONE": "Milestone",
     "deploymentHistory": "Deployments",
-    "save": "Save",
-    "saveAs": "Save as",
-    "saveAsNewMilestone": "Save as new Milestone",
     "saveAsNewArtifact": "Save as new Artifact",
     "saveVersionXAsNewArtifact": "Save Version {{milestone}} as new Artifact"
   },
   "assignment": {
-    "changedAssignment": "Changed role of {{username}} to {{roleEnum}}",
-    "added": "Added User to Repository",
-    "removed": "Removed {{username}} from Repository"
+    "changedAssignment": "Changed role of {{username}} to {{role}}",
+    "added": "Added {{username}} to Repository",
+    "removed": "Removed {{username}} from Repository",
+    "alreadyPresent": "{{username}} is already assigned to this project"
   },
   "form": {
     "create": "Create Form"
@@ -64,12 +67,17 @@
   "deployment": {
     "deployment": "Deployment",
     "deployments": "Deployments",
+    "multiple": "Deploy multiple Versions",
+    "target": "Ziel",
+    "deployedMultiple": "Deployed {{deployedVersions}} Versions",
+    "adminPermissionsRequired": "You need admin permissions to deploy artifacts",
     "dialogHeader": "Deploy Version {{versionNumber}}",
     "history": "All Deployments"
   },
   "user": {
     "user": "User",
     "users": "Users",
+    "manage": "Edit users",
     "OWNER": "Owner",
     "ADMIN": "Admin",
     "MEMBER": "Member",
@@ -92,7 +100,8 @@
     "cancel": "Cancel",
     "close": "Close",
     "create": "Create",
-    "copy": "Copy"
+    "copy": "Copy",
+    "share": "Share {{artifactName}}"
   },
   "properties": {
     "title": "Title",
@@ -132,8 +141,7 @@
   "error": {
     "missingTool": "Your package does not contain any tools for editing '{{fileType}}'. Contact our support to get additional tools",
     "couldNotProcess": "Request could not be processed",
-    "unknown": "Unknown Error - Please refresh the page",
-    "formatting": "Wrong JSON Syntax - could not format"
+    "unknown": "Unknown Error - Please refresh the page"
   },
   "artifact": {
     "addedToFavorite": "File added to Favorites",
@@ -146,17 +154,27 @@
     "createdDefault": "File created",
     "create": "Create File",
     "modifiedOn": "Modified on",
-    "openFromRepo": "Open",
     "upload": "Upload File",
     "updated": "File updated",
     "download": "Download File",
     "showInRepo": "Show in Repository",
     "edit": "Edit File",
-    "delete": "Delete File"
+    "delete": "Delete File",
+    "updatedDuration": "Updated {{duration}}"
+  },
+  "duration": {
+    "ago": {
+      "fewSeconds": "few seconds ago",
+      "lessThanOneMinute": "less than 1 minute ago",
+      "oneMinute": "1 minute ago",
+      "minutes": "{{minutes}} minutes ago",
+      "oneHour": "1 hour ago",
+      "hours": "{{hours}} hours ago",
+      "oneDay": "yesterday"
+    }
   },
   "path": {
     "overview": "Overview",
-    "editor": "Editor",
     "repository": "Repository"
   },
   "filter": {
@@ -167,5 +185,28 @@
     "lastEdited": "Last Edited",
     "created": "Creation Date",
     "name": "Name"
+  },
+  "share": {
+    "successful": "Artifact shared",
+    "removed": "Artifact is no longer shared",
+    "na": "No shared Artifacts available",
+    "updatedRepoRole": "Changed role for members of repository {{repoName}} to {{role}}"
+
+  },
+  "save": {
+    "save": "Save",
+    "newMilestone": "Save as new Milestone",
+    "newArtifact": "Save as new File",
+    "success": "File saved"
+  },
+  "role": {
+    "owner": "Owner",
+    "admin": "Admin",
+    "member": "Member",
+    "viewer": "Viewer"
+  },
+  "exception": {
+    "accessHistory": "Artifacts from archive can not be changed"
   }
+
 }

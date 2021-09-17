@@ -17,6 +17,7 @@
     "i18next": "^20.3.2",
     "i18next-fetch-backend": "^3.0.0",
     "i18next-xhr-backend": "^3.2.2",
+    "luxon": "^2.0.2",
     "mobx": "^6.1.8",
     "mobx-react": "^7.1.0",
     "portable-fetch": "^3.0.0",
@@ -70,7 +71,7 @@
   },
   "scripts": {
     "api-gen": "openapi-generator-cli generate -i http://localhost:8089/v3/api-docs -g typescript-axios -o src/api",
-    "start": "cross-env BROWSER=none WDS_SOCKET_PORT=3000 PUBLIC_URL=/editor/ react-scripts start",
+    "start": "cross-env BROWSER=none WDS_SOCKET_PORT=3001 PORT=3005 PUBLIC_URL=/editor/ react-scripts start",
     "build": "cross-env PUBLIC_URL=/editor/ react-scripts build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"

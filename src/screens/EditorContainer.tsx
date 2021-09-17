@@ -8,8 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Editor from "./Editor";
 import {useHistory} from "react-router-dom";
 import CreateArtifactDialog from "./CreateArtifactDialog";
-import {useTranslation} from "react-i18next";
-import DropdownButton, {DropdownButtonItem} from "../components/Form/DropdownButton";
+import {DropdownButtonItem} from "../components/Form/DropdownButton";
 import {RootState} from "../store/reducers/rootReducer";
 import {ArtifactTO, ArtifactTypeTO, ArtifactVersionTO, RepositoryTO} from "../api";
 import {makeStyles} from "@material-ui/styles";
@@ -64,7 +63,7 @@ const EditorContainer: React.FC = observer(() => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const history = useHistory();
-    const {t} = useTranslation("common");
+    //const {t} = useTranslation("common");
 
 
     const { artifactId } = useParams<{ artifactId: string }>();
@@ -149,7 +148,7 @@ const EditorContainer: React.FC = observer(() => {
 
     }, [fileTypes])
 
-
+    console.log(artifactOptions)
     //TODO: Add the Create File dropdown again (within CreateContainer, under PathStructure
     /*
                     <DropdownButton
@@ -168,18 +167,26 @@ const EditorContainer: React.FC = observer(() => {
 
             </div>
 
-            {repository &&
+            {repository ?
                 <div className={classes.header}>
                     <div className={classes.title}>
                         <span>{`${repository?.name} /`}</span>
                         <span className={classes.artifact}> {artifact.name}</span>
                     </div>
                     <span className={classes.description}>
-                        {artifact.description}
+                        {artifact?.description}
                     </span>
                     <span className={classes.comment}>
-                        {version.comment}
+                        {version?.comment}
                     </span>
+                </div>
+                :
+                <div className={classes.header}>
+                    <div className={classes.title}>
+                        <div className={classes.artifact}>
+                            <span>New Text File</span>
+                        </div>
+                    </div>
                 </div>
             }
             <Editor/>
