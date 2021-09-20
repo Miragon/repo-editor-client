@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
-import {observer} from "mobx-react";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { observer } from "mobx-react";
+import { useDispatch, useSelector } from "react-redux";
 import emptyTemplate from "./empty_template.json";
-import {ArtifactTO, ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../api";
-import {RootState} from "../store/reducers/rootReducer";
+import { ArtifactTO, ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum } from "../api";
+import { RootState } from "../store/reducers/rootReducer";
 import MonacoEditor from "react-monaco-editor";
-import {makeStyles} from "@material-ui/styles";
+import { makeStyles } from "@material-ui/styles";
 import * as monacoEditor from "monaco-editor";
-import {useTranslation} from "react-i18next";
-import {createVersion, updateVersion} from "../store/actions";
-import {useHistory} from "react-router-dom";
-import {HANDLEDERROR} from "../constants/Constants";
+import { useTranslation } from "react-i18next";
+import { createVersion, updateVersion } from "../store/actions";
+import { useHistory } from "react-router-dom";
+import { HANDLEDERROR } from "../constants/Constants";
 import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
-import {DropdownButtonItem} from "../components/Form/DropdownButton";
+import { DropdownButtonItem } from "../components/Form/DropdownButton";
 import SimpleButton from "../components/Form/SimpleButton";
 import helpers from "../util/helperFunctions";
 
@@ -43,7 +43,7 @@ const Editor: React.FC = observer(() => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const history = useHistory();
-    const {t} = useTranslation("common");
+    const { t } = useTranslation("common");
 
     const version: ArtifactVersionTO = useSelector((state: RootState) => state.versions.version)
     const artifact: ArtifactTO = useSelector((state: RootState) => state.artifacts.artifact)
@@ -56,20 +56,20 @@ const Editor: React.FC = observer(() => {
 
     useEffect(() => {
         //TODO: Auch anzeigen, wenn JSON Format nicht eingehalten werden
-        if(version){
-            try{
+        if (version) {
+            try {
                 console.log("Changing Version")
                 version?.file && setEditorContent(JSON.stringify(JSON.parse(version.file), null, 4))
             }
             catch (err) {
                 console.log(err)
                 version?.file && setEditorContent(version.file)
-                dispatch({type: HANDLEDERROR, errorMessage: t("error.formatting")})
+                dispatch({ type: HANDLEDERROR, errorMessage: t("error.formatting") })
             }
         }
     }, [version, dispatch, t])
 
-    const jsonEditorOptions : monacoEditor.editor.IStandaloneEditorConstructionOptions = {
+    const jsonEditorOptions: monacoEditor.editor.IStandaloneEditorConstructionOptions = {
         selectOnLineNumbers: true,
         formatOnPaste: true,
         fontSize: 14,
@@ -94,7 +94,7 @@ const Editor: React.FC = observer(() => {
     /**
      * Initialize the JSON-Schema
      */
-    const editorWillMount = (monaco : typeof monacoEditor) : void => {
+    const editorWillMount = (monaco: typeof monacoEditor): void => {
         /*
         monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
             validate: true,
@@ -110,12 +110,12 @@ const Editor: React.FC = observer(() => {
     /**
      * Modify height of monaco-editor depending on the number of lines
      */
-    const getHeight = (content : string) : number => {
+    const getHeight = (content: string): number => {
         if (content === undefined) {
             return 0;
         }
         const nrOfLines = content.split(/\r\n|\r|\n/).length;
-        return nrOfLines*23;
+        return nrOfLines * 23;
     }
 
     const saveAsNewVersion = () => {
@@ -139,7 +139,7 @@ const Editor: React.FC = observer(() => {
     }
 
 
-    const options: Array<DropdownButtonItem> = [
+    /*const options: Array<DropdownButtonItem> = [
         {
             id: "UpdateVersion",
             label: t("save.save"),
@@ -165,8 +165,7 @@ const Editor: React.FC = observer(() => {
 
             }
         }
-    ]
-
+    ]*/
 
 
     return (

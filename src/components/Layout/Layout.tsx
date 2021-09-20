@@ -8,7 +8,6 @@ import helpers from "../../util/helperFunctions";
 import RegisterNewUserScreen from "../../screens/RegisterNewUserScreen";
 import Menu from "./Menu";
 import Router from "./Router";
-import {useTranslation} from "react-i18next";
 import {CURRENT_USER_INFO, FILETYPES} from "../../constants/Constants";
 
 const useStyles = makeStyles((theme: Theme) => ({
