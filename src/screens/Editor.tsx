@@ -2,18 +2,17 @@ import React, {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useDispatch, useSelector} from "react-redux";
 import emptyTemplate from "./empty_template.json";
-import {ArtifactTO, ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../api";
+import {ArtifactTO, ArtifactVersionTO} from "../api";
 import {RootState} from "../store/reducers/rootReducer";
 import MonacoEditor from "react-monaco-editor";
 import elementTemplateSchema from "./elementTemplateSchema.json";
 import {makeStyles} from "@material-ui/styles";
 import * as monacoEditor from "monaco-editor";
 import {useTranslation} from "react-i18next";
-import {createVersion, updateVersion} from "../store/actions";
+import {updateVersion} from "../store/actions";
 import {useHistory} from "react-router-dom";
 import {HANDLEDERROR} from "../constants/Constants";
 import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
-import {DropdownButtonItem} from "../components/Form/DropdownButton";
 import SimpleButton from "../components/Form/SimpleButton";
 import helpers from "../util/helperFunctions";
 
@@ -118,11 +117,12 @@ const Editor: React.FC = observer(() => {
         return nrOfLines*23;
     }
 
+    /*
     const saveAsNewVersion = () => {
         dispatch(createVersion(version.artifactId, editorContent, ArtifactVersionUploadTOSaveTypeEnum.Milestone))
         history.push(`/${version.artifactId}/latest`)
     }
-
+*/
     const update = () => {
         updateVersion(version.id, editorContent, "").then(response => {
             if (Math.floor(response.status / 100) === 2) {
@@ -138,7 +138,7 @@ const Editor: React.FC = observer(() => {
 
     }
 
-
+    /*
     const options: Array<DropdownButtonItem> = [
         {
             id: "UpdateVersion",
@@ -166,7 +166,7 @@ const Editor: React.FC = observer(() => {
             }
         }
     ]
-
+*/
 
 
     return (
