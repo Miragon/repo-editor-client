@@ -5,6 +5,7 @@ import emptyTemplate from "./empty_template.json";
 import {ArtifactTO, ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../api";
 import {RootState} from "../store/reducers/rootReducer";
 import MonacoEditor from "react-monaco-editor";
+import elementTemplateSchema from "./elementTemplateSchema.json";
 import {makeStyles} from "@material-ui/styles";
 import * as monacoEditor from "monaco-editor";
 import {useTranslation} from "react-i18next";
@@ -95,16 +96,15 @@ const Editor: React.FC = observer(() => {
      * Initialize the JSON-Schema
      */
     const editorWillMount = (monaco : typeof monacoEditor) : void => {
-        /*
+
         monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
             validate: true,
             schemas: [{
                 uri: "http://myserver/foo-schema.json",
-                fileMatch: ["*"],
-                schema: templateSchema,
+                fileMatch: [elementTemplateSchema.toString()],
+                schema: elementTemplateSchema,
             }]
         });
-*/
     }
 
     /**

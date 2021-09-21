@@ -162,7 +162,8 @@
     "error": {
         "missingTool": "Ihr Paket beinhaltet keine Anwendung zum Bearbeiten von {{fileType}}. Kontaktieren Sie den Service, um die Erweiterung zu aktivieren",
         "couldNotProcess": "Anfrage konnte nicht ausgeführt werden",
-        "unknown": "Unbekannter Fehler - Bitte Seite neu laden"
+        "unknown": "Unbekannter Fehler - Bitte Seite neu laden",
+        "formatting": "Formatierungsfehler"
     },
     "path": {
         "overview": "Übersicht",

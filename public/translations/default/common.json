@@ -141,7 +141,8 @@
   "error": {
     "missingTool": "Your package does not contain any tools for editing '{{fileType}}'. Contact our support to get additional tools",
     "couldNotProcess": "Request could not be processed",
-    "unknown": "Unknown Error - Please refresh the page"
+    "unknown": "Unknown Error - Please refresh the page",
+    "formatting": "Formatting error"
   },
   "artifact": {
     "addedToFavorite": "File added to Favorites",
