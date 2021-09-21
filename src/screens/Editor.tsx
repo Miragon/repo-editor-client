@@ -12,7 +12,6 @@ import { createVersion, updateVersion } from "../store/actions";
 import { useHistory } from "react-router-dom";
 import { HANDLEDERROR } from "../constants/Constants";
 import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
-import { DropdownButtonItem } from "../components/Form/DropdownButton";
 import SimpleButton from "../components/Form/SimpleButton";
 import helpers from "../util/helperFunctions";
 
@@ -118,10 +117,10 @@ const Editor: React.FC = observer(() => {
         return nrOfLines * 23;
     }
 
-    const saveAsNewVersion = () => {
-        dispatch(createVersion(version.artifactId, editorContent, ArtifactVersionUploadTOSaveTypeEnum.Milestone))
-        history.push(`/${version.artifactId}/latest`)
-    }
+    /* const saveAsNewVersion = () => {
+         dispatch(createVersion(version.artifactId, editorContent, ArtifactVersionUploadTOSaveTypeEnum.Milestone))
+         history.push(`/${version.artifactId}/latest`)
+     } */
 
     const update = () => {
         updateVersion(version.id, editorContent, "").then(response => {
