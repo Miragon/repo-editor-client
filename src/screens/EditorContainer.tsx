@@ -1,17 +1,16 @@
-import {observer} from "mobx-react";
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router";
+import { observer } from "mobx-react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import "react-toastify/dist/ReactToastify.css";
-import PathStructure from "../components/Layout/PathStructure";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Editor from "./Editor";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import CreateArtifactDialog from "./CreateArtifactDialog";
-import {DropdownButtonItem} from "../components/Form/DropdownButton";
-import {RootState} from "../store/reducers/rootReducer";
-import {ArtifactTO, ArtifactTypeTO, ArtifactVersionTO, RepositoryTO} from "../api";
-import {makeStyles} from "@material-ui/styles";
+import { DropdownButtonItem } from "../components/Form/DropdownButton";
+import { RootState } from "../store/reducers/rootReducer";
+import { ArtifactTO, ArtifactTypeTO, ArtifactVersionTO, RepositoryTO } from "../api";
+import { makeStyles } from "@material-ui/styles";
 import {
     fetchFileTypes,
     fetchRepositories,
@@ -86,7 +85,7 @@ const EditorContainer: React.FC = observer(() => {
 
 
     useEffect(() => {
-        if(!versionSynced || !artifactSynced){
+        if (!versionSynced || !artifactSynced) {
             if (artifactId && (versionId === "latest")) {
                 dispatch(getArtifact(artifactId))
                 dispatch(getLatestVersion(artifactId))
@@ -101,7 +100,7 @@ const EditorContainer: React.FC = observer(() => {
 
 
     useEffect(() => {
-        if(createdArtifact){
+        if (createdArtifact) {
             history.push(`/${createdArtifact.id}/latest`)
         }
     }, [createdArtifact, history])
@@ -113,7 +112,7 @@ const EditorContainer: React.FC = observer(() => {
     }, [dispatch])
 
     useEffect(() => {
-        if(artifact?.repositoryId !== undefined) {
+        if (artifact?.repositoryId !== undefined) {
             dispatch(getSingleRepository(artifact.repositoryId))
         }
     }, [artifact, dispatch])
@@ -133,13 +132,15 @@ const EditorContainer: React.FC = observer(() => {
         const opts: Array<DropdownButtonItem> = []
         fileTypes?.forEach(fileType => {
             fileType.fileExtension === "json" &&
-            opts.push({id: fileType.name,
-                label: `artifact.create${fileType.name}`,
-                type: "button",
-                onClick: () => {
-                    setCreateArtifactOpen(true);
-                    setCreateArtifactType(fileType.name)
-                }});
+                opts.push({
+                    id: fileType.name,
+                    label: `artifact.create${fileType.name}`,
+                    type: "button",
+                    onClick: () => {
+                        setCreateArtifactOpen(true);
+                        setCreateArtifactType(fileType.name)
+                    }
+                });
 
 
         })
@@ -160,13 +161,6 @@ const EditorContainer: React.FC = observer(() => {
 
     return (
         <>
-            <div className={classes.createContainer}>
-
-                <PathStructure structure={path} />
-
-
-            </div>
-
             {repository ?
                 <div className={classes.header}>
                     <div className={classes.title}>
@@ -189,7 +183,7 @@ const EditorContainer: React.FC = observer(() => {
                     </div>
                 </div>
             }
-            <Editor/>
+            <Editor />
 
 
 
