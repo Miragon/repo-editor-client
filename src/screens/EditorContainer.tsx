@@ -117,17 +117,6 @@ const EditorContainer: React.FC = observer(() => {
         }
     }, [artifact, dispatch])
 
-    const element = {
-        name: "path.overview",
-        link: "/",
-    }
-    const element2 = {
-        name: "path.editor",
-        link: `#/editor/${artifactId}`
-    }
-    const path = [element, element2]
-
-
     useEffect(() => {
         const opts: Array<DropdownButtonItem> = []
         fileTypes?.forEach(fileType => {
