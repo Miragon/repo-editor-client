@@ -167,7 +167,8 @@
     },
     "path": {
         "overview": "Übersicht",
-        "repository": "Projekt"
+        "repository": "Projekt",
+        "editor": "Editor"
     },
     "filter": {
         "filter": "Filter"
@@ -186,7 +187,7 @@
     },
     "save": {
         "save": "Speichern",
-        "newMilestone": "Als neuer Meilenstein",
+        "asNewMilestone": "Als neuer Meilenstein",
         "newArtifact": "Als neue Datei",
         "success": "Datei gespeichert"
     },
@@ -197,6 +198,7 @@
         "viewer": "Gast"
     },
     "exception": {
-        "accessHistory": "Dateien aus dem Archiv können nicht geändert werden"
+        "accessHistory": "Dateien aus dem Archiv können nicht geändert werden",
+        "oldMilestone": "Sie betrachten eine veraltete Datei, ein neuerer Meilenstein ist verfügbar. Zum Öffnen hier klicken"
     }
 }

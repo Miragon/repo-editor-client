@@ -3,6 +3,9 @@ import {Route, Switch} from "react-router-dom";
 import EditorContainer from "../../screens/EditorContainer";
 
 const Router: React.FC = () => {
+
+    //Wrap Router with "BrowserRouter" or add a /#/ after "editor" in the url
+
     return (
         <Switch>
             <Route
@@ -10,10 +13,12 @@ const Router: React.FC = () => {
                 path="/"
                 component={EditorContainer}/>
             <Route
-                path="/:artifactId/:versionId"
+                exact
+                path="/:artifactId/:milestone"
                 component={EditorContainer} />
         </Switch>
     );
 };
+
 
 export default Router;

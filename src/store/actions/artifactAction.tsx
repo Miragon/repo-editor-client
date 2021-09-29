@@ -123,19 +123,9 @@ export const getByRepositoryIdAndType = (repositoryId: string, type: string) => 
     };
 };
 
-export const getArtifact = (artifactId: string) => {
-    return async (dispatch: Dispatch): Promise<void> => {
-        const artifactController = new ArtifactApi();
-        try {
-            const config = helpers.getClientConfig();
-            const response = await artifactController.getArtifact(artifactId, config);
-            if (Math.floor(response.status / 100) === 2) {
-                dispatch({type: GET_ARTIFACT, artifact: response.data})
-            } else {
-                dispatch({ type: HANDLEDERROR, errorMessage: "error.couldNotProcess" });
-            }
-        } catch (error) {
-            dispatch(handleError(error, ActionType.GET_ARTIFACT, [artifactId]));
-        }
-    };
+export const getArtifact = async(artifactId: string): Promise<AxiosResponse<ArtifactTO>> => {
+    const artifactController = new ArtifactApi();
+    const config = helpers.getClientConfig();
+    const response = artifactController.getArtifact(artifactId, config);
+    return response;
 };

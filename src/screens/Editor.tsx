@@ -1,20 +1,22 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useDispatch, useSelector} from "react-redux";
 import emptyTemplate from "./empty_template.json";
-import {ArtifactTO, ArtifactVersionTO} from "../api";
+import {ArtifactTO, ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../api";
 import {RootState} from "../store/reducers/rootReducer";
 import MonacoEditor from "react-monaco-editor";
 import elementTemplateSchema from "./elementTemplateSchema.json";
 import {makeStyles} from "@material-ui/styles";
 import * as monacoEditor from "monaco-editor";
 import {useTranslation} from "react-i18next";
-import {updateVersion} from "../store/actions";
+import {createVersion, updateVersion} from "../store/actions";
 import {useHistory} from "react-router-dom";
 import {HANDLEDERROR} from "../constants/Constants";
 import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
 import SimpleButton from "../components/Form/SimpleButton";
 import helpers from "../util/helperFunctions";
+import DropdownButton, {DropdownButtonItem} from "../components/Form/DropdownButton";
+import SaveAsNewMilestoneDialog from "./SaveAsNewMilestoneDialog";
 
 
 const useStyles = makeStyles({
@@ -39,17 +41,24 @@ const useStyles = makeStyles({
     }
 });
 
-const Editor: React.FC = observer(() => {
+interface Props {
+    version: ArtifactVersionTO;
+    artifact: ArtifactTO;
+}
+
+const Editor: React.FC<Props> = observer(props => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const history = useHistory();
     const {t} = useTranslation("common");
 
-    const version: ArtifactVersionTO = useSelector((state: RootState) => state.versions.version)
-    const artifact: ArtifactTO = useSelector((state: RootState) => state.artifacts.artifact)
+    const {version, artifact} = props
+    //   const version: ArtifactVersionTO = useSelector((state: RootState) => state.versions.version)
+    //   const artifact: ArtifactTO = useSelector((state: RootState) => state.artifacts.artifact)
 
     const [editorContent, setEditorContent] = useState<string>(JSON.stringify(emptyTemplate, null, 4));
     const [saveAsNewArtifactOpen, setSaveAsNewArtifactOpen] = useState<boolean>(false);
+    const [saveAsNewMilestoneOpen, setSaveAsNewMilestoneOpen] = useState<boolean>(false);
     /**
      * Options for the jsonEditor
      */
@@ -58,7 +67,6 @@ const Editor: React.FC = observer(() => {
         //TODO: Auch anzeigen, wenn JSON Format nicht eingehalten werden
         if(version){
             try{
-                console.log("Changing Version")
                 version?.file && setEditorContent(JSON.stringify(JSON.parse(version.file), null, 4))
             }
             catch (err) {
@@ -95,7 +103,6 @@ const Editor: React.FC = observer(() => {
      * Initialize the JSON-Schema
      */
     const editorWillMount = (monaco : typeof monacoEditor) : void => {
-
         monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
             validate: true,
             schemas: [{
@@ -117,14 +124,26 @@ const Editor: React.FC = observer(() => {
         return nrOfLines*23;
     }
 
-    /*
-    const saveAsNewVersion = () => {
-        dispatch(createVersion(version.artifactId, editorContent, ArtifactVersionUploadTOSaveTypeEnum.Milestone))
+
+    const saveAsNewVersion = useCallback(() => {
+        createVersion(version.artifactId, editorContent, ArtifactVersionUploadTOSaveTypeEnum.Milestone).then(response => {
+            if (Math.floor(response.status / 100) === 2) {
+                helpers.makeSuccessToast(t("save.success"))
+            } else {
+                helpers.makeErrorToast(t(response.data.toString()), () => saveAsNewVersion())
+            }
+
+
+        }, error => {
+            helpers.makeErrorToast(t(error.response.data), () => saveAsNewVersion())
+        })
         history.push(`/${version.artifactId}/latest`)
-    }
-*/
-    const update = () => {
-        updateVersion(version.id, editorContent, "").then(response => {
+    }, [editorContent, history, t, version.artifactId])
+
+
+
+    const update = useCallback(() => {
+        updateVersion(version.id, editorContent).then(response => {
             if (Math.floor(response.status / 100) === 2) {
                 helpers.makeSuccessToast(t("save.success"))
 
@@ -134,11 +153,10 @@ const Editor: React.FC = observer(() => {
         }, error => {
             helpers.makeErrorToast(t(error.response.data), () => update())
         })
-        history.push(`/${version.artifactId}/latest`)
+        history.push(`/${version.artifactId}/${version.milestone}`)
+    }, [editorContent, history, t, version.artifactId, version.id, version.milestone])
 
-    }
 
-    /*
     const options: Array<DropdownButtonItem> = [
         {
             id: "UpdateVersion",
@@ -153,7 +171,7 @@ const Editor: React.FC = observer(() => {
             label: t("save.asNewMilestone"),
             type: "button",
             onClick: () => {
-                saveAsNewVersion()
+                setSaveAsNewMilestoneOpen(true)
             }
         },
         {
@@ -166,7 +184,7 @@ const Editor: React.FC = observer(() => {
             }
         }
     ]
-*/
+
 
 
     return (
@@ -185,15 +203,25 @@ const Editor: React.FC = observer(() => {
             <div className={classes.saveOptions}>
 
                 {artifact && version ?
-                    <SimpleButton onClick={() => update()} title={t("save.save")} />
+                    <DropdownButton
+                        type="default"
+                        title={t("save.save")}
+                        options={options} />
                     :
-                    <SimpleButton onClick={() => setSaveAsNewArtifactOpen(true)} title={t("save.save")} />
-
+                    <SimpleButton onClick={() => setSaveAsNewArtifactOpen(true)} title={t("save.newArtifact")} />
                 }
 
 
             </div>
 
+
+            <SaveAsNewMilestoneDialog
+                open={saveAsNewMilestoneOpen}
+                onCancelled={() => setSaveAsNewMilestoneOpen(false)}
+                type={artifact?.fileType}
+                file={editorContent}
+                comment={version.comment}
+                artifactId={artifact.id} />
 
             <SaveAsNewArtifactDialog
                 open={saveAsNewArtifactOpen}
@@ -203,19 +231,6 @@ const Editor: React.FC = observer(() => {
         </>
     );
 });
-
-/*
-Conditional Save
-
-                {artifact && version ?
-                    <DropdownButton
-                        type="default"
-                        title={t("save.save")}
-                        options={options} />
-                    :
-                    <SimpleButton onClick={() => setSaveAsNewArtifactOpen(true)} title={t("save.newArtifact")} />
-                }
- */
 
 
 export default Editor;

@@ -176,7 +176,8 @@
   },
   "path": {
     "overview": "Overview",
-    "repository": "Repository"
+    "repository": "Repository",
+    "editor": "Editor"
   },
   "filter": {
     "filter": "Filter"
@@ -196,7 +197,7 @@
   },
   "save": {
     "save": "Save",
-    "newMilestone": "Save as new Milestone",
+    "asNewMilestone": "Save as new Milestone",
     "newArtifact": "Save as new File",
     "success": "File saved"
   },
@@ -207,7 +208,9 @@
     "viewer": "Viewer"
   },
   "exception": {
-    "accessHistory": "Artifacts from archive can not be changed"
+    "accessHistory": "Artifacts from archive can not be changed",
+    "oldMilestone": "You have opened an old version of this artifact. A newer milestone is available. Click here to open"
+
   }
 
 }

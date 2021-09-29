@@ -1,6 +1,6 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import * as api from "../../api/api";
-import {ArtifactVersionTO, ArtifactVersionUpdateTO} from "../../api/api";
+import {ArtifactVersionTO, ArtifactVersionUpdateTO, VersionApi} from "../../api/api";
 import {ArtifactVersionUploadTO, ArtifactVersionUploadTOSaveTypeEnum} from "../../api";
 import helpers from "../../util/helperFunctions";
 import {GET_VERSION, HANDLEDERROR, SUCCESS, SYNC_STATUS_VERSION} from "../../constants/Constants";
@@ -20,7 +20,7 @@ export const updateVersion = async (versionId: string, file?: string, comment?: 
     const versionController = new api.VersionApi();
     const config = helpers.getClientConfig();
     const artifactVersionUpdateTO: ArtifactVersionUpdateTO = {
-        versionId, file, comment
+        versionId, file
     }
     const response = await versionController.updateVersion(artifactVersionUpdateTO, config);
     return response
@@ -63,23 +63,21 @@ export const getSingleVersion = (artifactId: string, versionId: string) => {
 };
 
 
-export const getLatestVersion = (artifactId: string) => {
-    return async (dispatch: Dispatch): Promise<void> => {
-        try {
-            const versionController = new api.VersionApi();
-            const config = helpers.getClientConfig();
-            const response = await versionController.getLatestVersion(artifactId, config);
-            if (Math.floor(response.status / 100) === 2) {
-                dispatch({ type: GET_VERSION, version: response.data });
-            } else {
-                dispatch({ type: HANDLEDERROR, errorMessage: "error.couldNotProcess" });
-            }
-        } catch (error) {
-            dispatch(handleError(error, ActionType.LATEST_VERSION, [artifactId]));
-        }
-    };
-};
+export const getMilestoneVersion = async(artifactId: string, milestone: string): Promise<AxiosResponse<ArtifactVersionTO>> => {
+    const versionController = new VersionApi();
+    const config = helpers.getClientConfig();
+    const response = await versionController.getMilestoneVersion(artifactId, milestone, config);
+    return response;
+}
 
+
+
+export const getLatestVersion = async (artifactId: string): Promise<AxiosResponse<ArtifactVersionTO>> => {
+    const versionController = new VersionApi();
+    const config = helpers.getClientConfig();
+    const response = await versionController.getLatestVersion(artifactId, config);
+    return response;
+}
 
 
 export const download = (artifactId: string, artifactVersionId: string) => {
