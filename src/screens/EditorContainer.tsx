@@ -16,9 +16,9 @@ import {
     fetchFileTypes,
     fetchRepositories,
     getArtifact,
-    getLatestVersion, getMilestoneVersion,
-    getSingleRepository,
-    getSingleVersion
+    getLatestVersion,
+    getMilestoneVersion,
+    getSingleRepository
 } from "../store/actions";
 import {useTranslation} from "react-i18next";
 import helpers from "../util/helperFunctions";

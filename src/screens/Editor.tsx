@@ -1,9 +1,8 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {observer} from "mobx-react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import emptyTemplate from "./empty_template.json";
 import {ArtifactTO, ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum} from "../api";
-import {RootState} from "../store/reducers/rootReducer";
 import MonacoEditor from "react-monaco-editor";
 import elementTemplateSchema from "./elementTemplateSchema.json";
 import {makeStyles} from "@material-ui/styles";

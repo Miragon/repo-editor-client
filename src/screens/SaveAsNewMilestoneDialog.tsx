@@ -1,15 +1,11 @@
-import MenuItem from "@material-ui/core/MenuItem";
 import React, {useCallback, useState} from "react";
-import {useSelector} from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import {ArtifactVersionUploadTOSaveTypeEnum, RepositoryTO} from "../api";
+import {ArtifactVersionUploadTOSaveTypeEnum} from "../api";
 import PopupDialog from "../components/Form/PopupDialog";
 import SettingsForm from "../components/Form/SettingsForm";
-import SettingsSelect from "../components/Form/SettingsSelect";
 import SettingsTextField from "../components/Form/SettingsTextField";
-import {RootState} from "../store/reducers/rootReducer";
 import {useTranslation} from "react-i18next";
-import {createArtifact, createVersion} from "../store/actions";
+import {createVersion} from "../store/actions";
 import helpers from "../util/helperFunctions";
 import {useHistory} from "react-router-dom";
 

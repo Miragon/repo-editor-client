@@ -1,13 +1,7 @@
 import {Dispatch} from "@reduxjs/toolkit";
 import {ArtifactApi, ArtifactTO, ArtifactUpdateTO, NewArtifactTO} from "../../api";
 import helpers from "../../util/helperFunctions";
-import {
-    ARTIFACTS_BY_REPO_AND_TYPE,
-    GET_ARTIFACT,
-    HANDLEDERROR,
-    SUCCESS,
-    SYNC_STATUS_ARTIFACT
-} from "../../constants/Constants";
+import {ARTIFACTS_BY_REPO_AND_TYPE, HANDLEDERROR, SUCCESS, SYNC_STATUS_ARTIFACT} from "../../constants/Constants";
 import {ActionType} from "./actions";
 import {handleError} from "./errorAction";
 import {AxiosResponse} from "axios";
