@@ -13,17 +13,15 @@ import {RootState} from "../store/reducers/rootReducer";
 import {ArtifactTO, ArtifactTypeTO, ArtifactVersionTO, RepositoryTO} from "../api";
 import {makeStyles} from "@material-ui/styles";
 import {
-    fetchFileTypes,
-    fetchRepositories,
     getArtifact,
     getLatestVersion,
     getMilestoneVersion,
-    getSingleRepository
 } from "../store/actions";
 import {useTranslation} from "react-i18next";
 import helpers from "../util/helperFunctions";
 import {SYNC_STATUS_ARTIFACT, SYNC_STATUS_VERSION} from "../constants/Constants";
 import {openFileInTool} from "../util/Redirections";
+import {getRepository} from "../store/actions/repositoryAction";
 
 const useStyles = makeStyles(() => ({
     createContainer: {
@@ -77,10 +75,10 @@ const EditorContainer: React.FC = observer(() => {
     const { artifactId } = useParams<{ artifactId: string }>();
     const { milestone } = useParams<{ milestone: string }>();
 
-
+    const versionSynced: boolean = useSelector((state: RootState) => state.dataSynced.versionSynced);
     const fileTypes: Array<ArtifactTypeTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
-    const repository: RepositoryTO = useSelector((state: RootState) => state.repos.activeRepo);
 
+    const [repository, setRepository] = useState<RepositoryTO>();
     const [artifact, setArtifact] = useState<ArtifactTO>();
     const [version, setVersion] = useState<ArtifactVersionTO>();
 
@@ -88,11 +86,24 @@ const EditorContainer: React.FC = observer(() => {
     const [createArtifactType, setCreateArtifactType] = useState<string>("");
     const [artifactOptions, setArtifactOptions] = useState<Array<DropdownButtonItem>>([]);
 
+    const fetchRepository = useCallback((repoId: string) => {
+        getRepository(repoId).then(response => {
+            if (Math.floor(response.status / 100) === 2) {
+                setRepository(response.data)
+            } else {
+                helpers.makeErrorToast(t(response.data.toString()), () => fetchRepository(repoId))
+            }
+            
+        }, error => {
+            helpers.makeErrorToast(t(error.response.data), () => fetchRepository(repoId))
+        })
+    }, [t])
 
     const fetchArtifact = useCallback(() => {
         getArtifact(artifactId).then(response => {
             if (Math.floor(response.status / 100) === 2) {
                 setArtifact(response.data)
+                fetchRepository(response.data.repositoryId)
                 dispatch({type: SYNC_STATUS_ARTIFACT, dataSynced: true})
             } else {
                 helpers.makeErrorToast(t(response.data.toString()), () => fetchArtifact())
@@ -100,7 +111,7 @@ const EditorContainer: React.FC = observer(() => {
         }, error => {
             helpers.makeErrorToast(t(error.response.data), () => fetchArtifact())
         })
-    }, [artifactId, dispatch, t])
+    }, [artifactId, dispatch, fetchRepository, t])
 
     const fetchLatestVersion = useCallback(() => {
         getLatestVersion(artifactId).then(response => {
@@ -117,7 +128,7 @@ const EditorContainer: React.FC = observer(() => {
     }, [artifactId, dispatch, t])
 
     const fetchMilestoneVersion = useCallback(() => {
-        getMilestoneVersion(artifactId, milestone).then(response => {
+        getMilestoneVersion(artifactId, parseInt(milestone)).then(response => {
             if (Math.floor(response.status / 100) === 2) {
                 setVersion(response.data);
                 dispatch({type: SYNC_STATUS_VERSION, dataSynced: true})
@@ -142,18 +153,11 @@ const EditorContainer: React.FC = observer(() => {
     }, [artifactId, milestone, fetchMilestoneVersion, fetchArtifact, fetchLatestVersion])
 
 
-
     useEffect(() => {
-        dispatch(fetchFileTypes())
-        dispatch(fetchRepositories())
-    }, [dispatch])
-
-
-    useEffect(() => {
-        if(artifact?.repositoryId !== undefined) {
-            dispatch(getSingleRepository(artifact.repositoryId))
+        if(!versionSynced){
+            milestone === "latest" ? fetchLatestVersion() : fetchMilestoneVersion();
         }
-    }, [artifact, dispatch])
+    }, [fetchLatestVersion, fetchMilestoneVersion, milestone, versionSynced])
 
     const element = {
         name: "path.overview",

@@ -8,6 +8,8 @@ import {useTranslation} from "react-i18next";
 import {createVersion} from "../store/actions";
 import helpers from "../util/helperFunctions";
 import {useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {SYNC_STATUS_VERSION} from "../constants/Constants";
 
 interface Props {
     open: boolean;
@@ -21,6 +23,7 @@ interface Props {
 const SaveAsNewMilestoneDialog: React.FC<Props> = props => {
     const {t} = useTranslation("common");
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [comment, setComment] = useState<string>(props.comment || "");
@@ -31,6 +34,8 @@ const SaveAsNewMilestoneDialog: React.FC<Props> = props => {
             if (Math.floor(response.status / 100) === 2) {
                 helpers.makeSuccessToast(t("save.success"))
                 history.push(`/${props.artifactId}/latest`)
+                dispatch({type: SYNC_STATUS_VERSION, dataSynced: false})
+                setComment("")
                 props.onCancelled()
             } else {
                 helpers.makeErrorToast(t(response.data.toString()), () => onCreate())
@@ -38,7 +43,7 @@ const SaveAsNewMilestoneDialog: React.FC<Props> = props => {
         }, error => {
             helpers.makeErrorToast(t(error.response.data), () => onCreate())
         })
-    }, [props, comment, history, t])
+    }, [props, comment, t, history, dispatch])
 
 
 

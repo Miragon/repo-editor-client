@@ -27,6 +27,7 @@
         "edit": "Datei bearbeiten",
         "modifiedOn": "Bearbeitet am",
         "share": "Datei teilen",
+        "locked": "Sie haben die Datei für 10 Minuten zur Bearbeitung gesperrt",
         "upload": "Datei hochladen",
         "import": "Aus Cawemo importieren",
         "notAvailable": "Sie haben noch keine Datei erstellt",
@@ -73,6 +74,7 @@
         "deploymentHistory": "Veröffentlichungen",
         "saveAsNewArtifact": "Als neue Datei speichern",
         "saveVersionXAsNewArtifact": "Version {{milestone}} als neue Datei speichern"
+
     },
     "form": {
         "create": "Formular erstellen"
@@ -108,7 +110,7 @@
     },
     "category": {
         "favorite": "Favoriten",
-        "recent": "Vor Kurzem bearbeitet",
+        "recent": "Zuletzt bearbeitet",
         "shared": "Geteilt",
         "noFavoritesAvailable": "Sie haben noch keine Datei zu Ihren Favoriten hinzugefügt."
     },
@@ -198,7 +200,12 @@
         "viewer": "Gast"
     },
     "exception": {
+        "changeOwnRole": "Sie können Ihre eigene Rolle nicht ändern",
+        "authFailed": "Autorisierung fehlgeschlagen",
+        "editDeployedVersion": "Sie können keine Dateien überspeichern, die bereits veröffentlicht wurden",
         "accessHistory": "Dateien aus dem Archiv können nicht geändert werden",
-        "oldMilestone": "Sie betrachten eine veraltete Datei, ein neuerer Meilenstein ist verfügbar. Zum Öffnen hier klicken"
+        "oldMilestone": "Sie betrachten eine veraltete Datei, ein neuerer Meilenstein ist verfügbar. Zum Öffnen hier klicken",
+        "historicalDataAccess": "Sie können diese Datei nicht bearbeiten - ein neuer Meilenstein ist verfügbar",
+        "locked": "Diese Datei wird derzeit von einem anderen User bearbeitet"
     }
 }

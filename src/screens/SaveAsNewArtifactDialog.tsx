@@ -1,6 +1,6 @@
 import MenuItem from "@material-ui/core/MenuItem";
-import React, {useCallback, useState} from "react";
-import {useSelector} from "react-redux";
+import React, {useCallback, useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import {ArtifactVersionUploadTOSaveTypeEnum, RepositoryTO} from "../api";
 import PopupDialog from "../components/Form/PopupDialog";
@@ -12,6 +12,8 @@ import {useTranslation} from "react-i18next";
 import {createArtifact, createVersion} from "../store/actions";
 import helpers from "../util/helperFunctions";
 import {useHistory} from "react-router-dom";
+import {fetchRepositories} from "../store/actions/repositoryAction";
+import {REPOSITORIES, SYNC_STATUS_REPOSITORY} from "../constants/Constants";
 
 interface Props {
     open: boolean;
@@ -24,16 +26,30 @@ interface Props {
 const SaveAsNewArtifactDialog: React.FC<Props> = props => {
     const {t} = useTranslation("common");
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [repository, setRepository] = useState<string>(props.repo ? props.repo.id : "");
 
-    const allRepos: Array<RepositoryTO> = useSelector(
-        (state: RootState) => state.repos.repos
-    );
 
+    const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repositories.repositories)
+    const repoSynced: boolean = useSelector((state: RootState) => state.dataSynced.repoSynced)
+
+
+    const fetchRepos = useCallback(() => {
+        fetchRepositories().then(response => {
+            if (Math.floor(response.status / 100) === 2) {
+                dispatch({type: REPOSITORIES, repositories: response.data})
+                dispatch({type: SYNC_STATUS_REPOSITORY, dataSynced: true})
+            } else {
+                helpers.makeErrorToast(t(response.data.toString()), () => fetchRepos())
+            }
+        }, error => {
+            helpers.makeErrorToast(t(error.response.data), () => fetchRepos())
+        })
+    }, [dispatch, t])
 
 
     const onCreate = useCallback(async () => {
@@ -47,8 +63,11 @@ const SaveAsNewArtifactDialog: React.FC<Props> = props => {
                         .then(response2 => {
                             if (Math.floor(response2.status / 100) === 2) {
                                 helpers.makeSuccessToast(t("artifact.createdDefault"))
+                                setTitle("")
+                                setDescription("")
+                                setRepository("")
                                 props.onCancelled()
-                                history.push("/" + response.data.id + "/" + response2.data.id)
+                                history.push("/" + response.data.id + "/latest")
                             } else {
                                 helpers.makeErrorToast(t(response2.data.toString()), () => createVersion(response.data.id, props.file, ArtifactVersionUploadTOSaveTypeEnum.Milestone))
                             }
@@ -65,7 +84,11 @@ const SaveAsNewArtifactDialog: React.FC<Props> = props => {
     }, [props, repository, title, description, t, history]);
 
     
-
+    useEffect(() => {
+        if(!repoSynced){
+            fetchRepos();
+        }
+    }, [fetchRepos, repoSynced])
 
     return (
         <PopupDialog
