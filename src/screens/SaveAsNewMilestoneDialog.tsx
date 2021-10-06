@@ -1,15 +1,15 @@
 import React, {useCallback, useState} from "react";
 import "react-toastify/dist/ReactToastify.css";
-import {ArtifactVersionUploadTOSaveTypeEnum} from "../api";
+import {ArtifactMilestoneUploadTOSaveTypeEnum} from "../api";
 import PopupDialog from "../components/Form/PopupDialog";
 import SettingsForm from "../components/Form/SettingsForm";
 import SettingsTextField from "../components/Form/SettingsTextField";
 import {useTranslation} from "react-i18next";
-import {createVersion} from "../store/actions";
+import {createMilestone} from "../store/actions";
 import helpers from "../util/helperFunctions";
 import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {SYNC_STATUS_VERSION} from "../constants/Constants";
+import {SYNC_STATUS_MILESTONE} from "../constants/Constants";
 
 interface Props {
     open: boolean;
@@ -30,11 +30,11 @@ const SaveAsNewMilestoneDialog: React.FC<Props> = props => {
 
 
     const onCreate = useCallback(() => {
-        createVersion(props.artifactId, props.file, ArtifactVersionUploadTOSaveTypeEnum.Milestone, comment).then(response => {
+        createMilestone(props.artifactId, props.file, ArtifactMilestoneUploadTOSaveTypeEnum.Milestone, comment).then(response => {
             if (Math.floor(response.status / 100) === 2) {
-                helpers.makeSuccessToast(t("save.success"))
+                helpers.makeSuccessToast(t("action.saved"))
                 history.push(`/${props.artifactId}/latest`)
-                dispatch({type: SYNC_STATUS_VERSION, dataSynced: false})
+                dispatch({type: SYNC_STATUS_MILESTONE, dataSynced: false})
                 setComment("")
                 props.onCancelled()
             } else {
@@ -53,10 +53,10 @@ const SaveAsNewMilestoneDialog: React.FC<Props> = props => {
             error={error}
             onCloseError={() => setError(undefined)}
             open={props.open}
-            title={t("save.asNewMilestone")}
+            title={t("action.saveAsNewMilestone")}
             secondTitle={t("dialog.cancel")}
             onSecond={props.onCancelled}
-            firstTitle={t("save.save")}
+            firstTitle={t("action.save")}
             onFirst={onCreate} >
 
             <SettingsForm large>

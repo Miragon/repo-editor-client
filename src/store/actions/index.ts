@@ -1,2 +1,2 @@
 export * from "./artifactAction";
-export * from "./versionAction";
+export * from "./milestoneAction";

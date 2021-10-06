@@ -14,7 +14,7 @@ const Router: React.FC = () => {
                 component={EditorContainer}/>
             <Route
                 exact
-                path="/:artifactId/:milestone"
+                path="/:artifactId/:milestoneNumber"
                 component={EditorContainer} />
         </Switch>
     );

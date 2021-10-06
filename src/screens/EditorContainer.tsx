@@ -10,16 +10,16 @@ import {useHistory} from "react-router-dom";
 import CreateArtifactDialog from "./CreateArtifactDialog";
 import DropdownButton, {DropdownButtonItem} from "../components/Form/DropdownButton";
 import {RootState} from "../store/reducers/rootReducer";
-import {ArtifactTO, ArtifactTypeTO, ArtifactVersionTO, RepositoryTO} from "../api";
+import {ArtifactTO, ArtifactTypeTO, ArtifactMilestoneTO, RepositoryTO} from "../api";
 import {makeStyles} from "@material-ui/styles";
 import {
     getArtifact,
-    getLatestVersion,
-    getMilestoneVersion,
+    getLatestMilestone,
+    getByMilestoneNumber,
 } from "../store/actions";
 import {useTranslation} from "react-i18next";
 import helpers from "../util/helperFunctions";
-import {SYNC_STATUS_ARTIFACT, SYNC_STATUS_VERSION} from "../constants/Constants";
+import {SYNC_STATUS_ARTIFACT, SYNC_STATUS_MILESTONE} from "../constants/Constants";
 import {openFileInTool} from "../util/Redirections";
 import {getRepository} from "../store/actions/repositoryAction";
 
@@ -73,14 +73,14 @@ const EditorContainer: React.FC = observer(() => {
 
 
     const { artifactId } = useParams<{ artifactId: string }>();
-    const { milestone } = useParams<{ milestone: string }>();
+    const { milestoneNumber } = useParams<{ milestoneNumber: string }>();
 
-    const versionSynced: boolean = useSelector((state: RootState) => state.dataSynced.versionSynced);
+    const milestoneSynced: boolean = useSelector((state: RootState) => state.dataSynced.milestoneSynced);
     const fileTypes: Array<ArtifactTypeTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
 
     const [repository, setRepository] = useState<RepositoryTO>();
     const [artifact, setArtifact] = useState<ArtifactTO>();
-    const [version, setVersion] = useState<ArtifactVersionTO>();
+    const [milestone, setMilestone] = useState<ArtifactMilestoneTO>();
 
     const [createArtifactOpen, setCreateArtifactOpen] = useState<boolean>(false);
     const [createArtifactType, setCreateArtifactType] = useState<string>("");
@@ -113,51 +113,51 @@ const EditorContainer: React.FC = observer(() => {
         })
     }, [artifactId, dispatch, fetchRepository, t])
 
-    const fetchLatestVersion = useCallback(() => {
-        getLatestVersion(artifactId).then(response => {
+    const fetchLatestMilestone = useCallback(() => {
+        getLatestMilestone(artifactId).then(response => {
             if (Math.floor(response.status / 100) === 2) {
-                setVersion(response.data);
-                dispatch({type: SYNC_STATUS_VERSION, dataSynced: true})
+                setMilestone(response.data);
+                dispatch({type: SYNC_STATUS_MILESTONE, dataSynced: true})
             } else {
-                helpers.makeErrorToast(t(response.data.toString()), () => fetchLatestVersion())
+                helpers.makeErrorToast(t(response.data.toString()), () => fetchLatestMilestone())
             }
         }, error => {
-            helpers.makeErrorToast(t(error.response.data), () => fetchLatestVersion())
+            helpers.makeErrorToast(t(error.response.data), () => fetchLatestMilestone())
 
         })
     }, [artifactId, dispatch, t])
 
-    const fetchMilestoneVersion = useCallback(() => {
-        getMilestoneVersion(artifactId, parseInt(milestone)).then(response => {
+    const fetchByMilestoneNumber = useCallback(() => {
+        getByMilestoneNumber(artifactId, parseInt(milestoneNumber)).then(response => {
             if (Math.floor(response.status / 100) === 2) {
-                setVersion(response.data);
-                dispatch({type: SYNC_STATUS_VERSION, dataSynced: true})
+                setMilestone(response.data);
+                dispatch({type: SYNC_STATUS_MILESTONE, dataSynced: true})
             } else {
-                helpers.makeErrorToast(t(response.data.toString()), () => fetchMilestoneVersion())
+                helpers.makeErrorToast(t(response.data.toString()), () => fetchByMilestoneNumber())
             }
         }, error => {
-            helpers.makeErrorToast(t(error.response.data), () => fetchMilestoneVersion())
+            helpers.makeErrorToast(t(error.response.data), () => fetchByMilestoneNumber())
         })
-    }, [artifactId, dispatch, milestone, t])
+    }, [artifactId, dispatch, milestoneNumber, t])
 
     
     useEffect(() => {
-        if (artifactId && (milestone === "latest")) {
+        if (artifactId && (milestoneNumber === "latest")) {
             fetchArtifact()
-            fetchLatestVersion()
+            fetchLatestMilestone()
         }
-        if (artifactId && (milestone !== "latest")) {
+        if (artifactId && (milestoneNumber !== "latest")) {
             fetchArtifact()
-            fetchMilestoneVersion()
+            fetchByMilestoneNumber()
         }
-    }, [artifactId, milestone, fetchMilestoneVersion, fetchArtifact, fetchLatestVersion])
+    }, [artifactId, fetchArtifact, fetchByMilestoneNumber, fetchLatestMilestone, milestoneNumber])
 
 
     useEffect(() => {
-        if(!versionSynced){
-            milestone === "latest" ? fetchLatestVersion() : fetchMilestoneVersion();
+        if(!milestoneSynced){
+            milestoneNumber === "latest" ? fetchLatestMilestone() : fetchByMilestoneNumber();
         }
-    }, [fetchLatestVersion, fetchMilestoneVersion, milestone, versionSynced])
+    }, [fetchByMilestoneNumber, fetchLatestMilestone, milestoneNumber, milestoneSynced])
 
     const element = {
         name: "path.overview",
@@ -215,9 +215,9 @@ const EditorContainer: React.FC = observer(() => {
                         {artifact?.description}
                     </span>
                     <span className={classes.comment}>
-                        {version?.comment}
+                        {milestone?.comment}
                     </span>
-                    {(!version?.latestVersion && artifact) &&
+                    {(!milestone?.latestMilestone && artifact) &&
                         <div  className={classes.oldMilestoneHint} onClick={() => openFileInTool(fileTypes, artifact?.fileType, artifact?.repositoryId, artifact?.id, t("error.missingTool", artifact?.fileType))}>
                             <span>
                                 {t("exception.oldMilestone")}
@@ -235,9 +235,9 @@ const EditorContainer: React.FC = observer(() => {
                     </div>
                 </div>
             }
-            {(version && artifact) &&
+            {(milestone && artifact) &&
 
-                <Editor version={version} artifact={artifact}/>
+                <Editor milestone={milestone} artifact={artifact}/>
             }
 
 

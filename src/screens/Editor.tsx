@@ -2,13 +2,13 @@ import React, {useCallback, useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useDispatch, useSelector} from "react-redux";
 import emptyTemplate from "./empty_template.json";
-import {ArtifactTO, ArtifactVersionTO, ArtifactVersionUploadTOSaveTypeEnum, UserInfoTO} from "../api";
+import {ArtifactTO, ArtifactMilestoneTO, ArtifactMilestoneUploadTOSaveTypeEnum, UserInfoTO} from "../api";
 import MonacoEditor from "react-monaco-editor";
 import elementTemplateSchema from "./elementTemplateSchema.json";
 import {makeStyles} from "@material-ui/styles";
 import * as monacoEditor from "monaco-editor";
 import {useTranslation} from "react-i18next";
-import {createVersion, lockArtifact, updateVersion} from "../store/actions";
+import {createMilestone, lockArtifact, updateMilestone} from "../store/actions";
 import {useHistory} from "react-router-dom";
 import {HANDLEDERROR} from "../constants/Constants";
 import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
         maxWidth: "180px",
         marginRight: "1rem"
     },
-    deployedVersionHint: {
+    deployedMilestoneHint: {
         fontStyle: "bold",
         color: "red",
         padding: "10px"
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-    version: ArtifactVersionTO;
+    milestone: ArtifactMilestoneTO;
     artifact: ArtifactTO;
 }
 
@@ -57,7 +57,7 @@ const Editor: React.FC<Props> = observer(props => {
     const history = useHistory();
     const {t} = useTranslation("common");
 
-    const {version, artifact} = props
+    const {milestone, artifact} = props
 
     const [editorContent, setEditorContent] = useState<string>(JSON.stringify(emptyTemplate, null, 4));
     const [saveAsNewArtifactOpen, setSaveAsNewArtifactOpen] = useState<boolean>(false);
@@ -77,17 +77,17 @@ const Editor: React.FC<Props> = observer(props => {
 
     useEffect(() => {
         //TODO: Auch anzeigen, wenn JSON Format nicht eingehalten werden
-        if(version){
+        if(milestone){
             try{
-                version?.file && setEditorContent(JSON.stringify(JSON.parse(version.file), null, 4))
+                milestone?.file && setEditorContent(JSON.stringify(JSON.parse(milestone.file), null, 4))
             }
             catch (err) {
                 console.log(err)
-                version?.file && setEditorContent(version.file)
+                milestone?.file && setEditorContent(milestone.file)
                 dispatch({type: HANDLEDERROR, errorMessage: t("error.formatting")})
             }
         }
-    }, [version, dispatch, t])
+    }, [milestone, dispatch, t])
 
     useEffect(() => {
         if(artifact.lockedUntil && artifact.lockedBy){
@@ -152,42 +152,42 @@ const Editor: React.FC<Props> = observer(props => {
     }
 
 
-    const saveAsNewVersion = useCallback(() => {
-        createVersion(version.artifactId, editorContent, ArtifactVersionUploadTOSaveTypeEnum.Milestone).then(response => {
+    const saveAsNewMilestone = useCallback(() => {
+        createMilestone(milestone.artifactId, editorContent, ArtifactMilestoneUploadTOSaveTypeEnum.Milestone).then(response => {
             if (Math.floor(response.status / 100) === 2) {
-                helpers.makeSuccessToast(t("save.success"))
+                helpers.makeSuccessToast(t("action.saved"))
             } else {
-                helpers.makeErrorToast(t(response.data.toString()), () => saveAsNewVersion())
+                helpers.makeErrorToast(t(response.data.toString()), () => saveAsNewMilestone())
             }
 
 
         }, error => {
-            helpers.makeErrorToast(t(error.response.data), () => saveAsNewVersion())
+            helpers.makeErrorToast(t(error.response.data), () => saveAsNewMilestone())
         })
-        history.push(`/${version.artifactId}/latest`)
-    }, [editorContent, history, t, version.artifactId])
+        history.push(`/${milestone.artifactId}/latest`)
+    }, [editorContent, history, t, milestone.artifactId])
 
 
 
     const update = useCallback(() => {
-        updateVersion(version.id, editorContent).then(response => {
+        updateMilestone(milestone.id, editorContent).then(response => {
             if (Math.floor(response.status / 100) === 2) {
-                helpers.makeSuccessToast(t("save.success"))
-                history.push(`/${version.artifactId}/${version.milestone}`)
+                helpers.makeSuccessToast(t("action.saved"))
+                history.push(`/${milestone.artifactId}/${milestone.milestone}`)
             } else {
                 helpers.makeErrorToast(t(response.data.toString()), () => update())
             }
         }, error => {
             helpers.makeErrorToast(t(error.response.data), () => update())
         })
-    }, [editorContent, history, t, version.artifactId, version.id, version.milestone])
+    }, [editorContent, history, t, milestone.artifactId, milestone.id, milestone.milestone])
 
 
     const lockAndEdit = useCallback(() => {
         //TODO: Uncomment in order to forbid the user to edit the file. Right now the user can choose to save the file as new artifact in the end
-        // if(version.latestVersion){
-        //    if(version.deployments.length > 0){
-        //        helpers.makeErrorToast(t("exception.editDeployedVersion"), () => lockAndEdit())
+        // if(milestone.latestMilestone){
+        //    if(milestone.deployments.length > 0){
+        //        helpers.makeErrorToast(t("exception.editDeployedMilestone"), () => lockAndEdit())
         //    } else {
         lockArtifact(artifact.id).then(response => {
             if (Math.floor(response.status / 100) === 2) {
@@ -209,8 +209,8 @@ const Editor: React.FC<Props> = observer(props => {
 
     const options: Array<DropdownButtonItem> = [
         {
-            id: "UpdateVersion",
-            label: t("save.save"),
+            id: "UpdateMilestone",
+            label: t("action.save"),
             type: "button",
             onClick: () => {
                 update()
@@ -218,15 +218,15 @@ const Editor: React.FC<Props> = observer(props => {
         },
         {
             id: "SaveAsNewMilestone",
-            label: t("save.asNewMilestone"),
+            label: t("action.saveAsNewMilestone"),
             type: "button",
             onClick: () => {
                 setSaveAsNewMilestoneOpen(true)
             }
         },
         {
-            id: "SaveNewVersion",
-            label: t("save.newArtifact"),
+            id: "SaveNewMilestone",
+            label: t("action.saveAsNewArtifact"),
             type: "button",
             onClick: () => {
                 setSaveAsNewArtifactOpen(true)
@@ -253,64 +253,63 @@ const Editor: React.FC<Props> = observer(props => {
             <div className={classes.saveOptions}>
 
                 {
-                    artifact && version ?
+                    artifact && milestone ?
 
                         (
                             readOnly ?
-                                (version.deployments.length > 0 ?
+                                (milestone.deployments.length > 0 ?
                                     (
                                         <div>
-                                            <div className={classes.deployedVersionHint}>
-                                                {t("exception.editDeployedVersion")}
+                                            <div className={classes.deployedMilestoneHint}>
+                                                {t("exception.editDeployedMilestone")}
                                             </div>
                                             <DropdownButton
                                                 type="default"
-                                                title={t("save.save")}
-                                                options={options.filter(option => option.id !== "UpdateVersion")} />
+                                                title={t("action.save")}
+                                                options={options.filter(option => option.id !== "UpdateMilestone")} />
                                         </div>
                                     )
                                     :
                                     (
-                                        <DropdownButton
-                                            type="default"
-                                            title={t("save.save")}
-                                            options={options.filter(option => option.id !== "UpdateVersion")} />
+                                        <SimpleButton
+                                            title={t("artifact.edit")}
+                                            onClick={lockAndEdit} />
                                     )
                                 )
 
 
 
                                 :
-                                (version.deployments.length > 0 ?
+                                (milestone.deployments.length > 0 ?
                                     (
                                         <div>
-                                            <div className={classes.deployedVersionHint}>
-                                                {t("exception.editDeployedVersion")}
+                                            <div className={classes.deployedMilestoneHint}>
+                                                {t("exception.editDeployedMilestone")}
                                             </div>
                                             <DropdownButton
                                                 type="default"
-                                                title={t("save.save")}
-                                                options={options.filter(option => option.id !== "UpdateVersion")} />
+                                                title={t("action.save")}
+                                                options={options.filter(option => option.id !== "UpdateMilestone")} />
                                         </div>
                                     )
                                     :
-                                    (version.latestVersion ? 
+                                    (milestone.latestMilestone ? 
                                         <DropdownButton
                                             type="default"
-                                            title={t("save.save")}
+                                            title={t("action.save")}
                                             options={options} />
                                         :
                                         <DropdownButton
                                             type="default"
-                                            title={t("save.save")}
-                                            options={options.filter(option => option.id !== "UpdateVersion")} />
+                                            title={t("action.save")}
+                                            options={options.filter(option => option.id !== "UpdateMilestone")} />
                                     )
 
                                 )
                         )
                         :
                         (
-                            <SimpleButton onClick={() => setSaveAsNewArtifactOpen(true)} title={t("save.newArtifact")} />
+                            <SimpleButton onClick={() => setSaveAsNewArtifactOpen(true)} title={t("action.saveAsNewArtifact")} />
                         )
                 }
 
@@ -323,7 +322,7 @@ const Editor: React.FC<Props> = observer(props => {
                 onCancelled={() => setSaveAsNewMilestoneOpen(false)}
                 type={artifact?.fileType}
                 file={editorContent}
-                comment={version.comment}
+                comment={milestone.comment}
                 artifactId={artifact.id} />
 
             <SaveAsNewArtifactDialog

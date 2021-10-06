@@ -2,14 +2,14 @@ import MenuItem from "@material-ui/core/MenuItem";
 import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import {ArtifactTypeTO, ArtifactVersionUploadTOSaveTypeEnum, RepositoryTO} from "../api";
+import {ArtifactTypeTO, ArtifactMilestoneUploadTOSaveTypeEnum, RepositoryTO} from "../api";
 import PopupDialog from "../components/Form/PopupDialog";
 import SettingsForm from "../components/Form/SettingsForm";
 import SettingsSelect from "../components/Form/SettingsSelect";
 import SettingsTextField from "../components/Form/SettingsTextField";
 import {RootState} from "../store/reducers/rootReducer";
 import {useTranslation} from "react-i18next";
-import {createArtifact, createVersion, getArtifact} from "../store/actions";
+import {createArtifact, createMilestone, getArtifact} from "../store/actions";
 import {REPOSITORIES, SYNC_STATUS_ARTIFACT, SYNC_STATUS_REPOSITORY} from "../constants/Constants";
 import helpers from "../util/helperFunctions";
 import {fetchRepositories} from "../store/actions/repositoryAction";
@@ -50,16 +50,16 @@ const CreateArtifactDialog: React.FC<Props> = props => {
     }, [dispatch, t])
 
 
-    const createInitialVersion = useCallback((artifactId: string) => {
-        createVersion(artifactId, "", ArtifactVersionUploadTOSaveTypeEnum.Milestone).then(response => {
+    const createInitialMilestone = useCallback((artifactId: string) => {
+        createMilestone(artifactId, "", ArtifactMilestoneUploadTOSaveTypeEnum.Milestone).then(response => {
             if (Math.floor(response.status / 100) === 2) {
                 helpers.makeSuccessToast(t("artifact.created"));
                 history.push(`/${artifactId}/latest`)
             } else {
-                helpers.makeErrorToast(t(response.data.toString()), () => createInitialVersion(artifactId))
+                helpers.makeErrorToast(t(response.data.toString()), () => createInitialMilestone(artifactId))
             }
         }, error => {
-            helpers.makeErrorToast(t(error.response.data), () => createInitialVersion(artifactId))
+            helpers.makeErrorToast(t(error.response.data), () => createInitialMilestone(artifactId))
         })
     }, [history, t])
 
@@ -71,7 +71,7 @@ const CreateArtifactDialog: React.FC<Props> = props => {
             if(defaultFileProps){
                 createArtifact(props.repo?.id ? props.repo.id : repository, title, description, "CONFIGURATION").then(response => {
                     if (Math.floor(response.status / 100) === 2) {
-                        createInitialVersion(response.data.id)
+                        createInitialMilestone(response.data.id)
                     } else {
                         helpers.makeErrorToast(t(response.data.toString()), () => onCreate())
                     }
@@ -88,7 +88,7 @@ const CreateArtifactDialog: React.FC<Props> = props => {
         } catch (err) {
             console.log(err);
         }
-    }, [props, fileTypes, repository, title, description, createInitialVersion, t]);
+    }, [props, fileTypes, repository, title, description, createInitialMilestone, t]);
 
 
     useEffect(() => {

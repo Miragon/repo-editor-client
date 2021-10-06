@@ -1,14 +1,14 @@
 import {CaseReducer} from "@reduxjs/toolkit";
 import {
     SYNC_STATUS_ARTIFACT, SYNC_STATUS_REPOSITORY,
-    SYNC_STATUS_VERSION
+    SYNC_STATUS_MILESTONE
 } from "../../constants/Constants";
 
 const initialState = {
     repoSynced: false,
     recentSynced: false,
     artifactSynced: false,
-    versionSynced: undefined,
+    milestoneSynced: false,
 };
 
 const reducer: CaseReducer = (state = initialState, action) => {
@@ -24,10 +24,10 @@ const reducer: CaseReducer = (state = initialState, action) => {
                 artifactSynced: action.dataSynced
             };
 
-        case SYNC_STATUS_VERSION:
+        case SYNC_STATUS_MILESTONE:
             return {
                 ...state,
-                versionSynced: action.dataSynced
+                milestoneSynced: action.dataSynced
             };
 
     }

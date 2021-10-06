@@ -2,14 +2,14 @@ import MenuItem from "@material-ui/core/MenuItem";
 import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import {ArtifactVersionUploadTOSaveTypeEnum, RepositoryTO} from "../api";
+import {ArtifactMilestoneUploadTOSaveTypeEnum, RepositoryTO} from "../api";
 import PopupDialog from "../components/Form/PopupDialog";
 import SettingsForm from "../components/Form/SettingsForm";
 import SettingsSelect from "../components/Form/SettingsSelect";
 import SettingsTextField from "../components/Form/SettingsTextField";
 import {RootState} from "../store/reducers/rootReducer";
 import {useTranslation} from "react-i18next";
-import {createArtifact, createVersion} from "../store/actions";
+import {createArtifact, createMilestone} from "../store/actions";
 import helpers from "../util/helperFunctions";
 import {useHistory} from "react-router-dom";
 import {fetchRepositories} from "../store/actions/repositoryAction";
@@ -59,7 +59,7 @@ const SaveAsNewArtifactDialog: React.FC<Props> = props => {
         createArtifact(repository, title, description, "FORM")
             .then(response => {
                 if (Math.floor(response.status / 100) === 2) {
-                    createVersion(response.data.id, props.file, ArtifactVersionUploadTOSaveTypeEnum.Milestone)
+                    createMilestone(response.data.id, props.file, ArtifactMilestoneUploadTOSaveTypeEnum.Milestone)
                         .then(response2 => {
                             if (Math.floor(response2.status / 100) === 2) {
                                 helpers.makeSuccessToast(t("artifact.createdDefault"))
@@ -69,10 +69,10 @@ const SaveAsNewArtifactDialog: React.FC<Props> = props => {
                                 props.onCancelled()
                                 history.push("/" + response.data.id + "/latest")
                             } else {
-                                helpers.makeErrorToast(t(response2.data.toString()), () => createVersion(response.data.id, props.file, ArtifactVersionUploadTOSaveTypeEnum.Milestone))
+                                helpers.makeErrorToast(t(response2.data.toString()), () => createMilestone(response.data.id, props.file, ArtifactMilestoneUploadTOSaveTypeEnum.Milestone))
                             }
                         }, error => {
-                            helpers.makeErrorToast(t(error.response.data), () => createVersion(response.data.id, props.file, ArtifactVersionUploadTOSaveTypeEnum.Milestone))
+                            helpers.makeErrorToast(t(error.response.data), () => createMilestone(response.data.id, props.file, ArtifactMilestoneUploadTOSaveTypeEnum.Milestone))
                         })
                 } else {
                     helpers.makeErrorToast(t(response.data.toString()), () => onCreate())
