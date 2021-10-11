@@ -2,13 +2,13 @@ import React, {useCallback, useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useDispatch, useSelector} from "react-redux";
 import emptyTemplate from "./empty_template.json";
-import {ArtifactTO, ArtifactMilestoneTO, ArtifactMilestoneUploadTOSaveTypeEnum, UserInfoTO} from "../api";
+import {ArtifactMilestoneTO, ArtifactMilestoneUploadTOSaveTypeEnum, ArtifactTO, UserInfoTO} from "../api";
 import MonacoEditor from "react-monaco-editor";
 import elementTemplateSchema from "./elementTemplateSchema.json";
 import {makeStyles} from "@material-ui/styles";
 import * as monacoEditor from "monaco-editor";
 import {useTranslation} from "react-i18next";
-import {createMilestone, lockArtifact, updateMilestone} from "../store/actions";
+import {createMilestone, lockArtifact, unlockArtifact, updateMilestone} from "../store/actions";
 import {useHistory} from "react-router-dom";
 import {HANDLEDERROR} from "../constants/Constants";
 import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
@@ -32,7 +32,12 @@ const useStyles = makeStyles({
         flexDirection: "row",
         justifyContent: "flex-start",
         marginTop: "20px",
-
+    },
+    buttonContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%"
     },
     button: {
         minWidth: "180px",
@@ -63,17 +68,8 @@ const Editor: React.FC<Props> = observer(props => {
     const [saveAsNewArtifactOpen, setSaveAsNewArtifactOpen] = useState<boolean>(false);
     const [saveAsNewMilestoneOpen, setSaveAsNewMilestoneOpen] = useState<boolean>(false);
     const [readOnly, setReadOnly] = useState<boolean>(true);
-    const [lockedByUser, setLockedByUser] = useState<string>("");
-
-    //Zwei Checks ausführen: 1. Kann der User die Datei bearbeiten oder hat er nur Read berechtigungen?
-
-    //2. Ist die Datei momentan von einem anderen User gesperrt?
 
     const currentUser: UserInfoTO = useSelector((state: RootState) => state.users.currentUserInfo)
-
-    /**
-     * Options for the jsonEditor
-     */
 
     useEffect(() => {
         //TODO: Auch anzeigen, wenn JSON Format nicht eingehalten werden
@@ -93,12 +89,11 @@ const Editor: React.FC<Props> = observer(props => {
         if(artifact.lockedUntil && artifact.lockedBy){
             if(Date.parse(artifact.lockedUntil) > Date.now()) {
                 artifact.lockedBy === currentUser.username ? setReadOnly(false) : setReadOnly(true)
-                setLockedByUser(artifact.lockedBy)
             } else {
-                setLockedByUser("")
+                setReadOnly(true)
             }
         } else {
-            setLockedByUser("")
+            setReadOnly(true)
         }
     }, [artifact?.lockedBy, artifact.lockedUntil, currentUser.username])
 
@@ -235,6 +230,19 @@ const Editor: React.FC<Props> = observer(props => {
         }
     ]
 
+    const removeLock = useCallback(() => {
+        unlockArtifact(artifact.id).then(response => {
+            if (Math.floor(response.status / 100) === 2) {
+                setReadOnly(true)
+                helpers.makeSuccessToast(t("artifact.unlocked"))
+            } else {
+                helpers.makeErrorToast(t(response.data.toString()), () => removeLock())
+            }
+        }, error => {
+            helpers.makeErrorToast(t(error.response.data), () => removeLock())
+        })
+
+    }, [artifact.id, t])
 
 
     return (
@@ -259,15 +267,19 @@ const Editor: React.FC<Props> = observer(props => {
                             readOnly ?
                                 (milestone.deployments.length > 0 ?
                                     (
-                                        <div>
-                                            <div className={classes.deployedMilestoneHint}>
-                                                {t("exception.editDeployedMilestone")}
+                                        <div className={classes.buttonContainer}>
+                                            <div>
+                                                <div className={classes.deployedMilestoneHint}>
+                                                    {t("exception.editDeployedMilestone")}
+                                                </div>
+                                                <DropdownButton
+                                                    type="default"
+                                                    title={t("action.save")}
+                                                    options={options.filter(option => option.id !== "UpdateMilestone")} />
                                             </div>
-                                            <DropdownButton
-                                                type="default"
-                                                title={t("action.save")}
-                                                options={options.filter(option => option.id !== "UpdateMilestone")} />
+
                                         </div>
+                                        
                                     )
                                     :
                                     (
@@ -282,27 +294,43 @@ const Editor: React.FC<Props> = observer(props => {
                                 :
                                 (milestone.deployments.length > 0 ?
                                     (
-                                        <div>
-                                            <div className={classes.deployedMilestoneHint}>
-                                                {t("exception.editDeployedMilestone")}
+                                        <div className={classes.buttonContainer}>
+                                            <div>
+                                                <div className={classes.deployedMilestoneHint}>
+                                                    {t("exception.editDeployedMilestone")}
+                                                </div>
+                                                <DropdownButton
+                                                    type="default"
+                                                    title={t("action.save")}
+                                                    options={options.filter(option => option.id !== "UpdateMilestone")} />
                                             </div>
-                                            <DropdownButton
-                                                type="default"
-                                                title={t("action.save")}
-                                                options={options.filter(option => option.id !== "UpdateMilestone")} />
+                                            <SimpleButton
+                                                title={t("artifact.unlock")}
+                                                onClick={() => removeLock()} />
                                         </div>
                                     )
                                     :
                                     (milestone.latestMilestone ? 
-                                        <DropdownButton
-                                            type="default"
-                                            title={t("action.save")}
-                                            options={options} />
+                                        <div className={classes.buttonContainer}>
+                                            <DropdownButton
+                                                type="default"
+                                                title={t("action.save")}
+                                                options={options} />
+                                            <SimpleButton
+                                                title={t("artifact.unlock")}
+                                                onClick={() => removeLock()} />
+                                        </div>
+                                            
                                         :
-                                        <DropdownButton
-                                            type="default"
-                                            title={t("action.save")}
-                                            options={options.filter(option => option.id !== "UpdateMilestone")} />
+                                        <div className={classes.buttonContainer}> 
+                                            <DropdownButton
+                                                type="default"
+                                                title={t("action.save")}
+                                                options={options.filter(option => option.id !== "UpdateMilestone")} />
+                                            <SimpleButton
+                                                title={t("artifact.unlock")}
+                                                onClick={() => removeLock()} />
+                                        </div>
                                     )
 
                                 )

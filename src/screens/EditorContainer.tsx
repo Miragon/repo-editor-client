@@ -6,17 +6,12 @@ import PathStructure from "../components/Layout/PathStructure";
 import {useDispatch, useSelector} from "react-redux";
 
 import Editor from "./Editor";
-import {useHistory} from "react-router-dom";
 import CreateArtifactDialog from "./CreateArtifactDialog";
 import DropdownButton, {DropdownButtonItem} from "../components/Form/DropdownButton";
 import {RootState} from "../store/reducers/rootReducer";
-import {ArtifactTO, ArtifactTypeTO, ArtifactMilestoneTO, RepositoryTO} from "../api";
+import {ArtifactMilestoneTO, ArtifactTO, ArtifactTypeTO, RepositoryTO} from "../api";
 import {makeStyles} from "@material-ui/styles";
-import {
-    getArtifact,
-    getLatestMilestone,
-    getByMilestoneNumber,
-} from "../store/actions";
+import {getArtifact, getByMilestoneNumber, getLatestMilestone,} from "../store/actions";
 import {useTranslation} from "react-i18next";
 import helpers from "../util/helperFunctions";
 import {SYNC_STATUS_ARTIFACT, SYNC_STATUS_MILESTONE} from "../constants/Constants";
@@ -68,7 +63,6 @@ const useStyles = makeStyles(() => ({
 const EditorContainer: React.FC = observer(() => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const history = useHistory();
     const {t} = useTranslation("common");
 
 

@@ -1,8 +1,5 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {
-    SYNC_STATUS_ARTIFACT, SYNC_STATUS_REPOSITORY,
-    SYNC_STATUS_MILESTONE
-} from "../../constants/Constants";
+import {SYNC_STATUS_ARTIFACT, SYNC_STATUS_MILESTONE, SYNC_STATUS_REPOSITORY} from "../../constants/Constants";
 
 const initialState = {
     repoSynced: false,
