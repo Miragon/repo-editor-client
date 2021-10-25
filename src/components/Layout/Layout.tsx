@@ -9,6 +9,7 @@ import RegisterNewUserScreen from "../../screens/RegisterNewUserScreen";
 import Menu from "./Menu";
 import Router from "./Router";
 import {CURRENT_USER_INFO, FILETYPES} from "../../constants/Constants";
+import FileStatus from "./FileStatus";
 
 const useStyles = makeStyles((theme: Theme) => ({
     contentWrapper: {
@@ -31,11 +32,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 /**
  * Diese Komponente erzeugt das Layout auf oberster Ebene der Anwendung.
  * Es enthält sowohl das Menü als auch sämtlichen Inhalt der Anwendung. + Toasts für
- * Fehlgeschlagene bzw. erfolgreiche API calls Die primäre Aufgabe des Layouts ist die einheitliche
+ * Fehlgeschlagene bzw. erfolgreiche API calls & Hinweise zur Verfügbarkeit der Datei
+ * Die primäre Aufgabe des Layouts ist die einheitliche
  * Darstellung des globalen Menüs sowie das Routing.
  *
- * Die Komponente bietet keine Anpassungsmöglichkeiten und besitzt
- * keine Parameter.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Layout = (): any => {
@@ -69,9 +69,9 @@ const Layout = (): any => {
     useEffect(() => {
         if(!fileConfigFetched){
             const config = helpers.getClientConfig();
-            artifactController.getAllFileTypes(config).then(response2 => {
-                if(response2.data){
-                    dispatch({type: FILETYPES, fileTypes: response2.data});
+            artifactController.getAllFileTypes(config).then(response => {
+                if(response.data){
+                    dispatch({type: FILETYPES, fileTypes: response.data});
                     setFileConfigFetched(true);
                 }
             })
@@ -96,6 +96,7 @@ const Layout = (): any => {
             <div className={classes.contentWrapper}>
                 <div className={classes.content}>
                     <Router/>
+                    <FileStatus />
                     <ToastContainer/>
                 </div>
             </div>

@@ -17,6 +17,8 @@ import helpers from "../util/helperFunctions";
 import {SYNC_STATUS_ARTIFACT, SYNC_STATUS_MILESTONE} from "../constants/Constants";
 import {openFileInTool} from "../util/Redirections";
 import {getRepository} from "../store/actions/repositoryAction";
+import {DateTime} from "luxon";
+import {LOCKED, READONLY, READYTOEDIT, READYTOLOCK} from "../store/reducers/fileStatusReducer";
 
 const useStyles = makeStyles(() => ({
     createContainer: {
@@ -71,6 +73,7 @@ const EditorContainer: React.FC = observer(() => {
 
     const milestoneSynced: boolean = useSelector((state: RootState) => state.dataSynced.milestoneSynced);
     const fileTypes: Array<ArtifactTypeTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
+    const currentUser: string = useSelector((state: RootState) => state.users.name);
 
     const [repository, setRepository] = useState<RepositoryTO>();
     const [artifact, setArtifact] = useState<ArtifactTO>();
@@ -97,6 +100,20 @@ const EditorContainer: React.FC = observer(() => {
         getArtifact(artifactId).then(response => {
             if (Math.floor(response.status / 100) === 2) {
                 setArtifact(response.data)
+                //TODO FileStatus is captured here
+                if((artifact?.lockedBy !== currentUser)){
+                    if(artifact?.lockedUntil){
+                        const parsed = DateTime.fromISO(artifact?.lockedUntil);
+                        if(parsed > DateTime.now()){
+                            dispatch({type: LOCKED})
+                        } else{
+                            dispatch({type: READYTOLOCK})
+                        }
+                    } else {
+                        dispatch({type: READYTOLOCK})
+                    }
+                    dispatch({type: READYTOEDIT})
+                }
                 fetchRepository(response.data.repositoryId)
                 dispatch({type: SYNC_STATUS_ARTIFACT, dataSynced: true})
             } else {
@@ -105,7 +122,7 @@ const EditorContainer: React.FC = observer(() => {
         }, error => {
             helpers.makeErrorToast(t(error.response.data), () => fetchArtifact())
         })
-    }, [artifactId, dispatch, fetchRepository, t])
+    }, [artifact?.lockedBy, artifact?.lockedUntil, artifactId, currentUser, dispatch, fetchRepository, t])
 
     const fetchLatestMilestone = useCallback(() => {
         getLatestMilestone(artifactId).then(response => {
@@ -125,6 +142,9 @@ const EditorContainer: React.FC = observer(() => {
         getByMilestoneNumber(artifactId, parseInt(milestoneNumber)).then(response => {
             if (Math.floor(response.status / 100) === 2) {
                 setMilestone(response.data);
+                if(!milestone?.latestMilestone){
+                    dispatch({type: READONLY})
+                }
                 dispatch({type: SYNC_STATUS_MILESTONE, dataSynced: true})
             } else {
                 helpers.makeErrorToast(t(response.data.toString()), () => fetchByMilestoneNumber())
@@ -132,7 +152,7 @@ const EditorContainer: React.FC = observer(() => {
         }, error => {
             helpers.makeErrorToast(t(error.response.data), () => fetchByMilestoneNumber())
         })
-    }, [artifactId, dispatch, milestoneNumber, t])
+    }, [artifactId, dispatch, milestone?.latestMilestone, milestoneNumber, t])
 
     
     useEffect(() => {
