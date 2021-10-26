@@ -240,6 +240,7 @@
     "saved": "SAVED",
     "saving": "SAVE",
     "saveError": "Saving failed.",
+    "deployed": "The file has already been deployed. Your changes will not be saved",
     "action": {
       "openRecent": "OPEN RECENT",
       "lock": "EDIT",
@@ -249,6 +250,7 @@
   },
   "exception": {
     "changeOwnRole": "You can't change your own role",
+    "alreadyDeployed": "You can't edit files that have already been deployed",
     "authFailed": "Authorization failed",
     "editDeployedMilestone": "You can't edit files that have already been deployed",
     "accessHistory": "Artifacts from archive can not be changed",
