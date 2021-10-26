@@ -9,10 +9,7 @@ const Router: React.FC = () => {
     return (
         <HashRouter>
             <Switch>
-                <Route
-                    exact
-                    path="/"
-                    component={EditorContainer}/>
+
                 <Route
                     exact
                     path="/:artifactId/:milestoneNumber"

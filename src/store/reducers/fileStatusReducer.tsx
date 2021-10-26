@@ -1,16 +1,18 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {unlockArtifact} from "../actions";
 
 
 export const LOCKED = "LOCKED";
 export const READYTOLOCK = "READYTOLOCK";
 export const READONLY = "READONLY"
 export const READYTOEDIT = "READYTOEDIT";
+export const SAVED = "SAVED";
+export const SAVING = "SAVING";
+export const SAVEERROR = "SAVEERROR";
+export const DEPLOYED = "DEPLOYED";
 
 const initialState = {
     info: "",
     status: "readOnly",
-    action: () => console.log("No Action"),
 }
 
 const reducer: CaseReducer = (state = initialState, action) => {
@@ -20,28 +22,48 @@ const reducer: CaseReducer = (state = initialState, action) => {
                 ...state,
                 info: "fileStatus.locked",
                 status: "locked",
-                action: () => unlockArtifact,
             }
         case READYTOLOCK:
             return {
                 ...state,
                 info: "fileStatus.readyToLock",
                 status: "readyToLock",
-                action: () => unlockArtifact,
             }
         case READONLY:
             return {
                 ...state,
                 info: "fileStatus.readOnly",
                 status: "readOnly",
-                action: () => unlockArtifact,
             }
         case READYTOEDIT:
             return {
                 ...state,
                 info: "fileStatus.readyToEdit",
                 status: "readyToEdit",
-                action: () => unlockArtifact,
+            }
+        case SAVEERROR:
+            return {
+                ...state,
+                info: "fileStatus.saveError",
+                status: "saveError"
+            }
+        case SAVED:
+            return {
+                ...state,
+                info: "fileStatus.saved",
+                status: "saved"
+            }
+        case SAVING:
+            return {
+                ...state,
+                info: "fileStatus.saving",
+                status: "saving"
+            }
+        case DEPLOYED:
+            return {
+                ...state,
+                info: "fileStatus.deployed",
+                status: "deployed"
             }
     }
     return state;
@@ -49,10 +71,3 @@ const reducer: CaseReducer = (state = initialState, action) => {
 
 
 export default reducer;
-
-/*
- 1. EditroContainer sendet request
- 2. im EditorContainer wird eine action dispatched, die den status der datei meldet
- 3.
-
- */

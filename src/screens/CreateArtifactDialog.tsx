@@ -55,6 +55,7 @@ const CreateArtifactDialog: React.FC<Props> = props => {
             if (Math.floor(response.status / 100) === 2) {
                 helpers.makeSuccessToast(t("artifact.created"));
                 history.push(`/${artifactId}/latest`)
+                window.location.reload()
             } else {
                 helpers.makeErrorToast(t(response.data.toString()), () => createInitialMilestone(artifactId))
             }

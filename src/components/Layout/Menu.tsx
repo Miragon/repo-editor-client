@@ -6,6 +6,10 @@ import i18next from "i18next";
 import DropdownButton, {DropdownButtonItem} from "../Form/DropdownButton";
 import {useTranslation} from "react-i18next";
 import Flag from "react-world-flags";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/reducers/rootReducer";
+import {CircularProgress} from "@material-ui/core";
+import {Check, Warning} from "@material-ui/icons";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -33,6 +37,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     languageSelector: {
         minWidth: "200px"
+    },
+    saveStatusContainer: {
+        minWidth: "200px",
+    },
+    saveStatus: {
+        color: "white",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center"
+    },
+    saveText: {
+        color: "white"
     }
 }));
 
@@ -44,6 +61,8 @@ const changeLanguage = (language: string) => {
 const Menu: React.FC = () => {
     const classes = useStyles();
     const { t } = useTranslation("common");
+
+    const status: string = useSelector((state: RootState) => state.fileStatus.status);
 
     const options: DropdownButtonItem[] = useMemo(() => ([
         {
@@ -77,6 +96,42 @@ const Menu: React.FC = () => {
                     type="default"
                     title={t("language.select")}
                     options={options} />
+                <div className={classes.saveStatusContainer}>
+                    {
+                        status === "saved" &&
+                            <div className={classes.saveStatus}>
+                                <Typography
+                                    className={classes.saveText}
+                                    variant="h6">
+                                    {t("fileStatus.saved")}
+                                </Typography>
+                                <Check htmlColor={"white"}/>
+                            </div>
+                    }
+
+                    {
+                        status === "saving" &&
+                        (
+                            <div className={classes.saveStatus}>
+                                <Typography
+                                    className={classes.saveText}
+                                    variant="h6">
+                                    {t("fileStatus.saving")}
+                                </Typography>
+                                <CircularProgress color={"inherit"} size={25}/>
+                            </div>
+                        )
+                    }
+
+                    {
+                        status === "saveError" &&
+                            <div className={classes.saveStatus}>
+                                <Warning htmlColor={"white"}/>
+                            </div>
+                    }
+                </div>
+
+
             </div>
         </MenuBar>
     );

@@ -31,6 +31,7 @@
         "edit": "Datei bearbeiten",
         "modifiedOn": "Bearbeitet am",
         "locked": "Sie können die Datei nun bearbeiten",
+        "lock": "Sperren",
         "share": "Datei teilen",
         "upload": "Datei hochladen",
         "import": "Aus Cawemo importieren",
@@ -40,7 +41,7 @@
         "createBPMN": "BPMN-Diagramm erstellen",
         "createDMN": "DMN-Diagramm erstellen",
         "createFORM": "Formular erstellen",
-        "unlock": "Datei enstsperren",
+        "unlock": "Datei entsperren",
         "unlocked": "Datei entsperrt",
         "createCONFIGURATION": "Konfiguration erstellen",
         "updated": "Datei geändert",
@@ -227,6 +228,21 @@
         "copied": "Datei kopiert",
         "saved": "Gespeichert"
 
+    },
+    "fileStatus": {
+        "locked": "Die Datei wird von einem andern Benutzer bearbeitet. Ihre Änderungen werden nicht gespeichert.",
+        "readOnly": "Sie befinden sich im Lesemodus. Änderungen werden nicht gespeichert.",
+        "readyToLock": "Zur Bearbeitung sperren",
+        "readyToEdit": "Sie können die Datei nun bearbeiten",
+        "saved": "GESPEICHERT",
+        "saving": "SPEICHERN",
+        "saveError": "Das Speichern ist fehlgeschlagen.",
+        "action": {
+            "openRecent": "AKTUELLE DATEI ÖFFNEN",
+            "lock": "BEARBEITEN",
+            "endEditing": "BEARBEITEN BEENDEN",
+            "reload": "ERNEUT VERSUCHEN"
+        }
     },
     "exception": {
         "changeOwnRole": "Sie können Ihre eigene Rolle nicht ändern",

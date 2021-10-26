@@ -1,22 +1,21 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {observer} from "mobx-react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import emptyTemplate from "./empty_template.json";
-import {ArtifactMilestoneTO, ArtifactMilestoneUploadTOSaveTypeEnum, ArtifactTO, UserInfoTO} from "../api";
+import {ArtifactMilestoneTO, ArtifactTO} from "../api";
 import MonacoEditor from "react-monaco-editor";
 import elementTemplateSchema from "./elementTemplateSchema.json";
 import {makeStyles} from "@material-ui/styles";
 import * as monacoEditor from "monaco-editor";
 import {useTranslation} from "react-i18next";
-import {createMilestone, lockArtifact, unlockArtifact, updateMilestone} from "../store/actions";
+import {lockArtifact, updateMilestone} from "../store/actions";
 import {useHistory} from "react-router-dom";
 import {HANDLEDERROR} from "../constants/Constants";
 import SaveAsNewArtifactDialog from "./SaveAsNewArtifactDialog";
-import SimpleButton from "../components/Form/SimpleButton";
 import helpers from "../util/helperFunctions";
 import DropdownButton, {DropdownButtonItem} from "../components/Form/DropdownButton";
 import SaveAsNewMilestoneDialog from "./SaveAsNewMilestoneDialog";
-import {RootState} from "../store/reducers/rootReducer";
+import {READYTOEDIT, SAVED, SAVEERROR} from "../store/reducers/fileStatusReducer";
 
 
 const useStyles = makeStyles({
@@ -56,6 +55,9 @@ interface Props {
     artifact: ArtifactTO;
 }
 
+let timeout: NodeJS.Timeout | undefined;
+
+
 const Editor: React.FC<Props> = observer(props => {
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -67,140 +69,20 @@ const Editor: React.FC<Props> = observer(props => {
     const [editorContent, setEditorContent] = useState<string>(JSON.stringify(emptyTemplate, null, 4));
     const [saveAsNewArtifactOpen, setSaveAsNewArtifactOpen] = useState<boolean>(false);
     const [saveAsNewMilestoneOpen, setSaveAsNewMilestoneOpen] = useState<boolean>(false);
-    const [readOnly, setReadOnly] = useState<boolean>(true);
 
-    const currentUser: UserInfoTO = useSelector((state: RootState) => state.users.currentUserInfo)
 
     useEffect(() => {
-        //TODO: Auch anzeigen, wenn JSON Format nicht eingehalten werden
         if(milestone){
             try{
                 milestone?.file && setEditorContent(JSON.stringify(JSON.parse(milestone.file), null, 4))
             }
             catch (err) {
-                console.log(err)
                 milestone?.file && setEditorContent(milestone.file)
                 dispatch({type: HANDLEDERROR, errorMessage: t("error.formatting")})
             }
         }
     }, [milestone, dispatch, t])
 
-    useEffect(() => {
-        if(artifact.lockedUntil && artifact.lockedBy){
-            if(Date.parse(artifact.lockedUntil) > Date.now()) {
-                artifact.lockedBy === currentUser.username ? setReadOnly(false) : setReadOnly(true)
-            } else {
-                setReadOnly(true)
-            }
-        } else {
-            setReadOnly(true)
-        }
-    }, [artifact?.lockedBy, artifact.lockedUntil, currentUser.username])
-
-
-
-    const jsonEditorOptions : monacoEditor.editor.IStandaloneEditorConstructionOptions = {
-        selectOnLineNumbers: true,
-        formatOnPaste: true,
-        fontSize: 14,
-        colorDecorators: true,
-        tabCompletion: "on",
-        readOnly: readOnly,
-        minimap: {
-            enabled: false,
-        },
-        scrollbar: {
-            vertical: "hidden",
-            alwaysConsumeMouseWheel: false,
-            handleMouseWheel: false,
-            verticalSliderSize: 0,
-            verticalScrollbarSize: 0,
-            useShadows: false,
-            arrowSize: 0,
-        }
-    }
-
-
-    /**
-     * Initialize the JSON-Schema
-     */
-    const editorWillMount = (monaco : typeof monacoEditor) : void => {
-        monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-            validate: true,
-            schemas: [{
-                uri: "http://myserver/foo-schema.json",
-                fileMatch: [elementTemplateSchema.toString()],
-                schema: elementTemplateSchema,
-            }]
-        });
-    }
-
-    /**
-     * Modify height of monaco-editor depending on the number of lines
-     */
-    const getHeight = (content : string) : number => {
-        if (content === undefined) {
-            return 0;
-        }
-        const nrOfLines = content.split(/\r\n|\r|\n/).length;
-        return nrOfLines*23;
-    }
-
-
-    const saveAsNewMilestone = useCallback(() => {
-        createMilestone(milestone.artifactId, editorContent, ArtifactMilestoneUploadTOSaveTypeEnum.Milestone).then(response => {
-            if (Math.floor(response.status / 100) === 2) {
-                helpers.makeSuccessToast(t("action.saved"))
-            } else {
-                helpers.makeErrorToast(t(response.data.toString()), () => saveAsNewMilestone())
-            }
-
-
-        }, error => {
-            helpers.makeErrorToast(t(error.response.data), () => saveAsNewMilestone())
-        })
-        history.push(`/${milestone.artifactId}/latest`)
-    }, [editorContent, history, t, milestone.artifactId])
-
-
-
-    const update = useCallback(() => {
-        updateMilestone(milestone.id, editorContent).then(response => {
-            if (Math.floor(response.status / 100) === 2) {
-                helpers.makeSuccessToast(t("action.saved"))
-                history.push(`/${milestone.artifactId}/${milestone.milestone}`)
-            } else {
-                helpers.makeErrorToast(t(response.data.toString()), () => update())
-            }
-        }, error => {
-            helpers.makeErrorToast(t(error.response.data), () => update())
-        })
-    }, [editorContent, history, t, milestone.artifactId, milestone.id, milestone.milestone])
-
-
-    const lockAndEdit = useCallback(() => {
-        //TODO: Uncomment in order to forbid the user to edit the file. Right now the user can choose to save the file as new artifact in the end
-        // if(milestone.latestMilestone){
-        //    if(milestone.deployments.length > 0){
-        //        helpers.makeErrorToast(t("exception.editDeployedMilestone"), () => lockAndEdit())
-        //    } else {
-        lockArtifact(artifact.id).then(response => {
-            if (Math.floor(response.status / 100) === 2) {
-                setReadOnly(false)
-                helpers.makeSuccessToast(t("artifact.locked"))
-            } else {
-                helpers.makeErrorToast(t(response.data.toString()), () => lockAndEdit())
-            }
-        }, error => {
-            helpers.makeErrorToast(t(error.response.data), () => update())
-        })
-        //      }
-        //  } else {
-        //      helpers.makeErrorToast(t("exception.historicalDataAccess"), () => lockAndEdit())
-        //  }
-            
-
-    }, [artifact.id, t, update])
 
     const options: Array<DropdownButtonItem> = [
         {
@@ -208,7 +90,7 @@ const Editor: React.FC<Props> = observer(props => {
             label: t("action.save"),
             type: "button",
             onClick: () => {
-                update()
+                saveChanges()
             }
         },
         {
@@ -230,20 +112,91 @@ const Editor: React.FC<Props> = observer(props => {
         }
     ]
 
-    const removeLock = useCallback(() => {
-        unlockArtifact(artifact.id).then(response => {
+    const jsonEditorOptions : monacoEditor.editor.IStandaloneEditorConstructionOptions = {
+        selectOnLineNumbers: true,
+        formatOnPaste: true,
+        fontSize: 14,
+        colorDecorators: true,
+        tabCompletion: "on",
+        readOnly: false,
+        minimap: {
+            enabled: false,
+        },
+        scrollbar: {
+            vertical: "hidden",
+            alwaysConsumeMouseWheel: false,
+            handleMouseWheel: false,
+            verticalSliderSize: 0,
+            verticalScrollbarSize: 0,
+            useShadows: false,
+            arrowSize: 0,
+        }
+    }
+
+    const editorWillMount = (monaco : typeof monacoEditor) : void => {
+        monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+            validate: true,
+            schemas: [{
+                uri: "http://myserver/foo-schema.json",
+                fileMatch: [elementTemplateSchema.toString()],
+                schema: elementTemplateSchema,
+            }]
+        });
+    }
+
+    const getHeight = (content : string) : number => {
+        if (content === undefined) {
+            return 0;
+        }
+        const nrOfLines = content.split(/\r\n|\r|\n/).length;
+        return nrOfLines*23;
+    }
+
+
+    const saveChanges = useCallback(() => {
+        updateMilestone(milestone.id, editorContent).then(response => {
             if (Math.floor(response.status / 100) === 2) {
-                setReadOnly(true)
-                helpers.makeSuccessToast(t("artifact.unlocked"))
+                history.push(`/${milestone.artifactId}/latest`)
+                dispatch({type: SAVED})
             } else {
-                helpers.makeErrorToast(t(response.data.toString()), () => removeLock())
+                helpers.makeErrorToast(t(response.data.toString()), () => saveChanges())
+                dispatch({type: SAVEERROR})
             }
         }, error => {
-            helpers.makeErrorToast(t(error.response.data), () => removeLock())
+            helpers.makeErrorToast(t(error.response.data), () => saveChanges())
+            dispatch({type: SAVEERROR})
         })
+    }, [milestone.id, milestone.artifactId, editorContent, history, dispatch, t])
 
-    }, [artifact.id, t])
 
+    const lockAndSave = useCallback(() => {
+        artifact ?
+            lockArtifact(artifact.id).then(response => {
+                if (Math.floor(response.status / 100) === 2) {
+                    saveChanges()
+                    dispatch({type: READYTOEDIT})
+                } else {
+                    helpers.makeErrorToast(t(response.data.toString()), () => lockAndSave())
+                }
+            }, error => {
+                helpers.makeErrorToast(t(error.response.data), () => lockAndSave())
+            })
+            :
+            console.log("no artifact")
+    }, [artifact, dispatch, saveChanges, t])
+    
+
+
+    const onChangeWithTimer = ((content: string) => {
+        console.log(content)
+        setEditorContent(content);
+        if (content !== "") {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(() => lockAndSave(), 3000);
+        }
+    });
 
     return (
         <>
@@ -254,94 +207,17 @@ const Editor: React.FC<Props> = observer(props => {
                     width="100%"
                     value={editorContent}
                     options={jsonEditorOptions}
-                    onChange={setEditorContent}
+                    onChange={content => onChangeWithTimer(content)}
                     editorWillMount={editorWillMount} />
 
             </div>
             <div className={classes.saveOptions}>
-
-                {
-                    artifact && milestone ?
-
-                        (
-                            readOnly ?
-                                (milestone.deployments.length > 0 ?
-                                    (
-                                        <div className={classes.buttonContainer}>
-                                            <div>
-                                                <div className={classes.deployedMilestoneHint}>
-                                                    {t("exception.editDeployedMilestone")}
-                                                </div>
-                                                <DropdownButton
-                                                    type="default"
-                                                    title={t("action.save")}
-                                                    options={options.filter(option => option.id !== "UpdateMilestone")} />
-                                            </div>
-
-                                        </div>
-                                        
-                                    )
-                                    :
-                                    (
-                                        <SimpleButton
-                                            title={t("artifact.edit")}
-                                            onClick={lockAndEdit} />
-                                    )
-                                )
-
-
-
-                                :
-                                (milestone.deployments.length > 0 ?
-                                    (
-                                        <div className={classes.buttonContainer}>
-                                            <div>
-                                                <div className={classes.deployedMilestoneHint}>
-                                                    {t("exception.editDeployedMilestone")}
-                                                </div>
-                                                <DropdownButton
-                                                    type="default"
-                                                    title={t("action.save")}
-                                                    options={options.filter(option => option.id !== "UpdateMilestone")} />
-                                            </div>
-                                            <SimpleButton
-                                                title={t("artifact.unlock")}
-                                                onClick={() => removeLock()} />
-                                        </div>
-                                    )
-                                    :
-                                    (milestone.latestMilestone ? 
-                                        <div className={classes.buttonContainer}>
-                                            <DropdownButton
-                                                type="default"
-                                                title={t("action.save")}
-                                                options={options} />
-                                            <SimpleButton
-                                                title={t("artifact.unlock")}
-                                                onClick={() => removeLock()} />
-                                        </div>
-                                            
-                                        :
-                                        <div className={classes.buttonContainer}> 
-                                            <DropdownButton
-                                                type="default"
-                                                title={t("action.save")}
-                                                options={options.filter(option => option.id !== "UpdateMilestone")} />
-                                            <SimpleButton
-                                                title={t("artifact.unlock")}
-                                                onClick={() => removeLock()} />
-                                        </div>
-                                    )
-
-                                )
-                        )
-                        :
-                        (
-                            <SimpleButton onClick={() => setSaveAsNewArtifactOpen(true)} title={t("action.saveAsNewArtifact")} />
-                        )
-                }
-
-
+                <div className={classes.buttonContainer}>
+                    <DropdownButton
+                        type="default"
+                        title={t("action.save")}
+                        options={options} />
+                </div>
             </div>
 
 

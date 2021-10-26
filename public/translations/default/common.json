@@ -145,6 +145,7 @@
     "createDmn": "Create DMN Artifact",
     "delete": "Delete Artifact",
     "locked": "Artifact locked for editing",
+    "lock": "Lock",
     "deleted": "Artifact deleted",
     "sharewith": "Share Artifact",
     "download": "Download Artifact",
@@ -230,6 +231,21 @@
     "saveAsNewArtifact": "Save as new file",
     "copied": "Artifact copied",
     "saved": "Saved"
+  },
+  "fileStatus": {
+    "locked": "This file is locked by another user. Your changes will not be saved.",
+    "readOnly": "You are in read only mode. Your changes will not be saved.",
+    "readyToLock": "Lock for editing.",
+    "readyToEdit": "You can now edit the file.",
+    "saved": "SAVED",
+    "saving": "SAVE",
+    "saveError": "Saving failed.",
+    "action": {
+      "openRecent": "OPEN RECENT",
+      "lock": "EDIT",
+      "endEditing": "STOP EDITING",
+      "reload": "RETRY"
+    }
   },
   "exception": {
     "changeOwnRole": "You can't change your own role",

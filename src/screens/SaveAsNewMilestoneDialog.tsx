@@ -35,7 +35,9 @@ const SaveAsNewMilestoneDialog: React.FC<Props> = props => {
                 helpers.makeSuccessToast(t("action.saved"))
                 history.push(`/${props.artifactId}/latest`)
                 dispatch({type: SYNC_STATUS_MILESTONE, dataSynced: false})
+                dispatch({type: SYNC_STATUS_MILESTONE, dataSynced: false})
                 setComment("")
+                window.location.reload()
                 props.onCancelled()
             } else {
                 helpers.makeErrorToast(t(response.data.toString()), () => onCreate())
