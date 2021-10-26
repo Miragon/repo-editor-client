@@ -1,15 +1,19 @@
 import MenuItem from "@material-ui/core/MenuItem";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import {ArtifactTypeTO, RepositoryTO} from "../api";
+import {ArtifactMilestoneUploadTOSaveTypeEnum, RepositoryTO} from "../api";
 import PopupDialog from "../components/Form/PopupDialog";
 import SettingsForm from "../components/Form/SettingsForm";
 import SettingsSelect from "../components/Form/SettingsSelect";
 import SettingsTextField from "../components/Form/SettingsTextField";
 import {RootState} from "../store/reducers/rootReducer";
 import {useTranslation} from "react-i18next";
-import {createNewArtifactWithVersionFile} from "../store/actions";
+import {createArtifact, createMilestone} from "../store/actions";
+import helpers from "../util/helperFunctions";
+import {useHistory} from "react-router-dom";
+import {fetchRepositories} from "../store/actions/repositoryAction";
+import {REPOSITORIES, SYNC_STATUS_REPOSITORY} from "../constants/Constants";
 
 interface Props {
     open: boolean;
@@ -20,40 +24,71 @@ interface Props {
 }
 
 const SaveAsNewArtifactDialog: React.FC<Props> = props => {
-    const dispatch = useDispatch();
     const {t} = useTranslation("common");
-
+    const history = useHistory();
+    const dispatch = useDispatch();
 
     const [error, setError] = useState<string | undefined>(undefined);
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [repository, setRepository] = useState<string>(props.repo ? props.repo.id : "");
 
-    const fileTypes: Array<ArtifactTypeTO> = useSelector((state: RootState) => state.artifacts.fileTypes)
-    const allRepos: Array<RepositoryTO> = useSelector(
-        (state: RootState) => state.repos.repos
-    );
 
+    const allRepos: Array<RepositoryTO> = useSelector((state: RootState) => state.repositories.repositories)
+    const repoSynced: boolean = useSelector((state: RootState) => state.dataSynced.repoSynced)
+
+
+    const fetchRepos = useCallback(() => {
+        fetchRepositories().then(response => {
+            if (Math.floor(response.status / 100) === 2) {
+                dispatch({type: REPOSITORIES, repositories: response.data})
+                dispatch({type: SYNC_STATUS_REPOSITORY, dataSynced: true})
+            } else {
+                helpers.makeErrorToast(t(response.data.toString()), () => fetchRepos())
+            }
+        }, error => {
+            helpers.makeErrorToast(t(error.response.data), () => fetchRepos())
+        })
+    }, [dispatch, t])
 
 
     const onCreate = useCallback(async () => {
         setRepository(props.repo ? props.repo.id : "")
-        try {
-            const defaultFileProps = fileTypes.find(fileType => fileType.name === props.type)
-            if(defaultFileProps){
-                //TODO: Redirect to editor and pass the id of the new Object
-                dispatch(createNewArtifactWithVersionFile(props.repo?.id ? props.repo.id : repository, title, description, props.file , props.type, "svgPreview"));
-                setTitle("")
-                setDescription("")
-                setRepository("")
-                props.onCancelled();
-            }
+        //TODO: Redirect to editor and pass the id of the new Object
 
-        } catch (err) {
-            console.log(err);
+        createArtifact(repository, title, description, "FORM")
+            .then(response => {
+                if (Math.floor(response.status / 100) === 2) {
+                    createMilestone(response.data.id, props.file, ArtifactMilestoneUploadTOSaveTypeEnum.Milestone)
+                        .then(response2 => {
+                            if (Math.floor(response2.status / 100) === 2) {
+                                helpers.makeSuccessToast(t("artifact.createdDefault"))
+                                setTitle("")
+                                setDescription("")
+                                setRepository("")
+                                props.onCancelled()
+                                history.push("/" + response.data.id + "/latest")
+                            } else {
+                                helpers.makeErrorToast(t(response2.data.toString()), () => createMilestone(response.data.id, props.file, ArtifactMilestoneUploadTOSaveTypeEnum.Milestone))
+                            }
+                        }, error => {
+                            helpers.makeErrorToast(t(error.response.data), () => createMilestone(response.data.id, props.file, ArtifactMilestoneUploadTOSaveTypeEnum.Milestone))
+                        })
+                } else {
+                    helpers.makeErrorToast(t(response.data.toString()), () => onCreate())
+                }
+            }, error => {
+                helpers.makeErrorToast(t(error.response.data), () => onCreate())
+            })
+
+    }, [props, repository, title, description, t, history]);
+
+    
+    useEffect(() => {
+        if(!repoSynced){
+            fetchRepos();
         }
-    }, [dispatch, repository, title, description, props, fileTypes]);
-
+    }, [fetchRepos, repoSynced])
 
     return (
         <PopupDialog

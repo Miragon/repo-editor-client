@@ -1,15 +1,23 @@
 import React from "react";
-import {Route, Switch} from "react-router-dom";
+import {HashRouter, Route, Switch} from "react-router-dom";
 import EditorContainer from "../../screens/EditorContainer";
 
 const Router: React.FC = () => {
+
+    //Wrap Router with "BrowserRouter" or add a /#/ after "editor" in the url
+
     return (
-        <Switch>
-            <Route
-                path="/:artifactId/:versionId"
-                component={EditorContainer} />
-        </Switch>
+        <HashRouter>
+            <Switch>
+
+                <Route
+                    exact
+                    path="/:artifactId/:milestoneNumber"
+                    component={EditorContainer} />
+            </Switch>
+        </HashRouter>
     );
 };
+
 
 export default Router;

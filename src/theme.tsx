@@ -1,16 +1,9 @@
-import {createMuiTheme, responsiveFontSizes} from "@material-ui/core/styles";
+import {responsiveFontSizes} from "@material-ui/core/styles";
+import {blue} from "@material-ui/core/colors";
+import {createMuiTheme} from "@material-ui/core";
 
 const theme = responsiveFontSizes(
     createMuiTheme({
-        overrides: {
-            MuiTooltip: {
-                tooltip: {
-                    fontSize: ".9rem",
-                    color: "white",
-                    backgroundColor: "grey"
-                }
-            }
-        },
         palette: {
             primary: {
                 dark: "#000000",
@@ -19,10 +12,10 @@ const theme = responsiveFontSizes(
                 contrastText: "#FFFFFF"
             },
             secondary: {
-                dark: "#E5B700",
-                main: "#FFCC00",
-                light: "#FFD119",
-                contrastText: "rgba(0, 0, 0, 0.87)"
+                dark: blue[700],
+                main: blue[500],
+                light: blue[300],
+                contrastText: "#FFF"
             },
             error: {
                 main: "#D32F2F"
@@ -49,7 +42,9 @@ const theme = responsiveFontSizes(
             },
             type: "light"
         }
-    })
+    }
+
+    )
 );
 
 export default theme;

@@ -1,26 +1,21 @@
 import {observer} from "mobx-react";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useParams} from "react-router";
 import "react-toastify/dist/ReactToastify.css";
 import PathStructure from "../components/Layout/PathStructure";
 import {useDispatch, useSelector} from "react-redux";
 
 import Editor from "./Editor";
-import {useHistory} from "react-router-dom";
 import CreateArtifactDialog from "./CreateArtifactDialog";
-import {useTranslation} from "react-i18next";
 import DropdownButton, {DropdownButtonItem} from "../components/Form/DropdownButton";
 import {RootState} from "../store/reducers/rootReducer";
-import {ArtifactTO, ArtifactTypeTO, ArtifactVersionTO, RepositoryTO} from "../api";
+import {ArtifactMilestoneTO, ArtifactTO, ArtifactTypeTO, RepositoryTO} from "../api";
 import {makeStyles} from "@material-ui/styles";
-import {
-    fetchFileTypes,
-    fetchRepositories,
-    getArtifact,
-    getLatestVersion,
-    getSingleRepository,
-    getSingleVersion
-} from "../store/actions";
+import {getArtifact, getByMilestoneNumber, getLatestMilestone,} from "../store/actions";
+import {useTranslation} from "react-i18next";
+import helpers from "../util/helperFunctions";
+import {ACTIVEARTIFACT, MILESTONE} from "../constants/Constants";
+import {getRepository} from "../store/actions/repositoryAction";
 
 const useStyles = makeStyles(() => ({
     createContainer: {
@@ -50,12 +45,16 @@ const useStyles = makeStyles(() => ({
     description: {
         fontWeight: "lighter",
         fontStyle: "italic"
-
     },
     comment: {
         fontWeight: "lighter",
         marginBottom: "25px",
         fontStyle: "italic"
+    },
+    oldMilestoneHint: {
+        fontStyle: "bold",
+        color: "red",
+        cursor: "pointer"
     }
 }))
 
@@ -63,61 +62,98 @@ const useStyles = makeStyles(() => ({
 const EditorContainer: React.FC = observer(() => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const history = useHistory();
     const {t} = useTranslation("common");
 
 
     const { artifactId } = useParams<{ artifactId: string }>();
-    const { versionId } = useParams<{ versionId: string }>();
+    const { milestoneNumber } = useParams<{ milestoneNumber: string }>();
 
-
+    const milestoneSynced: boolean = useSelector((state: RootState) => state.dataSynced.milestoneSynced);
     const fileTypes: Array<ArtifactTypeTO> = useSelector((state: RootState) => state.artifacts.fileTypes);
-    const repository: RepositoryTO = useSelector((state: RootState) => state.repos.activeRepo);
-    const artifact: ArtifactTO = useSelector((state: RootState) => state.artifacts.artifact);
-    const createdArtifact: ArtifactTO = useSelector((state: RootState) => state.artifacts.createdArtifact);
-    const version: ArtifactVersionTO = useSelector((state: RootState) => state.versions.version);
-    const artifactSynced: boolean = useSelector((state: RootState) => state.dataSynced.artifactSynced)
-    const versionSynced: boolean = useSelector((state: RootState) => state.dataSynced.versionSynced)
 
-
+    const [repositoryId, setRepositoryId] = useState<string>("");
+    const [repository, setRepository] = useState<RepositoryTO>();
+    const [artifact, setArtifact] = useState<ArtifactTO>();
+    const [milestone, setMilestone] = useState<ArtifactMilestoneTO>();
 
     const [createArtifactOpen, setCreateArtifactOpen] = useState<boolean>(false);
     const [createArtifactType, setCreateArtifactType] = useState<string>("");
     const [artifactOptions, setArtifactOptions] = useState<Array<DropdownButtonItem>>([]);
 
 
-    useEffect(() => {
-        if(!versionSynced || !artifactSynced){
-            if (artifactId && (versionId === "latest")) {
-                dispatch(getArtifact(artifactId))
-                dispatch(getLatestVersion(artifactId))
+    const fetchArtifact = useCallback(() => {
+        getArtifact(artifactId).then(response => {
+            if (Math.floor(response.status / 100) === 2) {
+                setArtifact(response.data)
+                dispatch({type: ACTIVEARTIFACT, artifact: response.data})
+                setRepositoryId(response.data.repositoryId)
+            } else {
+                helpers.makeErrorToast(t(response.data.toString()), () => fetchArtifact())
             }
-            if (artifactId && (versionId !== "latest")) {
-                dispatch(getArtifact(artifactId))
-                dispatch(getSingleVersion(artifactId, versionId))
+        }, error => {
+            helpers.makeErrorToast(t(error.response.data), () => fetchArtifact())
+        })
+
+    }, [artifactId, dispatch, t])
+
+    const fetchMilestone = useCallback(() => {
+        getLatestMilestone(artifactId).then(response => {
+            if (Math.floor(response.status / 100) === 2) {
+                setMilestone(response.data)
+                dispatch({type: MILESTONE, milestone: response.data})
+            } else {
+                helpers.makeErrorToast(t(response.data.toString()), () => fetchMilestone())
             }
-        }
-    }, [dispatch, artifactId, versionId, versionSynced, artifactSynced])
+        }, error => {
+            helpers.makeErrorToast(t(error.response.data), () => fetchMilestone())
+        })
+    }, [artifactId, dispatch, t])
 
+    const fetchMilestoneByNumber = useCallback(() => {
+        getByMilestoneNumber(artifactId, parseInt(milestoneNumber)).then(response => {
+            if (Math.floor(response.status / 100) === 2) {
+                setMilestone(response.data)
+                dispatch({type: MILESTONE, milestone: response.data})
+            } else {
+                helpers.makeErrorToast(t(response.data.toString()), () => fetchMilestone())
+            }
+        }, error => {
+            helpers.makeErrorToast(t(error.response.data), () => fetchMilestone())
+        })
+    }, [artifactId, dispatch, fetchMilestone, milestoneNumber, t])
 
+    const fetchRepository = useCallback(() => {
+        getRepository(repositoryId).then(response => {
+            if (Math.floor(response.status / 100) === 2) {
+                setRepository(response.data)
+            } else {
+                helpers.makeErrorToast(t(response.data.toString()), () => fetchRepository())
+            }
+        }, error => {
+            helpers.makeErrorToast(t(error.response.data), () => fetchRepository())
+        })
+    }, [repositoryId, t])
 
     useEffect(() => {
-        if(createdArtifact){
-            history.push(`/${createdArtifact.id}/latest`)
+        fetchArtifact()
+        if(milestoneNumber === "latest"){
+            fetchMilestone()
+        } else {
+            fetchMilestoneByNumber()
         }
-    }, [createdArtifact, history])
-
+    }, [fetchArtifact, fetchMilestone, fetchMilestoneByNumber, fetchRepository, milestoneNumber])
 
     useEffect(() => {
-        dispatch(fetchFileTypes())
-        dispatch(fetchRepositories())
-    }, [dispatch])
+        if(repositoryId){
+            fetchRepository()
+        }
+    }, [fetchRepository, repositoryId])
 
     useEffect(() => {
-        if(artifact?.repositoryId !== undefined) {
-            dispatch(getSingleRepository(artifact.repositoryId))
+        if(!milestoneSynced){
+            fetchMilestone()
         }
-    }, [artifact, dispatch])
+    }, [fetchMilestone, milestoneSynced])
 
     const element = {
         name: "path.overview",
@@ -125,7 +161,7 @@ const EditorContainer: React.FC = observer(() => {
     }
     const element2 = {
         name: "path.editor",
-        link: `#/editor/${artifactId}`
+        link: `/${artifactId}/${milestone}`
     }
     const path = [element, element2]
 
@@ -141,13 +177,11 @@ const EditorContainer: React.FC = observer(() => {
                     setCreateArtifactOpen(true);
                     setCreateArtifactType(fileType.name)
                 }});
-
-
         })
-
         setArtifactOptions(opts)
 
     }, [fileTypes])
+
 
 
     return (
@@ -155,30 +189,42 @@ const EditorContainer: React.FC = observer(() => {
             <div className={classes.createContainer}>
 
                 <PathStructure structure={path} />
+
                 <DropdownButton
                     type={"default"}
                     title={t("artifact.create")}
                     onClick={() => setCreateArtifactOpen(true)}
                     options={artifactOptions}/>
+
             </div>
 
-            {repository &&
+            {repository ?
                 <div className={classes.header}>
                     <div className={classes.title}>
                         <span>{`${repository?.name} /`}</span>
-                        <span className={classes.artifact}> {artifact.name}</span>
+                        <span className={classes.artifact}> {artifact?.name}</span>
                     </div>
                     <span className={classes.description}>
-                        {artifact.description}
+                        {artifact?.description}
                     </span>
                     <span className={classes.comment}>
-                        {version.comment}
+                        {milestone?.comment}
                     </span>
+
+                </div>
+                :
+                <div className={classes.header}>
+                    <div className={classes.title}>
+                        <div className={classes.artifact}>
+                            <span>New Text File</span>
+                        </div>
+                    </div>
                 </div>
             }
-            <Editor/>
+            {(milestone && artifact) &&
 
-
+                <Editor milestone={milestone} artifact={artifact}/>
+            }
 
             <CreateArtifactDialog
                 open={createArtifactOpen}

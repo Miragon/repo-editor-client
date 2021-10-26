@@ -1,18 +1,19 @@
 import {combineReducers} from "@reduxjs/toolkit";
 import artifactReducer from "./artifactReducer";
-import apiResponseReducer from "./apiResponseReducer";
 import dataSyncedReducer from "./dataSyncedReducer";
-import repoReducer from "./repositoriesReducer";
-import versionsReducer from "./versionsReducer";
-import menuReducer from "./menuReducer";
+import milestonesReducer from "./milestonesReducer";
+import repositoryReducer from "./repositoryReducer";
+import usersReducer from "./usersReducer";
+import fileStatusReducer from "./fileStatusReducer";
+
 
 export const rootReducer = combineReducers({
-    menuItems: menuReducer,
-    repos: repoReducer,
-    api: apiResponseReducer,
     dataSynced: dataSyncedReducer,
+    repositories: repositoryReducer,
     artifacts: artifactReducer,
-    versions: versionsReducer,
+    milestones: milestonesReducer,
+    users: usersReducer,
+    fileStatus: fileStatusReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

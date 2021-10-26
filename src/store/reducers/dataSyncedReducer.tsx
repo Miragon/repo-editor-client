@@ -1,28 +1,19 @@
 import {CaseReducer} from "@reduxjs/toolkit";
-import {
-    SYNC_STATUS_ACTIVE_REPOSITORY,
-    SYNC_STATUS_ARTIFACT,
-    SYNC_STATUS_MENU,
-    SYNC_STATUS_VERSION
-} from "../../constants/Constants";
+import {SYNC_STATUS_ARTIFACT, SYNC_STATUS_MILESTONE, SYNC_STATUS_REPOSITORY} from "../../constants/Constants";
 
 const initialState = {
     repoSynced: false,
-    activeRepoSynced: false,
     recentSynced: false,
     artifactSynced: false,
-    versionSynced: undefined,
-    assignmentSynced: false,
-    menuSynced: false,
-    sharedSynced: false
+    milestoneSynced: false,
 };
 
 const reducer: CaseReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SYNC_STATUS_ACTIVE_REPOSITORY:
+        case SYNC_STATUS_REPOSITORY:
             return {
                 ...state,
-                activeRepoSynced: action.dataSynced
+                repoSynced: action.dataSynced
             }
         case SYNC_STATUS_ARTIFACT:
             return {
@@ -30,16 +21,10 @@ const reducer: CaseReducer = (state = initialState, action) => {
                 artifactSynced: action.dataSynced
             };
 
-        case SYNC_STATUS_VERSION:
+        case SYNC_STATUS_MILESTONE:
             return {
                 ...state,
-                versionSynced: action.dataSynced
-            };
-
-        case SYNC_STATUS_MENU:
-            return {
-                ...state,
-                menuSynced: action.dataSynced
+                milestoneSynced: action.dataSynced
             };
 
     }
