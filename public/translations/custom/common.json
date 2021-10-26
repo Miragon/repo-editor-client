@@ -237,6 +237,7 @@
         "saved": "GESPEICHERT",
         "saving": "SPEICHERN",
         "saveError": "Das Speichern ist fehlgeschlagen.",
+        "deployed": "Die Datei wurde bereits veröffentlicht. Ihre Änderungen werden nicht gespeichert",
         "action": {
             "openRecent": "AKTUELLE DATEI ÖFFNEN",
             "lock": "BEARBEITEN",

@@ -240,6 +240,7 @@
     "saved": "SAVED",
     "saving": "SAVE",
     "saveError": "Saving failed.",
+    "deployed": "The file has already been deployed. Your changes will not be saved",
     "action": {
       "openRecent": "OPEN RECENT",
       "lock": "EDIT",
