@@ -250,6 +250,7 @@
   },
   "exception": {
     "changeOwnRole": "You can't change your own role",
+    "alreadyDeployed": "You can't edit files that have already been deployed",
     "authFailed": "Authorization failed",
     "editDeployedMilestone": "You can't edit files that have already been deployed",
     "accessHistory": "Artifacts from archive can not be changed",

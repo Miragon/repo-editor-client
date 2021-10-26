@@ -247,6 +247,7 @@
     },
     "exception": {
         "changeOwnRole": "Sie können Ihre eigene Rolle nicht ändern",
+        "alreadyDeployed": "Sie können keine Dateien bearbeiten, die bereits veröffentlicht wurden",
         "authFailed": "Autorisierung fehlgeschlagen",
         "editDeployedMilestone": "Sie können keine Dateien überspeichern, die bereits veröffentlicht wurden",
         "accessHistory": "Dateien aus dem Archiv können nicht geändert werden",
