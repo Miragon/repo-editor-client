@@ -15,7 +15,7 @@
 ### Merged pull requests
 
 - added changelog.md [\#5](https://github.com/FlowSquad/repo-editor-client/pull/5) ([lmoesle](https://github.com/lmoesle))
-- [\#4](https://github.com/FlowSquad/repo-editor-client/pull/4) ([lmoesle](https://github.com/lmoesle))
+- refactor/non-proxy-env [\#4](https://github.com/FlowSquad/repo-editor-client/pull/4) ([lmoesle](https://github.com/lmoesle))
 
 ## Previous
 
